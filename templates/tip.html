@@ -1,0 +1,43 @@
+{% extends base_layout %}
+
+{% block title %}
+        {% trans %}Tip{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+        {% trans %}Did you appreciate the connection we made?{% endtrans %}
+{% endblock %}
+
+{% block content %}
+If you enjoyed the service we provided, then please consider leaving us a small tip. A small gesture of gratitude fuels our passion to make this service better every day. And thank you!
+
+
+<BR>
+<BR>
+<ul>
+<LI>Buy us a gumball ($0.25)
+<LI>Buy us a soda ($1.00)
+<LI>Buy us a bag of gummy bears ($2.75)
+<LI>Buy us a beer ($5) – YAY!
+<LI>I really had a great time! I met someone very special ($20)
+<LI>Something else ____
+</ul>
+<BR>
+<BR>
+Link to an easy payment method TBD.
+<BR>
+<BR>
+{% endblock %}
+
+{% block mediaJS %}
+<script type="text/javascript">
+    $().ready(function() {
+        $("#form_contact").validate({
+            errorPlacement: function(error, element) {
+                element.parent().parent().addClass("error");
+                error.addClass("help-inline").appendTo( element.parent() );
+            }
+        });
+    });
+</script>
+{% endblock %}
+

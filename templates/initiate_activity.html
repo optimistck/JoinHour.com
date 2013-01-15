@@ -1,0 +1,32 @@
+{% extends base_layout %}
+
+{% block title %}
+        {% trans %}Initiate Activity{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+        {% trans %}Initiate Activity{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+Initiate Activity request form goes here.
+
+<BR>
+<BR>
+ {% trans %}Submit and take user to {% endtrans %} <a href="{{ uri_for("stat") }}">{% trans %}Activity Leaderboard{% endtrans %}</a>
+<BR><BR><BR>
+{% endblock %}
+
+{% block mediaJS %}
+<script type="text/javascript">
+    $().ready(function() {
+        $("#form_contact").validate({
+            errorPlacement: function(error, element) {
+                element.parent().parent().addClass("error");
+                error.addClass("help-inline").appendTo( element.parent() );
+            }
+        });
+    });
+</script>
+{% endblock %}
+

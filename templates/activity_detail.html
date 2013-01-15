@@ -1,0 +1,26 @@
+{% extends base_layout %}
+
+{% block title %}
+        {% trans %}Activity Detail{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+        {% trans %}Activity Detail{% endtrans %}
+{% endblock %}
+
+{% block content %}
+Content goes here. END.
+{% endblock %}
+
+{% block mediaJS %}
+<script type="text/javascript">
+    $().ready(function() {
+        $("#form_contact").validate({
+            errorPlacement: function(error, element) {
+                element.parent().parent().addClass("error");
+                error.addClass("help-inline").appendTo( element.parent() );
+            }
+        });
+    });
+</script>
+{% endblock %}
+

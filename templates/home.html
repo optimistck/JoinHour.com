@@ -1,0 +1,142 @@
+{% extends base_layout %}
+
+{% block header_title_lead %}{% endblock %}
+
+{% block content %}
+
+    {% if user_id %}
+    <div class="hero-unit home_bp">
+        <p>
+            {% trans %}This is shown when you're logged in.{% endtrans %}
+        </p>
+        <p>
+            {% trans %}This page will have "My Dashboard" table showing the list of passive intrests announced, etc. It may also have a count of passive or active things that are going on.{% endtrans %}
+        </p>
+        <BR>
+        <BR>
+         {% trans %}The dashboard will also list (for 72 hours) near past activities and ask the user to provide ratings and {% endtrans %} <a href="{{ uri_for("feedback") }}">{% trans %}feedback{% endtrans %}</a> on participants.
+        <BR>
+                <p>
+            {% trans %}Will keep this simple...{% endtrans %}
+        </p>
+    </div>
+    {% else %}
+    <div class="row">
+        <div class="span9">
+            <div class="home_bp">
+                <h1>
+                    JoinHour.com
+                </h1>
+                <p>
+                    {% trans %}[This page is shown when you're not logged in. <B>Log-in to see other menus and pages.</B> Register on the home page. Go to admin: http://localhost:8081/admin/users. Edit user, activate. Go to home page. Login. You'll get a different view.]{% endtrans %}
+                    <br><br>{% trans %}Connecting good people a short walk away to do fun stuff spontaneously.{% endtrans %}
+                    <br><br>{% trans %}JoinHour.com connects in real-time like minded people with shared interests. It's like bumping into someone in an elevator who is also going for a run and asking if you can run together. JoinHour.com allows you to privately announce your interest (e.g., go for a run in 20 minutes, or grab a drink at 6 PM) and then it proposes a match for a selected activity. JoinHour.com is perfect for spontaneous and short-lived activities with your neighbors. JoinHour.com provides a near instant gratification by doing fun things without planning, and removes awkwardness by passively announcing your interest and letting the system pick a match.{% endtrans %}
+                </p>
+            </div>
+        </div>
+        <div class="span3 auth-at-home">
+            <form id="form_login_user" action="{{ uri_for("login") }}" method="post">
+                <fieldset class="well">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                    <div class="control-group">
+                        <label class="controls">
+                            <input class="focused required" name="username" id="l_username" type="text" placeholder="{% trans %}Username or Email{% endtrans %}">
+                        </label>
+                    </div>
+                    <div class="control-group">
+                        <div class="controls row-fluid">
+                            <label class="span8">
+                                <input class="focused required" name="password" id="l_password" type="password" placeholder="{% trans %}Password{% endtrans %}">
+                            </label>
+                            <label class="span4">
+                                <button type="submit" class="btn btn-primary btn-login">{% trans %}Login{% endtrans %}</button>
+                            </label>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="checkbox">
+                            <input type="checkbox" name="remember_me" id="remember_me" value="on">
+                            {% trans %}Remember me?{% endtrans %} <span class="separator"></span>
+                            <a href="{{ uri_for("password-reset") }}">{% trans %}Forgot your password?{% endtrans %}</a>
+                        </label>
+                    </div>
+                    {{ macros.federated_login(provider_info, provider_uris, enable_federated_login) }}
+                </fieldset>
+            </form>
+
+            <h3>{% trans %}Sign Up{% endtrans %}</h3>
+            <form id="form_register" action="{{ uri_for("register") }}" method="post">
+                <fieldset class="well">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                    <div class="control-group">
+                        <label class="controls">
+                            <input class="focused required" name="username" id="username" type="text" placeholder="{% trans %}Username{% endtrans %}">
+                        </label>
+                    </div>
+                    <div class="control-group">
+                        <label class="controls">
+                            <input class="focused required email" name="email" id="email" type="email" placeholder="{% trans %}Email{% endtrans %}">
+                            <input type="hidden" name="country" value="">
+                        </label>
+                    </div>
+                    <div class="control-group">
+                        <label class="controls">
+                            <input class="focused required" name="password" id="password" type="password" placeholder="{% trans %}Password{% endtrans %}">
+                        </label>
+                    </div>
+                    <div class="control-group">
+                        <label class="controls">
+                            <input class="focused required" name="c_password" id="c_password" type="password" placeholder="{% trans %}Confirm Password{% endtrans %}">
+                        </label>
+                    </div>
+                    <div class="control-group">
+                        <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div><!-- /row -->
+    {% endif %}
+
+{% endblock %}
+
+{% block mediaJS %}
+    <script type="text/javascript">
+        $().ready(function() {
+            $("#form_login_user").validate({
+                submitHandler: function(form) {
+                    form.submit();
+                },
+                errorPlacement: function(error, element) {
+                    element.parent().parent().addClass("error");
+                    error.addClass("help-inline").appendTo( element.parent() );
+                }
+            });
+
+            $("#form_register").validate({
+                submitHandler: function(form) {
+                    form.submit();
+                },
+                rules: {
+                    password: 'required',
+                    c_password: {
+                        required: true,
+                        equalTo: '#password'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    element.parent().parent().addClass("error");
+                    error.addClass("help-inline").appendTo( element.parent() );
+                }
+            });
+            
+            $("#password").passStrength({
+                shortPassText: '{% trans %}Short Password{% endtrans %}',
+                badPassText: '{% trans %}Insecure Password{% endtrans %}',
+                goodPassText: '{% trans %}Good Password{% endtrans %}',
+                strongPassText: '{% trans %}Secure Password{% endtrans %}'
+            });
+        });
+    </script>
+{% endblock %}
+
