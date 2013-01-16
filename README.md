@@ -5,9 +5,7 @@ Sponsored by <a href="http://www.jetbrains.com/pycharm/" alt="Download PyCharm">
   <img src="http://www.jetbrains.com/img/logos/pycharm_logo142x29.gif">
 </a>
 
-Google App Engine Boilerplate gets your project off the ground quickly using the Google App Engine platform. 
-Create powerful applications by using the latest technology supported on Google App Engine. 
-It will introduces new developers to App Engine and advanced developers to follow best practices.
+Constantin's change ....
 
 [Try a online demo](http://appengine.beecoss.com)
 
