@@ -28,7 +28,10 @@ _routes = [
     RedirectRoute('/password-reset/<user_id>/<token>', handlers.PasswordResetCompleteHandler, name='password-reset-check', strict_slash=True),
     RedirectRoute('/change-email/<user_id>/<encoded_email>/<token>', handlers.EmailChangedCompleteHandler, name='email-changed-check', strict_slash=True),
     RedirectRoute('/abtest/', handlers.AbTestHandler, name='abtest', strict_slash=True),
-    RedirectRoute('/', handlers.HomeRequestHandler, name='home', strict_slash=True)
+    RedirectRoute('/', handlers.HomeRequestHandler, name='home', strict_slash=True),
+    #JH added
+    RedirectRoute('/passive/', handlers.PassiveInterestHandler, name='passive', strict_slash=True),
+    RedirectRoute('/stat/', handlers.StatHandler, name='stat', strict_slash=True)
 ]
 
 def get_routes():

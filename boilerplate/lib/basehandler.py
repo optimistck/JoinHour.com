@@ -181,6 +181,17 @@ class BaseHandler(webapp2.RequestHandler):
     def messages(self):
         return self.session.get_flashes(key='_messages')
 
+### JH creativity: NOT needed to solve 'boilerplate.forms.PassiveInterestForm object' has no attribute 'interest' #. That was solved in fomrs.
+    @webapp2.cached_property
+    def interest(self):
+        return self.session.get_flashes(key='_interest')
+### JH
+
+### TODO: figure out why this is needed. Entered activity_status just to make it work.
+    @webapp2.cached_property
+    def activity_status(self):
+        return self.session.get_flashes(key='_activity_status')
+
     def add_message(self, message, level=None):
         self.session.add_flash(message, level, key='_messages')
 
@@ -343,7 +354,8 @@ class BaseHandler(webapp2.RequestHandler):
             'provider_uris': self.provider_uris,
             'provider_info': self.provider_info,
             'enable_federated_login': self.app.config.get('enable_federated_login'),
-            'base_layout': self.get_base_layout
+            'base_layout': self.get_base_layout,
+            'activity_status': self.activity_status
             })
         kwargs.update(self.auth_config)
         if hasattr(self, 'form'):

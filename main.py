@@ -15,8 +15,8 @@
 
 
 # TODO: change
-__author__  = 'Rodrigo Augosto (@coto)'
-__website__ = 'www.beecoss.com'
+__author__  = 'Constantin Kostenko with templates by Rodrigo Augosto'
+__website__ = 'www.JoinHour.com'
 
 import os, sys
 # Third party libraries path must be fixed before importing webapp2

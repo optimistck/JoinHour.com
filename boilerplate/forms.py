@@ -66,7 +66,14 @@ class ContactForm(BaseForm):
     email = fields.TextField(_('Email'), [validators.Required(), validators.Length(min=7, max=FIELD_MAXLENGTH), validators.regexp(utils.EMAIL_REGEXP, message=_('Invalid email address.'))])
     name = fields.TextField(_('Name'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
     message = fields.TextAreaField(_('Message'), [validators.Required(), validators.Length(max=65536)])
+    #TO DO: remove. Added to make shit work.
+    activity_status = fields.TextAreaField(_('activity_status'), [validators.Required(), validators.Length(max=65536)])
 
+#### JH
+class PassiveInterestForm(BaseForm):
+    #attribute for the form. added to solve the Error: 'boilerplate.forms.PassiveInterestForm object' has no attribute 'interest' 
+    interest = fields.TextField(_('interest'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
+### JH
 
 class RegisterForm(PasswordMixin, ConfirmPasswordMixin, UserMixin):
     email = fields.TextField(_('Email'), [validators.Required(), validators.Length(min=7, max=FIELD_MAXLENGTH), validators.regexp(utils.EMAIL_REGEXP, message=_('Invalid email address.'))])

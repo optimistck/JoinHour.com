@@ -2,6 +2,14 @@ from webapp2_extras.appengine.auth.models import User
 from google.appengine.ext import ndb
 
 
+### JoinHour
+
+class Passive_Interests(ndb.Model):
+    #user = ndb.KeyProperty(kind=User)
+    interest = ndb.StringProperty()
+
+### Join Hour
+
 class User(User):
     """
     Universal user model. Can be used with App Engine's default users API,

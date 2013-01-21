@@ -34,6 +34,9 @@ from lib.basehandler import BaseHandler
 from lib.basehandler import user_required
 from lib import facebook
 
+## JH
+from google.appengine.ext import ndb
+
 class AbTestHandler(BaseHandler):
     """
     AB Testing experiments are communly used with landing pages, but is not limited to them.
@@ -933,6 +936,66 @@ class ResendActivationEmailHandler(BaseHandler):
             message = _('Sorry, Some error occurred.')
             self.add_message(message, 'error')
             return self.redirect_to('home')
+
+
+### JH
+class PassiveInterestHandler(BaseHandler):
+    """
+    Handler for PassiveInterest Form
+    """
+
+    def get(self):
+        """ Returns a simple HTML for contact form """
+
+        """ JH: cut checks off for now.
+                if self.user:
+                    user_info = models.User.get_by_id(long(self.user_id))
+                    if user_info.name or user_info.last_name:
+                        self.form.name.data = user_info.name + " " + user_info.last_name
+                    if user_info.email:
+                        self.form.email.data = user_info.email
+                params = {
+                    "exception" : self.request.get('exception')
+                    }
+        JH END: """ 
+        # above params delete if above reinstated;
+        params = {}
+        return self.render_template('announce_passive_interest.html', **params)
+
+    def post(self):
+        
+        interest = self.form.interest.data.strip()
+        message = _('Your interest was registered successfully.')
+        self.add_message(message, 'success')
+        return self.redirect_to('stat')
+
+    @webapp2.cached_property
+    def form(self):
+        return forms.PassiveInterestForm(self)
+
+
+
+
+
+class StatHandler(BaseHandler):
+    """
+    Handler for the Stat view, formerly the Leaderboard showing all active open activities and pasive interest broadcasts
+    """
+    #orig
+    def get(self):
+        params = {}
+        return self.render_template('stat.html', **params)
+    
+'''
+    def get(self):  
+      extra = None
+      #quotes = models.Passive_Interests.all()
+      #quotes = ndb.GqlQuery("SELECT * FROM Passive_Interests")
+      quotes = None
+      return quotes, extra
+'''
+### JH
+
 
 
 class ContactHandler(BaseHandler):

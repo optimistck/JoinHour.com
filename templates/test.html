@@ -1,23 +1,20 @@
 {% extends base_layout %}
 
 {% block title %}
-        {% trans %}Announce Passive Interest{% endtrans %} - {{app_name}}
+        {% trans %}test page{% endtrans %} - {{app_name}}
 {% endblock %}
 {% block header_title %}
-        {% trans %}Announce Passive Interest{% endtrans %}
+        {% trans %}Test page{% endtrans %}
 {% endblock %}
 
 {% block content %}
-This text is in announce_passive_interest.html. 
-<BR>
-
-    <form id="form_contact" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <form id="form_contact" action="{{ url|safe }}" method="post" class="well form-horizontal">
         <fieldset>
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            {{ macros.field(form.interest, label=_("Interest"), placeholder=_("Enter your")+" "+_("Interest"), class="input-xlarge focused required") }}
+            {{ macros.field(form.activity_status, label=_("Message"), class="input-xlarge required", cols="40", rows="8") }}
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{% trans %}Announce your Interest{% endtrans %}</button>
+                <button type="submit" class="btn btn-primary">{% trans %}Send Message{% endtrans %}</button>
             </div>
         </fieldset>
     </form>

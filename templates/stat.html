@@ -13,8 +13,27 @@ The two tables go here. Remember, this should not be accessible to the user unle
 
 <BR>
 <BR>
- {% trans %}From the "Initiated Activities" table the user may also click on the corresponding {% endtrans %} <a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
+ {% trans %}Froom the "Initiated Activities" table the user may also click on the corresponding {% endtrans %} <a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
 <BR><BR><BR>
+
+
+
+
+<table class="tidbits">
+      {% for Passive_Interests in quotes %}
+
+      <tr class="tidbit">    
+        <td class="index"><a href="/boilerplate/{{ Passive_Interests.interest }}">{{ Passive_Interests.index }}</a></td>
+        <td class="quote">
+          <span class="quoteid">{{ Passive_Interests.interest }}</span> {{ Passive_Interests.interest|escape }} <br>              
+        </td>
+      </tr>
+      {% endfor %}
+    </table>
+
+
+
+
 
 {% endblock %}
 
