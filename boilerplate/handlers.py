@@ -974,6 +974,26 @@ class PassiveInterestHandler(BaseHandler):
         return forms.PassiveInterestForm(self)
 
 
+class InitiateActivityHandler(BaseHandler):
+    """
+    Handler for InitiateActivityHandler Form
+    """
+
+    def get(self):
+        params = {}
+        return self.render_template('initiate_activity.html', **params)
+
+    def post(self):
+        
+        #interest = self.form.interest.data.strip()
+        message = _('Your activity was registered successfully.')
+        self.add_message(message, 'success')
+        return self.redirect_to('stat')
+
+    @webapp2.cached_property
+    def form(self):
+        return forms.InitiateActvityForm(self)
+
 
 
 

@@ -12,7 +12,6 @@ secure_scheme = 'https'
 _routes = [
 	#BP = BoilerPlate code
     RedirectRoute('/secure/', handlers.SecureRequestHandler, name='secure', strict_slash=True),
-    RedirectRoute('/active/', handlers.InitiateActivityHandler, name='active', strict_slash=True),
     RedirectRoute('/activity_detail/', handlers.ActivityDetailHandler, name='activity_detail', strict_slash=True),
     RedirectRoute('/feedback/', handlers.FeedbackHandler, name='feedback', strict_slash=True),
     RedirectRoute('/tip/', handlers.TipHandler, name='tip', strict_slash=True),

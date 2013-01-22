@@ -27,7 +27,7 @@ Build our own:
 
 Forms:
 - each form has a unique id: e.g., id="form_contact"
-- the forms on the form (must / may) match what's in the forms.py file. NOTE: for now the forms.py file is located under the boilerplate. In the future all JoinHour forms should be pulled out out of boilerplate.
+- the fields on the form (must / may) match what's in the forms.py file. NOTE: for now the forms.py file is located under the boilerplate. In the future all JoinHour forms should be pulled out out of boilerplate.
 -  enter form's variables in the basehandler.py in the boilerplate.     
 	e.g.,	@webapp2.cached_property
 		 	   def activity_status(self):

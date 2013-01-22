@@ -112,15 +112,15 @@ class Guestbook(webapp2.RequestHandler):
 
 
 # Stat code:
-class InitiateActivityHandler(BaseHandler):
-    """
-    Handler for Initiate Activity Form
-    """
+##class InitiateActivityHandler(BaseHandler):
+##    """
+##    Handler for Initiate Activity Form
+##    """
 
-    def get(self):
-        """ Returns a simple HTML (for now) for Activity form """
-        params = {}
-        return self.render_template('initiate_activity.html', **params)
+##    def get(self):
+##        """ Returns a simple HTML (for now) for Activity form """
+##        params = {}
+##        return self.render_template('initiate_activity.html', **params)
 
 
 ##class AnnouncePassiveInterestHandler(BaseHandler):

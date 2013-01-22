@@ -8,14 +8,18 @@
 {% endblock %}
 
 {% block content %}
-This text is in announce_passive_interest.html. 
+<h5>Post your interest and let others find you. This approch is perfect if you're up for doing something, but don't want to make the first move.</h5>
 <BR>
 
-    <form id="form_contact" action="{{ url|safe }}" method="post" class="well form-horizontal">
+    <form id="form_announce_passive_interest" action="{{ url|safe }}" method="post" class="well form-horizontal">
         <fieldset>
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            {{ macros.field(form.interest, label=_("Interest"), placeholder=_("Enter your")+" "+_("Interest"), class="input-xlarge focused required") }}
+            {{ macros.field(form.category, label=_("Category")) }}
+            {{ macros.field(form.sub_category, label=_("Sub Category")) }}
+            {{ macros.field(form.time_chunks, label=_("Amount of time you have for an activity")) }}
+            {{ macros.field(form.time_chunks2, label=_("Your interest in doing something will perish in")) }}
+            {{ macros.field(form.interest, label=_("I want to connect to"), placeholder=_("e.g., get out of the house, get some sun ...")+" "+_("mind"), class="input-xlarge focused required") }}
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans %}Announce your Interest{% endtrans %}</button>
             </div>

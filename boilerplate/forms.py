@@ -45,7 +45,9 @@ class UserMixin(BaseForm):
     username = fields.TextField(_('Username'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH), validators.regexp(utils.ALPHANUMERIC_REGEXP, message=_('Username invalid. Use only letters and numbers.'))])
     name = fields.TextField(_('Name'), [validators.Length(max=FIELD_MAXLENGTH)])
     last_name = fields.TextField(_('Last Name'), [validators.Length(max=FIELD_MAXLENGTH)])
-    country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
+    ##country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
+    ### TODO: make this a building pull down, not a country field
+    country = fields.SelectField(_('Country'), choices=utils.BUILDINGS)
 
 
 class PasswordResetCompleteForm(PasswordMixin, ConfirmPasswordMixin):
@@ -73,7 +75,23 @@ class ContactForm(BaseForm):
 class PassiveInterestForm(BaseForm):
     #attribute for the form. added to solve the Error: 'boilerplate.forms.PassiveInterestForm object' has no attribute 'interest' 
     interest = fields.TextField(_('interest'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
+    category = fields.SelectField(_('Category'), choices=utils.CATEGORY)
+    sub_category = fields.SelectField(_('Sub_Category'), choices=utils.SUBCATEGORY)
+    time_chunks = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
+    time_chunks2 = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
 ### JH
+
+#### JH
+class InitiateActvityForm(BaseForm):
+    #attribute for the form. added to solve the Error: 'boilerplate.forms.PassiveInterestForm object' has no attribute 'interest' 
+    interest = fields.TextField(_('interest'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
+    category = fields.SelectField(_('Category'), choices=utils.CATEGORY)
+    sub_category = fields.SelectField(_('Sub_Category'), choices=utils.SUBCATEGORY)
+    time_chunks = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
+    time_chunks2 = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
+    number_of_people = fields.SelectField(_('Number_Of_People'), choices=utils.NUMBER_OF_PEOPLE)
+### JH
+
 
 class RegisterForm(PasswordMixin, ConfirmPasswordMixin, UserMixin):
     email = fields.TextField(_('Email'), [validators.Required(), validators.Length(min=7, max=FIELD_MAXLENGTH), validators.regexp(utils.EMAIL_REGEXP, message=_('Invalid email address.'))])

@@ -462,3 +462,97 @@ COUNTRIES = [
     ("ZR", "Zaire"),
     ("ZM", "Zambia"),
     ("ZW", "Zimbabwe")]
+
+BUILDINGS = [
+("", ""),
+("1", "Oakwood Falls Church"),
+("2", "Oakwood Court House"),
+("3", "The Belvedere"),
+("4", "Crystal Houses"),
+("5", "Circle Towers"),
+("6", "Quebec House Apartments"),
+("7", "River House"),
+("8", "NOT LISTED")]
+
+NUMBER_OF_PEOPLE = [
+("1", "1"),
+("2", "2"),
+("3", "3")]
+
+TIME_CHUNKS = [
+("", ""),
+("5", "5 mins"),
+("15", "15 mins"),
+("30", "30 mins"),
+("45", "45 mins"),
+("60", "1 hour"),
+("75", "1 hour 15 mins"),
+("90", "1 hour 30 mins"),
+("105", "1 hour 45 mins"),
+("120", "2 hours"),
+("135", "2 hours 15 mins"),
+("150", "2 hours 30 mins"),
+("165", "2 hours 45 mins"),
+("180", "3 hours")]
+
+
+TIME_CHUNKS2 = [
+("", ""),
+("5", "5 mins"),
+("10", "10 mins"),
+("15", "15 mins"),
+("20", "20 mins"),
+("25", "25 mins"),
+("30", "30 mins"),
+("40", "40 mins"),
+("45", "45 mins"),
+("50", "50 mins"),
+("60", "1 hour"),
+("75", "1 hour 15 mins"),
+("90", "1 hour 30 mins"),
+("105", "1 hour 45 mins"),
+("120", "2 hours")]
+
+CATEGORY = [
+("", ""),
+("1", "Exercise"),
+("2", "Grab a drink"),
+("3", "Just a walk"),
+("4", "Split a pizza"),
+("5", "Split a cab"),
+("6", "Play pool"),
+("7", "Play a board game"),
+("8", "Play a video game"),
+("9", "NOT LISTED")]
+
+SUBCATEGORY = [
+("", ""),
+("1.1", "Exercise - Running"),
+("1.2", "Exercise - Biking"),
+("1.3", "Exercise - Power Walking"),
+("1.4", "Exercise - Yoga"),
+("2.1", "Any drink"),
+("2.2", "Grab a beer"),
+("2.3", "Glass of wine"),
+("2.4", "Coffee & Tea"),
+("4.1", "Split a pizza - veggie only"),
+("4.2", "Split a pizza - with meat"),
+("5.1", "Split a cab - Downtown"),
+("5.2", "Split a cab - Adams Morgan"),
+("5.3", "Split a cab - Rosslyn / Court House"),
+("5.4", "Split a cab - Clarendon / Ballston"),
+("5.5", "Split a cab - U Street"),
+("5.6", "Split a cab - H Street"),
+("6.1", "Play pool - Carpool"),
+("6.2", "Play pool - Other, TBD"),
+("7.1", "Play a board game - Chess"),
+("7.2", "Play a board game - Risk"),
+("7.3", "Play a board game - Other"),
+("8.1", "Play a video game - Call of Duty 4"),
+("8.1", "Play a video game - Mass Effect 3"),
+("8.1", "Play a video game - Halo 4"),
+("8.1", "Play a video game - Far Cry 3"),
+("8.1", "Play a video game - X-COM: Enemy Unknown"),
+("8.1", "Play a video game - The Walking Dead"),
+("8.1", "Play a video game - Dishonored"),
+("9", "- No sub cattegory needed")]
