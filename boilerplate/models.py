@@ -6,8 +6,17 @@ from google.appengine.ext import ndb
 
 class Passive_Interests(ndb.Model):
     #user = ndb.KeyProperty(kind=User)
+    user = ndb.KeyProperty(kind=User)
     interest = ndb.StringProperty()
+    #user = ndb.KeyProperty(kind=User)
+    #uastring = ndb.StringProperty()
+    #ip = ndb.StringProperty()
+    #timestamp = ndb.StringProperty()
 
+    @classmethod
+    def query_passive_interests(cls, ancestor_key):
+        #orig: return cls.query(ancestor=ancestor_key).order(-cls.date)
+        return cls.query(ancestor=ancestor_key)
 ### Join Hour
 
 class User(User):

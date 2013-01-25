@@ -963,8 +963,25 @@ class PassiveInterestHandler(BaseHandler):
         return self.render_template('announce_passive_interest.html', **params)
 
     def post(self):
-        
+        #JH - bullshit guestbook name for now to make it work
+        guestbook_name = 'guestbook_name'
+
+        passive_Interests = models.Passive_Interests(
+        #user = user.key,
+        #uastring = self.request.user_agent,
+        #ip = self.request.remote_addr,
+        #timestamp = utils.get_date_time(),
+        ## too the bit on Key from the https://developers.google.com/appengine/docs/python/ndb/overview#queries
+
+        parent=ndb.Key("InterestKey", guestbook_name or "*notitle*"),
         interest = self.form.interest.data.strip()
+        )
+        passive_Interests.put()
+
+
+
+
+        #interest = self.form.interest.data.strip()
         message = _('Your interest was registered successfully.')
         self.add_message(message, 'success')
         return self.redirect_to('stat')
@@ -1005,17 +1022,21 @@ class StatHandler(BaseHandler):
     def get(self):
         params = {}
         return self.render_template('stat.html', **params)
-    
-'''
-    def get(self):  
-      extra = None
-      #quotes = models.Passive_Interests.all()
-      #quotes = ndb.GqlQuery("SELECT * FROM Passive_Interests")
-      quotes = None
-      return quotes, extra
-'''
-### JH
+            
+        '''
+        def get(self):  
+            guestbook_name = 'guestbook_name'
+            ancestor_key = ndb.Key("InterestKey", guestbook_name or "*notitle*")
+            passive_interests = models.Passive_Interests.query_passive_interests(ancestor_key).fetch(20)
+            logging.debug('Start guestbook signing request')
+            params = {
+                'passive_interests' : passive_interests
+                }
 
+            
+            return self.render_template('stat.html', **params)
+        '''
+### JH
 
 
 class ContactHandler(BaseHandler):

@@ -13,23 +13,40 @@ The two tables go here. Remember, this should not be accessible to the user unle
 
 <BR>
 <BR>
- {% trans %}Froom the "Initiated Activities" table the user may also click on the corresponding {% endtrans %} <a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
+ {% trans %}From the "Initiated Activities" table the user may also click on the corresponding {% endtrans %} <a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
 <BR><BR><BR>
 
 
 
-
-<table class="tidbits">
-      {% for Passive_Interests in quotes %}
-
-      <tr class="tidbit">    
-        <td class="index"><a href="/boilerplate/{{ Passive_Interests.interest }}">{{ Passive_Interests.index }}</a></td>
-        <td class="quote">
-          <span class="quoteid">{{ Passive_Interests.interest }}</span> {{ Passive_Interests.interest|escape }} <br>              
+<table class="table table-striped table-bordered">
+    <!--
+    <thead>
+        <tr>
+            <th class="span1">&nbsp;</th>
+            {% for attr, name in list_columns %}
+            <th>
+                {{ name }}
+            </th>
+            {% endfor %}
+        </tr>
+    </thead>
+    -->
+    {% for passive_interest in passive_interests %}
+    <tr>
+        <!--
+        <td>
+            <a class="icon" href="{{ uri_for('user-edit', user_id=user.get_id()) }}"><i class="icon-pencil"></i></a>
         </td>
-      </tr>
-      {% endfor %}
-    </table>
+        {% for attr, name in list_columns %}
+        <td>
+            {{ getattr(user, attr) }}
+        </td>
+        {% endfor %}
+        -->
+        hi
+    </tr>
+    {% endfor %}
+</table>
 
 
 

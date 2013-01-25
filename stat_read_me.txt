@@ -37,3 +37,7 @@ Notes:
 copied all files from the boilerplate/templates to /templates to correctly use the desired base.html
 TODO: get rid of the /templates in the boilerplate/tempaltes folder?
 TODO: update style.css to add the image back
+
+Database read and write.
+- to write do .put on the model
+- to get a variable from HTML use {{ @webapp2.cached_property name}}. The variable / object is defined in the basehandler.py in a form of @webapp2.cached_property and can access models, etc.
