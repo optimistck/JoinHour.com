@@ -36,6 +36,8 @@ from lib import facebook
 
 ## JH
 from google.appengine.ext import ndb
+## JH temp.
+import cgi
 
 class AbTestHandler(BaseHandler):
     """
@@ -987,6 +989,29 @@ class InitiateActivityHandler(BaseHandler):
         return forms.InitiateActvityForm(self)
 
 
+### TODO: good news, we are able tow rite to the page, bad news, need to figure out how to do it via the Jinja base handler crap.
+class StatHandler_NEW(webapp2.RequestHandler):
+    """
+    Handler for the Stat view, formerly the Leaderboard showing all active open activities and pasive interest broadcasts
+    """
+    #orig
+    def get(self):
+        #JH: this was moved from passive interest form, obviously, b/c this is where we want to write the passive interests
+        self.response.out.write('<html><body>')
+
+        building_name = 'building_name'
+        ancestor_key = ndb.Key("pInterestKey", building_name)
+        interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
+        for i in interests:
+         self.response.out.write('<blockquote>%s</blockquote>' %
+                              cgi.escape(i.interest))
+
+        self.response.out.write("""
+          
+            </body>
+         </html>""")
+        pass 
+
 
 
 class StatHandler(BaseHandler):
@@ -997,27 +1022,11 @@ class StatHandler(BaseHandler):
     def get(self):
         #JH: this was moved from passive interest form, obviously, b/c this is where we want to write the passive interests
         building_name = 'building_name'
-
         ancestor_key = ndb.Key("pInterestKey", building_name)
         interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
-
-        #
         params = {"interests" : interests}
         return self.render_template('stat.html', **params)
-            
-        '''
-        def get(self):  
-            guestbook_name = 'guestbook_name'
-            ancestor_key = ndb.Key("InterestKey", guestbook_name or "*notitle*")
-            passive_interests = models.Passive_Interest.query_passive_interests(ancestor_key).fetch(20)
-            logging.debug('Start guestbook signing request')
-            params = {
-                'passive_interests' : passive_interests
-                }
 
-            
-            return self.render_template('stat.html', **params)
-        '''
 ### JH
 
 
