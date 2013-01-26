@@ -83,7 +83,6 @@ class PassiveInterestForm(BaseForm):
 
 #### JH
 class InitiateActvityForm(BaseForm):
-    #attribute for the form. added to solve the Error: 'boilerplate.forms.PassiveInterestForm object' has no attribute 'interest' 
     interest = fields.TextField(_('interest'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
     category = fields.SelectField(_('Category'), choices=utils.CATEGORY)
     sub_category = fields.SelectField(_('Sub_Category'), choices=utils.SUBCATEGORY)

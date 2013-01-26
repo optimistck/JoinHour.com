@@ -4,9 +4,8 @@ from google.appengine.ext import ndb
 
 ### JoinHour
 
-class Passive_Interests(ndb.Model):
+class Passive_Interest(ndb.Model):
     #user = ndb.KeyProperty(kind=User)
-    user = ndb.KeyProperty(kind=User)
     interest = ndb.StringProperty()
     #user = ndb.KeyProperty(kind=User)
     #uastring = ndb.StringProperty()

@@ -966,7 +966,7 @@ class PassiveInterestHandler(BaseHandler):
         #JH - bullshit guestbook name for now to make it work
         guestbook_name = 'guestbook_name'
 
-        passive_Interests = models.Passive_Interests(
+        passive_Interests = models.Passive_Interest(
         #user = user.key,
         #uastring = self.request.user_agent,
         #ip = self.request.remote_addr,
@@ -1027,7 +1027,7 @@ class StatHandler(BaseHandler):
         def get(self):  
             guestbook_name = 'guestbook_name'
             ancestor_key = ndb.Key("InterestKey", guestbook_name or "*notitle*")
-            passive_interests = models.Passive_Interests.query_passive_interests(ancestor_key).fetch(20)
+            passive_interests = models.Passive_Interest.query_passive_interests(ancestor_key).fetch(20)
             logging.debug('Start guestbook signing request')
             params = {
                 'passive_interests' : passive_interests
