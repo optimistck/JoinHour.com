@@ -1023,8 +1023,8 @@ class StatHandler(BaseHandler):
         #JH: this was moved from passive interest form, obviously, b/c this is where we want to write the passive interests
         building_name = 'building_name'
         ancestor_key = ndb.Key("pInterestKey", building_name)
-        interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
-        params = {"interests" : interests}
+        self.view.interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
+        params = {"interests" : self.view.interests}
         return self.render_template('stat.html', **params)
 
 ### JH
