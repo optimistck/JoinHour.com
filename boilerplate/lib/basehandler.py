@@ -360,8 +360,8 @@ class BaseHandler(webapp2.RequestHandler):
             'provider_info': self.provider_info,
             'enable_federated_login': self.app.config.get('enable_federated_login'),
             'base_layout': self.get_base_layout,
-            #entered the interest below. TODO: determine if needs to be removed. No affect.
-            #'interest': self.interest,
+            #entered the interest below. TODO: determine if needs to be removed. No affect. Not how to call it. Exception not here, for example
+            'interest': self.interest,
             'activity_status': self.activity_status
             })
         kwargs.update(self.auth_config)
