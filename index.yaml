@@ -16,6 +16,12 @@ indexes:
   - name: date
     direction: desc
 
+- kind: Passive_Interest
+  ancestor: yes
+  properties:
+  - name: date_entered
+    direction: desc
+
 - kind: User
   properties:
   - name: __key__

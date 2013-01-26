@@ -5,17 +5,16 @@ from google.appengine.ext import ndb
 ### JoinHour
 
 class Passive_Interest(ndb.Model):
-    #user = ndb.KeyProperty(kind=User)
     interest = ndb.StringProperty()
+    date_entered = ndb.DateTimeProperty(auto_now_add=True)
+    #user = ndb.KeyProperty(kind=User)
     #user = ndb.KeyProperty(kind=User)
     #uastring = ndb.StringProperty()
     #ip = ndb.StringProperty()
-    #timestamp = ndb.StringProperty()
 
     @classmethod
-    def query_passive_interests(cls, ancestor_key):
-        #orig: return cls.query(ancestor=ancestor_key).order(-cls.date)
-        return cls.query(ancestor=ancestor_key)
+    def query_interest(cls, ancestor_key):
+        return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 ### Join Hour
 
 class User(User):

@@ -181,13 +181,18 @@ class BaseHandler(webapp2.RequestHandler):
     def messages(self):
         return self.session.get_flashes(key='_messages')
 
-### JH creativity: NOT needed to solve 'boilerplate.forms.PassiveInterestForm object' has no attribute 'interest' #. That was solved in fomrs.
-#    @webapp2.cached_property
-#    def interest(self):
-#        return self.session.get_flashes(key='_interest')
+### JH 
+    @webapp2.cached_property
+    def query_interest(self):
+        return self.session.get_flashes(key='_query_interest')
+
+    #entered the interest in hope to read it off .html, will remove if not needed
+    @webapp2.cached_property
+    def interest(self):
+        return self.session.get_flashes(key='_interest')
 ### JH
 
-### TODO: figure out why this is needed. Entered activity_status just to make it work.
+    ### JH: TODO: wait, is this mine? Research.
     @webapp2.cached_property
     def activity_status(self):
         return self.session.get_flashes(key='_activity_status')

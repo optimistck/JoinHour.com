@@ -31,12 +31,16 @@ The two tables go here. Remember, this should not be accessible to the user unle
         </tr>
     </thead>
     -->
-    {% for passive_interest in passive_interests %}
+     <tr>
+        <TD>test</TD>
+    </tr>
+    {% for i in interest %}
     <tr>
-        <!--
+        <TD>test</TD>
         <td>
-            <a class="icon" href="{{ uri_for('user-edit', user_id=user.get_id()) }}"><i class="icon-pencil"></i></a>
+            {{ i.interest }}
         </td>
+       <!--
         {% for attr, name in list_columns %}
         <td>
             {{ getattr(user, attr) }}
@@ -46,9 +50,14 @@ The two tables go here. Remember, this should not be accessible to the user unle
         hi
     </tr>
     {% endfor %}
+
 </table>
 
-
+<ul>
+{% for user in interest %}
+  <li><a href="/profile/{{ i.interest }}/">{{ i.interest }}</a></li>
+{% endfor %}
+</ul>
 
 
 

@@ -939,6 +939,7 @@ class ResendActivationEmailHandler(BaseHandler):
 
 
 ### JH
+# TODO: try without the BaseHandler, just webapp2.RequestHandler and figure our the BaseHandler later
 class PassiveInterestHandler(BaseHandler):
     """
     Handler for PassiveInterest Form
@@ -946,42 +947,16 @@ class PassiveInterestHandler(BaseHandler):
 
     def get(self):
         """ Returns a simple HTML for contact form """
-
-        """ JH: cut checks off for now.
-                if self.user:
-                    user_info = models.User.get_by_id(long(self.user_id))
-                    if user_info.name or user_info.last_name:
-                        self.form.name.data = user_info.name + " " + user_info.last_name
-                    if user_info.email:
-                        self.form.email.data = user_info.email
-                params = {
-                    "exception" : self.request.get('exception')
-                    }
-        JH END: """ 
-        # above params delete if above reinstated;
         params = {}
         return self.render_template('announce_passive_interest.html', **params)
 
     def post(self):
-        #JH - bullshit guestbook name for now to make it work
-        guestbook_name = 'guestbook_name'
+       
+        building_name = 'building_name'
+        interest = models.Passive_Interest(parent=ndb.Key("pInterestKey", building_name),
+                            interest = self.form.interest.data.strip())
+        interest.put()
 
-        passive_Interests = models.Passive_Interest(
-        #user = user.key,
-        #uastring = self.request.user_agent,
-        #ip = self.request.remote_addr,
-        #timestamp = utils.get_date_time(),
-        ## too the bit on Key from the https://developers.google.com/appengine/docs/python/ndb/overview#queries
-
-        parent=ndb.Key("InterestKey", guestbook_name or "*notitle*"),
-        interest = self.form.interest.data.strip()
-        )
-        passive_Interests.put()
-
-
-
-
-        #interest = self.form.interest.data.strip()
         message = _('Your interest was registered successfully.')
         self.add_message(message, 'success')
         return self.redirect_to('stat')
@@ -1020,7 +995,14 @@ class StatHandler(BaseHandler):
     """
     #orig
     def get(self):
-        params = {}
+        #JH: this was moved from passive interest form, obviously, b/c this is where we want to write the passive interests
+        building_name = 'building_name'
+
+        ancestor_key = ndb.Key("pInterestKey", building_name)
+        interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
+
+        #
+        params = {"interests" : interests}
         return self.render_template('stat.html', **params)
             
         '''
