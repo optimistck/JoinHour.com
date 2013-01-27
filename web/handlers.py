@@ -163,14 +163,7 @@ class TipHandler(BaseHandler):
         params = {}
         return self.render_template('tip.html', **params)
 
-#CK: moving the stat handler out as well.
-"""
-class StatHandler(BaseHandler):
 
-    def get(self):
-        params = {}
-        return self.render_template('stat.html', **params)
-"""
 
 class TestHandler(BaseHandler):
     """

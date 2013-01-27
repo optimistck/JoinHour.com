@@ -22,10 +22,10 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             {{ macros.field(form.category, label=_("Category")) }}
             {{ macros.field(form.sub_category, label=_("Sub Category")) }}
-            {{ macros.field(form.number_of_people, label=_("Number of people you want to join you")) }}
-            {{ macros.field(form.time_chunks, label=_("Amount of time you have for an activity")) }}
-            {{ macros.field(form.time_chunks2, label=_("Your interest in doing something will perish in")) }}
-            {{ macros.field(form.interest, label=_("I want to connect to"), placeholder=_("e.g., get out of the house, get some sun ...")+" "+_("mind"), class="input-xlarge focused required") }}
+            {{ macros.field(form.min_number_of_people_to_join, label=_("Number of people to join you")) }}
+            {{ macros.field(form.duration, label=_("Amount of time you have for an activity")) }}
+            {{ macros.field(form.expiration, label=_("Your interest in doing something will perish in")) }}
+            {{ macros.field(form.note, label=_("Note"), placeholder=_("e.g., get out of the house, get some sun ...")+" "+_("mind"), class="input-xlarge focused required") }}
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans %}Initiate Activity{% endtrans %}</button>
             </div>

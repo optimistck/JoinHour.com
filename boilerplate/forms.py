@@ -83,12 +83,12 @@ class PassiveInterestForm(BaseForm):
 
 #### JH
 class InitiateActvityForm(BaseForm):
-    interest = fields.TextField(_('interest'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
     category = fields.SelectField(_('Category'), choices=utils.CATEGORY)
     sub_category = fields.SelectField(_('Sub_Category'), choices=utils.SUBCATEGORY)
-    time_chunks = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
-    time_chunks2 = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
-    number_of_people = fields.SelectField(_('Number_Of_People'), choices=utils.NUMBER_OF_PEOPLE)
+    min_number_of_people_to_join = fields.TextField(_('interest'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
+    duration = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
+    expiration = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
+    note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
 ### JH
 
 

@@ -182,14 +182,14 @@ class BaseHandler(webapp2.RequestHandler):
         return self.session.get_flashes(key='_messages')
 
 ### JH 
-    @webapp2.cached_property
-    def query_interest(self):
-        return self.session.get_flashes(key='_query_interest')
+#    @webapp2.cached_property
+#    def query_interest(self):
+#        return self.session.get_flashes(key='_query_interest')
 
     #entered the interest in hope to read it off .html, will remove if not needed
-    @webapp2.cached_property
-    def interest(self):
-        return self.session.get_flashes(key='_interest')
+#    @webapp2.cached_property
+#    def interest(self):
+#        return self.session.get_flashes(key='_interest')
 ### JH
 
     ### JH: TODO: wait, is this mine? Research.
@@ -362,6 +362,7 @@ class BaseHandler(webapp2.RequestHandler):
             'base_layout': self.get_base_layout,
             #entered the interest below. TODO: determine if needs to be removed. No affect. Not how to call it. Exception not here, for example
             #'interest': self.interest,
+            #TODO: delete the activity status?
             'activity_status': self.activity_status
             })
         kwargs.update(self.auth_config)

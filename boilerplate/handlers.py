@@ -973,14 +973,33 @@ class InitiateActivityHandler(BaseHandler):
     Handler for InitiateActivityHandler Form
     """
 
+    #TODO: load the categories and sub-categories from the pull-down menu
     def get(self):
         params = {}
         return self.render_template('initiate_activity.html', **params)
 
     def post(self):
         
-        #interest = self.form.interest.data.strip()
-        message = _('Your activity was registered successfully.')
+        #TODO: the building name needs to come from the user profile
+        building_name = 'building_name'
+        #TODO: Look at EditProfileHandler for a way to cutomize the fields and to use "if user logged in code"
+
+
+
+        activitity = models.Activity(parent=ndb.Key("ActivityKey", building_name),
+                            category = self.form.category.data.strip(),
+                            sub_category = self.form.sub_category.data.strip(),
+                            min_number_of_people_to_join = self.form.min_number_of_people_to_join.data.strip(),
+                            duration = self.form.duration.data.strip(),
+                            expiration = self.form.expiration.data.strip(),
+                            note = self.form.note.data.strip(),
+                            #TODO: check if need to have the utils.get_date_time() call. or if it's autoset when defined in class
+                            #username = user.key,
+                            ip = self.request.remote_addr
+                            )
+        activitity.put()
+
+        message = _("Your activity was registered successfully. We are searching for a match...")
         self.add_message(message, 'success')
         return self.redirect_to('stat')
 
