@@ -25,7 +25,7 @@ class Activity(ndb.Model):
     expiration = ndb.StringProperty()
     note = ndb.StringProperty()
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
-    username = ndb.KeyProperty(kind=User)
+    username = ndb.StringProperty()
     ip = ndb.StringProperty()
 
     @classmethod

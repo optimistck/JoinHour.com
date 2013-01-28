@@ -979,14 +979,12 @@ class InitiateActivityHandler(BaseHandler):
         return self.render_template('initiate_activity.html', **params)
 
     def post(self):
-        
         #TODO: the building name needs to come from the user profile
         building_name = 'building_name'
-        #TODO: Look at EditProfileHandler for a way to cutomize the fields and to use "if user logged in code"
 
-
-
-        activitity = models.Activity(parent=ndb.Key("ActivityKey", building_name),
+        if self.user:
+            user_info = models.User.get_by_id(long(self.user_id))        
+            activitity = models.Activity(parent=ndb.Key("ActivityKey", building_name),
                             category = self.form.category.data.strip(),
                             sub_category = self.form.sub_category.data.strip(),
                             min_number_of_people_to_join = self.form.min_number_of_people_to_join.data.strip(),
@@ -994,14 +992,14 @@ class InitiateActivityHandler(BaseHandler):
                             expiration = self.form.expiration.data.strip(),
                             note = self.form.note.data.strip(),
                             #TODO: check if need to have the utils.get_date_time() call. or if it's autoset when defined in class
-                            #username = user.key,
+                            username = user_info.username,
                             ip = self.request.remote_addr
                             )
-        activitity.put()
+            activitity.put()
 
-        message = _("Your activity was registered successfully. We are searching for a match...")
-        self.add_message(message, 'success')
-        return self.redirect_to('stat')
+            message = _("Your activity was registered successfully. We are searching for a match...")
+            self.add_message(message, 'success')
+            return self.redirect_to('stat')
 
     @webapp2.cached_property
     def form(self):
@@ -1151,12 +1149,14 @@ class EditProfileHandler(BaseHandler):
 
         params = {}
         if self.user:
+            logging.info("XXXXXXXXXXXXXX LOGGING: GOT into the EditProfileHandler")
             user_info = models.User.get_by_id(long(self.user_id))
             self.form.username.data = user_info.username
             self.form.name.data = user_info.name
             self.form.last_name.data = user_info.last_name
             self.form.country.data = user_info.country
             providers_info = user_info.get_social_providers_info()
+            #logging.info("XXXX LOGGING:" + user_info.username)
             if not user_info.password:
                 params['local_account'] = False
             else:
