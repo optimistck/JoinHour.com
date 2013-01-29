@@ -15,7 +15,38 @@ Remember, this should not be accessible to the user unless he or she either Init
 <BR>
  {% trans %}From the "Initiated Activities" table the user may also click on the corresponding {% endtrans %} <a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
 <BR><BR><BR>
+Calculations on the columns need to be done before a page is loaded in the handler. This is just raw output from the table.
+<BR><BR><BR>
 
+<H3>Open Activities</H3>
+<table class="table table-striped table-bordered">
+
+    <thead>
+        <tr>
+            <th>Cat</th>
+            <th>Sub Cat</th>
+            <th>Joiners needed</th>
+            <th>Duration</th>
+            <th>Expires in</th>
+            <th>Note</th>
+            <th>Date entered</th>
+            <th>Care to join?</th>
+        </tr>
+    </thead>
+
+    {% for a in activities %}
+    <tr>
+        <TD>{{ a.category }}</TD>
+        <TD>{{ a.sub_category }}</TD>
+        <TD>{{ a.min_number_of_people_to_join }}</TD>
+        <TD>{{ a.duration }}</TD>
+        <TD>{{ a.expiration }}</TD>
+        <TD>{{ a.note }}</TD>
+        <TD>{{ a.date_entered }}</TD>
+        <TD>Join this</TD>
+    </tr>
+    {% endfor %}
+</table>
 
 <H3>Passive Interests</H3>
 <table class="table table-striped table-bordered">
@@ -31,13 +62,18 @@ Remember, this should not be accessible to the user unless he or she either Init
         </tr>
     </thead>
     -->
-
+    <thead>
+        <tr>
+            <th>Interest</th>
+            <th>Date entered</th>
+            <th>Make a connection?</th>
+        </tr>
+    </thead>
     {% for i in interests %}
     <tr>
-        <TD>test</TD>
-        <td>
-            {{ i.interest }}
-        </td>
+        <td>{{ i.interest }}</td>
+        <td>{{ i.date_entered }}</td>
+        <td>Create an activity</td>
        <!--
         {% for attr, name in list_columns %}
         <td>

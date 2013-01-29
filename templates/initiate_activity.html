@@ -20,12 +20,12 @@
         <fieldset>
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            {{ macros.field(form.category, label=_("Category")) }}
-            {{ macros.field(form.sub_category, label=_("Sub Category")) }}
-            {{ macros.field(form.min_number_of_people_to_join, label=_("Number of people to join you")) }}
-            {{ macros.field(form.duration, label=_("Amount of time you have for an activity")) }}
-            {{ macros.field(form.expiration, label=_("Your interest in doing something will perish in")) }}
-            {{ macros.field(form.note, label=_("Note"), placeholder=_("e.g., get out of the house, get some sun ...")+" "+_("mind"), class="input-xlarge focused required") }}
+            {{ macros.field(form.category, label=_("I want to")) }}
+            {{ macros.field(form.sub_category, label=_("and specifically")) }}
+            {{ macros.field(form.min_number_of_people_to_join, label=_("with so many people to join me")) }}
+            {{ macros.field(form.duration, label=_("for")) }}
+            {{ macros.field(form.expiration, label=_("and this has to start in this many minutes or less")) }}
+            {{ macros.field(form.note, label=_("Note"), placeholder=_("140 characters to say something special about this ...")+" "+_("mind"), class="input-xlarge focused required") }}
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans %}Initiate Activity{% endtrans %}</button>
             </div>

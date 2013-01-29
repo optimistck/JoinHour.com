@@ -988,7 +988,7 @@ class InitiateActivityHandler(BaseHandler):
 
         if self.user:
             user_info = models.User.get_by_id(long(self.user_id))        
-            activitity = models.Activity(parent=ndb.Key("ActivityKey", building_name),
+            activitity = models.Activity2(parent=ndb.Key("ActivityKey", building_name),
                             category = self.form.category.data.strip(),
                             sub_category = self.form.sub_category.data.strip(),
                             min_number_of_people_to_join = self.form.min_number_of_people_to_join.data.strip(),
@@ -1009,45 +1009,57 @@ class InitiateActivityHandler(BaseHandler):
     def form(self):
         return forms.InitiateActvityForm(self)
 
-
-### TODO: good news, we are able tow rite to the page, bad news, need to figure out how to do it via the Jinja base handler crap.
-class StatHandler_NEW(webapp2.RequestHandler):
-    """
-    Handler for the Stat view, formerly the Leaderboard showing all active open activities and pasive interest broadcasts
-    """
-    #orig
-    def get(self):
-        #JH: this was moved from passive interest form, obviously, b/c this is where we want to write the passive interests
-        self.response.out.write('<html><body>')
-
-        building_name = 'building_name'
-        ancestor_key = ndb.Key("pInterestKey", building_name)
-        interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
-        for i in interests:
-         self.response.out.write('<blockquote>%s</blockquote>' %
-                              cgi.escape(i.interest))
-
-        self.response.out.write("""
-          
-            </body>
-         </html>""")
-        pass 
-
-
-
 class StatHandler(BaseHandler):
     """
     Handler for the Stat view, formerly the Leaderboard showing all active open activities and pasive interest broadcasts
     """
     #orig
     def get(self):
-        #JH: this was moved from passive interest form, obviously, b/c this is where we want to write the passive interests
+        #JH: this needs to be dynamic
         building_name = 'building_name'
+
+        #For passive
         ancestor_key = ndb.Key("pInterestKey", building_name)
         self.view.interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
-        params = {"interests" : self.view.interests}
+
+        #For active
+        ancestor_key = ndb.Key("ActivityKey", building_name)
+        self.view.activities = models.Activity2.query_activity(ancestor_key).fetch(20)
+
+        #JH: passing of params is not applicable for the variables with self.view.actvity - they get passed right on to .html via {{}}
+        params = {}
         return self.render_template('stat.html', **params)
 
+
+class FeedbackHandler(BaseHandler):
+    """
+    Handler for the feedback page (not finished)
+    """
+    #orig
+    def get(self):
+        building_name = 'building_name'
+        ancestor_key = ndb.Key("FeedbackKey", building_name)
+        self.view.feedback = models.Feedback.query_feedback(ancestor_key).fetch(20)
+
+        # logging.info(">>>>>")
+        # logging.info(self.view.activities[1].date_entered)
+        
+        params = {}
+        return self.render_template('feedback.html', **params)
+
+    def post(self):
+        building_name = 'building_name'
+        feedback = models.Feedback(parent=ndb.Key("FeedbackKey", building_name),
+                            note = self.form.note.data.strip())
+        feedback.put()
+
+        message = _('Your feedback was submitted. Thank you.')
+        self.add_message(message, 'success')
+        return self.redirect_to('feedback')
+
+    @webapp2.cached_property
+    def form(self):
+        return forms.FeedbackForm(self)
 ### JH
 
 

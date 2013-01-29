@@ -13,11 +13,7 @@ _routes = [
 	#BP = BoilerPlate code
     RedirectRoute('/secure/', handlers.SecureRequestHandler, name='secure', strict_slash=True),
     RedirectRoute('/activity_detail/', handlers.ActivityDetailHandler, name='activity_detail', strict_slash=True),
-    RedirectRoute('/feedback/', handlers.FeedbackHandler, name='feedback', strict_slash=True),
-    RedirectRoute('/tip/', handlers.TipHandler, name='tip', strict_slash=True),
-    #RedirectRoute('/test/', handlers.TestHandler, name='test', strict_slash=True)
-    RedirectRoute('/test/', handlers.MainPage, name='test', strict_slash=True),
-    RedirectRoute('/sign/', handlers.Guestbook, name='sign', strict_slash=True)
+    RedirectRoute('/tip/', handlers.TipHandler, name='tip', strict_slash=True)
     #RedirectRoute('/', handlers.HomeRequestHandler, name='home', strict_slash=True)
 ]
 

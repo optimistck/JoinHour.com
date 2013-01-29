@@ -51,88 +51,6 @@ import webapp2
 from google.appengine.ext import db
 from google.appengine.api import users
 
-
-
-class MainPage(webapp2.RequestHandler):
-  def get(self):
-    self.response.out.write('<html><body>')
-    guestbook_name=self.request.get('guestbook_name')
-
-    # Ancestor Queries, as shown here, are strongly consistent with the High
-    # Replication Datastore. Queries that span entity groups are eventually
-    # consistent. If we omitted the ancestor from this query there would be a
-    # slight chance that greeting that had just been written would not show up
-    # in a query.
-    greetings = db.GqlQuery("SELECT * "
-                            "FROM Greeting "
-                            "WHERE ANCESTOR IS :1 "
-                            "ORDER BY date DESC LIMIT 10",
-                            stat_models.guestbook_key(guestbook_name))
-
-    for greeting in greetings:
-      if greeting.author:
-        self.response.out.write(
-            '<b>%s</b> wrote:' % greeting.author)
-      else:
-        self.response.out.write('An anonymous person wrote:')
-      self.response.out.write('<blockquote>%s</blockquote>' %
-                              cgi.escape(greeting.content))
-  
-    self.response.out.write("""
-    <form action="/sign?%s" method="post">
-    <div><textarea name="content" rows="3" cols="60"></textarea></div>
-    <div><input type="submit" value="Sign Guestbook"></div>
-    </form>
-    <hr>
-    <form>Guestbook name: <input value="%s" name="guestbook_name">
-    <input type="submit" value="switch"></form>
-    </body>
-    </html>""" % (urllib.urlencode({'guestbook_name': guestbook_name}), cgi.escape(guestbook_name)))
-    def post(self): 
-        pass
-
-class Guestbook(webapp2.RequestHandler):
-  def post(self):
-    # We set the same parent key on the 'Greeting' to ensure each greeting is in
-    # the same entity group. Queries across the single entity group will be
-    # consistent. However, the write rate to a single entity group should
-    # be limited to ~1/second.
-    guestbook_name = self.request.get('guestbook_name')
-    greeting = stat_models.Greeting(parent=stat_models.guestbook_key(guestbook_name))
-
-    if users.get_current_user():
-      greeting.author = users.get_current_user().nickname()
-
-    greeting.content = self.request.get('content')
-    greeting.put()
-    self.redirect('/test?' + urllib.urlencode({'guestbook_name': guestbook_name}))
-
-#JH experimental END
-
-
-
-# Stat code:
-##class InitiateActivityHandler(BaseHandler):
-##    """
-##    Handler for Initiate Activity Form
-##    """
-
-##    def get(self):
-##        """ Returns a simple HTML (for now) for Activity form """
-##        params = {}
-##        return self.render_template('initiate_activity.html', **params)
-
-
-##class AnnouncePassiveInterestHandler(BaseHandler):
-##    """
-##    Handler for Announce Passive Interest Form
-##    """
-
-##    def get(self):
-##        """ Returns a simple HTML (for now) for Passive Interest form """
-##        params = {}
-##        return self.render_template('announce_passive_interest.html', **params)
-
 class ActivityDetailHandler(BaseHandler):
     """
     Handler for Activity Detail (shows detail when a user clicks on an activity in the Stat view)
@@ -143,15 +61,6 @@ class ActivityDetailHandler(BaseHandler):
         params = {}
         return self.render_template('activity_detail.html', **params)
 
-class FeedbackHandler(BaseHandler):
-    """
-    Handler for Feedback (rating activity participants)
-    """
-
-    def get(self):
-        """ Returns a simple HTML (for now) for Activity Detail form """
-        params = {}
-        return self.render_template('feedback.html', **params)
 
 class TipHandler(BaseHandler):
     """
@@ -185,11 +94,6 @@ class TestHandler(BaseHandler):
 
         return self.render_template('test.html', **params)
 
-    #def get(self):
-        #""" Returns a simple HTML - for testing only """
-        #params = {}
-        #return self.render_template('test.html', **params)
-
     def post(self):
         """    Add a quote to the system.    """
         if not self.form.validate():
@@ -201,12 +105,6 @@ class TestHandler(BaseHandler):
         quote_id = stat_models.add_activity(message)
         self.redirect('/tip/')
         #self.response.out.write(template.render(template_file, template_values))        
-
-    ### TODO: remove? Not needed?
-    #@webapp2.cached_property
-    #def form(self):
-        # change to test form?
-        #return forms.ContactForm(self)
 
 ### end of stat code
 

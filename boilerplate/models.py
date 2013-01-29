@@ -18,8 +18,16 @@ class Passive_Interest(ndb.Model):
     def query_interest(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 
+class Feedback(ndb.Model):
+    note = ndb.StringProperty()
+    date_entered = ndb.DateTimeProperty(auto_now_add=True)
 
-class Activity(ndb.Model):
+    @classmethod
+    def query_feedback(cls, ancestor_key):
+        return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
+
+#renamed Activity2 b/c there was a jam on my install for the use of Activity
+class Activity2(ndb.Model):
     category = ndb.StringProperty()
     sub_category = ndb.StringProperty()
     min_number_of_people_to_join = ndb.StringProperty()

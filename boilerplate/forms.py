@@ -11,6 +11,7 @@ from webapp2_extras.i18n import lazy_gettext as _
 from webapp2_extras.i18n import ngettext, gettext
 
 FIELD_MAXLENGTH = 50 # intended to stop maliciously long input
+FIELD_MAXLENGTH_NOTE = 140 # intended to stop maliciously long input
 
 
 class FormTranslations(object):
@@ -79,16 +80,21 @@ class PassiveInterestForm(BaseForm):
     sub_category = fields.SelectField(_('Sub_Category'), choices=utils.SUBCATEGORY)
     time_chunks = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
     time_chunks2 = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
+
+
+class FeedbackForm(BaseForm):
+    note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
 ### JH
 
 #### JH
 class InitiateActvityForm(BaseForm):
     category = fields.SelectField(_('Category'), choices=utils.CATEGORY)
     sub_category = fields.SelectField(_('Sub_Category'), choices=utils.SUBCATEGORY)
-    min_number_of_people_to_join = fields.TextField(_('interest'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
+    #min_number_of_people_to_join = fields.TextField(_('interest'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
+    min_number_of_people_to_join = fields.SelectField(_('min_number_of_people_to_join'), choices=utils.NUMBER_OF_PEOPLE)
     duration = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
     expiration = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
-    note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
+    note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
 ### JH
 
 

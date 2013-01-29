@@ -13,7 +13,31 @@ Please rate your activity partner. For each ... do rate.
 <BR>
 <BR>
  {% trans %}Submit and ask the user to {% endtrans %} <a href="{{ uri_for("tip") }}">{% trans %}tip{% endtrans %}</a> us.
-<BR><BR><BR>
+
+<BR>This page is not complete. Experimental.<BR>
+
+ <form id="form_feedback" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <fieldset>
+            <input type="hidden" name="exception" value="{{ exception }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            {{ macros.field(form.note, label=_("Note"), placeholder=_("your feedback ...")+" "+_("mind"), class="input-xlarge focused required") }}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{% trans %}Submit Feedback{% endtrans %}</button>
+            </div>
+        </fieldset>
+    </form>
+
+
+<H3>Feedback Test</H3>
+<table class="table table-striped table-bordered">
+    {% for f in feedback %}
+    <tr>
+        <TD>{{ f.note }}</TD>
+        <TD>{{ f.date_entered }}</TD>
+    </tr>
+    {% endfor %}
+</table>
+
 
 {% endblock %}
 
