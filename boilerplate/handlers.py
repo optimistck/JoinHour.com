@@ -738,6 +738,7 @@ class RegisterHandler(RegisterBaseHandler):
         email = self.form.email.data.lower()
         password = self.form.password.data.strip()
         country = self.form.country.data
+        building = self.form.building.data
 
         # Password to SHA512
         password = utils.hashing(password, self.app.config.get('salt'))
@@ -750,7 +751,7 @@ class RegisterHandler(RegisterBaseHandler):
         user = self.auth.store.user_model.create_user(
             auth_id, unique_properties, password_raw=password,
             username=username, name=name, last_name=last_name, email=email,
-            ip=self.request.remote_addr, country=country
+            ip=self.request.remote_addr, country=country, building=building
         )
 
         if not user[0]: #user is a tuple
@@ -995,7 +996,6 @@ class InitiateActivityHandler(BaseHandler):
                             duration = self.form.duration.data.strip(),
                             expiration = self.form.expiration.data.strip(),
                             note = self.form.note.data.strip(),
-                            #TODO: check if need to have the utils.get_date_time() call. or if it's autoset when defined in class
                             username = user_info.username,
                             ip = self.request.remote_addr
                             )
@@ -1026,7 +1026,7 @@ class StatHandler(BaseHandler):
         ancestor_key = ndb.Key("ActivityKey", building_name)
         self.view.activities = models.Activity2.query_activity(ancestor_key).fetch(20)
 
-        #JH: passing of params is not applicable for the variables with self.view.actvity - they get passed right on to .html via {{}}
+        #JH: passing of params is not applicable for the variables with self.view.XXXXX - they get passed right on to .html via {{}}
         params = {}
         return self.render_template('stat.html', **params)
 
@@ -1171,6 +1171,7 @@ class EditProfileHandler(BaseHandler):
             self.form.name.data = user_info.name
             self.form.last_name.data = user_info.last_name
             self.form.country.data = user_info.country
+            self.form.building.data = user_info.building
             providers_info = user_info.get_social_providers_info()
             #logging.info("XXXX LOGGING:" + user_info.username)
             if not user_info.password:
@@ -1180,6 +1181,7 @@ class EditProfileHandler(BaseHandler):
             params['used_providers'] = providers_info['used']
             params['unused_providers'] = providers_info['unused']
             params['country'] = user_info.country
+            params['building'] = user_info.building
 
         return self.render_template('edit_profile.html', **params)
 
@@ -1192,6 +1194,7 @@ class EditProfileHandler(BaseHandler):
         name = self.form.name.data.strip()
         last_name = self.form.last_name.data.strip()
         country = self.form.country.data
+        building = self.form.building.data
 
         try:
             user_info = models.User.get_by_id(long(self.user_id))
@@ -1224,6 +1227,7 @@ class EditProfileHandler(BaseHandler):
                 user_info.name=name
                 user_info.last_name=last_name
                 user_info.country=country
+                user_info.building=building
                 user_info.put()
                 message+= " " + _('Thanks, your settings have been saved.')
                 self.add_message(message, 'success')

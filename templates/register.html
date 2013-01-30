@@ -13,11 +13,12 @@
             {{ macros.field(form.name, label=_("Name"), placeholder=_("Enter your")+" "+_("Name"), class="input-xlarge focused") }}
             {{ macros.field(form.last_name, label=_("Last Name"), placeholder=_("Enter your")+" "+_("Last Name"), class="input-xlarge focused") }}
             {{ macros.field(form.email, label=_("Email"), placeholder=_("Enter your")+" "+_("Email"), class="input-xlarge focused required email", type="email") }}
+            {{ macros.field(form.building, label=_("Building")) }}
             {{ macros.field(form.password, label=_("Password"), placeholder=_("Enter your")+" "+_("Password"), class="input-xlarge focused required", type="password") }}
             {% if not is_mobile %}
             {{ macros.field(form.c_password, label=_("Confirm Password"), placeholder=_("Confirm Password"), class="input-xlarge focused required", type="password") }}
             {% endif %}
-            {{ macros.field(form.country, label=_("Building")) }}
+            <{{ macros.field(form.country, label=_("Need to Delete")) }}>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
             </div>

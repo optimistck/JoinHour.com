@@ -72,6 +72,8 @@ class User(User):
     country = ndb.StringProperty()
     #: Account activation verifies email
     activated = ndb.BooleanProperty(default=False)
+    #: Building name (not GeoHood just yet, buildingds will be part of GeoHoods)
+    building = ndb.StringProperty()
     
     @classmethod
     def get_by_email(cls, email):
