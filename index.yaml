@@ -22,6 +22,12 @@ indexes:
   - name: date_entered
     direction: desc
 
+- kind: Activity_Queue
+  ancestor: yes
+  properties:
+  - name: date_entered
+    direction: desc
+
 - kind: Feedback
   ancestor: yes
   properties:

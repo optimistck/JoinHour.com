@@ -27,7 +27,7 @@ class Feedback(ndb.Model):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 
 #renamed Activity2 b/c there was a jam on my install for the use of Activity
-class Activity2(ndb.Model):
+class Activity_Queue(ndb.Model):
     category = ndb.StringProperty()
     sub_category = ndb.StringProperty()
     min_number_of_people_to_join = ndb.StringProperty()
@@ -74,6 +74,9 @@ class User(User):
     activated = ndb.BooleanProperty(default=False)
     #: Building name (not GeoHood just yet, buildingds will be part of GeoHoods)
     building = ndb.StringProperty()
+    #: Blacklist of users that this user doesn't want to connect with
+    #: this needs to be implemented right, probably in its own UserPrefernces model. This is just budget. Will use | separator to add black listed user names for this user.
+    blacklist = ndb.StringProperty()
     
     @classmethod
     def get_by_email(cls, email):

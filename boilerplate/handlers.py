@@ -989,7 +989,7 @@ class InitiateActivityHandler(BaseHandler):
 
         if self.user:
             user_info = models.User.get_by_id(long(self.user_id))        
-            activitity = models.Activity2(parent=ndb.Key("ActivityKey", building_name),
+            activitity = models.Activity_Queue(parent=ndb.Key("ActivityKey", building_name),
                             category = self.form.category.data.strip(),
                             sub_category = self.form.sub_category.data.strip(),
                             min_number_of_people_to_join = self.form.min_number_of_people_to_join.data.strip(),
@@ -1024,7 +1024,7 @@ class StatHandler(BaseHandler):
 
         #For active
         ancestor_key = ndb.Key("ActivityKey", building_name)
-        self.view.activities = models.Activity2.query_activity(ancestor_key).fetch(20)
+        self.view.activities = models.Activity_Queue.query_activity(ancestor_key).fetch(20)
 
         #JH: passing of params is not applicable for the variables with self.view.XXXXX - they get passed right on to .html via {{}}
         params = {}
@@ -1162,7 +1162,7 @@ class EditProfileHandler(BaseHandler):
     @user_required
     def get(self):
         """ Returns a simple HTML form for edit profile """
-
+        #this is a good example of how the data needs to be pulled from the DB and prepoulated on Get. Use of params.
         params = {}
         if self.user:
             logging.info("XXXXXXXXXXXXXX LOGGING: GOT into the EditProfileHandler")
