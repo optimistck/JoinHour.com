@@ -7,6 +7,8 @@ from google.appengine.ext import ndb
 class Passive_Interest(ndb.Model):
     interest = ndb.StringProperty()
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
+    username = ndb.StringProperty()
+    timeToExpire = ndb.StringProperty()
     #user = ndb.KeyProperty(kind=User)
     #user = ndb.KeyProperty(kind=User)
     #uastring = ndb.StringProperty()

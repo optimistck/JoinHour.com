@@ -955,8 +955,12 @@ class PassiveInterestHandler(BaseHandler):
     def post(self):
        
         building_name = 'building_name'
-        interest = models.Passive_Interest(parent=ndb.Key("pInterestKey", building_name),
-                            interest = self.form.interest.data.strip())
+        user_info = models.User.get_by_id(long(self.user_id))
+        
+        interest = models.Passive_Interest()
+        interest.interest = self.form.interest.data.strip()
+        interest.username = user_info.username
+        interest.timeToExpire = self.form.time_chunks2.data.strip()
         interest.put()
 
         message = _('Your interest was registered successfully.')
