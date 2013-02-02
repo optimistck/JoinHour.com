@@ -85,6 +85,12 @@ class PassiveInterestForm(BaseForm):
 
 class FeedbackForm(BaseForm):
     note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH)])
+
+class ActivityDetailForm(BaseForm):
+    test_key = fields.TextField(_('test_key'))
+
+class StatForm(BaseForm):
+    test_key = fields.TextField(_('test_key'))
 ### JH
 
 #### JH

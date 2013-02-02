@@ -51,17 +51,6 @@ import webapp2
 from google.appengine.ext import db
 from google.appengine.api import users
 
-class ActivityDetailHandler(BaseHandler):
-    """
-    Handler for Activity Detail (shows detail when a user clicks on an activity in the Stat view)
-    """
-
-    def get(self):
-        """ Returns a simple HTML (for now) for Activity Detail form """
-        params = {}
-        return self.render_template('activity_detail.html', **params)
-
-
 class TipHandler(BaseHandler):
     """
     Handler for Tip (rating activity participants)

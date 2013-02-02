@@ -17,8 +17,15 @@ Remember, this should not be accessible to the user unless he or she either Init
 <BR><BR><BR>
 Calculations on the columns need to be done before a page is loaded in the handler. This is just raw output from the table.
 <BR><BR><BR>
+{{activities}}
+<BR><BR><BR>
 
 <H3>Open Activities</H3>
+    <form id="form_take_action" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <fieldset>
+            <input type="hidden" name="exception" value="{{ exception }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+
 <table class="table table-striped table-bordered">
 
     <thead>
@@ -31,6 +38,7 @@ Calculations on the columns need to be done before a page is loaded in the handl
             <th>Note</th>
             <th>Date entered</th>
             <th>Care to join?</th>
+            <th>ID</th>
         </tr>
     </thead>
 
@@ -43,10 +51,21 @@ Calculations on the columns need to be done before a page is loaded in the handl
         <TD>{{ a.expiration }}</TD>
         <TD>{{ a.note }}</TD>
         <TD>{{ a.date_entered }}</TD>
-        <TD>Join this</TD>
+        <TD><input type="submit" name="save_item" value="Save Item" /></TD>
+        <TD>
+            <input type="submit" name="delete_item" value="Delete Item" />{{ a.key.id() }}
+        </TD>
     </tr>
     {% endfor %}
 </table>
+
+
+
+            
+            
+        </fieldset>
+    </form>
+
 
 <H3>Passive Interests</H3>
 <table class="table table-striped table-bordered">

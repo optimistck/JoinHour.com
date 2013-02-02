@@ -36,8 +36,11 @@ from lib import facebook
 
 ## JH
 from google.appengine.ext import ndb
-## JH temp.
-import cgi
+
+## JH - attempt to pass variables in URL
+import urllib
+
+
 
 class AbTestHandler(BaseHandler):
     """
@@ -1015,12 +1018,19 @@ class StatHandler(BaseHandler):
     """
     #orig
     def get(self):
+        #JH: test 2.1.2013
+        guestbook_name=self.request.get('guestbook_name')
+
         #JH: this needs to be dynamic
         building_name = 'building_name'
 
         #For passive
         ancestor_key = ndb.Key("pInterestKey", building_name)
         self.view.interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
+
+        ## NOT NEEDED, but good to know, a way to get the keys only
+        #query = models.Passive_Interest.query()
+        #self.view.interests_keys = query.fetch(20, keys_only=True)
 
         #For active
         ancestor_key = ndb.Key("ActivityKey", building_name)
@@ -1029,21 +1039,41 @@ class StatHandler(BaseHandler):
         #JH: passing of params is not applicable for the variables with self.view.XXXXX - they get passed right on to .html via {{}}
         params = {}
         return self.render_template('stat.html', **params)
+  
+    def post(self):
+        is_delete = self.request.POST.get('delete_item') 
+        is_save = self.request.POST.get('save_item') 
+        if is_delete: 
+            message = _('You clicked: DELETE')
+            entity_key = _('You clicked DELETE in the entity_key')
+        elif is_save: 
+            message = _('You clicked: SAVE')
+            entity_key = _('You clicked SAVE in the entity_key')
+        else: 
+            raise Exception('no form action given') 
+        
+        self.add_entity_key_to_pass(entity_key)
+        logging.info('******************')
+        logging.info(self.entity_keys)
+        self.add_message(message, 'success')
+        return self.redirect_to('feedback')
+
+
+    @webapp2.cached_property
+    def form(self):
+        return forms.StatForm(self)
 
 
 class FeedbackHandler(BaseHandler):
     """
     Handler for the feedback page (not finished)
     """
-    #orig
+
     def get(self):
         building_name = 'building_name'
         ancestor_key = ndb.Key("FeedbackKey", building_name)
         self.view.feedback = models.Feedback.query_feedback(ancestor_key).fetch(20)
 
-        # logging.info(">>>>>")
-        # logging.info(self.view.activities[1].date_entered)
-        
         params = {}
         return self.render_template('feedback.html', **params)
 
@@ -1060,6 +1090,30 @@ class FeedbackHandler(BaseHandler):
     @webapp2.cached_property
     def form(self):
         return forms.FeedbackForm(self)
+
+class ActivityDetailHandler(BaseHandler):
+    """
+    Handler for Activity Detail (shows detail when a user clicks on an activity in the Stat view)
+    """
+
+    def get(self):
+        """ Returns a simple HTML (for now) for Activity Detail form """
+        params = {}
+        return self.render_template('activity_detail.html', **params)
+    
+    def post(self):
+        test_key = self.form.test_key.data.strip()
+
+        #ancestor_key = ndb.Key("ActivityKey", building_name)
+        #self.view.activities = models.Activity_Queue.query_activity(ancestor_key).fetch(20)
+
+        message = _('Key is: ' + test_key)
+        self.add_message(message, 'success')
+        return self.redirect_to('activity_detail')
+
+    @webapp2.cached_property
+    def form(self):
+        return forms.ActivityDetailForm(self)
 ### JH
 
 

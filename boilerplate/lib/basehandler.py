@@ -181,10 +181,16 @@ class BaseHandler(webapp2.RequestHandler):
     def messages(self):
         return self.session.get_flashes(key='_messages')
 
+    def add_message(self, message, level=None):
+        self.session.add_flash(message, level, key='_messages')
+
 ### JH 
-#    @webapp2.cached_property
-#    def query_interest(self):
-#        return self.session.get_flashes(key='_query_interest')
+    @webapp2.cached_property
+    def entity_keys(self):
+        return self.session.get_flashes(key='_entity_keys')
+
+    def add_entity_key_to_pass(self, theKey):
+        self.session.add_flash(theKey, key='_entity_keys')
 
     #entered the interest in hope to read it off .html, will remove if not needed
 #    @webapp2.cached_property
@@ -197,8 +203,6 @@ class BaseHandler(webapp2.RequestHandler):
     def activity_status(self):
         return self.session.get_flashes(key='_activity_status')
 
-    def add_message(self, message, level=None):
-        self.session.add_flash(message, level, key='_messages')
 
     @webapp2.cached_property
     def auth_config(self):
