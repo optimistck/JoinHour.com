@@ -1024,9 +1024,17 @@ class StatHandler(BaseHandler):
         #JH: this needs to be dynamic
         building_name = 'building_name'
 
-        #For passive
-        ancestor_key = ndb.Key("pInterestKey", building_name)
-        self.view.interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
+        #For passive - THIS WORKS
+        #ancestor_key = ndb.Key("pInterestKey", building_name)
+        #self.view.interests = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
+
+        #ancestor_key = ndb.Key("pInterestKey", building_name)
+        #self.view.interest = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
+
+        self.view.interest = models.Passive_Interest.query().fetch(20)
+         
+
+
 
         ## NOT NEEDED, but good to know, a way to get the keys only
         #query = models.Passive_Interest.query()
