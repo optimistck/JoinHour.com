@@ -1091,6 +1091,7 @@ class FeedbackHandler(BaseHandler):
     def form(self):
         return forms.FeedbackForm(self)
 
+
 class ActivityDetailHandler(BaseHandler):
     """
     Handler for Activity Detail (shows detail when a user clicks on an activity in the Stat view)
@@ -1102,13 +1103,26 @@ class ActivityDetailHandler(BaseHandler):
         return self.render_template('activity_detail.html', **params)
     
     def post(self):
-        test_key = self.form.test_key.data.strip()
+        '''
+        test_key_string = self.form.test_key.data.strip()
+        test_key = ndb.Key(test_key_string)
+        query = models.Activity_Queue.query(models.Activity_Queue.key == test_key)
+        self.view.activity_detail = query.fetch()
 
+        '''    
+        #est_key_string = self.form.test_key.data.strip()
+        key = ndb.Key('ActivityKey', 61)
+        #test_key = ndb.Key(test_key_string)
+        query = models.Activity_Queue.query(models.Activity_Queue.category != '1')
+        self.view.activity_detail = query.fetch()
+
+        logging.info('******************')
+        logging.info(self.view.activity_detail)
         #ancestor_key = ndb.Key("ActivityKey", building_name)
         #self.view.activities = models.Activity_Queue.query_activity(ancestor_key).fetch(20)
 
-        message = _('Key is: ' + test_key)
-        self.add_message(message, 'success')
+        #message = _('Activity detail: Test Key = ' + test_key_string + ' and query result: ' + self.view.activity_detail)
+        #self.add_message(message, 'success')
         return self.redirect_to('activity_detail')
 
     @webapp2.cached_property
