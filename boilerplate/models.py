@@ -26,7 +26,7 @@ class Feedback(ndb.Model):
     def query_feedback(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 
-#renamed Activity2 b/c there was a jam on my install for the use of Activity
+#renamed Activity2 b/c there was a jam on my install for the use of Activity. #renamed again to Activity_Queue
 class Activity_Queue(ndb.Model):
     category = ndb.StringProperty()
     sub_category = ndb.StringProperty()
