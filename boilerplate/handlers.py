@@ -962,6 +962,7 @@ class PassiveInterestHandler(BaseHandler):
         user_info = models.User.get_by_id(long(self.user_id))
         
         interest = models.Passive_Interest()
+        interest.parent=ndb.Key("pInterestKey", building_name)
         interest.interest = self.form.interest.data.strip()
         interest.username = user_info.username
         interest.timeToExpire = self.form.time_chunks2.data.strip()
@@ -1031,7 +1032,7 @@ class StatHandler(BaseHandler):
         #ancestor_key = ndb.Key("pInterestKey", building_name)
         #self.view.interest = models.Passive_Interest.query_interest(ancestor_key).fetch(20)
 
-        self.view.interest = models.Passive_Interest.query().fetch(20)
+        self.view.interests = models.Passive_Interest.query().fetch(20)
          
 
 
