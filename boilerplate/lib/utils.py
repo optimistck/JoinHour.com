@@ -465,14 +465,14 @@ COUNTRIES = [
 
 BUILDINGS = [
 ("", ""),
-("1", "Oakwood Falls Church"),
-("2", "Oakwood Court House"),
-("3", "The Belvedere"),
-("4", "Crystal Houses"),
-("5", "Circle Towers"),
-("6", "Quebec House Apartments"),
-("7", "River House"),
-("8", "NOT LISTED")]
+("Oakwood Falls Church", "Oakwood Falls Church"),
+("Oakwood Court House", "Oakwood Court House"),
+("The Belvedere", "The Belvedere"),
+("Crystal Houses", "Crystal Houses"),
+("Circle Towers", "Circle Towers"),
+("Quebec House Apartments", "Quebec House Apartments"),
+("River House", "River House"),
+("NOT LISTED", "NOT LISTED")]
 
 NUMBER_OF_PEOPLE = [
 ("1", "1"),
