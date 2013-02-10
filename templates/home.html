@@ -6,18 +6,24 @@
 
     {% if user_id %}
     <div class="hero-unit home_bp">
+            {% trans %}This dashboard page is shown when you're logged in.{% endtrans %}
+                    <BR>
         <p>
-            {% trans %}This is shown when you're logged in.{% endtrans %}
+            {% trans %}Table for open <em>Initiate Activity</em> items{% endtrans %}
         </p>
-        <p>
-            {% trans %}This page will have "My Dashboard" table showing the list of passive intrests announced, etc. It may also have a count of passive or active things that are going on.{% endtrans %}
-        </p>
+
         <BR>
-        <BR>
-         {% trans %}The dashboard will also list (for 72 hours) near past activities and ask the user to provide ratings and {% endtrans %} <a href="{{ uri_for("feedback") }}">{% trans %}feedback{% endtrans %}</a> on participants.
-        <BR>
+         {% trans %}Table for items requesting feedback for past connections (can provide feedback up to 72 hours after event start time) {% endtrans %} <a href="{{ uri_for("feedback") }}">{% trans %}feedback{% endtrans %}</a> on participants.
+        <BR><BR>
                 <p>
-            {% trans %}Will keep this simple...{% endtrans %}
+            {% trans %}Developer's helper: other pages not easily accessible{% endtrans %}
+                <BR>
+                    <UL>
+                        <LI><a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
+                        <LI><a href="{{ uri_for("tip") }}">{% trans %}Tip us!{% endtrans %}</a> link.
+                        <LI><a href="{{ uri_for("feedback") }}">{% trans %}Feedback{% endtrans%}</a> link.
+                    </UL>
+            
         </p>
     </div>
     {% else %}

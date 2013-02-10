@@ -8,24 +8,9 @@
 {% endblock %}
 
 {% block content %}
-Test only. The way this needs to work is when you click on "view detail" link for a specific activity it brings you to this page showing the details for an activity. For now the silly form submission is here since we haven't figured out a simple way to dynamically generate a link on the Live Board (stat.html) page to pass data between pages for a specific activity. This requires creating a hidden link for each of the activity items listed ina table. This needs to get done. 
-
+The way this needs to work is when you click on "detail" link for a specific activity it brings you to this page showing the details for an activity. 
 
 <BR><BR>
-{{activity_detail}}
-<BR><BR>
-
- <form id="form_activity_detail" action="{{ url|safe }}" method="post" class="well form-horizontal">
-        <fieldset>
-            <input type="hidden" name="exception" value="{{ exception }}">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            {{ macros.field(form.test_key, label=_("Test Key"), placeholder=_("Paste test")+" "+_("key"), class="input-xlarge focused required") }}
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{% trans %}Load a record{% endtrans %}</button>
-            </div>
-        </fieldset>
-    </form>
-<BR><BR><BR>
 
 <H3>Activity Detail</H3>
 <table class="table table-striped table-bordered">

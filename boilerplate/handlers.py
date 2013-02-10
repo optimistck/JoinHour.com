@@ -1112,21 +1112,14 @@ class ActivityDetailHandler(BaseHandler):
         return self.render_template('activity_detail.html', **params)
     
     def post(self):
+        # this does nothing. All experimental.
         '''
-        test_key_string = self.form.test_key.data.strip()
-        test_key = ndb.Key(test_key_string)
-        query = models.Activity_Queue.query(models.Activity_Queue.key == test_key)
-        self.view.activity_detail = query.fetch()
-
-        '''    
-        #est_key_string = self.form.test_key.data.strip()
         key = ndb.Key('ActivityKey', 61)
-        #test_key = ndb.Key(test_key_string)
         query = models.Activity_Queue.query(models.Activity_Queue.category != '1')
         self.view.activity_detail = query.fetch()
-
         logging.info('******************')
         logging.info(self.view.activity_detail)
+        '''
         #ancestor_key = ndb.Key("ActivityKey", building_name)
         #self.view.activities = models.Activity_Queue.query_activity(ancestor_key).fetch(20)
 
