@@ -1,0 +1,51 @@
+{% extends base_layout %}
+
+{% block title %}
+        {% trans %}Join{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+        {% trans %}Join{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+<h4>Register your interest and time constraints.</h4>
+
+<BR>
+<BR>
+ {% trans %}Submit and take user to {% endtrans %} <a href="{{ uri_for("stat") }}">{% trans %}Activity Leaderboard{% endtrans %}</a>
+<BR><BR><BR>
+
+        <form id="form_initiate_actvitiy" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <fieldset>
+            <input type="hidden" name="exception" value="{{ exception }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            {{ macros.field(form.category, label=_("I want to")) }}
+            <!--{{ macros.field(form.sub_category, label=_("and specifically")) }} -->
+            {{ macros.field(form.min_number_of_people_to_join, label=_("with min")) }}
+            {{ macros.field(form.max_number_of_people_to_join, label=_("no more than")) }}
+            {{ macros.field(form.duration, label=_("for")) }}
+            {{ macros.field(form.expiration, label=_("willing to wait for a match for")) }}
+            {{ macros.field(form.note, label=_("Note"), placeholder=_("activity / interest details ...")+" "+_("mind"), class="input-xlarge focused required") }}
+            <B>This still lacks the radio box for selection between     a) I'd like to go with the flow: find me a match AND b) I'd like to initiate an activity and set meeting details </b>
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{% trans %}Join{% endtrans %}</button>
+            </div>
+        </fieldset>
+    </form>
+    
+{% endblock %}
+
+{% block mediaJS %}
+<script type="text/javascript">
+    $().ready(function() {
+        $("#form_contact").validate({
+            errorPlacement: function(error, element) {
+                element.parent().parent().addClass("error");
+                error.addClass("help-inline").appendTo( element.parent() );
+            }
+        });
+    });
+</script>
+{% endblock %}
+

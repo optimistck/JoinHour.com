@@ -170,8 +170,16 @@
 
                         <!-- Code if the user has logged in-->
                         {% elif user_id %}
+                       
+                       <!--  TODO: cut after consolidation is done between active, passive onto Join
+
                         <li{% if path == uri_for("active") %} class="passive"{% endif %}><a href="{{ uri_for("active") }}">{% trans %}Initiate Activity{% endtrans %}</a></li>
                         <li{% if path == uri_for("passive") %} class="passive"{% endif %}><a href="{{ uri_for("passive") }}">{% trans %}Announce Passive Interest{% endtrans %}</a></li>
+
+                        -->
+
+
+                        <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Join{% endtrans %}</a></li>
                         <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="{{ uri_for("stat") }}">{% trans %}Live Activity Board{% endtrans %}</a></li>
                         
                         {% endif %}

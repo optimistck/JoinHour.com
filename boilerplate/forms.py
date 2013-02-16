@@ -102,6 +102,16 @@ class InitiateActvityForm(BaseForm):
     duration = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
     expiration = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
     note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
+
+
+class JoinForm(BaseForm):
+    category = fields.SelectField(_('Category'), choices=utils.CATEGORY)
+    sub_category = fields.SelectField(_('Sub_Category'), choices=utils.SUBCATEGORY)
+    min_number_of_people_to_join = fields.SelectField(_('min_number_of_people_to_join'), choices=utils.NUMBER_OF_PEOPLE_MIN)
+    max_number_of_people_to_join = fields.SelectField(_('max_number_of_people_to_join'), choices=utils.NUMBER_OF_PEOPLE_MAX)
+    duration = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
+    expiration = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
+    note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
 ### JH
 
 

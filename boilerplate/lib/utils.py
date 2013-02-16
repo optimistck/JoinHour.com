@@ -474,10 +474,23 @@ BUILDINGS = [
 ("River House", "River House"),
 ("NOT LISTED", "NOT LISTED")]
 
+#TODO: should be deleted because this was used by passive and active interest only. Reworked to use min and max people
 NUMBER_OF_PEOPLE = [
-("1", "1"),
-("2", "2"),
-("3", "3")]
+("1 person", "1 person"),
+("2 people", "2 people"),
+("3 people", "3 people")]
+
+NUMBER_OF_PEOPLE_MIN = [
+("1 person", "1 person"),
+("2 people", "2 people"),
+("3 people", "3 people")]
+
+NUMBER_OF_PEOPLE_MAX = [
+("1 person", "1 person"),
+("2 people", "2 people"),
+("3 people", "3 people"),
+("4 people", "4 people"),
+("No limit", "No limit"),]
 
 TIME_CHUNKS = [
 ("", ""),
@@ -515,16 +528,17 @@ TIME_CHUNKS2 = [
 
 CATEGORY = [
 ("", ""),
-("1", "Exercise"),
-("2", "Grab a drink"),
-("3", "Just a walk"),
-("4", "Split a pizza"),
-("5", "Split a cab"),
-("6", "Play pool"),
-("7", "Play a board game"),
-("8", "Play a video game"),
-("9", "NOT LISTED")]
+("Go for a run", "Go for a run"),
+("Grab a drink", "Grab a drink"),
+("Walk and Talk", "Walk and Talk"),
+("Split a pizza", "Split a pizza"),
+("Split a cab", "Split a cab"),
+("Play pool", "Play pool"),
+("Play a board game", "Play a board game"),
+("Play a video game", "Play a video game"),
+("Other", "Other")]
 
+# These may have to go
 SUBCATEGORY = [
 ("", ""),
 ("1.1", "Exercise - Running"),

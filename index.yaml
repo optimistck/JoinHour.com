@@ -46,6 +46,12 @@ indexes:
   - name: date_entered
     direction: desc
 
+- kind: TheActivity
+  ancestor: yes
+  properties:
+  - name: date_entered
+    direction: desc
+
 - kind: User
   properties:
   - name: __key__

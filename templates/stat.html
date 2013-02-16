@@ -8,15 +8,15 @@
 {% endblock %}
 
 {% block content %}
-Remember, this should not be accessible to the user unless he or she either Initiated an Actvitiy or Announced Passive Interest. No browsing without contributing at the start.
+Suggestions, this should not be accessible to the user unless he or she submited an actvity interest. No browsing without contributing at the start.
 
 <BR>
- {% trans %}From the "Initiated Activities" table the user may also click on the corresponding {% endtrans %} <a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
-
-Calculations on the columns need to be done before a page is loaded in the handler. This is just raw output from the table.
+ {% trans %}From the here a user may click on the corresponding {% endtrans %} <a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
+<BR><BR>
+<EM>Calculations on the columns need to be done</EM> before a page is loaded in the handler. This is just raw output from the table. <EM>This needs to be addressed</EM>
 <BR><BR>
 
-<H3>Open Activities</H3>
+<H3>Activities you can join</H3>
     <form id="form_take_action" action="{{ url|safe }}" method="post" class="well form-horizontal">
         <fieldset>
             <input type="hidden" name="exception" value="{{ exception }}">
@@ -27,22 +27,22 @@ Calculations on the columns need to be done before a page is loaded in the handl
     <thead>
         <tr>
             <th>Cat</th>
-            <th>Sub Cat</th>
-            <th>Joiners needed</th>
+            <th>Spots Min</th>
+            <th>Spots Max</th>
             <th>Duration</th>
             <th>Expires in</th>
             <th>Note</th>
             <th>Date entered</th>
             <th>Join activity?</th>
-            <th>ID</th>
+            <th>Details</th>
         </tr>
     </thead>
 
     {% for a in activities %}
     <tr>
         <TD>{{ a.category }}</TD>
-        <TD>{{ a.sub_category }}</TD>
         <TD>{{ a.min_number_of_people_to_join }}</TD>
+        <TD>{{ a.max_number_of_people_to_join }}</TD>
         <TD>{{ a.duration }}</TD>
         <TD>{{ a.expiration }}</TD>
         <TD>{{ a.note }}</TD>
@@ -59,26 +59,27 @@ Calculations on the columns need to be done before a page is loaded in the handl
     </form>
 
 
-<H3>Passive Interests</H3>
+<H3>Floating Passive Interests</H3>
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
             <th>Interest</th>
             <th>Date entered</th>
-            <th>Convert into an activity?</th>
+            <th>Make an activity?</th>
         </tr>
     </thead>
     {% for i in interests %}
     <tr>
         <td>{{ i.interest }}</td>
         <td>{{ i.date_entered }}</td>
-        <td><input type="submit" name="initiarte_activity" value="Initiate an activity" /></td>
+        <td><input type="submit" name="initiarte_activity" value="Make it happen!" /></td>
     </tr>
     {% endfor %}
 
 </table>
 
-
+"Make it happen" converts a passive interst into an activity.
+<BR><BR><BR><BR>
 
 
 

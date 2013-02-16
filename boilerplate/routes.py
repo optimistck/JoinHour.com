@@ -2,6 +2,8 @@
 Using redirect route instead of simple routes since it supports strict_slash
 Simple route: http://webapp-improved.appspot.com/guide/routing.html#simple-routes
 RedirectRoute: http://webapp-improved.appspot.com/api/webapp2_extras/routes.html#webapp2_extras.routes.RedirectRoute
+
+NOTE: the name='  ' matters. It's used in base.html. RedirectRoute('/join/', handlers.JoinHandler, name='join', strict_slash=True)
 """
 
 from webapp2_extras.routes import RedirectRoute
@@ -34,7 +36,8 @@ _routes = [
     RedirectRoute('/stat/', handlers.StatHandler, name='stat', strict_slash=True),
     RedirectRoute('/feedback/', handlers.FeedbackHandler, name='feedback', strict_slash=True),
     RedirectRoute('/activity_detail/', handlers.ActivityDetailHandler, name='activity_detail', strict_slash=True),
-    RedirectRoute('/active/', handlers.InitiateActivityHandler, name='active', strict_slash=True)
+    RedirectRoute('/active/', handlers.InitiateActivityHandler, name='active', strict_slash=True),
+    RedirectRoute('/join/', handlers.JoinHandler, name='join', strict_slash=True)
 ]
 
 def get_routes():
