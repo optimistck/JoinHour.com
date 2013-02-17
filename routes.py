@@ -13,7 +13,7 @@ secure_scheme = 'https'
 _routes = [
     RedirectRoute('/secure/', handlers.SecureRequestHandler, name='secure', strict_slash=True),
     RedirectRoute('/tip/', handlers.TipHandler, name='tip', strict_slash=True),
-    RedirectRoute('/Activity/', ActivityHandler, name='stat', strict_slash=True),
+    RedirectRoute('/activity/', ActivityHandler, name='stat', strict_slash=True),
     RedirectRoute('/join/', JoinHandler, name='join', strict_slash=True)
 ]
 
