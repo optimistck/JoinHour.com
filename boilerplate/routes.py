@@ -33,10 +33,11 @@ _routes = [
     RedirectRoute('/', handlers.HomeRequestHandler, name='home', strict_slash=True),
     #JH added
     RedirectRoute('/passive/', handlers.PassiveInterestHandler, name='passive', strict_slash=True),
+    RedirectRoute('/stat/', handlers.StatHandler, name='stat', strict_slash=True),
     RedirectRoute('/feedback/', handlers.FeedbackHandler, name='feedback', strict_slash=True),
     RedirectRoute('/activity_detail/', handlers.ActivityDetailHandler, name='activity_detail', strict_slash=True),
     RedirectRoute('/active/', handlers.InitiateActivityHandler, name='active', strict_slash=True),
-
+    RedirectRoute('/join/', handlers.JoinHandler, name='join', strict_slash=True)
 ]
 
 def get_routes():

@@ -41,8 +41,6 @@ from boilerplate.lib import facebook
 
 # TODO: create and import (here) own models and BaseHandler
 from web import stat_models #for now using stat_models. Eventually we'll pull models into the web code, but need to think about the Boilerplate updates too
-from models.Activity import Activity
-from models import User as UserModel
 
 #JH experimental
 
@@ -50,10 +48,8 @@ import cgi
 import datetime
 import urllib
 import webapp2
-from google.appengine.ext import ndb
+from google.appengine.ext import db
 from google.appengine.api import users
-
-
 
 class TipHandler(BaseHandler):
     """
