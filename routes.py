@@ -13,8 +13,13 @@ _routes = [
 	#BP = BoilerPlate code
     RedirectRoute('/secure/', handlers.SecureRequestHandler, name='secure', strict_slash=True),
     RedirectRoute('/tip/', handlers.TipHandler, name='tip', strict_slash=True),
+<<<<<<< HEAD
     RedirectRoute('/tip/thankyou/', handlers.ThankYouHandler, name='thankyou', strict_slash=True)
     #RedirectRoute('/', handlers.HomeRequestHandler, name='home', strict_slash=True)
+=======
+    RedirectRoute('/activity/', ActivityHandler, name='stat', strict_slash=True),
+    RedirectRoute('/join/', JoinHandler, name='join', strict_slash=True)
+>>>>>>> Craig
 ]
 
 def get_routes():
