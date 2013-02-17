@@ -1,15 +1,4 @@
-from webapp2_extras.appengine.auth.models import User
 from google.appengine.ext import ndb
-
-#JH experimental
-
-import cgi
-import datetime
-import urllib
-import webapp2
-from google.appengine.ext import db
-from google.appengine.api import users
-
 
 class Activity(ndb.Model):
     category = ndb.StringProperty()
@@ -25,4 +14,3 @@ class Activity(ndb.Model):
     @classmethod
     def query_activity(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
-    

@@ -1,19 +1,20 @@
-"""
-This file contains stat_routes
-"""
+
+#  This file contains the routes for JoinHour.com
 
 from webapp2_extras.routes import RedirectRoute
 from web import handlers
+from handlers.ActivityHandler import ActivityHandler
+from handlers.JoinHandler import JoinHandler
 
 
 
 secure_scheme = 'https'
 
 _routes = [
-	#BP = BoilerPlate code
     RedirectRoute('/secure/', handlers.SecureRequestHandler, name='secure', strict_slash=True),
-    RedirectRoute('/tip/', handlers.TipHandler, name='tip', strict_slash=True)
-    #RedirectRoute('/', handlers.HomeRequestHandler, name='home', strict_slash=True)
+    RedirectRoute('/tip/', handlers.TipHandler, name='tip', strict_slash=True),
+    RedirectRoute('/Activity/', ActivityHandler, name='stat', strict_slash=True),
+    RedirectRoute('/join/', JoinHandler, name='join', strict_slash=True)
 ]
 
 def get_routes():
