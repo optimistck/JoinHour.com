@@ -1,48 +1,16 @@
-from boilerplate import models
-from boilerplate.lib.basehandler import BaseHandler
-from boilerplate.lib.basehandler import user_required
-
-
-# standard library imports
-import logging
-import random
-import re
-import json
-
-# related third party imports
+#google imports
 import webapp2
-import httpagentparser
-from webapp2_extras import security
-from webapp2_extras.auth import InvalidAuthIdError, InvalidPasswordError
-from webapp2_extras.i18n import gettext as _
-from webapp2_extras.appengine.auth.models import Unique
-from google.appengine.api import taskqueue
-from google.appengine.api import users
-from github import github
-from linkedin import linkedin
+from google.appengine.ext import ndb
 
-# local application/library specific imports
-import boilerplate.models
-import boilerplate.forms as forms
-from boilerplate.lib import utils, captcha, twitter
+# Boilerplate imports
 from boilerplate.lib.basehandler import BaseHandler
 from boilerplate.lib.basehandler import user_required
-from boilerplate.lib import facebook
-
-
-# TODO: create and import (here) own models and BaseHandler
-from web import stat_models #for now using stat_models. Eventually we'll pull models into the web code, but need to think about the Boilerplate updates too
 from models.Activity import Activity
-from models import User as UserModel
+
+
 
 #JH experimental
 
-import cgi
-import datetime
-import urllib
-import webapp2
-from google.appengine.ext import ndb
-from google.appengine.api import users
 
 class ActivityHandler(BaseHandler):
     """
@@ -52,7 +20,7 @@ class ActivityHandler(BaseHandler):
     def get(self):
         #JH: this needs to be dynamic
         building_name = 'building_name'
-        self.view.interests = models.Passive_Interest.query().fetch(20)
+        #self.view.interests = models.Passive_Interest.query().fetch(20)
         #For active
         ancestor_key = ndb.Key("ActivityKey", building_name)
         self.view.activities = Activity.query_activity(ancestor_key).fetch(20)
