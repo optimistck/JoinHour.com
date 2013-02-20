@@ -180,7 +180,7 @@
 
 
                         <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Join{% endtrans %}</a></li>
-                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="{{ uri_for("stat") }}">{% trans %}Live Activity Board{% endtrans %}</a></li>
+                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Activity Board{% endtrans %}</a></li>
                         
                         {% endif %}
                     </ul>
