@@ -51,26 +51,6 @@ import webapp2
 from google.appengine.ext import db
 from google.appengine.api import users
 
-class ThankYouHandler(BaseHandler):
-    """
-    Handler for the thank you page(after a user tips)
-    """
-
-    def get(self):
-        """ Returns a simple HTML (for now) for handling the thank you page """
-        params = {}
-        return self.render_template('thankyou.html', **params)
-
-class TipHandler(BaseHandler):
-    """
-    Handler for Tip (rating activity participants)
-    """
-
-    def get(self):
-        """ Returns a simple HTML (for now) for handling tips form """
-        params = {}
-        return self.render_template('tip.html', **params)
-
 
 
 class TestHandler(BaseHandler):

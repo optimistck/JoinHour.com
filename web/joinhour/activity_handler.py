@@ -1,15 +1,15 @@
 #google imports
 import webapp2
 from google.appengine.ext import ndb
+from webapp2_extras.i18n import gettext as _
 
 # Boilerplate imports
 from boilerplate.lib.basehandler import BaseHandler
-from boilerplate.lib.basehandler import user_required
-from models.Activity import Activity
 
 
 
 #JH experimental
+from src.joinhour.models.activity import Activity
 
 
 class ActivityHandler(BaseHandler):
@@ -41,8 +41,6 @@ class ActivityHandler(BaseHandler):
             raise Exception('no form action given') 
         
         self.add_entity_key_to_pass(entity_key)
-        logging.info('******************')
-        logging.info(self.entity_keys)
         self.add_message(message, 'success')
         return self.redirect_to('activity_detail')
 
