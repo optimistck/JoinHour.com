@@ -1,0 +1,14 @@
+<p>Hello <strong>{{username}}</strong>,</p>
+
+<p>
+
+Just a dummy template for now.
+
+</p>
+
+{{feedback_url}}
+
+
+
+<p>Sincerely,<br>
+{{ app_name }} Team

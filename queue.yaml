@@ -1,0 +1,4 @@
+total_storage_limit: 120M
+queue:
+- name: post_activity_mgr
+  rate: 35/s
