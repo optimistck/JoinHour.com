@@ -1,11 +1,10 @@
 from webapp2_extras.i18n import gettext as _
 from google.appengine.ext import ndb
-from models.Activity import Activity 
 import webapp2
 from boilerplate.lib.basehandler import BaseHandler 
 from boilerplate import forms
 from boilerplate import models
-
+from src.joinhour.models.activity import Activity
 
 
 class JoinHandler(BaseHandler):
@@ -24,7 +23,7 @@ class JoinHandler(BaseHandler):
 
         if self.user:
             user_info = models.User.get_by_id(long(self.user_id))        
-            activitity = Activity(parent=ndb.Key("ActivityKey", building_name),
+            activity = Activity(parent=ndb.Key("ActivityKey", building_name),
                             category = self.form.category.data.strip(),
                             min_number_of_people_to_join = self.form.min_number_of_people_to_join.data.strip(),
                             max_number_of_people_to_join = self.form.max_number_of_people_to_join.data.strip(),
@@ -34,7 +33,7 @@ class JoinHandler(BaseHandler):
                             username = user_info.username,
                             ip = self.request.remote_addr
                             )
-            activitity.put()
+            activity.put()
 
             message = _("Your interest was registered successfully. We are searching for a match ... ")
             self.add_message(message, 'success')
