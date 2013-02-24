@@ -4,8 +4,11 @@
 .settings
 .DS_Store
 .idea
-.idea/*
+.idea/*.xml
 *.orig
 *.iml
 *.ipr
 *.iws
+.idea/*.iml
+.idea/*.ipr
+.idea/*.iws
