@@ -32,7 +32,7 @@ class FeedbackEmailHandler(BaseHandler):
                            subject=subject,
                            body=self.jinja2.render_template('emails/send_feedback',template_val))
 
-            taskqueue.add(url='/post_activity_mgr',queue_name='post_activity_mgr', method='POST',payload=email_payload,eta=self.FOLLOW_UP_EMAIL_INTERVAL)
+            taskqueue.add(url='/post_activity_mgr',queue_name='postActivityMgr', method='POST',payload=email_payload,eta=self.FOLLOW_UP_EMAIL_INTERVAL)
 
     def _check_if_got_feedback(self):
         #TODO
