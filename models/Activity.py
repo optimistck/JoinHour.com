@@ -1,4 +1,3 @@
-__author__ = 'aparbane'
 from google.appengine.ext import ndb
 
 class Activity(ndb.Model):
@@ -15,4 +14,3 @@ class Activity(ndb.Model):
     @classmethod
     def query_activity(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
-
