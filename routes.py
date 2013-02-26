@@ -16,7 +16,7 @@ _routes = [
     RedirectRoute('/tip/',tip_handler.TipHandler, name='tip', strict_slash=True),
     RedirectRoute('/tip/thankyou/', thank_you_handler.ThankYouHandler, name='thankyou', strict_slash=True),
     RedirectRoute('/activity/', activity_handler.ActivityHandler, name='activity', strict_slash=True),
-    RedirectRoute('/join/', join_handler, name='join', strict_slash=True),
+    RedirectRoute('/join/', join_handler.JoinHandler, name='join', strict_slash=True),
     RedirectRoute('/post_activity_mgr/', FeedbackEmailHandler, name='post_activity_mgr', strict_slash=True)
 ]
 
