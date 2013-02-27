@@ -16,3 +16,11 @@ class Activity(ndb.Model):
     def query_activity(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 
+class Love(ndb.Model):
+    note = ndb.StringProperty()
+    date_entered = ndb.DateTimeProperty(auto_now_add=True)
+
+    @classmethod
+    def query_love(cls, ancestor_key):
+        return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
+
