@@ -970,7 +970,7 @@ class PassiveInterestHandler(BaseHandler):
 
         message = _('Your interest was registered successfully.')
         self.add_message(message, 'success')
-        return self.redirect_to('stat')
+        return self.redirect_to('activity')
 
     @webapp2.cached_property
     def form(self):
