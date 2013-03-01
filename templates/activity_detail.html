@@ -22,12 +22,19 @@ The way this needs to work is when you click on "detail" link for a specific act
         </tr>
     </thead>
 
-    <tr><TD>Category:</TD> <TD></TD></tr>
-    <tr><TD>Sub Category:</TD> <TD></TD></tr>
-    <tr><TD>Min number to join:</TD> <TD></TD></tr>
-    <tr><TD>Duration:</TD> <TD></TD></tr>
-    <tr><TD>Expires in:</TD> <TD></TD></tr>
-    <tr><TD>Note:</TD> <TD></TD></tr>
+    <tr><TD>Kind: {{ a.kind }}</TD> <TD></TD></tr>
+    <tr><TD>Key: {{ a.key }}</TD> <TD></TD></tr>
+    <tr><TD>ID: </TD> <TD></TD></tr>
+    <tr><TD>category: {{ a.category }}</TD> <TD></TD></tr>
+    <tr><TD>date_entered: {{ a.date_entered }}</TD> <TD></TD></tr>
+    <tr><TD>duration:  {{ a.duration }}</TD> <TD></TD></tr>
+    <tr><TD>expiration:  {{ a.expiration }}</TD> <TD></TD></tr>
+    <tr><TD>ip:  {{ a.ip }}</TD> <TD></TD></tr>
+    <tr><TD>max_number_of_people_to_join:  {{ a.max_number_of_people_to_join }}</TD> <TD></TD></tr>
+    <tr><TD>min_number_of_people_to_join:  {{ a.min_number_of_people_to_join }}</TD> <TD></TD></tr>
+    <tr><TD>note:  {{ a.note }}</TD> <TD></TD></tr>
+    <tr><TD>username:  {{ a.username }}</TD> <TD></TD></tr>
+    
 </table>
 
 
@@ -49,3 +56,4 @@ The way this needs to work is when you click on "detail" link for a specific act
 </script>
 {% endblock %}
 
+<a href="/Admin_Console?filter=Financial"><button type="button" >Financial</button></a>

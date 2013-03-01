@@ -17,10 +17,6 @@ Suggestions, this should not be accessible to the user unless he or she submited
 <BR><BR>
 
 <H3>Activities you can join</H3>
-    <form id="form_take_action" action="{{ url|safe }}" method="post" class="well form-horizontal">
-        <fieldset>
-            <input type="hidden" name="exception" value="{{ exception }}">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
 
 <table class="table table-striped table-bordered">
 
@@ -47,16 +43,15 @@ Suggestions, this should not be accessible to the user unless he or she submited
         <TD>{{ a.expiration }}</TD>
         <TD>{{ a.note }}</TD>
         <TD>{{ a.date_entered }}</TD>
-        <TD><input type="submit" name="save_item" value="Join" /></TD>
+        <TD>blazz</TD>
         <TD>
-            <input type="submit" name="delete_item" value="Details" />{{ a.key.id() }}
+            <a href="/activity_detail/?ID={{ a.key.urlsafe() }}"><button>Details</button></a>
         </TD>
     </tr>
     {% endfor %}
 </table>
 
         </fieldset>
-    </form>
 
 
 <H3>Floating Passive Interests</H3>
