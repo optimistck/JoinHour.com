@@ -15,7 +15,15 @@
             {{ macros.field(form.name, label=_("Name"), placeholder=_("Enter your")+" "+_("Name"), class="input-xlarge focused required") }}
             {{ macros.field(form.message, label=_("Message"), class="input-xlarge required", cols="40", rows="8") }}
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{% trans %}Send Message{% endtrans %}</button>
+                <button type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+            </div>
+            <div>
+                {% trans %}Comments{% endtrans %}
+                <ul>
+                {% for love in loves%}
+                <li>{{ love.note }}</li>
+                {% endfor %}
+                </ul>
             </div>
         </fieldset>
     </form>
