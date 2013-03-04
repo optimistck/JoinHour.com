@@ -21,7 +21,7 @@
                 {% trans %}Comments{% endtrans %}
                 <ul>
                 {% for love in loves%}
-                <li>{{ love.note }}</li>
+                <li>{{ love.note }}<br> --{{ love.name }}</li>
                 {% endfor %}
                 </ul>
             </div>
