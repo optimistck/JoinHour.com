@@ -21,6 +21,9 @@ class GetActivityHandler(BaseHandler):
         #JH: this needs to be dynamic
         building_name = 'building_name'
         ID = self.request.get('ID')
+        if (not ID):
+          return self.response.out.write("<html><body><h1>You do not belong here</h1></body></html>")
+          
         self.view.a = ndb.Key(urlsafe=ID).get()
         #For active
         ancestor_key = ndb.Key("ActivityKey", building_name)

@@ -1,0 +1,44 @@
+{% extends base_layout %}
+
+{% block title %}
+    {% trans %}Love{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+    {% trans %}Love JoinHour{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <form id="form_contact" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <fieldset>
+            <input type="hidden" name="exception" value="{{ exception }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            {{ macros.field(form.name, label=_("Name"), placeholder=_("Enter your")+" "+_("Name"), class="input-xlarge focused required") }}
+            {{ macros.field(form.message, label=_("Message"), class="input-xlarge required", cols="40", rows="8") }}
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+            </div>
+            <div>
+                {% trans %}Comments{% endtrans %}
+                <ul>
+                {% for love in loves%}
+                <li>{{ love.note }}<br> --{{ love.name }}</li>
+                {% endfor %}
+                </ul>
+            </div>
+        </fieldset>
+    </form>
+{% endblock %}
+
+{% block mediaJS %}
+    <script type="text/javascript">
+        $().ready(function() {
+            $("#form_contact").validate({
+                errorPlacement: function(error, element) {
+                    element.parent().parent().addClass("error");
+                    error.addClass("help-inline").appendTo( element.parent() );
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
