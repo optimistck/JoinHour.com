@@ -20,11 +20,8 @@ class ActivityHandler(BaseHandler):
     def get(self):
         #JH: this needs to be dynamic
         building_name = 'building_name'
-        #self.view.interests = models.Passive_Interest.query().fetch(20)
-        #For active
-        ancestor_key = ndb.Key("ActivityKey", building_name)
-        self.view.activities = Activity.query_activity(ancestor_key).fetch(20)
-        #JH: passing of params is not applicable for the variables with self.view.XXXXX - they get passed right on to .html via {{}}
+        
+        self.view.activities = Activity.query().fetch(20)
         params = {}
         return self.render_template('stat.html', **params)
   
