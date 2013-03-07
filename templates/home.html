@@ -9,22 +9,82 @@
             {% trans %}This dashboard page is shown when you're logged in.{% endtrans %}
                     <BR>
         <p>
-            {% trans %}Table for open <em>Initiate Activity</em> items{% endtrans %}
+            {% trans %}<H3>Activities you initiated</H3>{% endtrans %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Spots Remaining</th>
+                        <th>Expires in</th>
+                        <th>Delete?</th>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <TD>Activity name A</TD>
+                    <TD>1</TD>
+                    <TD>21 minutes</TD>
+                    <TD><a href="#"><button>Yes</button></a></TD>
+                </tr>
+                 <tr>
+                    <TD>Activity name B</TD>
+                    <TD>3</TD>
+                    <TD>2 hours 21 minutes</TD>
+                    <TD><a href="#"><button>Yes</button></a></TD>
+                </tr>
+            </table>
+        </p>
+
+                <p>
+            {% trans %}<H3>Your interests</H3>{% endtrans %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Expires in</th>
+                        <th>Delete?</th>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <TD>Interest A</TD>
+                    <TD>9 minutes</TD>
+                    <TD><a href="#"><button>Yes</button></a></TD>
+                </tr>
+            </table>
+        </p>
+
+        <p>
+            {% trans %}<H3>Feedback requested</H3>{% endtrans %}
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Activity Date</th>
+                        <th>Expires in</th>
+                        <th>Provide Feedback</th>
+                    </tr>
+                </thead>
+
+                <tr>
+                    <TD>Past event X</TD>
+                    <TD>05/01</TD>
+                    <TD>1 day and 3 hours</TD>
+                    <TD><a href="{{ uri_for("feedback") }}"><button>Feedback</button></a></TD>
+                </tr>
+            </table>
         </p>
 
         <BR>
-         {% trans %}Table for items requesting feedback for past connections (can provide feedback up to 72 hours after event start time) {% endtrans %} <a href="{{ uri_for("feedback") }}">{% trans %}feedback{% endtrans %}</a> on participants.
         <BR><BR>
                 <p>
-            {% trans %}Developer's helper: other pages not easily accessible{% endtrans %}
+            {% trans %}TEMP: Developer's helper: other pages not easily accessible{% endtrans %}
                 <BR>
                     <UL>
-                        <LI><a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
                         <LI><a href="{{ uri_for("tip") }}">{% trans %}Tip us!{% endtrans %}</a> link.
                         <LI><a href="{{ uri_for("feedback") }}">{% trans %}Feedback{% endtrans%}</a> link.
-                        <LI>The pages below were cut and replaced with 'join'; for now left for reference:
-                        <LI><a href="{{ uri_for("passive") }}">{% trans %}Announce Passive Interest{% endtrans%}</a> link.
-                        <LI><a href="{{ uri_for("active") }}">{% trans %}Initiate Activity{% endtrans%}</a> link.
+                        <LI><a href="{{ uri_for("love") }}">{% trans %}Love{% endtrans%}</a> link.
+                            
                     </UL>
             
         </p>
@@ -37,10 +97,19 @@
                     JoinHour.com
                 </h1>
                 <p>
-                    {% trans %}JoinHour.com is a service that connects people with a shared activity interest in a span of an hour.  {% endtrans %}
+                    {% trans %}<blockquote>We connect people instantaneously based on activity interests and availability</blockquote> {% endtrans %}
                 </p>
+                <UL>
+                    <LI>Opportunity in 5 seconds
+                    <LI>Solution in 5 seconds
+                    <LI>Examples in 10 seconds
+                    <LI>Take Action in 2 seconds
+                </UL>
             </div>
         </div>
+
+
+
         <div class="span3 auth-at-home">
             <form id="form_login_user" action="{{ uri_for("login") }}" method="post">
                 <fieldset class="well">

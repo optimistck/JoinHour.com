@@ -7,9 +7,7 @@
 {% block content %}
     <div class="row">
         <div class="span9 auth-at-home">
-            <p>
-                <h3> The profile page needs to be modified to include fields we care about. E.g., apartment building, not country. </h3>
-            </p>
+
         </div>
     </div><!-- /row -->
 
@@ -21,7 +19,7 @@
                 {{ macros.field(form.name, label=_("Name"), placeholder=_("Enter your")+" "+_("Name"), class="input-xlarge focused") }}
                 {{ macros.field(form.last_name, label=_("Last Name"), placeholder=_("Enter your")+" "+_("Last Name"), class="input-xlarge focused") }}
                 <!--{{ macros.field(form.country, label=_("Country")) }} -->
-                {{ macros.field(form.building, label=_("Building")) }}
+                <!--{{ macros.field(form.building, label=_("Building")) }} -->
                 <div class="control-group">
                     <label class="control-label">{% trans %}Email{% endtrans %}:</label>
                     <div class="controls">

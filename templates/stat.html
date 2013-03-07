@@ -8,15 +8,12 @@
 {% endblock %}
 
 {% block content %}
-Suggestions, this should not be accessible to the user unless he or she submited an actvity interest. No browsing without contributing at the start.
 
-<BR>
- {% trans %}From the here a user may click on the corresponding {% endtrans %} <a href="{{ uri_for("activity_detail") }}">{% trans %}Activity Detail{% endtrans %}</a> link.
-<BR><BR>
-<EM>Calculations on the columns need to be done</EM> before a page is loaded in the handler. This is just raw output from the table. <EM>This needs to be addressed</EM>
+ {% trans %}JoinHour keeps your interest and activity submissions in a queue and notifies you whena match is made. Or you an browse all open activities and active interests in your building.{% endtrans %}
 <BR><BR>
 
-<H3>Activities you can join</H3>
+
+<H3>Open Activities you can join</H3>
 
 <table class="table table-striped table-bordered">
 
@@ -43,7 +40,7 @@ Suggestions, this should not be accessible to the user unless he or she submited
         <TD>{{ a.expiration }}</TD>
         <TD>{{ a.note }}</TD>
         <TD>{{ a.date_entered }}</TD>
-        <TD>blazz</TD>
+        <TD><button>JOIN</button></TD>
         <TD>
             <a href="/activity_detail/?ID={{ a.key.urlsafe() }}"><button>Details</button></a>
         </TD>
@@ -54,20 +51,20 @@ Suggestions, this should not be accessible to the user unless he or she submited
         </fieldset>
 
 
-<H3>Floating Passive Interests</H3>
+<H3>Active Interests</H3>
 <table class="table table-striped table-bordered">
     <thead>
         <tr>
             <th>Interest</th>
-            <th>Date entered</th>
-            <th>Make an activity?</th>
+            <th>Expires In</th>
+            <th>Initiate an activity?</th>
         </tr>
     </thead>
     {% for i in interests %}
     <tr>
         <td>{{ i.interest }}</td>
         <td>{{ i.date_entered }}</td>
-        <td><input type="submit" name="initiarte_activity" value="Make it happen!" /></td>
+        <td><input type="submit" name="initiarte_activity" value="Initiate Activity!" /></td>
     </tr>
     {% endfor %}
 
