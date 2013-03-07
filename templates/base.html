@@ -189,7 +189,7 @@
                         -->
 
 
-                        <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Join{% endtrans %}</a></li>
+                        <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Connect{% endtrans %}</a></li>
                         <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Activity Board{% endtrans %}</a></li>
                         
                         {% endif %}
@@ -211,7 +211,7 @@
 
             {% block footer %}
             <footer>
-                {% trans %}Copyright 2013. {% endtrans %} <a href="http://www.JoinHour.com" target="_blank">JoinHour.com</a>
+                {% trans %}Copyright 2013 | Firebrand Fuse LLC | 4201 Wilson Blvd. #110-355, Arlington, VA 22203 {% endtrans %} 
             </footer>
             {% endblock %}
         </div><!-- /content -->

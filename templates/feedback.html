@@ -8,13 +8,12 @@
 {% endblock %}
 
 {% block content %}
-Please rate your activity partner. For each ... do rate.
+Keep us honest. How was your experience? Rate your activity partners.
 
 <BR>
 <BR>
  {% trans %}Submit and ask the user to {% endtrans %} <a href="{{ uri_for("tip") }}">{% trans %}tip{% endtrans %}</a> us.
 
-<BR>This page is not complete. Experimental.<BR>
     <BR>
 <BR>
     {{entity_keys}}
@@ -32,15 +31,6 @@ Please rate your activity partner. For each ... do rate.
         </fieldset>
     </form>
 
-
-<H3>Feedback Test</H3>
-<table class="table table-striped table-bordered">
-    {% for f in feedback %}
-    <tr>
-        <TD>{{ f.note }}</TD>
-        <TD>{{ f.date_entered }}</TD>
-    </tr>
-    {% endfor %}
 </table>
 
 
