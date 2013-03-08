@@ -46,9 +46,7 @@ class UserMixin(BaseForm):
     username = fields.TextField(_('Username'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH), validators.regexp(utils.ALPHANUMERIC_REGEXP, message=_('Username invalid. Use only letters and numbers.'))])
     name = fields.TextField(_('Name'), [validators.Length(max=FIELD_MAXLENGTH)])
     last_name = fields.TextField(_('Last Name'), [validators.Length(max=FIELD_MAXLENGTH)])
-    ##country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
-    ### TODO: make this a building pull down, not a country field
-    country = fields.SelectField(_('Country'), choices=utils.BUILDINGS)
+    country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
     building = fields.SelectField(_('Building'), choices=utils.BUILDINGS)
 
 
