@@ -740,7 +740,6 @@ class RegisterHandler(RegisterBaseHandler):
         last_name = self.form.last_name.data.strip()
         email = self.form.email.data.lower()
         password = self.form.password.data.strip()
-        country = self.form.country.data
         building = self.form.building.data
 
         # Password to SHA512
@@ -754,7 +753,7 @@ class RegisterHandler(RegisterBaseHandler):
         user = self.auth.store.user_model.create_user(
             auth_id, unique_properties, password_raw=password,
             username=username, name=name, last_name=last_name, email=email,
-            ip=self.request.remote_addr, country=country, building=building
+            ip=self.request.remote_addr, building=building
         )
 
         if not user[0]: #user is a tuple
@@ -1220,7 +1219,6 @@ class EditProfileHandler(BaseHandler):
             self.form.username.data = user_info.username
             self.form.name.data = user_info.name
             self.form.last_name.data = user_info.last_name
-            self.form.country.data = user_info.country
             self.form.building.data = user_info.building
             providers_info = user_info.get_social_providers_info()
             #logging.info("XXXX LOGGING:" + user_info.username)
@@ -1230,7 +1228,6 @@ class EditProfileHandler(BaseHandler):
                 params['local_account'] = True
             params['used_providers'] = providers_info['used']
             params['unused_providers'] = providers_info['unused']
-            params['country'] = user_info.country
             params['building'] = user_info.building
 
         return self.render_template('edit_profile.html', **params)
@@ -1243,7 +1240,6 @@ class EditProfileHandler(BaseHandler):
         username = self.form.username.data.lower()
         name = self.form.name.data.strip()
         last_name = self.form.last_name.data.strip()
-        country = self.form.country.data
         building = self.form.building.data
 
         try:
@@ -1276,7 +1272,6 @@ class EditProfileHandler(BaseHandler):
                         return self.get()
                 user_info.name=name
                 user_info.last_name=last_name
-                user_info.country=country
                 user_info.building=building
                 user_info.put()
                 message+= " " + _('Thanks, your settings have been saved.')
