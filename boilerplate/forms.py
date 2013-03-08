@@ -48,7 +48,7 @@ class UserMixin(BaseForm):
     last_name = fields.TextField(_('Last Name'), [validators.Length(max=FIELD_MAXLENGTH)])
     ##country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
     ### TODO: make this a building pull down, not a country field
-    #country = fields.SelectField(_('Country'), choices=utils.BUILDINGS)
+    country = fields.TextField(_('Last Name'), [validators.Length(max=FIELD_MAXLENGTH)])
     building = fields.SelectField(_('Building'), choices=utils.BUILDINGS)
 
 
