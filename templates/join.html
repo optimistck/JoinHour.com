@@ -9,12 +9,9 @@
 
 {% block content %}
 
-<h4>Register your interest and time constraints.</h4>
+<h4>Provide your interest and availability info.</h4>
 
 <BR>
-<BR>
- {% trans %}Submit and take user to {% endtrans %} <a href="{{ uri_for("stat") }}">{% trans %}Activity Leaderboard{% endtrans %}</a>
-<BR><BR><BR>
 
         <form id="form_initiate_actvitiy" action="{{ url|safe }}" method="post" class="well form-horizontal">
         <fieldset>
@@ -22,14 +19,19 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             {{ macros.field(form.category, label=_("I want to")) }}
             <!--{{ macros.field(form.sub_category, label=_("and specifically")) }} -->
+             {{ macros.field(form.duration, label=_("for")) }}
+            {{ macros.field(form.expiration, label=_("willing to wait for a match for")) }}
+            <label class="radio"><input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>I'm just expressing an interest</label>
+            <label class="radio"><input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">I'm initiating an activity [then show options below]</label>
             {{ macros.field(form.min_number_of_people_to_join, label=_("with min")) }}
             {{ macros.field(form.max_number_of_people_to_join, label=_("no more than")) }}
-            {{ macros.field(form.duration, label=_("for")) }}
-            {{ macros.field(form.expiration, label=_("willing to wait for a match for")) }}
-            {{ macros.field(form.note, label=_("Note"), placeholder=_("activity / interest details ...")+" "+_("mind"), class="input-xlarge focused required") }}
-            <B>This still lacks the radio box for selection between     a) I'd like to go with the flow: find me a match AND b) I'd like to initiate an activity and set meeting details </b>
+            {{ macros.field(form.note, label=_("Details"), placeholder=_("e.g., where we're meeting and ")+" "+_("going"), class="input-xlarge focused required") }}
+         
+            <label class="checkbox">
+            <input type="checkbox" value="">I read the <a href="#" target="_blank">Privacy Policy</a> and agree with <a href="#" target="_blank">Terms Of Service</a>
+            </label>
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{% trans %}Join{% endtrans %}</button>
+                <button type="submit" class="btn btn-primary">{% trans %}Connect{% endtrans %}</button>
             </div>
         </fieldset>
     </form>
