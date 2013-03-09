@@ -9,15 +9,15 @@ class Activity(ndb.Model):
     COMPLETE = 'COMPLETE'
 
     category = ndb.StringProperty()
-    min_number_of_people_to_join = ndb.IntegerProperty()
-    max_number_of_people_to_join = ndb.IntegerProperty()
+    min_number_of_people_to_join = ndb.StringProperty()
+    max_number_of_people_to_join = ndb.StringProperty()
     duration = ndb.StringProperty()
     expiration = ndb.StringProperty()
     note = ndb.StringProperty()
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
     username = ndb.StringProperty()
     ip = ndb.StringProperty()
-    spots_remaining = ndb.IntegerProperty(default=max_number_of_people_to_join.split(" ")[0])
+    spots_remaining = ndb.IntegerProperty()
     status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE])
 
 
