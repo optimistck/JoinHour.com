@@ -17,7 +17,7 @@ class Activity(ndb.Model):
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
     username = ndb.StringProperty()
     ip = ndb.StringProperty()
-    spots_remaining = ndb.IntegerProperty()
+    number_of_people_joined = ndb.IntegerProperty()
     status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE])
 
 

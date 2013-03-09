@@ -36,6 +36,9 @@ class ActivityManager(object):
     def mark_expired(self):
         self._change_status(Status.EXPIRED)
 
+    def can_join(self,userId):
+        pass
+
     def _change_status(self,new_status):
         #TODO Need to think about Thread safety here
         #TODO Once the activity is expired or complete need to move it to a different table. Primarly for analytics support
