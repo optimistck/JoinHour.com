@@ -16,6 +16,7 @@ import json
 
 # related third party imports
 import webapp2
+from lib import utils
 import httpagentparser
 from webapp2_extras import security
 from webapp2_extras.auth import InvalidAuthIdError, InvalidPasswordError
@@ -1219,7 +1220,6 @@ class EditProfileHandler(BaseHandler):
             self.form.username.data = user_info.username
             self.form.name.data = user_info.name
             self.form.last_name.data = user_info.last_name
-            self.form.building.data = user_info.building
             providers_info = user_info.get_social_providers_info()
             #logging.info("XXXX LOGGING:" + user_info.username)
             if not user_info.password:
@@ -1240,8 +1240,6 @@ class EditProfileHandler(BaseHandler):
         username = self.form.username.data.lower()
         name = self.form.name.data.strip()
         last_name = self.form.last_name.data.strip()
-        building = self.form.building.data
-
         try:
             user_info = models.User.get_by_id(long(self.user_id))
 
@@ -1272,7 +1270,6 @@ class EditProfileHandler(BaseHandler):
                         return self.get()
                 user_info.name=name
                 user_info.last_name=last_name
-                user_info.building=building
                 user_info.put()
                 message+= " " + _('Thanks, your settings have been saved.')
                 self.add_message(message, 'success')
@@ -1291,7 +1288,7 @@ class EditProfileHandler(BaseHandler):
 
     @webapp2.cached_property
     def form(self):
-        return forms.EditProfileForm(self)
+        return forms.MiniEditProfileForm(self)
 
 
 class EditPasswordHandler(BaseHandler):
