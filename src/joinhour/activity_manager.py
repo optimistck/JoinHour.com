@@ -1,6 +1,9 @@
 __author__ = 'aparbane'
 
 from src.joinhour.models.activity import Activity
+from google.appengine.ext import ndb
+from  datetime import datetime
+from datetime import timedelta
 
 class ActivityManager(object):
 
@@ -16,7 +19,9 @@ class ActivityManager(object):
         return ActivityManager(activityId)
 
     def __init__(self,activity_id):
-        self._activity = Activity.get_by_id(activity_id)
+        self._activity = Activity.get_by_id(activity_id,parent=ndb.Key("ActivityKey", 'building_name'))
+
+
 
 
     def connect(self,user_id,**kwargs):
@@ -51,6 +56,16 @@ class ActivityManager(object):
 
     def status(self):
         return self._activity.status
+
+    def expires_in(self):
+        if self._activity.status == Activity.EXPIRED:
+            return Activity.EXPIRED
+        else:
+            expiration_time = int(str(self._activity.expiration))
+            now = datetime.now()
+            if now < (self._activity.date_entered + timedelta(minutes=expiration_time)):
+                return  (self._activity.date_entered + timedelta(minutes=expiration_time)) - now
+            return Activity.EXPIRED
 
     def _change_status(self,new_status):
         #TODO Need to think about Thread safety here

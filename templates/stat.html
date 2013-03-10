@@ -37,7 +37,7 @@
         <TD>{{ a.min_number_of_people_to_join }}</TD>
         <TD>{{ a.max_number_of_people_to_join }}</TD>
         <TD>{{ a.duration }}</TD>
-        <TD>{{ a.expiration }}</TD>
+        <TD>{{ a.key.id() |expires_in}}</TD>
         <TD>{{ a.note }}</TD>
         <TD>{{ a.date_entered }}</TD>
         <TD><button>JOIN</button></TD>

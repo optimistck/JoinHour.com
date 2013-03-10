@@ -12,10 +12,10 @@ import jinja2
 from src.joinhour.models.activity import Activity
 from src.joinhour.activity_manager import ActivityManager
 
-def activity_expires_in(activityId):
-    return ActivityManager.get(activityId).status()
+def expires_in(activityId):
+    return ActivityManager.get(activityId).expires_in()
 
-jinja2.filters.FILTERS['activity_expires_in'] = activity_expires_in
+jinja2.filters.FILTERS['expires_in'] = expires_in
 
 
 
