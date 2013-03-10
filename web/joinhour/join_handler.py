@@ -42,3 +42,7 @@ class JoinHandler(BaseHandler):
     @webapp2.cached_property
     def form(self):
         return forms.JoinForm(self)
+
+    def __find_spots_remaining(self,max_people):
+
+        pass
