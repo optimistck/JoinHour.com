@@ -5,11 +5,19 @@ from webapp2_extras.i18n import gettext as _
 
 # Boilerplate imports
 from boilerplate.lib.basehandler import BaseHandler
-
+import jinja2
 
 
 #JH experimental
 from src.joinhour.models.activity import Activity
+from src.joinhour.activity_manager import ActivityManager
+
+def expires_in(activityId):
+    return ActivityManager.get(activityId).expires_in()
+
+jinja2.filters.FILTERS['expires_in'] = expires_in
+
+
 
 
 class ActivityHandler(BaseHandler):
@@ -20,7 +28,7 @@ class ActivityHandler(BaseHandler):
     def get(self):
         #JH: this needs to be dynamic
         building_name = 'building_name'
-        
+
         self.view.activities = Activity.query().fetch(20)
         params = {}
         return self.render_template('stat.html', **params)
@@ -42,6 +50,8 @@ class ActivityHandler(BaseHandler):
         return self.redirect_to('activity_detail')
 
 
+
     @webapp2.cached_property
     def form(self):
         return forms.StatForm(self)
+
