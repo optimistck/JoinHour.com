@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="/css/style.css">
     -->
     <link rel="stylesheet" href="/css/boilerplate.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
 
 
     {% block mediaCSS %}{% endblock %}
@@ -174,8 +175,8 @@
                         <!-- The sub nav menu changes depending if a user has logged in or not-->
 
                         {% if not user_id %}
-                        <li{% if path == uri_for("register") %} class="active"{% endif %}><a href="{{ uri_for("register") }}">{% trans %}Sign Up{% endtrans %}</a></li>
-                        <li{% if path == uri_for("password-reset") %} class="active"{% endif %}><a href="{{ uri_for("password-reset") }}">{% trans %}Forgot your password?{% endtrans %}</a></li>
+                        <li{% if path == uri_for("register") %} class="active"{% endif %}><a href="{{ uri_for("register") }}">{% trans %}<i class="icon-spinner icon-spin"></i> Sign Up{% endtrans %}</a></li>
+                        <li{% if path == uri_for("password-reset") %} class="active"{% endif %}><a href="{{ uri_for("password-reset") }}">{% trans %}Password Reset{% endtrans %}</a></li>
 
                         <!-- Code if the user has logged in-->
                         {% elif user_id %}
@@ -189,7 +190,8 @@
 
 
                         <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Connect{% endtrans %}</a></li>
-                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Activity Board{% endtrans %}</a></li>
+                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Board{% endtrans %}</a></li>
+                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/">{% trans %}my Satus{% endtrans %}</a></li>
                         
                         {% endif %}
                     </ul>

@@ -465,13 +465,16 @@ COUNTRIES = [
 
 BUILDINGS = [
 ("", ""),
-("Oakwood Falls Church", "Oakwood Falls Church"),
-("Oakwood Court House", "Oakwood Court House"),
-("The Belvedere", "The Belvedere"),
-("Crystal Houses", "Crystal Houses"),
-("Circle Towers", "Circle Towers"),
-("Quebec House Apartments", "Quebec House Apartments"),
 ("River House", "River House"),
+("Crystal Towers", "Crystal Towers"),
+("The Belvedere", "The Belvedere"),
+("Meridian at Courthouse Commons", "Meridian at Courthouse Commons"),
+("Courtland Towers", "Courtland Towers"),
+("Arlington Courthouse Place", "Arlington Courthouse Place"),
+("Randolph Towers", "Randolph Towers"),
+("Post Pentagon Row", "Post Pentagon Row"),
+("Crystal House 1 and 2", "Crystal House 1 and 2"),
+("Virginia Square Plaza", "Virginia Square Plaza"),
 ("NOT LISTED", "NOT LISTED")]
 
 #TODO: should be deleted because this was used by passive and active interest only. Reworked to use min and max people
@@ -490,6 +493,7 @@ NUMBER_OF_PEOPLE_MAX = [
 ("2 people", "2 people"),
 ("3 people", "3 people"),
 ("4 people", "4 people"),
+("5 people", "5 people"),
 ("No limit", "No limit"),]
 
 TIME_CHUNKS = [
