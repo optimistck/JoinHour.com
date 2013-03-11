@@ -63,6 +63,10 @@ handlers:
   mime_type: text/css
   static_dir: static/css
 
+- url: /font
+  mime_type: text/font
+  static_dir: static/font
+
 - url: /js
   mime_type: text/javascript
   static_dir: static/js
