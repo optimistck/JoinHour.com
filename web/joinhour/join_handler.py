@@ -5,6 +5,8 @@ from boilerplate.lib.basehandler import BaseHandler
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.models.activity import Activity
+from src.joinhour.interest_manager import InterestManager
+from src.joinhour.activity_manager import ActivityManager
 
 
 class JoinHandler(BaseHandler):
@@ -22,19 +24,16 @@ class JoinHandler(BaseHandler):
         building_name = 'building_name'
 
         if self.user:
-            user_info = models.User.get_by_id(long(self.user_id))        
-            activity = Activity(parent=ndb.Key("ActivityKey", building_name),
-                            category = self.form.category.data.strip(),
-                            min_number_of_people_to_join = self.form.min_number_of_people_to_join.data.strip(),
-                            max_number_of_people_to_join = self.form.max_number_of_people_to_join.data.strip(),
-                            duration = self.form.duration.data.strip(),
-                            expiration = self.form.expiration.data.strip(),
-                            note = self.form.note.data.strip(),
-                            username = user_info.username,
-                            ip = self.request.remote_addr
-                            )
-            activity.put()
-
+            is_create_activity = self.request.get('type_radio') == 'activity'
+            user_info = models.User.get_by_id(long(self.user_id))
+            if is_create_activity == 'activity':
+                ActivityManager.create_activity(building_name=building_name,category=self.form.category.data.strip(),duration=self.form.duration.data.strip(),expiration = self.form.expiration.data.strip(),
+                                                username = user_info.username,note = self.form.note.data.strip(),ip = self.request.remote_addr,
+                                                min_number_of_people_to_join = self.form.min_number_of_people_to_join.data.strip(),
+                                                max_number_of_people_to_join = self.form.max_number_of_people_to_join.data.strip())
+            else:
+                InterestManager.create_interest(building_name=building_name,category=self.form.category.data.strip(),duration=self.form.duration.data.strip(),expiration = self.form.expiration.data.strip(),
+                                                username = user_info.username)
             message = _("Your interest was registered successfully. We are searching for a match ... ")
             self.add_message(message, 'success')
             return self.redirect_to('activity')
@@ -43,6 +42,5 @@ class JoinHandler(BaseHandler):
     def form(self):
         return forms.JoinForm(self)
 
-    def __find_spots_remaining(self,max_people):
 
-        pass
+
