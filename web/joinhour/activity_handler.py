@@ -11,10 +11,14 @@ import jinja2
 #JH experimental
 from src.joinhour.models.activity import Activity
 from src.joinhour.activity_manager import ActivityManager
+from src.joinhour.interest_manager import InterestManager
 from src.joinhour.models.interest import Interest
 
-def expires_in(activityId):
-    return ActivityManager.get(activityId).expires_in()
+def expires_in(entityId,entity_type):
+    if entity_type == 'Activity':
+        return ActivityManager.get(entityId).expires_in()
+    else:
+        return InterestManager.get(entityId).expires_in()
 
 jinja2.filters.FILTERS['expires_in'] = expires_in
 
