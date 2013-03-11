@@ -5,11 +5,11 @@ class Interest(ndb.Model):
     FORMING = 'FORMING'
     EXPIRED = 'EXPIRED'
     COMPLETE = 'COMPLETE'
-    interest = ndb.StringProperty()
+    category = ndb.StringProperty()
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
     username = ndb.StringProperty()
-    duration = ndb.IntegerProperty()
-    expiration = ndb.IntegerProperty()
+    duration = ndb.StringProperty()
+    expiration = ndb.StringProperty()
     status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE])
 
     @classmethod

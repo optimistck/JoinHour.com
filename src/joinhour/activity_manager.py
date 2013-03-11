@@ -5,6 +5,9 @@ from google.appengine.ext import ndb
 from  datetime import datetime
 from datetime import timedelta
 
+
+
+
 class ActivityManager(object):
 
     '''
@@ -13,6 +16,20 @@ class ActivityManager(object):
     * Concurrency
     * Memory
     '''
+
+    @classmethod
+    def create_activity(cls,**kwargs):
+        activity = Activity(parent=ndb.Key("ActivityKey", kwargs['building_name']),
+                            category = kwargs['category'],
+                            duration = kwargs['duration'],
+                            expiration = kwargs['expiration'],
+                            note = kwargs['note'],
+                            ip = kwargs['ip'],
+                            min_number_of_people_to_join = kwargs['min_number_of_people_to_join'],
+                            max_number_of_people_to_join = kwargs['max_number_of_people_to_join'],
+                            username = kwargs['username']
+        )
+        activity.put()
 
     @classmethod
     def get(cls,activityId):
@@ -72,24 +89,5 @@ class ActivityManager(object):
         #TODO Once the activity is expired or complete need to move it to a different table. Primarly for analytics support
         self._activity.status = new_status
         self._activity.put()
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 

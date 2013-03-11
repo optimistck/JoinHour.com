@@ -11,6 +11,7 @@ import jinja2
 #JH experimental
 from src.joinhour.models.activity import Activity
 from src.joinhour.activity_manager import ActivityManager
+from src.joinhour.models.interest import Interest
 
 def expires_in(activityId):
     return ActivityManager.get(activityId).expires_in()
@@ -30,6 +31,7 @@ class ActivityHandler(BaseHandler):
         building_name = 'building_name'
 
         self.view.activities = Activity.query().fetch(20)
+        self.view.interests = Interest.query().fetch(20)
         params = {}
         return self.render_template('stat.html', **params)
   
