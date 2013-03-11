@@ -28,6 +28,7 @@
     <link rel="stylesheet" href="/css/style.css">
     -->
     <link rel="stylesheet" href="/css/boilerplate.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
 
 
     {% block mediaCSS %}{% endblock %}
@@ -149,7 +150,7 @@
             {% block header %}
             <header class="navbar" id="overview">
                 {% block header_title_lead %}
-                <h1>{% block header_title %}{{ app_name }}{% endblock %}</h1>
+                <h3>{% block header_title %}{{ app_name }}{% endblock %}</h3>
                 
                 <!-- START: remove large blurbs for now 
 
@@ -174,22 +175,14 @@
                         <!-- The sub nav menu changes depending if a user has logged in or not-->
 
                         {% if not user_id %}
-                        <li{% if path == uri_for("register") %} class="active"{% endif %}><a href="{{ uri_for("register") }}">{% trans %}Sign Up{% endtrans %}</a></li>
-                        <li{% if path == uri_for("password-reset") %} class="active"{% endif %}><a href="{{ uri_for("password-reset") }}">{% trans %}Forgot your password?{% endtrans %}</a></li>
+                        <li{% if path == uri_for("register") %} class="active"{% endif %}><a href="{{ uri_for("register") }}">{% trans %}<i class="icon-spinner icon-spin"></i> Sign Up{% endtrans %}</a></li>
+                        <li{% if path == uri_for("how") %} class="active"{% endif %}><a href="{{ uri_for("how") }}">{% trans %}How This Works{% endtrans %}</a></li>
 
                         <!-- Code if the user has logged in-->
                         {% elif user_id %}
-                       
-                       <!--  TODO: cut after consolidation is done between active, passive onto Join
-
-                        <li{% if path == uri_for("active") %} class="passive"{% endif %}><a href="{{ uri_for("active") }}">{% trans %}Initiate Activity{% endtrans %}</a></li>
-                        <li{% if path == uri_for("passive") %} class="passive"{% endif %}><a href="{{ uri_for("passive") }}">{% trans %}Announce Passive Interest{% endtrans %}</a></li>
-
-                        -->
-
-
                         <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Connect{% endtrans %}</a></li>
-                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Activity Board{% endtrans %}</a></li>
+                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Board{% endtrans %}</a></li>
+                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/">{% trans %}my Satus{% endtrans %}</a></li>
                         
                         {% endif %}
                     </ul>

@@ -1,12 +1,17 @@
 {% extends base_layout %}
 
-{% block header_title_lead %}{% endblock %}
+{% block header_title_lead %}{% endblock %}{% block title %}
+        {% trans %}Connections Without Obligations{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+        {% trans %}my Status{% endtrans %}
+{% endblock %}
 
 {% block content %}
 
     {% if user_id %}
     <div class="hero-unit home_bp">
-            {% trans %}This dashboard page is shown when you're logged in.{% endtrans %}
+            Get started. Post <a href="{{ uri_for("join") }}">interest</a>. Or see <a href="{{ uri_for("how") }}"> how it works</a>.
                     <BR>
         <p>
             {% trans %}<H3>Activities you initiated</H3>{% endtrans %}
@@ -96,8 +101,8 @@
                 <h1>
                     JoinHour.com
                 </h1>
-                <p>
-                    {% trans %}<blockquote>We connect people instantaneously based on activity interests and availability</blockquote> {% endtrans %}
+                <p>We connect neighbors in real-time based on activity interests and availability. Finding an impromptu running partner, joining a group dog walk, or sharing a cab is super easy.
+                    
                 </p>
                 <UL>
                     <LI>Opportunity in 5 seconds

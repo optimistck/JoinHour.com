@@ -5,7 +5,7 @@ This file contains stat_routes
 from webapp2_extras.routes import RedirectRoute
 from web import handlers
 from web.joinhour import get_activity_handler
-from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, tip_handler, love_handler
+from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, tip_handler, love_handler, how_request_handler
 
 from web.joinhour.post_activity_mgr_handlers import FeedbackEmailHandler
 
@@ -21,7 +21,8 @@ _routes = [
     RedirectRoute('/join/', join_handler.JoinHandler, name='join', strict_slash=True),
     RedirectRoute('/activity_detail/', get_activity_handler.GetActivityHandler, name='activity_detail', strict_slash=True),
     RedirectRoute('/love/', love_handler.LoveHandler, name='love', strict_slash=True),
-    RedirectRoute('/post_activity_mgr/', FeedbackEmailHandler, name='post_activity_mgr', strict_slash=True)
+    RedirectRoute('/post_activity_mgr/', FeedbackEmailHandler, name='post_activity_mgr', strict_slash=True),
+    RedirectRoute('/how/', how_request_handler.HowRequestHandler, name='how', strict_slash=True)
 ]
 
 def get_routes():
