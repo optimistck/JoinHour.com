@@ -62,15 +62,12 @@
     </thead>
     {% for i in interests %}
     <tr>
-<<<<<<< HEAD
         <td>{{ i.category }}</td>
         <td>{{ i.key.id() | expires_in('Interest') }}</td>
         <td><input type="submit" name="initiarte_activity" value="Initiate Activity!" /></td>
-=======
         <td>{{ i.interest }}</td>
         <td>{{ i.date_entered }}</td>
         <td><input type="submit" name="initiarte_activity" value="Connect" /></td>
->>>>>>> Font Awesome
     </tr>
     {% endfor %}
 
