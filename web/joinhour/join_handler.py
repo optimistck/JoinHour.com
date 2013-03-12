@@ -26,7 +26,7 @@ class JoinHandler(BaseHandler):
         if self.user:
             is_create_activity = self.request.get('type_radio') == 'activity'
             user_info = models.User.get_by_id(long(self.user_id))
-            if is_create_activity == 'activity':
+            if is_create_activity:
                 ActivityManager.create_activity(building_name=building_name,category=self.form.category.data.strip(),duration=self.form.duration.data.strip(),expiration = self.form.expiration.data.strip(),
                                                 username = user_info.username,note = self.form.note.data.strip(),ip = self.request.remote_addr,
                                                 min_number_of_people_to_join = self.form.min_number_of_people_to_join.data.strip(),
