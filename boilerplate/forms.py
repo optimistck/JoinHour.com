@@ -125,6 +125,8 @@ class JoinForm(BaseForm):
     note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
 ### JH
 
+class JoinActivityForm(BaseForm):
+    activity_id = fields.TextField(_('activity_id'))
 
 class RegisterForm(PasswordMixin, ConfirmPasswordMixin, UserMixin):
     email = fields.TextField(_('Email'), [validators.Required(), validators.Length(min=7, max=FIELD_MAXLENGTH), validators.regexp(utils.EMAIL_REGEXP, message=_('Invalid email address.'))])

@@ -22,6 +22,7 @@
             <th>Category</th>
             <th>Spots Min</th>
             <th>Spots Max</th>
+            <th>Headcount</th>
             <th>Duration</th>
             <th>Expires in</th>
             <th>Note</th>
@@ -36,11 +37,13 @@
         <TD>{{ a.category }}</TD>
         <TD>{{ a.min_number_of_people_to_join }}</TD>
         <TD>{{ a.max_number_of_people_to_join }}</TD>
+        <TD>{{ a.headcount }}</TD>
         <TD>{{ a.duration }}</TD>
         <TD>{{ a.key.id() |expires_in('Activity')}}</TD>
         <TD>{{ a.note }}</TD>
         <TD>{{ a.date_entered }}</TD>
-        <TD><button>JOIN</button></TD>
+        <TD><a href="/join_activity/?activity_id={{ a.key.id() }}"><button>JOIN</button></a></TD>
+
         <TD>
             <a href="/activity_detail/?ID={{ a.key.urlsafe() }}"><button>Details</button></a>
         </TD>
