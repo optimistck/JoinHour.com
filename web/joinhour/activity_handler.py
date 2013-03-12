@@ -33,7 +33,8 @@ class ActivityHandler(BaseHandler):
     def get(self):
         #JH: this needs to be dynamic
         building_name = 'building_name'
-
+        if not self.user:
+            return self.redirect_to('login')
         self.view.activities = Activity.query().fetch(20)
         self.view.interests = Interest.query().fetch(20)
         params = {}
