@@ -1,6 +1,8 @@
 __author__ = 'aparbane'
 
 from src.joinhour.models.activity import Activity
+from src.joinhour.models.user_activity import UserActivity
+from boilerplate import models
 from google.appengine.ext import ndb
 from  datetime import datetime
 from datetime import timedelta
@@ -36,23 +38,38 @@ class ActivityManager(object):
         return ActivityManager(activityId)
 
     def __init__(self,activity_id):
-        self._activity = Activity.get_by_id(activity_id,parent=ndb.Key("ActivityKey", 'building_name'))
-
-
-
+        self._activity = Activity.get_by_id(long(activity_id),parent=ndb.Key("ActivityKey", 'building_name'))
 
     def connect(self,user_id,**kwargs):
-        #Check what is the current status and the spots_remaining (use the can_join function)
-        #If more than one spots are remaining
+        if not self.can_join(user_id):
+            return
+        if self.spots_remaining() > 0:
+            #Need to validate whether the same user has signed up for the same activity
+            user_info = models.User.get_by_id(long(user_id))
+            user_activity = UserActivity(parent=ndb.Key("UserActivityKey", user_info.username),
+                                         user=user_info.key,
+                                         activity=self._activity.key)
+            user_activity.put()
             #If the status is INITIATED change it to FORMING
-            #else If the status is FORMING
+            self._activity.headcount += 1
+            if self._activity.status == Activity.INITIATED and self.can_start():
+                self._change_status(Activity.FORMING)
+                #else If the status is FORMING
                 #If this would be the last spot change status to COMPLETE
-                    #Queue a task in JoinNotificationQueue for notifying user
+                #Queue a task in JoinNotificationQueue for notifying user
+            if self.spots_remaining() == 0:
+                self._change_status(Activity.COMPLETE)
                 #else Don't change the status
-                    #Queue a task in JoinNotificationQueue for notifying user
-        #else - raise an exception
-        pass
+                #Queue a task in JoinNotificationQueue for notifying user
 
+
+    def spots_remaining(self):
+        max_count = int(self._activity.max_number_of_people_to_join.split()[0])
+        return max_count - self._activity.headcount
+
+    def can_start(self):
+        min_count = int(self._activity.min_number_of_people_to_join.split()[0])
+        return min_count <= self._activity.headcount
 
     def mark_expired(self):
         self._change_status(Activity.EXPIRED)
@@ -61,12 +78,17 @@ class ActivityManager(object):
         #First check the status
         if self._activity == Activity.EXPIRED or self._activity == Activity.COMPLETE:
             return False
+        #Are there any activities with this user and this activity?
+        user_info = models.User.get_by_id(long(userId))
+        user_activity = UserActivity.get_by_user_activity(user_info.key, self._activity.key)
+        if user_activity:
+            return False
         #Now check if there are spots remaining
         elif self._activity.max_number_of_people_to_join == 'No Limit':
             return True
         else:
             headcount = self._activity.headcount
-            max_count = self._activity.max_number_of_people_to_join
+            max_count = self._activity.max_number_of_people_to_join.split()[0]
             if headcount < max_count:
                 return True
             return False
