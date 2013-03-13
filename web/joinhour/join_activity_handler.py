@@ -20,8 +20,10 @@ class JoinActivityHandler(BaseHandler):
         user_id = self.user_id
         activity_id = self.request.get('activity_id')
         activity_manager = ActivityManager.get(activity_id)
-        activity_manager.connect(user_id)
-
+        (success, message) = activity_manager.connect(user_id)
+        if success:
+            message = _("Congratulations! You joined an activity for " + activity_id)
+        self.add_message(message, 'success')
         return self.redirect_to('activity')
 
     def post(self):
