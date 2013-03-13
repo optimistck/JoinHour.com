@@ -15,26 +15,14 @@ The way this needs to work is when you click on "detail" link for a specific act
 <H3>Activity Detail</H3>
 <table class="table table-striped table-bordered">
 
-    <thead>
-        <tr>
-            <th>What</th>
-            <th>Detail</th>
-        </tr>
-    </thead>
-
-    <tr><TD>Kind: {{ a.kind }}</TD> <TD></TD></tr>
-    <tr><TD>Key: {{ a.key }}</TD> <TD></TD></tr>
-    <tr><TD>ID: </TD> <TD></TD></tr>
-    <tr><TD>category: {{ a.category }}</TD> <TD></TD></tr>
-    <tr><TD>date_entered: {{ a.date_entered }}</TD> <TD></TD></tr>
-    <tr><TD>duration:  {{ a.duration }}</TD> <TD></TD></tr>
-    <tr><TD>expiration:  {{ a.expiration }}</TD> <TD></TD></tr>
-    <tr><TD>ip:  {{ a.ip }}</TD> <TD></TD></tr>
-    <tr><TD>max_number_of_people_to_join:  {{ a.max_number_of_people_to_join }}</TD> <TD></TD></tr>
-    <tr><TD>min_number_of_people_to_join:  {{ a.min_number_of_people_to_join }}</TD> <TD></TD></tr>
-    <tr><TD>note:  {{ a.note }}</TD> <TD></TD></tr>
-    <tr><TD>username:  {{ a.username }}</TD> <TD></TD></tr>
-    
+    <col width="10">
+    <col width="90">
+    <tr><TD>Category </TD> <TD>{{ a.category }}</TD></tr>
+    <tr><TD>Duration  </TD> <TD>{{ a.duration }}</TD></tr>
+    <tr><TD>Expiration:  </TD> <TD>{{ a.expiration }}</TD></tr>
+    <tr><TD>Note:  </TD> <TD>{{ a.note }}</TD></tr>
+    <tr><TD>Number joined:  </TD> <TD>{{ a.headcount }}</TD></tr>
+    <tr><td/><TD><a href="/join_activity/?activity_id={{ a.key.id() }}"><button>JOIN</button></a></TD></tr>
 </table>
 
 
