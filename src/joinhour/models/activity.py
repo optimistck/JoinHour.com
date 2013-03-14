@@ -26,8 +26,8 @@ class Activity(ndb.Model):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 
     @classmethod
-    def query_all_activity(cls):
-        return cls.query()
+    def query_all_unexpired_activity(cls):
+        return cls.query(cls.status != Activity.EXPIRED)
 
 
 
