@@ -25,6 +25,9 @@ class Activity(ndb.Model):
     def query_activity(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 
+    @classmethod
+    def query_all_activity(cls):
+        return cls.query()
 
 
 
