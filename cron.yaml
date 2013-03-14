@@ -1,0 +1,4 @@
+cron:
+- description: daily expiry job
+  url: /expire_activities/
+  schedule: every 5 minutes 

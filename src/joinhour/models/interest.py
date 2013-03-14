@@ -16,3 +16,6 @@ class Interest(ndb.Model):
     def query_interest(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 
+    @classmethod
+    def query_all_unexpired_interest(cls):
+        return cls.query(cls.status != Interest.EXPIRED)
