@@ -20,12 +20,9 @@
     <thead>
         <tr>
             <th>Category</th>
-            <th>Spots Min</th>
-            <th>Spots Max</th>
-            <th>Headcount</th>
+            <th>Spots</th>
             <th>Duration</th>
             <th>Expires in</th>
-            <th>Note</th>
             <th>Date entered</th>
             <th>Join activity?</th>
             <th>Details</th>
@@ -35,12 +32,9 @@
     {% for a in activities %}
     <tr>
         <TD>{{ a.category }}</TD>
-        <TD>{{ a.min_number_of_people_to_join }}</TD>
-        <TD>{{ a.max_number_of_people_to_join }}</TD>
-        <TD>{{ a.headcount }}</TD>
+        <TD>{{ a.key.id() |spots_remaining()}}</TD>
         <TD>{{ a.duration }}</TD>
         <TD>{{ a.key.id() |expires_in('Activity')}}</TD>
-        <TD>{{ a.note }}</TD>
         <TD>{{ a.date_entered }}</TD>
         <TD><a href="/join_activity/?activity_id={{ a.key.id() }}"><button>JOIN</button></a></TD>
 
@@ -70,7 +64,6 @@
         <td><input type="submit" name="initiate_activity" value="Initiate Activity!" /></td>
         <td>{{ i.interest }}</td>
         <td>{{ i.date_entered }}</td>
-        <td><input type="submit" name="initiate_activity" value="Connect" /></td>
     </tr>
     {% endfor %}
 
