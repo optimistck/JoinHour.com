@@ -22,7 +22,10 @@ def expires_in(entityId,entity_type):
 
 jinja2.filters.FILTERS['expires_in'] = expires_in
 
+def spots_remaining(entityId):
+    return ActivityManager.get(entityId).spots_remaining()
 
+jinja2.filters.FILTERS['spots_remaining'] = spots_remaining
 
 
 class ActivityHandler(BaseHandler):
