@@ -2,3 +2,7 @@ total_storage_limit: 120M
 queue:
 - name: postActivityMgr
   rate: 35/s
+- name: matchmaker
+  rate: 35/s
+  retry_parameters:
+      task_retry_limit: 0

@@ -6,8 +6,8 @@ from boilerplate import models
 from google.appengine.ext import ndb
 from  datetime import datetime
 from datetime import timedelta
-
-
+from google.appengine.api import taskqueue
+from google.appengine.api.taskqueue import Task
 
 
 class ActivityManager(object):
@@ -32,6 +32,9 @@ class ActivityManager(object):
                             username = kwargs['username']
         )
         activity.put()
+        task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
+        task.add('matchmaker')
+        return activity
 
     @classmethod
     def get(cls,activityId):

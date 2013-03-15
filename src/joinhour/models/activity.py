@@ -28,6 +28,22 @@ class Activity(ndb.Model):
     @classmethod
     def query_all_unexpired_activity(cls):
         return cls.query(cls.status != Activity.EXPIRED)
+    @classmethod
+    def get_by_status(cls, status):
+        return cls.query(cls.status == status).fetch()
+
+    @classmethod
+    def get_by_category(cls,category):
+        return cls.query(cls.category == category).fetch()
+
+    @classmethod
+    def get_by_status_and_category(cls,category,status):
+        return cls.query(cls.category == category,cls.status == status).fetch()
+
+    @classmethod
+    def get_active_activities_by_category(cls,category):
+        return cls.query(cls.category == category,cls.status.IN([Activity.INITIATED,Activity.FORMING])).fetch()
+
 
 
 
