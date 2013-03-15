@@ -3,6 +3,10 @@ from src.joinhour.models.interest import Interest
 from google.appengine.ext import ndb
 from  datetime import datetime
 from datetime import timedelta
+from google.appengine.api import taskqueue
+from google.appengine.api.taskqueue import Task
+
+
 class InterestManager(object):
 
     @classmethod
@@ -15,6 +19,10 @@ class InterestManager(object):
 
         )
         interest.put()
+        task = Task(url='/match_maker/',method='GET',params={'interest': interest.key.urlsafe()})
+        task.add('matchmaker')
+        return interest
+
 
     @classmethod
     def get(cls,interestId):
