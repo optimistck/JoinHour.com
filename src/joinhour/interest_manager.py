@@ -19,8 +19,8 @@ class InterestManager(object):
 
         )
         interest.put()
-        task = Task(url='/match_maker/',method='GET',params={'interest': interest.key.urlsafe()})
-        task.add('matchmaker')
+        #task = Task(url='/match_maker/',method='GET',params={'interest': interest.key.urlsafe()})
+        #task.add('matchmaker')
         return interest
 
 

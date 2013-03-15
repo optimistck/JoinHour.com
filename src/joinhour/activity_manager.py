@@ -32,8 +32,8 @@ class ActivityManager(object):
                             username = kwargs['username']
         )
         activity.put()
-        task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
-        task.add('matchmaker')
+        #task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
+        #task.add('matchmaker')
         return activity
 
     @classmethod
@@ -102,6 +102,9 @@ class ActivityManager(object):
     def status(self):
         return self._activity.status
 
+    def get_activity(self):
+        return self._activity
+
     def expires_in(self):
         if self._activity.status == Activity.EXPIRED:
             return Activity.EXPIRED
@@ -117,5 +120,8 @@ class ActivityManager(object):
         #TODO Once the activity is expired or complete need to move it to a different table. Primarly for analytics support
         self._activity.status = new_status
         self._activity.put()
+
+
+
 
 

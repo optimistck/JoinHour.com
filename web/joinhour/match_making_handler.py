@@ -19,11 +19,14 @@ class MatchMakingHandler(BaseHandler):
     At the end of matchmaking pushes the result to notification queue.
     """
     def get(self):
-        if self.request.get('activity') != '':
-            self.full_match()
-        elif self.request.get('interest') != '':
-            interest = self.request.get('interest')
-            self.single_match(self.request.get('interest'))
+        try:
+            if self.request.get('activity') != '':
+                self.full_match()
+            elif self.request.get('interest') != '':
+                interest = self.request.get('interest')
+                self.single_match(self.request.get('interest'))
+        except Exception , e:
+            print e
 
     def full_match(self):
         """

@@ -94,6 +94,10 @@ class User(User):
         return cls.query(cls.email == email).get()
 
     @classmethod
+    def get_by_username(cls,username):
+        return cls.query(cls.username == username).get()
+
+    @classmethod
     def create_resend_token(cls, user_id):
         entity = cls.token_model.create(user_id, 'resend-activation-mail')
         return entity.token
