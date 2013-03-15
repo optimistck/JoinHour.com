@@ -13,7 +13,7 @@
 
 <BR>
 
-        <form id="form_initiate_actvitiy" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <form id="form_initiate_activity" action="{{ url|safe }}" method="post" class="well form-horizontal">
         <fieldset>
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
@@ -21,14 +21,15 @@
             <!--{{ macros.field(form.sub_category, label=_("and specifically")) }} -->
              {{ macros.field(form.duration, label=_("for")) }}
             {{ macros.field(form.expiration, label=_("willing to wait for a match for")) }}
-            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange()">I'm just expressing an interest</label>
-            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange()">I'm initiating an activity [then show options below]</label>
+            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm just expressing an interest</label>
+            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm initiating an activity [then show options below]</label>
+            <span id="initiate_activity_details" style="display: none;">
             {{ macros.field(form.min_number_of_people_to_join, label=_("with min"),disabled=true) }}
             {{ macros.field(form.max_number_of_people_to_join, label=_("no more than"),disabled=true) }}
             {{ macros.field(form.note, label=_("Details"),disabled=true, placeholder=_("e.g., where we're meeting and ")+" "+_("going"), class="input-xlarge focused required") }}
-         
+            </span>
             <label class="checkbox">
-            <input type="checkbox" value="">I read the <a href="#" target="_blank">Privacy Policy</a> and agree with <a href="#" target="_blank">Terms Of Service</a>
+            <input id="agree" type="checkbox" value="">I read the <a href="#" target="_blank">Privacy Policy</a> and agree with <a href="#" target="_blank">Terms Of Service</a>
             </label>
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans %}Connect{% endtrans %}</button>
@@ -48,15 +49,18 @@
             }
         });
     });
-    function onTypeRadioButtonChange(){
+
+    function onTypeRadioButtonChange(id){
         if(document.getElementById('express_interest_radio').checked)
         {
+            document.getElementById(id).style.display = 'none';
             document.getElementById('note').disabled = true
             document.getElementById('min_number_of_people_to_join').disabled = true
             document.getElementById('max_number_of_people_to_join').disabled = true
         }
         else if(document.getElementById('initiate_activity_radio').checked)
         {
+            document.getElementById(id).style.display = 'block';
             document.getElementById('note').disabled = false
             document.getElementById('min_number_of_people_to_join').disabled = false
             document.getElementById('max_number_of_people_to_join').disabled = false
