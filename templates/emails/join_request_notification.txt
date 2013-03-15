@@ -1,0 +1,19 @@
+<p>Hello <strong>{{activity_creator_username}}</strong>,</p>
+
+<p>
+You've got a request from {{username}} to join an activity you have created earlier. Check it out
+</p>
+
+<p>
+Activity detail
+{{activity_category}}
+{{activity_note}}
+
+Requester detail
+{{requester_name}}
+{{requester_building}}
+{{requester_email}}
+</p>
+
+<p>Have fun,and thank you for using JoinHour.com<br>
+{{ app_name }} Team
