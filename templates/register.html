@@ -5,27 +5,33 @@
 {% endblock %}
 
 {% block content %}
-
-    <form id="form_register" action="{{ url|safe }}" method="post" class="well form-horizontal">
-        <fieldset>
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            {{ macros.field(form.username, label=_("Username"), placeholder=_("Enter your")+" "+_("Username"), class="input-xlarge focused required") }}
-            {{ macros.field(form.name, label=_("Name"), placeholder=_("Enter your")+" "+_("Name"), class="input-xlarge focused") }}
-            {{ macros.field(form.last_name, label=_("Last Name"), placeholder=_("Enter your")+" "+_("Last Name"), class="input-xlarge focused") }}
-            {{ macros.field(form.email, label=_("Email"), placeholder=_("Enter your")+" "+_("Email"), class="input-xlarge focused required email", type="email") }}
-            {{ macros.field(form.building, label=_("Building")) }}
-            {{ macros.field(form.password, label=_("Password"), placeholder=_("Enter your")+" "+_("Password"), class="input-xlarge focused required", type="password") }}
-            {% if not is_mobile %}
-            {{ macros.field(form.c_password, label=_("Confirm Password"), placeholder=_("Confirm Password"), class="input-xlarge focused required", type="password") }}
-            {% endif %}
-            {{ macros.field(form.country, label=_("I want this because")) }}
-            <div class="form-actions">
-                        <label class="checkbox">
-            <input id="agree" type="checkbox" value="">I read the <a href="#" target="_blank">Privacy Policy</a> and agree with <a href="#" target="_blank">Terms Of Service</a>
-            </label>    <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
+<div class="container-fluid">
+    <div class="row-fluid">
+            <div class="span6">
+                <form id="form_register" action="{{ url|safe }}" method="post" class="well form-horizontal">
+                    <I>You're about to join hundreds of neighbors in your building who want to connect to do activities together</I><BR>
+                    <fieldset>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                        {{ macros.field(form.username, label=_("Username"), placeholder=_("Enter your")+" "+_("Username"), class="input-xlarge focused required") }}
+                        {{ macros.field(form.name, label=_("Name"), placeholder=_("Enter your")+" "+_("Name"), class="input-xlarge focused") }}
+                        {{ macros.field(form.last_name, label=_("Last Name"), placeholder=_("Enter your")+" "+_("Last Name"), class="input-xlarge focused") }}
+                        {{ macros.field(form.email, label=_("Email"), placeholder=_("Enter your")+" "+_("Email"), class="input-xlarge focused required email", type="email") }}
+                        {{ macros.field(form.building, label=_("Building")) }}
+                        {{ macros.field(form.password, label=_("Password"), placeholder=_("Enter your")+" "+_("Password"), class="input-xlarge focused required", type="password") }}
+                        {% if not is_mobile %}
+                        {{ macros.field(form.c_password, label=_("Confirm Password"), placeholder=_("Confirm Password"), class="input-xlarge focused required", type="password") }}
+                        {% endif %}
+                        {{ macros.field(form.country, label=_("I want this because")) }}
+                        <div class="form-actions">
+                                    <label class="checkbox">
+                        <input id="agree" type="checkbox" value="">I read the <a href="#" target="_blank">Privacy Policy</a> and agree with <a href="#" target="_blank">Terms Of Service</a>
+                        </label>    <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
+                        </div>
+                    </fieldset>
+                </form>
             </div>
-        </fieldset>
-    </form>
+        </div>
+    </div>
 
 {% endblock %}
 
