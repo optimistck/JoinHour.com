@@ -11,11 +11,11 @@ class InterestManager(object):
 
     @classmethod
     def create_interest(cls,**kwargs):
-        interest = Interest(parent=ndb.Key("InterestKey", kwargs['building_name']),
-                            category = kwargs['category'],
+        interest = Interest(category = kwargs['category'],
                             duration = kwargs['duration'],
                             expiration = kwargs['expiration'],
-                            username = kwargs['username']
+                            username = kwargs['username'],
+                            building_name = kwargs['building_name']
 
         )
         interest.put()
@@ -25,11 +25,14 @@ class InterestManager(object):
 
 
     @classmethod
-    def get(cls,interestId):
-        return InterestManager(interestId)
+    def get(cls,key):
+        return InterestManager(key)
 
-    def __init__(self,interestId):
-        self._interest = Interest.get_by_id(interestId,parent=ndb.Key("InterestKey", 'building_name'))
+    def __init__(self,key):
+        self._interest = ndb.Key(urlsafe=key).get()
+
+    def get_interest(self):
+        return self._interest
 
     def expires_in(self):
         if self._interest.status == Interest.EXPIRED:
