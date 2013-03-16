@@ -1,7 +1,7 @@
 <p>Hello <strong>{{activity_creator_username}}</strong>,</p>
 
 <p>
-We found a match for the activity you created. {{username}} will be joining you. 
+Your activity is a Go! All activity criteria has been met and notification to the participants sent out. 
 </p>
 
 <p>
@@ -10,12 +10,10 @@ Activity detail
 {{activity_note}}
 
 Activity companion details
-{{requester_name}}
-{{requester_building}}
-{{requester_email}}
+
 </p>
 
-<p>Enjoy the connection, and thank you for using JoinHour.com<br>
+<p>Have fun, and thank you for using JoinHour.com<br>
 {{ app_name }} Team
 
 <BR>
@@ -24,4 +22,4 @@ If you have any questions, comments, or thoughts on how we can improve the servi
 {{support_url}}
 </p>
 
-<p>We, the people, not computers, read and respond to every email. <br>
+<p>We, the people, not computers, read and respond to every email. </p>
