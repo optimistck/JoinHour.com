@@ -4,7 +4,7 @@
         {% trans %}Connections Without Obligations{% endtrans %} - {{app_name}}
 {% endblock %}
 {% block header_title %}
-        {% trans %}my Status{% endtrans %}
+        {% trans %}My Corner{% endtrans %}
 {% endblock %}
 
 {% block content %}
@@ -25,18 +25,14 @@
                     </tr>
                 </thead>
 
-                <tr>
-                    <TD>Activity name A</TD>
-                    <TD>1</TD>
-                    <TD>21 minutes</TD>
-                    <TD><a href="#"><button>Yes</button></a></TD>
-                </tr>
-                 <tr>
-                    <TD>Activity name B</TD>
-                    <TD>3</TD>
-                    <TD>2 hours 21 minutes</TD>
-                    <TD><a href="#"><button>Yes</button></a></TD>
-                </tr>
+                {% for a in activities %}
+                    <tr>
+                        <TD>{{ a.category }}</TD>
+                        <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
+                        <TD>{{ a.key.urlsafe() |expires_in('Activity')}}</TD>
+                        <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button>Yes</button></a></TD>
+                    </tr>
+                {% endfor %}
             </table>
         </p>
 
@@ -51,11 +47,13 @@
                     </tr>
                 </thead>
 
-                <tr>
-                    <TD>Interest A</TD>
-                    <TD>9 minutes</TD>
-                    <TD><a href="#"><button>Yes</button></a></TD>
-                </tr>
+                {% for i in interests %}
+                    <tr>
+                        <td>{{ i.category }}</td>
+                        <td>{{ i.key.urlsafe() | expires_in('Interest') }}</td>
+                        <TD><a href="/?key={{ i.key.urlsafe()}}&action=delete"><button>Yes</button></a></TD>
+                    </tr>
+                {% endfor %}
             </table>
         </p>
 

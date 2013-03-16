@@ -37,7 +37,7 @@ class JoinHandler(BaseHandler):
                                                 username = user_info.username)
             message = _("Your interest was registered successfully. We are searching for a match ... ")
             self.add_message(message, 'success')
-            return self.redirect_to('activity')
+            return self.redirect_to('home')
 
     @webapp2.cached_property
     def form(self):
