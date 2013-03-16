@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<h4>Provide your interest and availability info.</h4>
+<h4>Post your interest and availability</h4>
 
 <BR>
 
@@ -21,18 +21,15 @@
             <!--{{ macros.field(form.sub_category, label=_("and specifically")) }} -->
              {{ macros.field(form.duration, label=_("for")) }}
             {{ macros.field(form.expiration, label=_("willing to wait for a match for")) }}
-            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm just expressing an interest</label>
-            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm initiating an activity [then show options below]</label>
+            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm just expressing an interest; someone else can organize</label>
+            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')">I want to organize and specify activity details</label>
             <span id="initiate_activity_details" style="display: none;">
             {{ macros.field(form.min_number_of_people_to_join, label=_("with min"),disabled=true) }}
             {{ macros.field(form.max_number_of_people_to_join, label=_("no more than"),disabled=true) }}
             {{ macros.field(form.note, label=_("Details"),disabled=true, placeholder=_("e.g., where we're meeting and ")+" "+_("going"), class="input-xlarge focused required") }}
             </span>
-            <label class="checkbox">
-            <input id="agree" type="checkbox" value="">I read the <a href="#" target="_blank">Privacy Policy</a> and agree with <a href="#" target="_blank">Terms Of Service</a>
-            </label>
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{% trans %}Connect{% endtrans %}</button>
+                <button type="submit" class="btn btn-primary">{% trans %}Post{% endtrans %}</button>
             </div>
         </fieldset>
     </form>

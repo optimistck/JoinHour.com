@@ -19,8 +19,11 @@
             {{ macros.field(form.c_password, label=_("Confirm Password"), placeholder=_("Confirm Password"), class="input-xlarge focused required", type="password") }}
             {% endif %}
             {{ macros.field(form.country, label=_("I want to travel to")) }}
+            
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
+                        <label class="checkbox">
+            <input id="agree" type="checkbox" value="">I read the <a href="#" target="_blank">Privacy Policy</a> and agree with <a href="#" target="_blank">Terms Of Service</a>
+            </label>    <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
             </div>
         </fieldset>
     </form>
