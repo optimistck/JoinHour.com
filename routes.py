@@ -5,6 +5,7 @@ This file contains stat_routes
 from webapp2_extras.routes import RedirectRoute
 from web import handlers
 from web.joinhour import get_activity_handler
+from web.joinhour import terms_handler
 from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler,match_making_handler
 
 from web.joinhour.post_activity_mgr_handlers import FeedbackEmailHandler
@@ -14,6 +15,7 @@ secure_scheme = 'https'
 
 _routes = [
     RedirectRoute('/', home_request_handler.HomeRequestHandler, name='home', strict_slash=True),
+    RedirectRoute('/terms', terms_handler.TermsHandler, name='terms', strict_slash=True),
     RedirectRoute('/secure/', handlers.SecureRequestHandler, name='secure', strict_slash=True),
     RedirectRoute('/tip/',tip_handler.TipHandler, name='tip', strict_slash=True),
     RedirectRoute('/tip/thankyou/', thank_you_handler.ThankYouHandler, name='thankyou', strict_slash=True),
