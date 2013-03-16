@@ -498,10 +498,22 @@ NUMBER_OF_PEOPLE_MAX = [
 
 TIME_CHUNKS = [
 ("", ""),
-("5", "5 mins"),
 ("15", "15 mins"),
 ("30", "30 mins"),
 ("45", "45 mins"),
+("60", "1 hour"),
+("75", "1 hour 15 mins"),
+("90", "1 hour 30 mins"),
+("105", "1 hour 45 mins"),
+("120", "2 hours")]
+
+
+TIME_CHUNKS2 = [
+("", ""),
+("15", "15 mins"),
+("30", "30 mins"),
+("40", "40 mins"),
+("50", "50 mins"),
 ("60", "1 hour"),
 ("75", "1 hour 15 mins"),
 ("90", "1 hour 30 mins"),
@@ -512,35 +524,15 @@ TIME_CHUNKS = [
 ("165", "2 hours 45 mins"),
 ("180", "3 hours")]
 
-
-TIME_CHUNKS2 = [
-("", ""),
-("5", "5 mins"),
-("10", "10 mins"),
-("15", "15 mins"),
-("20", "20 mins"),
-("25", "25 mins"),
-("30", "30 mins"),
-("40", "40 mins"),
-("45", "45 mins"),
-("50", "50 mins"),
-("60", "1 hour"),
-("75", "1 hour 15 mins"),
-("90", "1 hour 30 mins"),
-("105", "1 hour 45 mins"),
-("120", "2 hours")]
-
 CATEGORY = [
 ("", ""),
 ("Go for a run", "Go for a run"),
-("Grab a drink", "Grab a drink"),
-("Walk and Talk", "Walk and Talk"),
-("Split a pizza", "Split a pizza"),
+("Go for a walk", "Go for a walk"),
 ("Split a cab", "Split a cab"),
-("Play pool", "Play pool"),
-("Play a board game", "Play a board game"),
-("Play a video game", "Play a video game"),
-("Other", "Other")]
+("Play tennis", "Play tennis"),
+("Pickup basketball", "Pickup basketball"),
+("Other Hobby", "Other Hobby"),
+("Other Activity", "Other Activity")]
 
 # These may have to go
 SUBCATEGORY = [
