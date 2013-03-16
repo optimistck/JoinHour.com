@@ -21,15 +21,15 @@ class ActivityManager(object):
 
     @classmethod
     def create_activity(cls,**kwargs):
-        activity = Activity(parent=ndb.Key("ActivityKey", kwargs['building_name']),
-                            category = kwargs['category'],
+        activity = Activity(category = kwargs['category'],
                             duration = kwargs['duration'],
                             expiration = kwargs['expiration'],
                             note = kwargs['note'],
                             ip = kwargs['ip'],
                             min_number_of_people_to_join = kwargs['min_number_of_people_to_join'],
                             max_number_of_people_to_join = kwargs['max_number_of_people_to_join'],
-                            username = kwargs['username']
+                            username = kwargs['username'],
+                            building_name = kwargs['building_name']
         )
         activity.put()
         #task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
@@ -37,11 +37,11 @@ class ActivityManager(object):
         return activity
 
     @classmethod
-    def get(cls,activityId):
-        return ActivityManager(activityId)
+    def get(cls,key):
+        return ActivityManager(key)
 
-    def __init__(self,activity_id):
-        self._activity = Activity.get_by_id(long(activity_id),parent=ndb.Key("ActivityKey", 'building_name'))
+    def __init__(self,key):
+        self._activity = ndb.Key(urlsafe=key).get()
 
     def connect(self,user_id,**kwargs):
         (canJoin, message) = self.can_join(user_id)
@@ -50,8 +50,7 @@ class ActivityManager(object):
 
         #Need to validate whether the same user has signed up for the same activity
         user_info = models.User.get_by_id(long(user_id))
-        user_activity = UserActivity(parent=ndb.Key("UserActivityKey", user_info.username),
-                                     user=user_info.key,
+        user_activity = UserActivity(user=user_info.key,
                                      activity=self._activity.key)
         user_activity.put()
         #If the status is INITIATED change it to FORMING

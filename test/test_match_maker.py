@@ -1,5 +1,4 @@
-from src.joinhour.models.activity import Activity
-from src.joinhour.models.interest import Interest
+
 
 __author__ = 'aparbane'
 
@@ -8,6 +7,8 @@ from google.appengine.ext import testbed
 from src.joinhour.matchmaker import MatchMaker
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.interest_manager import InterestManager
+from src.joinhour.models.activity import Activity
+from src.joinhour.models.interest import Interest
 
 
 

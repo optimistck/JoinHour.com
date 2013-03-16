@@ -1,29 +1,29 @@
 #google imports
 import webapp2
-from google.appengine.ext import ndb
 from webapp2_extras.i18n import gettext as _
 
 # Boilerplate imports
 from boilerplate.lib.basehandler import BaseHandler
+from boilerplate import models
 import jinja2
 
 
-#JH experimental
 from src.joinhour.models.activity import Activity
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.interest_manager import InterestManager
 from src.joinhour.models.interest import Interest
 
-def expires_in(entityId,entity_type):
+def expires_in(key,entity_type):
     if entity_type == 'Activity':
-        return ActivityManager.get(entityId).expires_in()
+        return ActivityManager.get(key).expires_in()
     else:
-        return InterestManager.get(entityId).expires_in()
+        return InterestManager.get(key).expires_in()
 
 jinja2.filters.FILTERS['expires_in'] = expires_in
 
-def spots_remaining(entityId):
-    return ActivityManager.get(entityId).spots_remaining()
+
+def spots_remaining(key):
+    return ActivityManager.get(key).spots_remaining()
 
 jinja2.filters.FILTERS['spots_remaining'] = spots_remaining
 
@@ -34,12 +34,12 @@ class ActivityHandler(BaseHandler):
     """
     #orig
     def get(self):
-        #JH: this needs to be dynamic
-        building_name = 'building_name'
         if not self.user:
             return self.redirect_to('login')
-        self.view.activities = Activity.query().fetch(20)
-        self.view.interests = Interest.query().fetch(20)
+        user_info = models.User.get_by_id(long(self.user_id))
+        building_name = user_info.building
+        self.view.activities = Activity.query(Activity.building_name == building_name,Activity.username != user_info.username).fetch()
+        self.view.interests = Interest.query(Interest.building_name == building_name,Interest.username != user_info.username).fetch()
         params = {}
         return self.render_template('stat.html', **params)
   

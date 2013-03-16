@@ -12,6 +12,7 @@ class Interest(ndb.Model):
     duration = ndb.StringProperty()
     expiration = ndb.StringProperty()
     status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE])
+    building_name = ndb.StringProperty()
 
     @classmethod
     def query_interest(cls, ancestor_key):
@@ -40,6 +41,10 @@ class Interest(ndb.Model):
     @classmethod
     def get_active_interests_by_category(cls,category):
         return cls.query(cls.category == category,cls.status.IN([Interest.FORMING,Interest.INITIATED])).fetch()
+
+    @classmethod
+    def get_interests_by_building(cls,building_name):
+        return cls.query(cls.building_name == building_name).order(-cls.date_entered).fetch()
 
 
 

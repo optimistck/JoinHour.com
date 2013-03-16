@@ -18,13 +18,13 @@ class ExpiryHandler(BaseHandler):
         activities =  Activity.query_all_unexpired_activity()
 
         for activity in activities:
-            if ActivityManager.get(activity.key.id()).expires_in() == Activity.EXPIRED:
+            if ActivityManager.get(activity.key.urlsafe()).expires_in() == Activity.EXPIRED:
                 activity.status = Activity.EXPIRED
                 activity.put()
 
         interests =  Interest.query_all_unexpired_interest()
 
         for interest in interests:
-            if InterestManager.get(interest.key.id()).expires_in() == Interest.EXPIRED:
+            if InterestManager.get(interest.key.urlsafe()).expires_in() == Interest.EXPIRED:
                 interest.status = Interest.EXPIRED
                 interest.put()

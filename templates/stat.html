@@ -23,7 +23,6 @@
             <th>Spots</th>
             <th>Duration</th>
             <th>Expires in</th>
-            <th>Date entered</th>
             <th>Join activity?</th>
             <th>Details</th>
         </tr>
@@ -32,11 +31,10 @@
     {% for a in activities %}
     <tr>
         <TD>{{ a.category }}</TD>
-        <TD>{{ a.key.id() |spots_remaining()}}</TD>
+        <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
         <TD>{{ a.duration }}</TD>
-        <TD>{{ a.key.id() |expires_in('Activity')}}</TD>
-        <TD>{{ a.date_entered }}</TD>
-        <TD><a href="/join_activity/?activity_id={{ a.key.id() }}"><button>JOIN</button></a></TD>
+        <TD>{{ a.key.urlsafe() |expires_in('Activity')}}</TD>
+        <TD><a href="/join_activity/?key={{ a.key.urlsafe() }}"><button>JOIN</button></a></TD>
 
         <TD>
             <a href="/activity_detail/?ID={{ a.key.urlsafe() }}"><button>Details</button></a>
@@ -54,16 +52,12 @@
         <tr>
             <th>Interest</th>
             <th>Expires In</th>
-            <th>Create an Activity?</th>
         </tr>
     </thead>
     {% for i in interests %}
     <tr>
         <td>{{ i.category }}</td>
-        <td>{{ i.key.id() | expires_in('Interest') }}</td>
-        <td><input type="submit" name="initiate_activity" value="Initiate Activity!" /></td>
-        <td>{{ i.interest }}</td>
-        <td>{{ i.date_entered }}</td>
+        <td>{{ i.key.urlsafe() | expires_in('Interest') }}</td>
     </tr>
     {% endfor %}
 

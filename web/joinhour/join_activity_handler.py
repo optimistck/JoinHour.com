@@ -20,13 +20,12 @@ class JoinActivityHandler(BaseHandler):
     #TODO: load the categories and sub-categories from the pull-down menu
     def get(self):
         user_id = self.user_id
-        activity_id = self.request.get('activity_id')
-        activity_manager = ActivityManager.get(activity_id)
+        activity_manager = ActivityManager.get(self.request.get('key'))
         (success, message) = activity_manager.connect(user_id)
         if success:
-            message = _("Congratulations! You joined an activity for " + activity_id)
+            message = _("Congratulations! You joined an activity for ")
             self._push_notification(user_id,activity_manager.get_activity())
-        self.add_message(message, 'success')
+            self.add_message(message, 'success')
         return self.redirect_to('activity')
 
     def post(self):
