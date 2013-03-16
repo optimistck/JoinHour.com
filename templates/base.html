@@ -180,9 +180,9 @@
 
                         <!-- Code if the user has logged in-->
                         {% elif user_id %}
-                        <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Connect{% endtrans %}</a></li>
+                        <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Post{% endtrans %}</a></li>
                         <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Board{% endtrans %}</a></li>
-                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/">{% trans %}my Satus{% endtrans %}</a></li>
+                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/">{% trans %}My Corner{% endtrans %}</a></li>
                         
                         {% endif %}
                     </ul>
