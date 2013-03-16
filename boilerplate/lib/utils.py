@@ -214,7 +214,7 @@ def parse_if_int(s):
         return s
 
 # TODO: Use locale (Babel)
-COUNTRIES = [
+COUNTRIES_ORIG = [
     ("", ""),
     ("AF", "Afghanistan"),
     ("AL", "Albania"),
@@ -462,6 +462,15 @@ COUNTRIES = [
     ("ZR", "Zaire"),
     ("ZM", "Zambia"),
     ("ZW", "Zimbabwe")]
+
+COUNTRIES = [
+    ("0", "my schedule is unpredictable"),
+    ("1", "planning ahead is hard"),
+    ("2", "I don't like to plan ahead"),
+    ("3", "I hate traffic"),
+    ("4", "I want connections without obligations"),
+    ("5", "I want to meet good people"),
+    ("6", "my friends are far")]
 
 BUILDINGS = [
 ("", ""),

@@ -18,7 +18,7 @@
             {% if not is_mobile %}
             {{ macros.field(form.c_password, label=_("Confirm Password"), placeholder=_("Confirm Password"), class="input-xlarge focused required", type="password") }}
             {% endif %}
-            {{ macros.field(form.country, label=_("I want to travel to")) }}
+            {{ macros.field(form.country, label=_("I want this because")) }}
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
             </div>
