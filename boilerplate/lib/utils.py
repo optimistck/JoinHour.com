@@ -214,7 +214,7 @@ def parse_if_int(s):
         return s
 
 # TODO: Use locale (Babel)
-COUNTRIES = [
+COUNTRIES_ORIG = [
     ("", ""),
     ("AF", "Afghanistan"),
     ("AL", "Albania"),
@@ -463,18 +463,27 @@ COUNTRIES = [
     ("ZM", "Zambia"),
     ("ZW", "Zimbabwe")]
 
+COUNTRIES = [
+    ("0", "my schedule is unpredictable"),
+    ("1", "planning ahead is hard"),
+    ("2", "I don't like to plan ahead"),
+    ("3", "I hate traffic"),
+    ("4", "I want connections without obligations"),
+    ("5", "I want to meet good people"),
+    ("6", "my friends are far")]
+
 BUILDINGS = [
 ("", ""),
 ("River House", "River House"),
-("Crystal Towers", "Crystal Towers"),
+#("Crystal Towers", "Crystal Towers"),
 ("The Belvedere", "The Belvedere"),
-("Meridian at Courthouse Commons", "Meridian at Courthouse Commons"),
-("Courtland Towers", "Courtland Towers"),
-("Arlington Courthouse Place", "Arlington Courthouse Place"),
-("Randolph Towers", "Randolph Towers"),
-("Post Pentagon Row", "Post Pentagon Row"),
-("Crystal House 1 and 2", "Crystal House 1 and 2"),
-("Virginia Square Plaza", "Virginia Square Plaza"),
+#("Meridian at Courthouse Commons", "Meridian at Courthouse Commons"),
+#("Courtland Towers", "Courtland Towers"),
+#("Arlington Courthouse Place", "Arlington Courthouse Place"),
+#("Randolph Towers", "Randolph Towers"),
+#("Post Pentagon Row", "Post Pentagon Row"),
+#("Crystal House 1 and 2", "Crystal House 1 and 2"),
+#("Virginia Square Plaza", "Virginia Square Plaza"),
 ("NOT LISTED", "NOT LISTED")]
 
 #TODO: should be deleted because this was used by passive and active interest only. Reworked to use min and max people
@@ -528,11 +537,11 @@ CATEGORY = [
 ("", ""),
 ("Go for a run", "Go for a run"),
 ("Go for a walk", "Go for a walk"),
-("Split a cab", "Split a cab"),
+#("Split a cab", "Split a cab"),
 ("Play tennis", "Play tennis"),
-("Pickup basketball", "Pickup basketball"),
-("Other Hobby", "Other Hobby"),
-("Other Activity", "Other Activity")]
+#("Pickup basketball", "Pickup basketball"),
+("Group dog walk", "Group dog walk"),
+("Grab a beverage", "Grab a beverage")]
 
 # These may have to go
 SUBCATEGORY = [
