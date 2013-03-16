@@ -1,0 +1,33 @@
+{% extends base_layout %}
+
+{% block title %}
+        {% trans %}Terms of Service{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+        {% trans %}Terms of Service{% endtrans %}
+{% endblock %}
+
+{% block content %}
+ 
+
+This is where the terms of service go.
+
+
+{% endblock %}
+
+
+
+{% block mediaJS %}
+<script type="text/javascript">
+    $().ready(function() {
+        $("#form_contact").validate({
+            errorPlacement: function(error, element) {
+                element.parent().parent().addClass("error");
+                error.addClass("help-inline").appendTo( element.parent() );
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+<a href="/Admin_Console?filter=Financial"><button type="button" >Financial</button></a>
