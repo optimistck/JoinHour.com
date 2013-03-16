@@ -8,5 +8,12 @@
 
 <p>Once confirmed, all {{ app_name }} email will be sent to this address.</p>
 
+<p>
+If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. <br>
+
 <p>Sincerely,<br>
 {{ app_name }} Team
