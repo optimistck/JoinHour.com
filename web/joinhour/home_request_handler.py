@@ -30,8 +30,9 @@ class HomeRequestHandler(RegisterBaseHandler):
     """
 
     def get(self):
+        params = {}
         if not self.user:
-            return self.redirect_to('login')
+            return self.render_template('home.html', **params)
         action = str(self.request.get('action'))
         if action == 'delete':
             key = self.request.get('key')
@@ -39,5 +40,5 @@ class HomeRequestHandler(RegisterBaseHandler):
         user_info = models.User.get_by_id(long(self.user_id))
         self.view.activities = Activity.query(Activity.username == user_info.username).fetch()
         self.view.interests = Interest.query(Interest.username == user_info.username).fetch()
-        params = {}
+
         return self.render_template('home.html', **params)
