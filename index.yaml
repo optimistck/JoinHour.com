@@ -11,6 +11,17 @@ indexes:
 # your application using appcfg.py.
 
 - kind: Activity
+  properties:
+  - name: building_name
+  - name: date_entered
+    direction: desc
+
+- kind: Activity
+  properties:
+  - name: building_name
+  - name: username
+
+- kind: Activity
   ancestor: yes
   properties:
   - name: date_entered
@@ -39,6 +50,17 @@ indexes:
   properties:
   - name: date
     direction: desc
+
+- kind: Interest
+  properties:
+  - name: building_name
+  - name: date_entered
+    direction: desc
+
+- kind: Interest
+  properties:
+  - name: building_name
+  - name: username
 
 - kind: Love
   ancestor: yes

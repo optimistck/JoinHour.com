@@ -19,6 +19,7 @@ class Activity(ndb.Model):
     ip = ndb.StringProperty()
     headcount = ndb.IntegerProperty(default=0)
     status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE])
+    building_name = ndb.StringProperty()
 
 
     @classmethod
@@ -43,6 +44,10 @@ class Activity(ndb.Model):
     @classmethod
     def get_active_activities_by_category(cls,category):
         return cls.query(cls.category == category,cls.status.IN([Activity.INITIATED,Activity.FORMING])).fetch()
+
+    @classmethod
+    def get_activities_by_building(cls,building_name):
+        return cls.query(cls.building_name == building_name).order(-cls.date_entered).fetch()
 
 
 

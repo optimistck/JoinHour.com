@@ -22,7 +22,7 @@ The way this needs to work is when you click on "detail" link for a specific act
     <tr><TD>Expiration:  </TD> <TD>{{ a.expiration }}</TD></tr>
     <tr><TD>Note:  </TD> <TD>{{ a.note }}</TD></tr>
     <tr><TD>Number joined:  </TD> <TD>{{ a.headcount }}</TD></tr>
-    <tr><td/><TD><a href="/join_activity/?activity_id={{ a.key.id() }}"><button>JOIN</button></a></TD></tr>
+    <tr><td/><TD><a href="/join_activity/?activity_id={{ a.key.urlsafe() }}"><button>JOIN</button></a></TD></tr>
 </table>
 
 

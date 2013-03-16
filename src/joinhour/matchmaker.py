@@ -2,7 +2,7 @@ __author__ = 'aparbane'
 from datetime import timedelta
 from src.joinhour.models.match import Match
 import math
-from boilerplate import models
+
 
 
 class MatchMaker(object):
