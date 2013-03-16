@@ -45,9 +45,10 @@ class JoinActivityHandler(BaseHandler):
         return forms.JoinActivityForm(self)
 
     def _push_notification(self,user_id,activity):
-
         user = models.User.get_by_id(long(user_id))
+        email_url = self.uri_for('taskqueue-send-email')
         activity_user = models.User.get_by_username(activity.username)
+        #To the participant
         template_val = {
             "app_name": self.app.config.get('app_name'),
             "activity_creator_username": activity.username,
@@ -55,13 +56,25 @@ class JoinActivityHandler(BaseHandler):
             "activity_note": activity.note,
             "requester_name":user.username,
             "requester_building":user.building,
-            "requester_email":user.email,
+            "requester_email":user.email
         }
-        email_url = self.uri_for('taskqueue-send-email')
-        body = self.jinja2.render_template('emails/join_request_notification.txt', **template_val)
+        body = self.jinja2.render_template('emails/activity_go_notification_for_activity_participant.txt', **template_val)
         taskqueue.add(url = email_url,params={
-            'to':activity_user.email,
-            'subject' : '[JoinHour.com]Connect request',
+            'to':user.email,
+            'subject' : '[JoinHour.com]Your Connect request confirmation',
+            'body' : body
+        })
+        #To the activity owner
+        template_val = {
+            "app_name": self.app.config.get('app_name'),
+            "activity_creator_username": activity.username,
+            "activity_category": activity.category,
+            "activity_note": activity.note
+        }
+        body = self.jinja2.render_template('emails/activity_go_notification_for_activity_owner.txt', **template_val)
+        taskqueue.add(url = email_url,params={
+            'to':user.email,
+            'subject' : '[JoinHour.com]Your Connect request confirmation',
             'body' : body
         })
 
