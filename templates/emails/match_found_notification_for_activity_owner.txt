@@ -1,0 +1,27 @@
+<p>Hello <strong>{{activity_creator_username}}</strong>,</p>
+
+<p>
+We found a match for the activity you created. {{username}} will be joining you. We will send you a confirmation email once the activity criterial is met and the activity is a Go!
+</p>
+
+<p>
+Activity detail
+{{activity_category}}
+{{activity_note}}
+
+Activity companion details
+{{requester_name}}
+{{requester_building}}
+{{requester_email}}
+</p>
+
+<p>Thank you for using JoinHour.com<br>
+{{ app_name }} Team
+
+<BR>
+<p>
+If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>
