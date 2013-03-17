@@ -60,12 +60,35 @@ class ActivityManagerTest(unittest.TestCase):
                     building = "building_1"
         )
         user2.put()
+        user3 = User(
+            name = "User3_name",
+            last_name = "User3_lastname",
+            email = "user3@example.com",
+            password = "foo",
+            username = "user2",
+            building = "building_1"
+        )
+        user3.put()
+        user4 = User(
+            name = "User4_name",
+            last_name = "User4_lastname",
+            email = "user4@example.com",
+            password = "foo",
+            username = "user2",
+            building = "building_1"
+        )
+        user4.put()
         activity_created = ActivityManager.create_activity(category='Category1',duration='40',expiration='180',username=user1.username,building_name ='building_1',ip='127.0.0.1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
         activity_manager = ActivityManager.get(activity_created.key.urlsafe())
         self.assertEqual(activity_created.key.urlsafe(),activity_manager.get_activity().key.urlsafe())
         self.assertEqual(True,activity_manager.can_join(user2.key.id())[0])
         activity_manager.connect(user2.key.id())
+        self.assertEqual(Activity.COMPLETE,activity_created.status)
         self.assertEqual(False,activity_manager.can_join(user2.key.id())[0])
+        self.assertEqual(True,activity_manager.can_join(user3.key.id())[0])
+        activity_manager.connect(user3.key.id())
+        self.assertEqual(False,activity_manager.can_join(user4.key.id())[0])
+
 
 
 
