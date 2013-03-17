@@ -30,6 +30,12 @@ class MatchMaker(object):
             if interest.status == 'EXPIRED':
                 continue
             for activity in activity_list:
+                #Do we really need this in the core algorithm?
+                if activity.username == interest.username:
+                    continue
+                #Do we really need this in the core algorithm?
+                if activity.building_name != interest.building_name:
+                    continue
                 if activity.status == 'EXPIRED' or activity.status == 'COMPLETE':
                     continue
                 if Match.already_tested_for_match(activity.key,interest.key) is not None:

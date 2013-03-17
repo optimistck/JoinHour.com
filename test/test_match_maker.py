@@ -50,6 +50,9 @@ class MatchMakerTest(unittest.TestCase):
         self.assertEqual(MatchMaker.CATEGORY_MISMATCH,match_list['testuser1'][1].match_type)
         self.assertEqual(MatchMaker.DURATION_MISMATCH,match_list['testuser1'][2].match_type)
         self.assertEqual(MatchMaker.CATEGORY_MISMATCH,match_list['testuser1'][3].match_type)
+        match_list = MatchMaker.match_interests_with_activities([InterestManager.create_interest(category='Go for a run',duration='40',expiration='180',username='testuser1',building_name='building_name')],activity_list,{})
+        self.assertEqual(1,len(match_list))
+        self.assertEqual(MatchMaker.CLOSE_MATCH,match_list['testuser1'][0].match_type)
 
 
 
