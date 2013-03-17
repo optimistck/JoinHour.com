@@ -7,6 +7,8 @@ from boilerplate.lib.basehandler import BaseHandler
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.interest_manager import InterestManager
 import jinja2
+from  datetime import datetime
+from datetime import timedelta
 
 def expires_in(key,entity_type):
     if entity_type == 'Activity':
@@ -18,6 +20,10 @@ jinja2.filters.FILTERS['expires_in'] = expires_in
 
 #JH experimental
 
+def format_datetime(value, format='medium'):
+    return datetime.datetime.strptime(value, '%M').strftime('%M')
+
+jinja2.filters.FILTERS['format_datetime'] = format_datetime
 
 class GetActivityHandler(BaseHandler):
     """

@@ -6,12 +6,15 @@ from webapp2_extras.i18n import gettext as _
 from boilerplate.lib.basehandler import BaseHandler
 from boilerplate import models
 import jinja2
-
+from  datetime import datetime
+from datetime import timedelta
 
 from src.joinhour.models.activity import Activity
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.interest_manager import InterestManager
 from src.joinhour.models.interest import Interest
+
+
 
 def expires_in(key,entity_type):
     if entity_type == 'Activity':
