@@ -32,8 +32,8 @@ class ActivityManager(object):
                             building_name = kwargs['building_name']
         )
         activity.put()
-        #task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
-        #task.add('matchmaker')
+        task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
+        task.add('matchmaker')
         return activity
 
     @classmethod

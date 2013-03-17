@@ -34,29 +34,33 @@ class MatchMakingHandler(BaseHandler):
         First groups the activities and interests into categories and then executes matchmaking. This is done to optimize the time complexity
         At the end of matchmaking pushes the result to notification queue.
         """
-        match_list = {}
+        match_result_list = {}
         for category in self._get_categories():
             if category[0] == '':
                 continue
             interest_list = Interest.get_active_interests_by_category(category[0])
             activity_list = Activity.get_active_activities_by_category(category[0])
-            match_list = MatchMaker.match_interests_with_activities(interest_list,activity_list,match_list)
-        self._process_notification(match_list)
+            match_result_list = MatchMaker.match_interests_with_activities(interest_list,activity_list,match_result_list)
+        self._process_notification(match_result_list)
 
-    def single_match(self,interest):
+    def single_match(self,interest_key):
         """
         Calls MatchMaker to do match between a single interest and the set of valid activities.
         At the end of matchmaking pushes the result to notification queue.
         """
-        match_list = {}
-        activity_list = Activity.get_active_activities_by_category(interest.category)
-        match_list = MatchMaker.match_interests_with_activities([ndb.Key(urlsafe=interest).get()], activity_list, match_list)
+        interest = ndb.Key(urlsafe=interest_key).get()
+        activity_list = Activity.get_active_activities_by_category_and_building(interest.category,interest.building_name)
+        match_list = MatchMaker.match_interests_with_activities([interest], activity_list,{})
         self._process_notification(match_list)
 
     def _get_categories(self):
         return utils.CATEGORY
 
     def _process_notification(self,match_list):
+        pass
+
+
+    def _notify_interest_owner(self):
         pass
 
 

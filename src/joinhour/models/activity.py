@@ -46,6 +46,11 @@ class Activity(ndb.Model):
         return cls.query(cls.category == category,cls.status.IN([Activity.INITIATED,Activity.FORMING])).fetch()
 
     @classmethod
+    def get_active_activities_by_category_and_building(cls,category,building_name):
+        return cls.query(cls.category == category,cls.building_name == building_name,cls.status.IN([Activity.INITIATED,Activity.FORMING])).fetch()
+
+
+    @classmethod
     def get_activities_by_building(cls,building_name):
         return cls.query(cls.building_name == building_name).order(-cls.date_entered).fetch()
 
