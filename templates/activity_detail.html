@@ -19,7 +19,7 @@ The way this needs to work is when you click on "detail" link for a specific act
     <col width="90">
     <tr><TD>Category </TD> <TD>{{ a.category }}</TD></tr>
     <tr><TD>Duration  </TD> <TD>{{ a.duration }}</TD></tr>
-    <tr><TD>Expiration:  </TD> <TD>{{ a.expiration }}</TD></tr>
+    <tr><TD>Expires in:  </TD> <TD>{{ a.key.urlsafe() |expires_in('Activity')}}</TD></tr>
     <tr><TD>Note:  </TD> <TD>{{ a.note }}</TD></tr>
     <tr><TD>Number joined:  </TD> <TD>{{ a.headcount }}</TD></tr>
     <tr><td/><TD><a href="/join_activity/?activity_id={{ a.key.urlsafe() }}"><button>JOIN</button></a></TD></tr>
