@@ -27,7 +27,10 @@ class JoinActivityHandler(BaseHandler):
             message = _("Congratulations! You joined an activity for " + ndb.Key(urlsafe=key).get().category)
             self._push_notification(user_id,activity_manager.get_activity())
             self.add_message(message, 'success')
-        return self.redirect_to('activity')
+            return self.redirect_to('activity_detail')
+        else:
+            self.add_message(message, 'failure')
+            return self.redirect_to('activity')
 
     def post(self):
         # if not self.form.validate():
