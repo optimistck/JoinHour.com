@@ -13,7 +13,18 @@ from src.joinhour.models.activity import Activity
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.interest_manager import InterestManager
 from src.joinhour.models.interest import Interest
+def minute_format(value):
+    if value != Activity.EXPIRED and value != Interest.EXPIRED:
+        total_seconds = int(value.total_seconds())
+        hours, remainder = divmod(total_seconds,60*60)
+        minutes, seconds = divmod(remainder,60)
+        if hours > 0:
+            return str(hours) + ' hours ' + str(minutes) + ' minutes'
+        else:
+            return str(minutes) + ' minutes'
+    return value
 
+jinja2.filters.FILTERS['minute_format'] = minute_format
 
 
 def expires_in(key,entity_type):

@@ -33,7 +33,7 @@
         <TD>{{ a.category }}</TD>
         <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
         <TD>{{ a.duration }}</TD>
-        <TD>{{ a.key.urlsafe() |expires_in('Activity')}}</TD>
+        <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
         <TD><a href="/join_activity/?key={{ a.key.urlsafe() }}"><button>JOIN</button></a></TD>
 
         <TD>
@@ -57,7 +57,7 @@
     {% for i in interests %}
     <tr>
         <td>{{ i.category }}</td>
-        <td>{{ i.key.urlsafe() | expires_in('Interest') }}</td>
+        <td>{{ i.key.urlsafe() | expires_in('Interest')  | minute_format}}</td>
     </tr>
     {% endfor %}
 
