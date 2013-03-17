@@ -4,10 +4,17 @@ from google.appengine.ext import ndb
 
 # Boilerplate imports
 from boilerplate.lib.basehandler import BaseHandler
-from boilerplate.lib.basehandler import user_required
-from src.joinhour.models.activity import Activity
+from src.joinhour.activity_manager import ActivityManager
+from src.joinhour.interest_manager import InterestManager
+import jinja2
 
+def expires_in(key,entity_type):
+    if entity_type == 'Activity':
+        return ActivityManager.get(key).expires_in()
+    else:
+        return InterestManager.get(key).expires_in()
 
+jinja2.filters.FILTERS['expires_in'] = expires_in
 
 #JH experimental
 
