@@ -20,10 +20,11 @@ class JoinActivityHandler(BaseHandler):
     #TODO: load the categories and sub-categories from the pull-down menu
     def get(self):
         user_id = self.user_id
-        activity_manager = ActivityManager.get(self.request.get('key'))
+        key = self.request.get('key')
+        activity_manager = ActivityManager.get(key)
         (success, message) = activity_manager.connect(user_id)
         if success:
-            message = _("Congratulations! You joined an activity for ")
+            message = _("Congratulations! You joined an activity for " + ndb.Key(urlsafe=key).get().category)
             self._push_notification(user_id,activity_manager.get_activity())
             self.add_message(message, 'success')
         return self.redirect_to('activity')
