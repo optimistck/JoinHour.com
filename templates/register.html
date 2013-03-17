@@ -9,7 +9,7 @@
     <div class="row-fluid">
             <div class="span6">
                 <form id="form_register" action="{{ url|safe }}" method="post" class="well form-horizontal">
-                    <I>You're about to join hundreds of neighbors in your building who want to connect to do activities together</I><BR>
+                    
                     <fieldset>
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                         {{ macros.field(form.username, label=_("Username"), placeholder=_("Enter your")+" "+_("Username"), class="input-xlarge focused required") }}
@@ -24,14 +24,19 @@
                         {{ macros.field(form.country, label=_("I want this because")) }}
                         <div class="form-actions">
                                     <label class="checkbox">
-                        <input id="agree" type="checkbox" value="">I read the <a href="#" target="_blank">Privacy Policy</a> and agree with <a href="#" target="_blank">Terms Of Service</a>
+                        <input id="agree" type="checkbox" value="">I read the <a href="{{ uri_for("terms") }}" target="_blank">Privacy Policy</a> and agree with the <a href="{{ uri_for("terms") }}" target="_blank">Terms Of Service</a>. We collect for just enough data to make meaningful connections.  
                         </label>    <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
                         </div>
                     </fieldset>
                 </form>
             </div>
+            <div class="span3">
+                <I>You're about to join hundreds of neighbors in your building who want to connect in real-time to do activities together with no planning.</I><BR>
+                </div>
+
         </div>
     </div>
+
 
 {% endblock %}
 
