@@ -1,4 +1,4 @@
-from google.appengine.api import taskqueue
+
 
 __author__ = 'ashahab'
 from webapp2_extras.i18n import gettext as _
@@ -8,6 +8,7 @@ from boilerplate.lib.basehandler import BaseHandler
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.activity_manager import ActivityManager
+from google.appengine.api import taskqueue
 from src.joinhour.models.activity import Activity
 # import handlers
 

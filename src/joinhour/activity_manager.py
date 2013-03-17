@@ -6,7 +6,6 @@ from boilerplate import models
 from google.appengine.ext import ndb
 from  datetime import datetime
 from datetime import timedelta
-from google.appengine.api import taskqueue
 from google.appengine.api.taskqueue import Task
 
 

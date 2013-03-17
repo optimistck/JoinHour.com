@@ -1,0 +1,24 @@
+<p>Hello <strong>{{interest_creator_username}}</strong>,</p>
+
+<p>
+We have found new matches for you. Check ’em out!
+</p>
+
+<p>New matches</p>
+
+	{% for match in matches %}
+		<li>{{match.activity.category}}</li>
+        <li>{{match.activity.note}}</li>
+    {% endfor %}
+
+
+<p>Thank you for using JoinHour.com<br>
+{{ app_name }} Team
+
+<BR>
+<p>
+If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>
