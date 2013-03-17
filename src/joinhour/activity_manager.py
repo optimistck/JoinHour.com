@@ -53,34 +53,33 @@ class ActivityManager(object):
         user_activity = UserActivity(user=user_info.key,
                                      activity=self._activity.key)
         user_activity.put()
-        #If the status is INITIATED change it to FORMING
         self._activity.headcount += 1
-        if self._activity.status == Activity.INITIATED and self.can_start():
-            self._change_status(Activity.FORMING)
-            #else If the status is FORMING
-            #If this would be the last spot change status to COMPLETE
-            #Queue a task in JoinNotificationQueue for notifying user
-        if self.spots_remaining() == 0:
-            self._change_status(Activity.COMPLETE)
-            #else Don't change the status
-            #Queue a task in JoinNotificationQueue for notifying user
+        #An activity will be marked as COMPLETE if it satisfies the minm number of people required requirement
+        if self._activity.status == Activity.INITIATED or self._activity.status == Activity.FORMING:
+            if self._is_complete():
+                self._change_status(Activity.COMPLETE)
+            else:
+                self._change_status(Activity.FORMING)
         return True, message
 
     def spots_remaining(self):
         max_count = int(self._activity.max_number_of_people_to_join.split()[0])
         return max_count - self._activity.headcount
 
-    def can_start(self):
+    def _is_complete(self):
         min_count = int(self._activity.min_number_of_people_to_join.split()[0])
         return min_count <= self._activity.headcount
+
+
+
 
     def mark_expired(self):
         self._change_status(Activity.EXPIRED)
 
     def can_join(self, userId):
         #First check the status
-        if self._activity == Activity.EXPIRED or self._activity == Activity.COMPLETE:
-            return False, "Activity is expired or complete."
+        if self._activity == Activity.EXPIRED:
+            return False, "Activity is already expired"
         #Are there any activities with this user and this activity?
         user_info = models.User.get_by_id(long(userId))
         if self._activity.username == user_info.username:
@@ -93,7 +92,7 @@ class ActivityManager(object):
             return True, "Success"
         else:
             headcount = self._activity.headcount
-            max_count = self._activity.max_number_of_people_to_join.split()[0]
+            max_count = int(self._activity.max_number_of_people_to_join.split()[0])
             if headcount < max_count:
                 return True, "Success"
             return False, "This activity is full."
@@ -119,6 +118,9 @@ class ActivityManager(object):
         #TODO Once the activity is expired or complete need to move it to a different table. Primarly for analytics support
         self._activity.status = new_status
         self._activity.put()
+
+
+
 
 
 
