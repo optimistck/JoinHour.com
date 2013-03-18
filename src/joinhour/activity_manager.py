@@ -77,7 +77,7 @@ class ActivityManager(object):
 
     def can_join(self, userId):
         #First check the status
-        if self._activity == Activity.EXPIRED:
+        if self.expires_in() == Activity.EXPIRED:
             return False, "Activity is already expired"
         #Are there any activities with this user and this activity?
         user_info = models.User.get_by_id(long(userId))
