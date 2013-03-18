@@ -71,7 +71,7 @@ class ActivityHandler(BaseHandler):
         
         self.add_entity_key_to_pass(entity_key)
         self.add_message(message, 'success')
-        return self.redirect_to('activity_detail')
+        return self.redirect_to('activity')
 
 
 
