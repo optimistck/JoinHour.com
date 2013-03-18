@@ -35,8 +35,8 @@ config = {
 'locales' : ['en_US', 'es_ES', 'it_IT', 'zh_CN', 'id_ID', 'fr_FR', 'de_DE', 'ru_RU', 'pt_BR', 'cs_CZ'],
 
 # contact page email settings
-'contact_sender' : "JoinHourStat@gmail.com",
-'contact_recipient' : "JoinHourStat@gmail.com",
+'contact_sender' : "we@joinhour.com",
+'contact_recipient' : "we@joinhour.com",
 
 # Password AES Encryption Parameters
 'aes_key' : "12_24_32_BYTES_KEY_FOR_PASSWORDS",
@@ -95,7 +95,7 @@ config = {
 
 # fellas' list
 'developers' : (
-    ('JoinHour', 'JoinHourStat@gmail.com'),
+    ('JoinHour', 'we@joinhour.com'),
 ),
 
 # ----> ADD MORE CONFIGURATION OPTIONS HERE <----
