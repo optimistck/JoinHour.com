@@ -28,7 +28,7 @@ class JoinActivityHandler(BaseHandler):
             message = _("Congratulations! You joined an activity for " + ndb.Key(urlsafe=key).get().category)
             self._push_notification(user_id,activity_manager.get_activity())
             self.add_message(message, 'success')
-            return self.redirect_to('activity_detail')
+            return self.redirect_to('activity')
         else:
             self.add_message(message, 'failure')
             return self.redirect_to('activity')
