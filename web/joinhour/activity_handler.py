@@ -52,7 +52,8 @@ class ActivityHandler(BaseHandler):
             return self.redirect_to('login')
         user_info = models.User.get_by_id(long(self.user_id))
         building_name = user_info.building
-        self.view.activities = Activity.query(Activity.building_name == building_name,Activity.username != user_info.username).fetch()
+        activities_from_db = Activity.query(Activity.building_name == building_name, Activity.username != user_info.username).fetch()
+        self.view.activities = [activity for activity in activities_from_db if ActivityManager.get(activity.key.urlsafe()).can_join(self.user_id)[0]]
         self.view.interests = Interest.query(Interest.building_name == building_name,Interest.username != user_info.username).fetch()
         params = {}
         return self.render_template('stat.html', **params)
