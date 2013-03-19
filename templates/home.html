@@ -31,7 +31,7 @@
                         <TD>{{ a.category }}</TD>
                         <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
                         <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
-                        <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button>Yes</button></a></TD>
+                        <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-primary">Yes</button></a></TD>
                     </tr>
                 {% endfor %}
             </table>
@@ -52,7 +52,7 @@
                     <tr>
                         <td>{{ i.category }}</td>
                         <td>{{ i.key.urlsafe() | expires_in('Interest') | minute_format }}</td>
-                        <TD><a href="/?key={{ i.key.urlsafe()}}&action=delete"><button>Yes</button></a></TD>
+                        <TD><a href="/?key={{ i.key.urlsafe()}}&action=delete"><button class="btn btn-primary">Yes</button></a></TD>
                     </tr>
                 {% endfor %}
             </table>
@@ -74,7 +74,7 @@
                     <TD>Past event X</TD>
                     <TD>05/01</TD>
                     <TD>1 day and 3 hours</TD>
-                    <TD><a href="{{ uri_for("feedback") }}"><button>Feedback</button></a></TD>
+                    <TD><a href="{{ uri_for("feedback") }}"><button class="btn btn-primary">Feedback</button></a></TD>
                 </tr>
             </table>
         </p>

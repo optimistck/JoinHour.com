@@ -102,3 +102,8 @@ indexes:
   - name: username
   - name: __key__
     direction: desc
+
+- kind: UserActivity
+  properties:
+  - name: activity
+  - name: user
