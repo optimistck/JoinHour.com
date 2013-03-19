@@ -1,4 +1,4 @@
-
+from src.joinhour.models.user_activity import UserActivity
 
 __author__ = 'ashahab'
 from webapp2_extras.i18n import gettext as _
@@ -26,7 +26,7 @@ class JoinActivityHandler(BaseHandler):
         (success, message) = activity_manager.connect(user_id)
         if success:
             message = _("Congratulations! You joined an activity for " + ndb.Key(urlsafe=key).get().category)
-            self._push_notification(user_id,activity_manager.get_activity())
+            self._push_notification(user_id,activity_manager)
             self.add_message(message, 'success')
             return self.redirect_to('activity')
         else:
@@ -49,37 +49,29 @@ class JoinActivityHandler(BaseHandler):
     def form(self):
         return forms.JoinActivityForm(self)
 
-    def _push_notification(self,user_id,activity):
+    def _push_notification(self,user_id,activity_manager):
         user = models.User.get_by_id(long(user_id))
         email_url = self.uri_for('taskqueue-send-email')
-        activity_user = models.User.get_by_username(activity.username)
-        #To the participant
-        template_val = {
-            "app_name": self.app.config.get('app_name'),
-            "activity_creator_username": activity.username,
-            "activity_category": activity.category,
-            "activity_note": activity.note,
-            "requester_name":user.username,
-            "requester_building":user.building,
-            "requester_email":user.email
-        }
-        body = self.jinja2.render_template('emails/activity_go_notification_for_activity_participant.txt', **template_val)
-        taskqueue.add(url = email_url,params={
-            'to':user.email,
-            'subject' : '[JoinHour.com]Your Connect request confirmation',
-            'body' : body
-        })
+        activity_user = models.User.get_by_username(activity_manager.get_activity().username)
+        participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_activity().key).fetch(projection = [UserActivity.user])
+        participants = []
+        for participant in participants_list:
+            participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))
+
         #To the activity owner
         template_val = {
             "app_name": self.app.config.get('app_name'),
-            "activity_creator_username": activity.username,
-            "activity_category": activity.category,
-            "activity_note": activity.note
+            "owner_name":activity_user.name+' '+activity_user.last_name,
+            "activity": activity_manager.get_activity(),
+            "participant_username":user.name+' '+user.last_name,
+            "complete": activity_manager.status() == Activity.COMPLETE,
+            "expires_in": activity_manager.expires_in(),
+            "participants":''.join(participants)
         }
-        body = self.jinja2.render_template('emails/activity_go_notification_for_activity_owner.txt', **template_val)
+        body = self.jinja2.render_template('emails/activity_new_companion_notification_for_activity_owner.txt', **template_val)
         taskqueue.add(url = email_url,params={
-            'to':user.email,
-            'subject' : '[JoinHour.com]Your Connect request confirmation',
+            'to':activity_user.email,
+            'subject' : '[JoinHour.com]New companion for your activity',
             'body' : body
         })
 
