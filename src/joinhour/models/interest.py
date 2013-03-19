@@ -7,7 +7,7 @@ class Interest(ndb.Model):
     EXPIRED = 'EXPIRED'
     COMPLETE = 'COMPLETE'
     category = ndb.StringProperty()
-    date_entered = ndb.DateTimeProperty(auto_now_add=True)
+    date_entered = ndb.DateTimeProperty()
     username = ndb.StringProperty()
     duration = ndb.StringProperty()
     expiration = ndb.StringProperty()

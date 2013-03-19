@@ -22,7 +22,7 @@ Here are some more details about this activity. Interested in Joining? Just clic
     <tr><TD>Expires in:  </TD> <TD>{{ a.key.urlsafe() | expires_in('Activity') | minute_format}}</TD></tr>
     <tr><TD>Note:  </TD> <TD>{{ a.note }}</TD></tr>
     <tr><TD>Number joined:  </TD> <TD>{{ a.headcount }}</TD></tr>
-    <tr><td/><TD><a href="/join_activity/?key={{ a.key.urlsafe() }}"><button>JOIN</button></a></TD></tr>
+    <tr><td/><TD><a href="/join_activity/?key={{ a.key.urlsafe() }}"><button class="btn btn-primary">JOIN</button></a></TD></tr>
 </table>
 
 

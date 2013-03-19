@@ -1,4 +1,4 @@
 cron:
-- description: daily expiry job
+- description: activity and interest expiry job
   url: /expire_activities/
   schedule: every 5 minutes 

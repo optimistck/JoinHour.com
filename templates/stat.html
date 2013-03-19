@@ -34,10 +34,10 @@
         <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
         <TD>{{ a.duration }}</TD>
         <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
-        <TD><a href="/join_activity/?key={{ a.key.urlsafe() }}"><button>JOIN</button></a></TD>
+        <TD><a href="/join_activity/?key={{ a.key.urlsafe() }}"><button class="btn btn-primary">JOIN</button></a></TD>
 
         <TD>
-            <a href="/activity_detail/?ID={{ a.key.urlsafe() }}"><button>Details</button></a>
+            <a href="/activity_detail/?ID={{ a.key.urlsafe() }}"><button class="btn btn-primary">Details</button></a>
         </TD>
     </tr>
     {% endfor %}

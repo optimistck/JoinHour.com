@@ -1,0 +1,40 @@
+<p>Hello <strong>{{owner_name}}</strong>,</p>
+
+<p>
+You have a new companion for your activity  <strong>{{activity.category}}</strong>. <strong>{{participant_username}}</strong> will be joining you.
+</p>
+
+<p>
+
+{%if complete%}
+
+With this your activity is now Go! We will of course notify you if you have a new companion.
+
+{% endif %}
+
+<p>
+Here is a quick summary for this activity :</p>
+<ul>
+	<li>
+		<em>Name</em> - {{activity.category}}</li>
+	<li>
+		<em>Must start in</em> - {{expires_in}} </li>
+	<li>
+		<em>Companions joined so far</em> - {{participants}}
+	</li>
+</ul>
+
+
+
+
+<p>Have fun, and thank you for using JoinHour.com<br>
+
+{{ app_name }} Team
+
+<BR>
+<p>
+If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>

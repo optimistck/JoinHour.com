@@ -15,12 +15,13 @@ class InterestManager(object):
                             duration = kwargs['duration'],
                             expiration = kwargs['expiration'],
                             username = kwargs['username'],
-                            building_name = kwargs['building_name']
+                            building_name = kwargs['building_name'],
+                            date_entered = datetime.utcnow()
 
         )
         interest.put()
-        task = Task(url='/match_maker/',method='GET',params={'interest': interest.key.urlsafe()})
-        task.add('matchmaker')
+        #task = Task(url='/match_maker/',method='GET',params={'interest': interest.key.urlsafe()})
+        #task.add('matchmaker')
         return interest
 
 
@@ -39,7 +40,7 @@ class InterestManager(object):
             return Interest.EXPIRED
         else:
             expiration_time = int(str(self._interest.expiration))
-            now = datetime.now()
+            now = datetime.utcnow()
             if now < (self._interest.date_entered + timedelta(minutes=expiration_time)):
                 return  (self._interest.date_entered + timedelta(minutes=expiration_time)) - now
             return Interest.EXPIRED

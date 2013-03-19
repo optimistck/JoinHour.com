@@ -28,11 +28,12 @@ class ActivityManager(object):
                             min_number_of_people_to_join = kwargs['min_number_of_people_to_join'],
                             max_number_of_people_to_join = kwargs['max_number_of_people_to_join'],
                             username = kwargs['username'],
-                            building_name = kwargs['building_name']
+                            building_name = kwargs['building_name'],
+                            date_entered = datetime.utcnow()
         )
         activity.put()
-        task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
-        task.add('matchmaker')
+        #task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
+        #task.add('matchmaker')
         return activity
 
     @classmethod
@@ -107,9 +108,10 @@ class ActivityManager(object):
             return Activity.EXPIRED
         else:
             expiration_time = int(str(self._activity.expiration))
-            now = datetime.now()
-            if now < (self._activity.date_entered + timedelta(minutes=expiration_time)):
-                return  (self._activity.date_entered + timedelta(minutes=expiration_time)) - now
+            now = datetime.utcnow()
+            activity_creation_date = self._activity.date_entered
+            if now < (activity_creation_date + timedelta(minutes=expiration_time)):
+                return  (activity_creation_date + timedelta(minutes=expiration_time)) - now
             return Activity.EXPIRED
 
     def _change_status(self,new_status):
