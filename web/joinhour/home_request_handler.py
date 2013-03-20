@@ -50,7 +50,8 @@ class HomeRequestHandler(RegisterBaseHandler):
             key = self.request.get('key')
             ndb.Key(urlsafe=key).delete()
         user_info = models.User.get_by_id(long(self.user_id))
-        self.view.activities = Activity.query(Activity.username == user_info.username).fetch()
+        activities_from_db = Activity.query(Activity.username == user_info.username).fetch()
+        self.view.activities = activities_from_db
         self.view.interests = Interest.query(Interest.username == user_info.username).fetch()
-
+        self.view.past_activities = [activity for activity in activities_from_db if activity.status == Activity.COMPLETE]
         return self.render_template('home.html', **params)
