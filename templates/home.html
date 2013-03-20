@@ -57,7 +57,7 @@
                 {% endfor %}
             </table>
         </p>
-
+        {% if past_activities %}
         <p>
             {% trans %}<H3>How did it go?</H3>{% endtrans %}
             <table class="table table-striped table-bordered">
@@ -69,16 +69,17 @@
                         <th>Action</th>
                     </tr>
                 </thead>
-
+                {% for a in past_activities %}
                 <tr>
-                    <TD>Past event X</TD>
-                    <TD>05/01</TD>
+                    <TD>{{ a.category }}</TD>
+                    <TD>{{ a.date_entered }}</TD>
                     <TD>1 day and 3 hours</TD>
                     <TD><a href="{{ uri_for("feedback") }}"><button class="btn btn-primary">Feedback</button></a></TD>
                 </tr>
+                {% endfor %}
             </table>
         </p>
-
+        {% endif %}
         <BR>
         <BR><BR>
             <!--
