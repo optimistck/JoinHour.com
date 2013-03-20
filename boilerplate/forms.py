@@ -130,7 +130,7 @@ class JoinActivityForm(BaseForm):
 
 class RegisterForm(PasswordMixin, ConfirmPasswordMixin, UserMixin):
     email = fields.TextField(_('Email'), [validators.Required(), validators.Length(min=7, max=FIELD_MAXLENGTH), validators.regexp(utils.EMAIL_REGEXP, message=_('Invalid email address.'))])
-    agree = fields.BooleanField(_('Agree'), [validators.Required()])
+   # agree = fields.BooleanField(_('Agree'), [validators.Required()])
     pass
 
 
