@@ -1,3 +1,5 @@
+from src.joinhour.models.interest import Interest
+
 __author__ = 'aparbane'
 from datetime import timedelta
 from src.joinhour.models.match import Match
@@ -44,6 +46,9 @@ class MatchMaker(object):
                 match = Match(interest=interest.key,
                               activity=activity.key,match_type=match_type)
                 match.put()
+                if match_type == cls.CLOSE_MATCH:
+                    interest.status = Interest.COMPLETE
+                    interest.put()
                 if interest.username in match_list:
                     match_list[interest.username].append(match)
                 else:

@@ -7,6 +7,7 @@ from google.appengine.ext import ndb
 from  datetime import datetime
 from datetime import timedelta
 from google.appengine.api.taskqueue import Task
+import os
 
 
 class ActivityManager(object):
@@ -32,8 +33,9 @@ class ActivityManager(object):
                             date_entered = datetime.utcnow()
         )
         activity.put()
-        #task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
-        #task.add('matchmaker')
+        if os.environ.get('ENV_TYPE') is None:
+            task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe()})
+            task.add('matchmaker')
         return activity
 
     @classmethod

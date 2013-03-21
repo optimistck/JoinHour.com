@@ -16,11 +16,17 @@ With this your activity is now Go! We will of course notify you if you have a ne
 Here is a quick summary for this activity :</p>
 <ul>
 	<li>
-		<em>Name</em> - {{activity.category}}</li>
+		<em>Name</em> - {{activity.category}}
+	</li>
+
+	<li>
+		<em>Activity Initiator</em> - {{owner_name}}(you)</li>
+	</li>
 	<li>
 		<em>Must start in</em> - {{expires_in}} </li>
+	</li>
 	<li>
-		<em>Companions joined so far</em> - {{participants}}
+		<em>Your other companions </em> - {{participants}}
 	</li>
 </ul>
 

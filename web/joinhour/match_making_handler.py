@@ -23,10 +23,12 @@ class MatchMakingHandler(BaseHandler):
     def get(self):
         try:
             if self.request.get('activity') != '':
-                self.full_match()
+                self.match_activity_to_interests(self.request.get('activity'))
             elif self.request.get('interest') != '':
                 interest = self.request.get('interest')
-                self.single_match(self.request.get('interest'))
+                self.match_interest_to_activities(self.request.get('interest'))
+            else:
+                self.full_match()
         except Exception , e:
             print e
 
@@ -45,7 +47,7 @@ class MatchMakingHandler(BaseHandler):
             match_result_list = MatchMaker.match_interests_with_activities(interest_list,activity_list,match_result_list)
         self._process_notification(match_result_list)
 
-    def single_match(self,interest_key):
+    def match_interest_to_activities(self,interest_key):
         """
         Calls MatchMaker to do match between a single interest and the set of valid activities.
         At the end of matchmaking pushes the result to notification queue.
@@ -53,6 +55,12 @@ class MatchMakingHandler(BaseHandler):
         interest = ndb.Key(urlsafe=interest_key).get()
         activity_list = Activity.get_active_activities_by_category_and_building(interest.category,interest.building_name)
         match_list = MatchMaker.match_interests_with_activities([interest], activity_list,{})
+        self._process_notification(match_list)
+
+    def match_activity_to_interests(self,activity_key):
+        activity = ndb.Key(urlsafe=activity_key).get()
+        interest_list = Interest.get_active_interests_by_category_and_building(activity.category, activity.building_name);
+        match_list = MatchMaker.match_interests_with_activities(interest_list, [activity],{})
         self._process_notification(match_list)
 
     def _get_categories(self):
