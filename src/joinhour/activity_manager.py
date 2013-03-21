@@ -1,7 +1,9 @@
 __author__ = 'aparbane'
 
 from src.joinhour.models.activity import Activity
+from src.joinhour.models.interest import Interest
 from src.joinhour.models.user_activity import UserActivity
+from src.joinhour.interest_manager import InterestManager
 from boilerplate import models
 from google.appengine.ext import ndb
 from  datetime import datetime
@@ -44,13 +46,33 @@ class ActivityManager(object):
         return activity
 
     @classmethod
+    def create_activity_from_interest(cls, **kwargs):
+        interest = ndb.Key(urlsafe=kwargs['interest_id']).get()
+        if InterestManager.get(interest.key.urlsafe()).expires_in() == Interest.EXPIRED:
+            return False, "Cannot create activity from expired interest"
+        #Create the activity
+        activity = ActivityManager.create_activity(
+                                        building_name=interest.building_name,category=interest.category,
+                                        duration=interest.duration,expiration = interest.expiration,
+                                        username = kwargs['username'],note = kwargs['note'],
+                                        ip = kwargs['ip'],
+                                        min_number_of_people_to_join = kwargs['min_number_of_people_to_join'],
+                                        max_number_of_people_to_join = kwargs['max_number_of_people_to_join'])
+        #mark interest complete
+        interest.status = interest.COMPLETE
+        user = models.User.get_by_username(interest.username)
+        success, message = ActivityManager.get(activity.key.urlsafe()).connect(user.key.id())
+        interest.put()
+        #Notify interest owner
+        return success, message, user.key.id(), activity.key.urlsafe()
+    @classmethod
     def get(cls,key):
         return ActivityManager(key)
 
     def __init__(self,key):
         self._activity = ndb.Key(urlsafe=key).get()
 
-    def connect(self,user_id,**kwargs):
+    def connect(self,user_id):
         (canJoin, message) = self.can_join(user_id)
         if not canJoin:
             return False, message
