@@ -7,6 +7,8 @@
         {% trans %}My Corner{% endtrans %}
 {% endblock %}
 
+
+
 {% block content %}
 
     {% if user_id %}
@@ -22,16 +24,31 @@
                         <th>Name</th>
                         <th>Spots Remaining</th>
                         <th>Expires in</th>
-                        <th>Delete?</th>
+                        <th>Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
                 {% for a in activities %}
+
                     <tr>
                         <TD>{{ a.category }}</TD>
                         <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
                         <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
-                        <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-primary">Yes</button></a></TD>
+                        {% if a.status == 'COMPLETE' %}
+                            <TD>
+                                <span class="label label-success">GO</span>
+                            </TD>
+                        {% elif  a.status == 'FORMING' %}
+                            <TD>
+                                <span class="label label-info">FORMING</span>
+                            </TD>
+                        {% else %}
+                            <TD>
+                                <span class="label">{{a.status}}</span>
+                            </TD>
+                             <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Delete</button></a></TD>
+                        {% endif %}
                     </tr>
                 {% endfor %}
             </table>
@@ -45,23 +62,31 @@
                         <th>Category</th>
                         <th>Expires in</th>
                         <th>Status</th>
-                        <th>Delete?</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
 
                 {% for i in interests %}
-                    <tr>
+                    <tr >
                         <td>{{ i.category }}</td>
                         <td>{{ i.key.urlsafe() | expires_in('Interest') | minute_format }}</td>
-                        <td>
-                            {%if i.status == 'COMPLETE' %}
+                        {% if i.status == 'COMPLETE' %}
+                            <td>
                                 <span class="label label-success">Match found</span>
-                            {% else %}
-                                <span class="label">Posted</span>
-                            {% endif %}
-                        </td>
-                        <td><a href="/?key={{ i.key.urlsafe()}}&action=delete"><button class="btn btn-primary">Yes</button></a></td>
+                            </td>
+                            <td>
+                                <a href="/activity_detail/?ID={{ i.key | get_matching_activity_key }}"><button class="btn btn-link">See the match</button></a></td>
+                            </td>
+                        {%  else %}
+                            <td>
+                                <span class="label">{{i.status}}</span>
+                            </td>
+                            <td>
+                                <a href="/?key={{ i.key.urlsafe()}}&action=delete"><button class="btn btn-link">Delete</button></a>
+                            </td>
+                        {% endif %}
                     </tr>
+
                 {% endfor %}
             </table>
         </p>

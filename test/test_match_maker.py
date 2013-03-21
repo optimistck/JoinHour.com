@@ -30,31 +30,45 @@ class MatchMakerTest(unittest.TestCase):
     def test_match_making(self):
         interest_list = []
         activity_list = []
-        interest_list.append(InterestManager.create_interest(category='Go for a run',duration='40',expiration='180',username='testuser1',building_name='building_name'))
-        interest_list.append(InterestManager.create_interest(category='Go for a run',duration='40',expiration='180',username='testuser2',building_name='building_name'))
-        interest_list.append(InterestManager.create_interest(category='Go for a run',duration='20',expiration='180',username='testuser1',building_name='building_name'))
+        #Create some interests
+        interest_list.append(InterestManager.create_interest(category='Go for a run',duration='40',expiration='180',username='testuser1',building_name='building1'))
+        interest_list.append(InterestManager.create_interest(category='Go for a run',duration='40',expiration='180',username='testuser2',building_name='building1'))
+        interest_list.append(InterestManager.create_interest(category='Go for a run',duration='20',expiration='180',username='testuser1',building_name='building1'))
+
+        #Create some activities
         activity_list.append(ActivityManager.create_activity(category='Go for a run',duration='40',expiration='180',username='testuser',
-                                                              building_name ='building_name',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside'))
+                                                              building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside'))
         activity_list.append(ActivityManager.create_activity(category='Play pool',duration='40',expiration='180',username='testuser',
-                                                             building_name='building_name',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside'))
+                                                             building_name='building1',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside'))
+
+        #Assert if interests and activities are created fine
         self.assertEqual(3,len(Interest.get_active_interests_by_category('Go for a run')))
         self.assertEqual(1,len(Activity.get_active_activities_by_category('Go for a run')))
         self.assertEqual(1,len(Activity.get_active_activities_by_category('Play pool')))
-        match_list = MatchMaker.match_interests_with_activities(interest_list,activity_list)
-        self.assertEqual(2,len(match_list))
-        self.assertEqual(4,len(match_list['testuser1']))
-        self.assertEqual(2,len(match_list['testuser2']))
-        self.assertEqual(MatchMaker.CLOSE_MATCH,match_list['testuser2'][0].match_type)
-        self.assertEqual(MatchMaker.CATEGORY_MISMATCH,match_list['testuser2'][1].match_type)
-        self.assertEqual(MatchMaker.CLOSE_MATCH,match_list['testuser1'][0].match_type)
-        self.assertEqual(MatchMaker.CATEGORY_MISMATCH,match_list['testuser1'][1].match_type)
-        self.assertEqual(MatchMaker.DURATION_MISMATCH,match_list['testuser1'][2].match_type)
-        self.assertEqual(MatchMaker.CATEGORY_MISMATCH,match_list['testuser1'][3].match_type)
-        match_list = MatchMaker.match_interests_with_activities([InterestManager.create_interest(category='Go for a run',duration='40',expiration='180',username='testuser1',building_name='building_name')],activity_list,{})
-        self.assertEqual(1,len(match_list))
-        self.assertEqual(MatchMaker.CLOSE_MATCH,match_list['testuser1'][0].match_type)
 
 
+        match_list = MatchMaker.match_all()
+        self.assertEqual(2, len(match_list))
+        self.assertEqual(1, len(match_list['testuser1']))
+        self.assertEqual(1, len(match_list['testuser2']))
+        interest = InterestManager.create_interest(category='Play pool',duration='40',expiration='180',username='testuser1',building_name='building1')
+        interest_list.append(interest)
+        match_list = MatchMaker.match_interest_with_activities(interest.key.urlsafe())
+        self.assertEqual(1, len(match_list))
+        self.assertEqual(1, len(match_list['testuser1']))
+
+        activity = ActivityManager.create_activity(category='Play pool',duration='40',expiration='180',username='testuser',
+                                        building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside')
+
+        match_list = MatchMaker.match_activity_with_interests(activity.key.urlsafe())
+        self.assertEqual(0, len(match_list))
+
+        activity = ActivityManager.create_activity(category='Go for a run',duration='20',expiration='180',username='testuser',
+                                                   building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside')
+
+        match_list = MatchMaker.match_activity_with_interests(activity.key.urlsafe())
+        self.assertEqual(1, len(match_list))
+        self.assertEqual(1, len(match_list['testuser1']))
 
 
 if __name__ == '__main__':
