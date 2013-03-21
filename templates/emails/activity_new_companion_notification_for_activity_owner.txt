@@ -18,9 +18,14 @@ Here is a quick summary for this activity :</p>
 	<li>
 		<em>Name</em> - {{activity.category}}</li>
 	<li>
-		<em>Must start in</em> - {{expires_in}} </li>
 	<li>
-		<em>Companions joined so far</em> - {{participants}}
+		<em>Activity Initiator</em> - {{owner_name}}(you)</li>
+	</li>
+	<li>
+		<em>Must start in</em> - {{expires_in}} </li>
+	</li>
+	<li>
+		<em>Participants </em> - {{participants}}
 	</li>
 </ul>
 
