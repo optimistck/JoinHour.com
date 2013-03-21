@@ -1,19 +1,23 @@
-<p>Hello <strong>{{username}}</strong>,</p>
+<p>Hello <strong>{{participant_username}}</strong>,</p>
 
 <p>
-Your activity is a Go! All activity criteria has been met and the notification to all the participants sent out. The activity initiator is {{activity_creator_username}}. 
-</p>
+Your activity is a Go! All activity criteria has been met and the notification to all the participants sent out.
 
-<p>
-Activity detail
-{{activity_category}}
-{{activity_note}}
-
-Activity companion details
-{{requester_name}}
-{{requester_building}}
-{{requester_email}}
-</p>
+Here is a quick summary for this activity :</p>
+<ul>
+	<li>
+		<em>Name</em> - {{activity.category}}</li>
+	</li>
+	<li>
+		<em>Activity Initiator</em> - {{owner_name}}</li>
+	</li>
+	<li>
+		<em>Must start in</em> - {{expires_in}} </li>
+	</li>
+	<li>
+		<em>Your other companions </em> - {{participants}}
+	</li>
+</ul>
 
 <p>Enjoy the connection, and thank you for using JoinHour.com<br>
 {{ app_name }} Team

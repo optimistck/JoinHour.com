@@ -5,6 +5,7 @@ from  datetime import datetime
 from datetime import timedelta
 from google.appengine.api import taskqueue
 from google.appengine.api.taskqueue import Task
+import os
 
 
 class InterestManager(object):
@@ -20,8 +21,9 @@ class InterestManager(object):
 
         )
         interest.put()
-        #task = Task(url='/match_maker/',method='GET',params={'interest': interest.key.urlsafe()})
-        #task.add('matchmaker')
+        if os.environ.get('ENV_TYPE') is None:
+            task = Task(url='/match_maker/',method='GET',params={'interest': interest.key.urlsafe()})
+            task.add('matchmaker')
         return interest
 
 
