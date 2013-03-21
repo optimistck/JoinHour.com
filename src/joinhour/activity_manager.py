@@ -33,8 +33,8 @@ class ActivityManager(object):
                             date_entered = datetime.utcnow()
         )
         activity.put()
-        if os.environ.get('ENV_TYPE') != 'TEST':
-            task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe})
+        if os.environ.get('ENV_TYPE') is None:
+            task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe()})
             task.add('matchmaker')
         return activity
 

@@ -21,7 +21,7 @@ class InterestManager(object):
 
         )
         interest.put()
-        if os.environ.get('ENV_TYPE') != 'TEST':
+        if os.environ.get('ENV_TYPE') is None:
             task = Task(url='/match_maker/',method='GET',params={'interest': interest.key.urlsafe()})
             task.add('matchmaker')
         return interest
