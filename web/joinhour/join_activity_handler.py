@@ -58,6 +58,7 @@ class JoinActivityHandler(BaseHandler):
         for participant in participants_list:
             participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))
 
+
         #To the activity owner
         template_val = {
             "app_name": self.app.config.get('app_name'),
@@ -75,8 +76,10 @@ class JoinActivityHandler(BaseHandler):
             'body' : body
         })
 
+        #To the activity participants in case the activity is a GO
         if activity_manager.status() == Activity.COMPLETE :
             for participant in participants_list:
+                participants.remove(participant.user.get().name+' '+participant.user.get().last_name);
                 template_val = {
                     "app_name": self.app.config.get('app_name'),
                     "owner_name":activity_user.name+' '+activity_user.last_name,
@@ -87,10 +90,12 @@ class JoinActivityHandler(BaseHandler):
                 }
                 body = self.jinja2.render_template('emails/activity_go_notification_for_activity_participant.txt', **template_val)
                 taskqueue.add(url = email_url,params={
-                    'to':activity_user.email,
+                    'to':participant.user.get().email,
                     'subject' : '[JoinHour.com]Your activity is a GO',
                     'body' : body
                 })
+
+
 
 
 
