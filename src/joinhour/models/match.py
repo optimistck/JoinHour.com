@@ -14,8 +14,8 @@ class Match(ndb.Model):
     activity = ndb.KeyProperty(kind=Activity,
                                name='activity')
     match_found_date = ndb.DateTimeProperty(auto_now_add=True)
-    status = ndb.StringProperty(default=NEW_MATCH,choices=[NEW_MATCH,NOTIFIED])
-    match_type = ndb.StringProperty()
+
+
 
     @classmethod
     def already_tested_for_match(cls, activity,interest):
