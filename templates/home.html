@@ -35,21 +35,40 @@
                         <TD>{{ a.category }}</TD>
                         <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
                         <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
-                        {% if a.status == 'COMPLETE' %}
-                            <TD>
-                                <span class="label label-success">GO</span>
-                            </TD>
-                            <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Cancel</button></a></TD>
-                        {% elif  a.status == 'FORMING' %}
-                            <TD>
-                                <span class="label label-info">FORMING</span>
-                            </TD>
-                            <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Cancel</button></a></TD>
+                        {% if a.key.urlsafe() |expires_in('Activity') != 'EXPIRED' %}
+                            {% if a.status == 'COMPLETE' %}
+                                <TD>
+                                    <span class="label label-success">GO</span>
+                                </TD>
+                                <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Cancel</button></a></TD>
+                            {% elif  a.status == 'FORMING' %}
+                                <TD>
+                                    <span class="label label-info">FORMING</span>
+                                </TD>
+                                <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Cancel</button></a></TD>
+                            {% else %}
+                                <TD>
+                                    <span class="label">{{a.status}}</span>
+                                </TD>
+                                <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Delete</button></a></TD>
+                            {% endif %}
                         {% else %}
-                            <TD>
-                                <span class="label">{{a.status}}</span>
-                            </TD>
-                             <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Delete</button></a></TD>
+                            {% if a.status == 'COMPLETE' %}
+                                <TD>
+                                    <span class="label label-success">GO</span>
+                                </TD>
+                                <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Delete</button></a></TD>
+                            {% elif  a.status == 'FORMING' %}
+                                <TD>
+                                    <span class="label label-info">FORMING</span>
+                                </TD>
+                                <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Delete</button></a></TD>
+                            {% else %}
+                                <TD>
+                                    <span class="label">{{a.status}}</span>
+                                </TD>
+                                <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete"><button class="btn btn-link">Delete</button></a></TD>
+                            {% endif %}
                         {% endif %}
                     </tr>
                 {% endfor %}
