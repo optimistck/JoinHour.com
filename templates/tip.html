@@ -8,10 +8,13 @@
 {% endblock %}
 
 {% block content %}
-If you appreciated the connection we made, then please consider leaving us a token of gratitude. Tips are the best indicator of the value we provide. Tippers get preferential service. Your gratitude fuels our passion and we shake the tip jar every day. Thank you! 
+<H3>Insert a Token of Gratitude Here</H3>
+<div class="alert alert-info"><i class="icon-gift"></i> 
+Tips are the best indicator of the value we provide. If there is one thing we track, it's the people who tips us, so that we can offer them preferential treatment in the future. <B>Your gratitude fuels our passion</B>. And we shake the tip jar every day. Thank you! 
+</div>
 
-<BR><BR>
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
 <input type="hidden" name="cmd" value="_s-xclick">
 <input type="hidden" name="hosted_button_id" value="2XD675VMWXSE8">
 <table>
@@ -19,7 +22,7 @@ If you appreciated the connection we made, then please consider leaving us a tok
     <option value="Buy us a soda">Buy us a soda $1.00 USD</option>
     <option value="Buy us gummy bears">Buy us gummy bears $2.75 USD</option>
     <option value="Buy us a drink!">Buy us a drink! $5.00 USD</option>
-    <option value="Buy us an inspiration">Buy us an inspiration $10.00 USD</option>
+    <option value="Buy us inspiration">Buy us inspiration $10.00 USD</option>
     <option value="Buy us ability to connect others">Buy us ability to connect others $20.00 USD</option>
 </select> </td></tr>
 <tr><td><input type="hidden" name="on1" value="Why you love this:">Why you love this:</td></tr><tr><td><input type="text" name="os1" maxlength="200"></td></tr>
@@ -28,12 +31,16 @@ If you appreciated the connection we made, then please consider leaving us a tok
 <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_paynow_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
 <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
 </form>
-Be warned: high roller tip will result in an thank you email, phone call, or a thank you card from our founder.
+
+
+Be warned: a high roller tip will result in a thank you email, phone call, or a thank you card from us.
 <BR>
 <BR>
-    <UL>
-<LI>I love the service and may tip later. But for now I'll leave <a href="/love/"><button>an awesome note</button></a> for all to see on how much I love this!
-</ul>
+<H3>I'm broke!</H3>
+But I'd love to leave you <a href="/love/"><button>an awesome note</button></a> for the world to see why I love JoinHour!
+<BR>
+<BR><BR>
+<BR>
 {% endblock %}
 
 {% block mediaJS %}
