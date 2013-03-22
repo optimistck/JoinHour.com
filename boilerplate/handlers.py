@@ -797,7 +797,7 @@ class RegisterHandler(RegisterBaseHandler):
                         })
 
                     message = _('You were successfully registered. '
-                                'Please check your email to activate your account.')
+                                'We sent you an email to activate your account. Check your Inbox or Junk mail folder.')
                     self.add_message(message, 'success')
                     return self.redirect_to('home')
 
