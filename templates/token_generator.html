@@ -1,0 +1,43 @@
+{% extends base_layout %}
+
+{% block title %}
+    {% trans %}Generate Tokens{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+    {% trans %}Tokens for unique keys{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <form id="form_tokens" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <fieldset>
+            <input type="hidden" name="exception" value="{{ exception }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            {{ macros.field(form.num_tokens, label=_("Number of Tokens"), placeholder=_("Enter the number of tokens to generate"), class="input-xlarge focused required") }}
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">{% trans %}Generate Tokens{% endtrans %}</button>
+            </div>
+
+        </fieldset>
+    </form>
+{% endblock %}
+
+{% block mediaJS %}
+    <script type="text/javascript">
+        $().ready(function () {
+            $("#form_tokens").validate({
+                submitHandler: function (form) {
+                    form.submit();
+                },
+                rules: {
+                    num_tokens: 'required'
+                },
+                errorPlacement: function (error, element) {
+                    element.parent().parent().addClass("error");
+                    error.addClass("help-inline").appendTo(element.parent());
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
