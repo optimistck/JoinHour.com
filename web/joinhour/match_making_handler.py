@@ -4,6 +4,7 @@ from boilerplate.lib.basehandler import BaseHandler
 from src.joinhour.matchmaker import MatchMaker
 from boilerplate import models
 from google.appengine.api import taskqueue
+from urlparse import urlparse
 
 
 class MatchMakingHandler(BaseHandler):
@@ -33,14 +34,16 @@ class MatchMakingHandler(BaseHandler):
     def _notify_interest_owner(self,username,matches):
         user = models.User.get_by_username(username)
         email_url = self.uri_for('taskqueue-send-email')
+        url_object = urlparse(self.request.url)
         template_val = {
             "app_name": self.app.config.get('app_name'),
-            "interest_creator_username": username,
+            "interest_creator_name": user.name+' '+user.last_name,
             "matches": matches,
+            "url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
         }
         body = self.jinja2.render_template('emails/match_found_notification_for_interest_owner.txt', **template_val)
         taskqueue.add(url = email_url,params={
-            'to':user.email,
+            'to': user.email,
             'subject' : '[JoinHour.com]Match notification',
             'body' : body
         })
