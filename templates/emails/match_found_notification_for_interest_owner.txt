@@ -1,24 +1,38 @@
-<p>Hello <strong>{{interest_creator_username}}</strong>,</p>
+<p>Hello <strong>{{interest_creator_name}}</strong>,</p>
 
 <p>
-We have found new matches for you. Check ’em out!
+We have found new matches for you. Check them out:
+</p>
+<p>
+{% for match in matches %}
+    <ul>
+        <li>Interest name : <strong>{{match.interest.get().category}}</strong></li>
+        <ul>
+            <li>
+            	Activity Name</em> - {{match.activity.get().category}}
+            </li>
+            <li>
+            	Activity Initiator</em> - {{match.activity.get().username}}
+            </li>
+            <li>
+            	Note - {{match.activity.get().note}}
+            </li>
+            <li>
+            	<a href="{{url}}/activity_detail/?ID={{ a.key.urlsafe() }}">View this activity</a>
+            </li>
+        </ul>
+    </ul>
+{% endfor %}
 </p>
 
-<p>New matches</p>
-
-	{% for match in matches %}
-		<li>{{match.activity.category}}</li>
-        <li>{{match.activity.note}}</li>
-    {% endfor %}
-
-
 <p>Thank you for using JoinHour.com<br>
-{{ app_name }} Team
+JoinHour Team
 
 <BR>
 <p>
-If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
-{{support_url}}
+If you have any questions, comments, or thoughts on how we can improve the serv
+ce please contact us at:</br>
+
 </p>
 
 <p>We, the people, not computers, read and respond to every email. </p>
