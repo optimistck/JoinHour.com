@@ -1,0 +1,15 @@
+<p>Hello <strong>{{participant_name}}</strong>,</p>
+
+<p>
+We are sorry! Your activity {{activity_name}} is cancelled by the owner {{activity_owner_name}}.
+
+<p>Thank you for using JoinHour.com<br>
+{{ app_name }} Team
+
+<BR>
+<p>
+If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>
