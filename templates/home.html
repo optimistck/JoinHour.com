@@ -39,12 +39,11 @@
                            Providing a reason is optional, but this will help us in informing other participants.
                         </p>
                         <label>Reason</label>
-                        <input type="text" placeholder="Type something…">
+                        <input type="text" placeholder="Type something…" id="cancellation_reason" name="cancellation_reason">
                     </div>
 
                     <div class="modal-footer">
-                        <a href="#" class="btn">I have changed my mind</a>
-
+                        <a href="/" class="btn">I have changed my mind</a>
                         <button class="btn btn-primary" type="submit" id="cancel_activity_id">Yes cancel the activity</button>
                     </div>
 
@@ -360,7 +359,7 @@
                 $('#cancel_modal').modal('show');
             });
             $("#cancel_activity_id").click(function(){
-                document.location.href='/?key='+$("#activity_id").val()+"&action=cancel";
+                document.location.href='/?key='+$("#activity_id").val()+"&action=cancel&reason="+$("#cancellation_reason").val();
             });
 
         });

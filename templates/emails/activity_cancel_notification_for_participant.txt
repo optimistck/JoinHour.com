@@ -1,7 +1,14 @@
 <p>Hello <strong>{{participant_name}}</strong>,</p>
 
 <p>
-We are sorry! Your activity {{activity_name}} is cancelled by the owner {{activity_owner_name}}.
+We are sorry! Your activity <strong>{{activity_name}} </strong> is cancelled by the owner {{activity_owner_name}}.
+Note left by activity owner-
+{%if reason_for_cancellation is defined %}
+{{reason_for_cancellation}}
+{%else%}
+None
+{%endif%}
+
 
 <p>Thank you for using JoinHour.com<br>
 {{ app_name }} Team

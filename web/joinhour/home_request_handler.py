@@ -64,7 +64,7 @@ class HomeRequestHandler(RegisterBaseHandler):
             activity_user = models.User.get_by_username(activity_username)
             activity_owner_name = activity_user.name + ' ' + activity_user.last_name
             for participant in participants:
-                self._push_notification(category,activity_owner_name,participant)
+                self._push_notification(category,activity_owner_name,participant,self.request.get('reason'))
         user_info = models.User.get_by_id(long(self.user_id))
         activities_from_db = Activity.query(Activity.username == user_info.username).fetch()
         self.view.activities = activities_from_db
@@ -89,18 +89,19 @@ class HomeRequestHandler(RegisterBaseHandler):
         ndb.Key(urlsafe=key).delete()
         return category,activity_username,participants
 
-    def _push_notification(self,category,activity_owner_name,participant):
+    def _push_notification(self,category,activity_owner_name,participant,reason_for_cancellation):
         email_url = self.uri_for('taskqueue-send-email')
         template_val = {
             "app_name": self.app.config.get('app_name'),
             "activity_name": category,
             "activity_owner_name": activity_owner_name,
-            "participant_username":participant.name+' '+participant.last_name
+            "participant_username":participant.name+' '+participant.last_name,
+            "reason_for_cancellation":reason_for_cancellation
         }
         body = self.jinja2.render_template('emails/activity_cancel_notification_for_participant.txt', **template_val)
         taskqueue.add(url = email_url,params={
             'to':participant.email,
-            'subject' : '[JoinHour.com]New companion for your activity',
+            'subject' : '[JoinHour.com]Activity cancellation notification',
             'body' : body
         })
 
