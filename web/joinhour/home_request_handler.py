@@ -9,6 +9,8 @@ from src.joinhour.interest_manager import InterestManager
 from src.joinhour.models.interest import Interest
 from google.appengine.ext import ndb
 from src.joinhour.models.match import Match
+from src.joinhour.models.user_activity import UserActivity
+from google.appengine.api import taskqueue
 
 
 def minute_format(value):
@@ -56,11 +58,51 @@ class HomeRequestHandler(RegisterBaseHandler):
             return self.render_template('home.html', **params)
         action = str(self.request.get('action'))
         if action == 'delete':
-            key = self.request.get('key')
-            ndb.Key(urlsafe=key).delete()
+            self._delete_entity(self.request.get('key'))
+        elif action == 'cancel':
+            category, activity_username,participants = self._cancel_activity(self.request.get('key'))
+            activity_user = models.User.get_by_username(activity_username)
+            activity_owner_name = activity_user.name + ' ' + activity_user.last_name
+            for participant in participants:
+                self._push_notification(category,activity_owner_name,participant,self.request.get('reason'))
         user_info = models.User.get_by_id(long(self.user_id))
         activities_from_db = Activity.query(Activity.username == user_info.username).fetch()
         self.view.activities = activities_from_db
         self.view.interests = Interest.query(Interest.username == user_info.username).fetch()
         self.view.past_activities = [activity for activity in activities_from_db if activity.status == Activity.COMPLETE]
         return self.render_template('home.html', **params)
+
+    def _delete_entity(self,key):
+        key = self.request.get('key')
+        ndb.Key(urlsafe=key).delete()
+
+
+    def _cancel_activity(self,key):
+        activity = ndb.Key(urlsafe=key).get()
+        category = activity.category
+        activity_username = activity.username
+        participants_list = UserActivity.query(UserActivity.activity == activity.key).fetch()
+        participants = []
+        for participant in participants_list:
+            participants.append(participant.user.get())
+            participant.key.delete()
+        ndb.Key(urlsafe=key).delete()
+        return category,activity_username,participants
+
+    def _push_notification(self,category,activity_owner_name,participant,reason_for_cancellation):
+        email_url = self.uri_for('taskqueue-send-email')
+        template_val = {
+            "app_name": self.app.config.get('app_name'),
+            "activity_name": category,
+            "activity_owner_name": activity_owner_name,
+            "participant_username":participant.name+' '+participant.last_name,
+            "reason_for_cancellation":reason_for_cancellation
+        }
+        body = self.jinja2.render_template('emails/activity_cancel_notification_for_participant.txt', **template_val)
+        taskqueue.add(url = email_url,params={
+            'to':participant.email,
+            'subject' : '[JoinHour.com]Activity cancellation notification',
+            'body' : body
+        })
+
+

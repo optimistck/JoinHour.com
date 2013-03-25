@@ -8,7 +8,7 @@ You have a new companion for your activity  <strong>{{activity.category}}</stron
 
 {%if complete%}
 
-With this your activity is now Go! We will of course notify you if you have a new companion.
+With this your activity is now Go!
 
 {% endif %}
 
