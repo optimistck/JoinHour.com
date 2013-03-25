@@ -60,6 +60,7 @@ class ActivityManager(object):
         if self._activity.status == Activity.INITIATED or self._activity.status == Activity.FORMING:
             if self._is_complete():
                 self._change_status(Activity.COMPLETE)
+                self._on_activity_completion(self._activity)
             else:
                 self._change_status(Activity.FORMING)
         return True, message
@@ -105,6 +106,7 @@ class ActivityManager(object):
     def get_activity(self):
         return self._activity
 
+
     def expires_in(self):
         if self._activity.status == Activity.EXPIRED:
             return Activity.EXPIRED
@@ -121,6 +123,10 @@ class ActivityManager(object):
         #TODO Once the activity is expired or complete need to move it to a different table. Primarly for analytics support
         self._activity.status = new_status
         self._activity.put()
+
+    def _on_activity_completion(self,activity):
+        pass
+
 
 
 
