@@ -84,6 +84,9 @@ class LoveForm(BaseForm):
     #TO DO: remove. Added to make shit work.
     activity_status = fields.TextAreaField(_('activity_status'), [validators.Required(), validators.Length(max=65536)])
 
+class TokenForm(BaseForm):
+    num_tokens = fields.TextField(_('Number of Tokens'), [validators.Required(), validators.NumberRange(min=1, max=1000, message="Number must be between 1 and 1000")])
+
 #### JH
 class PassiveInterestForm(BaseForm):
     #attribute for the form. added to solve the Error: 'boilerplate.forms.PassiveInterestForm object' has no attribute 'interest' 
@@ -130,7 +133,7 @@ class JoinActivityForm(BaseForm):
 
 class RegisterForm(PasswordMixin, ConfirmPasswordMixin, UserMixin):
     email = fields.TextField(_('Email'), [validators.Required(), validators.Length(min=7, max=FIELD_MAXLENGTH), validators.regexp(utils.EMAIL_REGEXP, message=_('Invalid email address.'))])
-   # agree = fields.BooleanField(_('Agree'), [validators.Required()])
+    security_code = fields.TextField(_('Security Code'), [validators.regexp("\d\d\d\d\d\d", message=_('Invalid security code.'))])
     pass
 
 
