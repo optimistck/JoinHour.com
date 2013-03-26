@@ -473,7 +473,7 @@ COUNTRIES = [
     ("6", "my friends are far")]
 
 BUILDINGS = [
-#("", ""),
+("", ""),
 ("River House", "River House"),
 #("Crystal Towers", "Crystal Towers"),
 ("The Belvedere", "The Belvedere")
