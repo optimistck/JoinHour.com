@@ -18,6 +18,10 @@ class UserActivity(ndb.Model):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 
     @classmethod
+    def get_users_for_activity(cls, activity):
+        return cls.query(cls.activity == activity).get()
+
+    @classmethod
     def get_by_user_activity(cls, user, activity):
         """Returns a user object based on an email.
 
