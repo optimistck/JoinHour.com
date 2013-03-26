@@ -2,10 +2,7 @@ __author__ = 'ashahab'
 import webapp2
 from boilerplate.lib.basehandler import BaseHandler
 from boilerplate import forms
-from boilerplate import models
-from src.joinhour.matchmaker import MatchMaker
-from boilerplate import models
-from google.appengine.ext import ndb
+from src.joinhour.token_generator import TokenGenerator
 from webapp2_extras.i18n import gettext as _
 
 
@@ -25,7 +22,8 @@ class TokenGeneratorHandler(BaseHandler):
         return self.render_template('token_generator.html', **params)
 
     def post(self):
-
+        number_of_tokens = int(self.form.num_tokens.data.strip())
+        TokenGenerator.create_tokens(number_of_tokens)
         message = _('Successfully generated tokens.')
         self.add_message(message, 'success')
         self.redirect_to('token_generator')

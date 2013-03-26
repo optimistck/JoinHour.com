@@ -26,7 +26,7 @@ from google.appengine.api import taskqueue
 from google.appengine.api import users
 from github import github
 from linkedin import linkedin
-
+from src.joinhour.models.token import Token
 # local application/library specific imports
 import models
 import forms as forms
@@ -742,7 +742,12 @@ class RegisterHandler(RegisterBaseHandler):
         email = self.form.email.data.lower()
         password = self.form.password.data.strip()
         building = self.form.building.data
-
+        security_code = self.form.security_code.data.strip();
+        if security_code:
+            if not Token.match(security_code):
+                message = _('Sorry, invalid security code. Please try again.')
+                self.add_message(message, 'error')
+                return self.redirect_to('register')
         # Password to SHA512
         password = utils.hashing(password, self.app.config.get('salt'))
 

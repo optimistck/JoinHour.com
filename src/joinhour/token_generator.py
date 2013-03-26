@@ -8,8 +8,12 @@ class TokenGenerator(object):
     def generate_tokens(cls, number_of_tokens):
         list_of_tokens = set();
         random.seed()
-        while len(list_of_tokens) < number_of_tokens  :
-            list_of_tokens.add(random.randint(cls.RANDOM_RANGE_FROM, cls.RANDOM_RANGE_TO))
+        while len(list_of_tokens) < number_of_tokens:
+            newToken = random.randint(cls.RANDOM_RANGE_FROM, cls.RANDOM_RANGE_TO)
+            matchedToken = Token.match(newToken)
+            if matchedToken:
+                continue
+            list_of_tokens.add(newToken)
         return list_of_tokens
 
     @classmethod
