@@ -107,3 +107,8 @@ indexes:
   properties:
   - name: activity
   - name: user
+
+- kind: UserActivity
+  properties:
+  - name: user
+  - name: activity
