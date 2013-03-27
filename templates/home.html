@@ -114,7 +114,7 @@
                     <TD>
                         {% if joined_activity.activity.get().status == 'COMPLETE' %}
                             <span class="label label-success">GO</span>
-                        {% elif joined_activity.get().status == 'FORMING' %}
+                        {% elif joined_activity.activity.get().status == 'FORMING' %}
                             <span class="label label-info">FORMING</span>
                         {% else %}
                             <span class="label">INITIATED</span>
