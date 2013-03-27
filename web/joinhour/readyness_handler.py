@@ -50,7 +50,7 @@ class ReadynessHandler(BaseHandler):
             "participants":participants,
             "support_url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
         }
-        body = self.jinja2.render_template('emails/match_found_notification_for_interest_owner.txt', **template_val)
+        body = self.jinja2.render_template('emails/activity_go_notification_for_activity_participant.txt', **template_val)
         taskqueue.add(url = email_url,params={
             'to': user.email,
             'subject' : '[JoinHour.com]Its a go!',
