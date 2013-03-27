@@ -7,8 +7,7 @@ from web import handlers
 from web.joinhour import get_activity_handler
 from web.joinhour import terms_handler
 from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler,match_making_handler, token_gen_handler
-
-from web.joinhour.post_activity_mgr_handlers import FeedbackEmailHandler
+from web.joinhour.post_activity_completion_handler import PostActivityCompletionHandler
 
 
 secure_scheme = 'https'
@@ -23,7 +22,7 @@ _routes = [
     RedirectRoute('/join/', join_handler.JoinHandler, name='join', strict_slash=True),
     RedirectRoute('/activity_detail/', get_activity_handler.GetActivityHandler, name='activity_detail', strict_slash=True),
     RedirectRoute('/love/', love_handler.LoveHandler, name='love', strict_slash=True),
-    RedirectRoute('/post_activity_mgr/', FeedbackEmailHandler, name='post_activity_mgr', strict_slash=True),
+    RedirectRoute('/post_activity_completion/', PostActivityCompletionHandler, name='post_activity_completion', strict_slash=True),
     RedirectRoute('/how/', how_request_handler.HowRequestHandler, name='how', strict_slash=True),
     RedirectRoute('/join_activity/', join_activity_handler.JoinActivityHandler, name='join_activity', strict_slash=True),
     RedirectRoute('/expire_activities/', expiry_handler.ExpiryHandler, name='expire_activities', strict_slash=True),

@@ -73,9 +73,6 @@ class ActivityManager(object):
         min_count = int(self._activity.min_number_of_people_to_join.split()[0])
         return min_count <= self._activity.headcount
 
-
-
-
     def mark_expired(self):
         self._change_status(Activity.EXPIRED)
 
@@ -119,13 +116,28 @@ class ActivityManager(object):
             return Activity.EXPIRED
 
     def _change_status(self,new_status):
-        #TODO Need to think about Thread safety here
-        #TODO Once the activity is expired or complete need to move it to a different table. Primarly for analytics support
         self._activity.status = new_status
         self._activity.put()
 
     def _on_activity_completion(self,activity):
-        pass
+        #Fire the post activity completion handlers
+        if os.environ.get('ENV_TYPE') is None:
+            #Calculate the eta
+            expiration_time = int(str(self._activity.expiration))
+            if os.environ.get('SERVER_SOFTWARE','').startswith('Development'):
+                eta = 120
+            else :
+                eta = int(activity.duration) * 60
+                activity_start_time = activity.date_entered + timedelta(minutes=expiration_time)
+                now = datetime.utcnow()
+                if now < activity_start_time:
+                    eta = eta + (activity_start_time - now).total_seconds()
+
+            task = Task(url='/post_activity_completion/',method='GET',
+                        params={'activity_key': activity.key.urlsafe()},
+                        countdown=eta)
+            task.add('postActivityCompletion')
+
 
 
 
