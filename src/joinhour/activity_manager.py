@@ -36,6 +36,11 @@ class ActivityManager(object):
         if os.environ.get('ENV_TYPE') is None:
             task = Task(url='/match_maker/',method='GET',params={'activity': activity.key.urlsafe()})
             task.add('matchmaker')
+            expiration_time = int(str(activity.expiration))
+            timezone_offset = datetime.now() - datetime.utcnow()
+            task_execution_time = activity.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
+            goTask = Task(eta=task_execution_time, url='/readyness_mail/',method='GET',params={'activity': activity.key.urlsafe()})
+            goTask.add('readyness')
         return activity
 
     @classmethod
@@ -137,7 +142,7 @@ class ActivityManager(object):
                         params={'activity_key': activity.key.urlsafe()},
                         countdown=eta)
             task.add('postActivityCompletion')
-
+        pass
 
 
 

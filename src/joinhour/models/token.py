@@ -12,5 +12,6 @@ class Token(ndb.Model):
     def match(cls, value):
         return cls.query(cls.value == int(value)).get()
 
+    @classmethod
     def get_next_token(cls):
         return cls.query(cls.used == False).get()
