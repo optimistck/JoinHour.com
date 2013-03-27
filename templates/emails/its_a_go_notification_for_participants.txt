@@ -6,7 +6,7 @@ Your activity is a Go! All activity criteria has been met and the notification t
 Here is a quick summary for this activity :</p>
 <ul>
 	<li>
-		<em>Name</em> - {{activity.category}}</li>
+		<em>Name</em> - {{activity_category}}</li>
 	</li>
 	<li>
 		<em>Activity Initiator</em> - {{owner_name}}</li>
@@ -15,10 +15,10 @@ Here is a quick summary for this activity :</p>
 		<em>Must start in</em> - {{expires_in}} </li>
 	</li>
 	<li>
-		<em>All participants </em> - {{participants}}
+		<em>Your other companions </em> - {{participants}}
 	</li>
 </ul>
-
+<p>You've committed to the activity, please make every effort to participate. If you can't, please meet with the participants and let them know that you can't. At this time we don't have a way to withdraw elegantly from a commitment.
 <p>Enjoy the connection, and thank you for using JoinHour.com<br>
 {{ app_name }} Team
 

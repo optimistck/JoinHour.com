@@ -744,10 +744,14 @@ class RegisterHandler(RegisterBaseHandler):
         building = self.form.building.data
         security_code = self.form.security_code.data.strip();
         if security_code:
-            if not Token.match(security_code):
+            token_match = Token.match(security_code)
+            if not token_match:
                 message = _('Sorry, invalid security code. Please try again.')
                 self.add_message(message, 'error')
                 return self.redirect_to('register')
+            else:
+                token_match.used = True
+                token_match.put();
         # Password to SHA512
         password = utils.hashing(password, self.app.config.get('salt'))
 
