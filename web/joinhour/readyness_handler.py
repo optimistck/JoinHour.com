@@ -8,8 +8,9 @@ from urlparse import urlparse
 from google.appengine.ext import ndb
 from webapp2_extras.appengine.auth.models import User
 from src.joinhour.activity_manager import ActivityManager
-from google.appengine.api import taskqueue
+from UserString import MutableString
 from src.joinhour.models.activity import Activity
+from boilerplate.models import User
 class ReadynessHandler(BaseHandler):
     """
     Handles the matching making requests.
@@ -22,22 +23,29 @@ class ReadynessHandler(BaseHandler):
             if activity_key != '':
                 activity = ndb.Key(urlsafe=activity_key).get()
                 if activity.status == Activity.COMPLETE:
-                    users_for_activity = UserActivity.get_users_for_activity(activity)
-                    self._process_notification(users_for_activity)
+
+                    userActivities = UserActivity.get_users_for_activity(activity.key)
+                    participants = self._process_notification(userActivities)
+                    activity_owner = User.get_by_username(activity.username)
+                    self._notify_participants(activity_owner, activity, participants)
         except Exception , e:
             print e
 
     def _process_notification(self,users_for_activity):
-        participants = []
+        participants = MutableString()
         for userActivity in users_for_activity:
-            participants.append(userActivity.user.name+' '+userActivity.user.last_name)
-        for userActivity in users_for_activity:
-            self._notify_interest_owner(userActivity, participants)
+            user = userActivity.user.get()
+            participants += str(user.name)+' ' + str(user.last_name) + ' , '
+            participants.rstrip(',')
 
-    def _notify_interest_owner(self,userActivity, participants):
-        user = userActivity.user
-        activity = userActivity.activity
-        activity_owner = User.get_by_username(activity.username)
+        for userActivity in users_for_activity:
+            user = userActivity.user.get()
+            activity = userActivity.activity.get()
+            self._notify_participants(user, activity, participants)
+        return participants
+
+    def _notify_participants(self,user, activity, participants):
+        activity_owner = models.User.get_by_username(activity.username)
         email_url = self.uri_for('taskqueue-send-email')
         url_object = urlparse(self.request.url)
 
@@ -47,7 +55,7 @@ class ReadynessHandler(BaseHandler):
             "activity_category": activity.category,
             "owner_name": activity_owner.name+' '+activity_owner.last_name,
             "expires_in": ActivityManager.get(activity.key.urlsafe()).expires_in(),
-            "participants":participants,
+            "participants": participants,
             "support_url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
         }
         body = self.jinja2.render_template('emails/its_a_go_notification_for_participants.txt', **template_val)

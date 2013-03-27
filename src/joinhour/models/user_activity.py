@@ -19,7 +19,7 @@ class UserActivity(ndb.Model):
 
     @classmethod
     def get_users_for_activity(cls, activity):
-        return cls.query(cls.activity == activity).get()
+        return cls.query(cls.activity == activity).fetch()
 
     @classmethod
     def get_by_user_activity(cls, user, activity):
