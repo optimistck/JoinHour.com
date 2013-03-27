@@ -70,7 +70,7 @@ class HomeRequestHandler(RegisterBaseHandler):
         self.view.activities = activities_from_db
         self.view.interests = Interest.query(Interest.username == user_info.username).fetch()
         self.view.past_activities = [activity for activity in activities_from_db if activity.status == Activity.COMPLETE]
-        self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key).fetch(projection = [UserActivity.activity])
+        self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key).fetch()
         return self.render_template('home.html', **params)
 
     def _delete_entity(self,key):
