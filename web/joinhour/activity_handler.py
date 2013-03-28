@@ -54,7 +54,7 @@ class ActivityHandler(BaseHandler):
         building_name = user_info.building
         activities_from_db = Activity.query(Activity.building_name == building_name, Activity.username != user_info.username).fetch()
         self.view.activities = [activity for activity in activities_from_db if ActivityManager.get(activity.key.urlsafe()).can_join(self.user_id)[0]]
-        self.view.interests = Interest.get_active_interests_by_building_not_mine(building_name,user_info.username)
+        self.view.interests = [interest for interest in Interest.get_active_interests_by_building_not_mine(building_name,user_info.username) if InterestManager.get(interest.key.urlsafe()).expires_in() != Interest.EXPIRED]
         params = {}
         return self.render_template('stat.html', **params)
   
