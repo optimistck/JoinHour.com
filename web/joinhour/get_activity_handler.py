@@ -4,32 +4,10 @@ from google.appengine.ext import ndb
 
 # Boilerplate imports
 from boilerplate.lib.basehandler import BaseHandler
-from src.joinhour.activity_manager import ActivityManager
-from src.joinhour.interest_manager import InterestManager
-from src.joinhour.models.activity import Activity
-from src.joinhour.models.interest import Interest
+from src.joinhour.utils import *
 import jinja2
-def expires_in(key,entity_type):
-    if entity_type == 'Activity':
-        return ActivityManager.get(key).expires_in()
-    else:
-        return InterestManager.get(key).expires_in()
 
-jinja2.filters.FILTERS['expires_in'] = expires_in
-
-#JH experimental
-
-def minute_format(value):
-    if value != Activity.EXPIRED and value != Interest.EXPIRED:
-        total_seconds = int(value.total_seconds())
-        hours, remainder = divmod(total_seconds,60*60)
-        minutes, seconds = divmod(remainder,60)
-        if hours > 0:
-            return str(hours) + ' hours ' + str(minutes) + ' minutes'
-        else:
-            return str(minutes) + ' minutes'
-    return value
-
+jinja2.filters.FILTERS['expires_in'] = get_expiration_duration
 jinja2.filters.FILTERS['minute_format'] = minute_format
 
 class GetActivityHandler(BaseHandler):

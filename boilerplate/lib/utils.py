@@ -473,7 +473,7 @@ COUNTRIES = [
     ("6", "my friends are far")]
 
 BUILDINGS = [
-("", ""),
+#("", ""),
 ("River House", "River House"),
 ("Oakwood at Falls Church", "Oakwood at Falls Church"),
 ("The Belvedere", "The Belvedere")
@@ -507,7 +507,7 @@ NUMBER_OF_PEOPLE_MAX = [
 #("No limit", "No limit")]
 
 TIME_CHUNKS = [
-("", ""),
+#("", ""),
 ("15", "15 mins"),
 ("30", "30 mins"),
 ("45", "45 mins"),
@@ -519,7 +519,7 @@ TIME_CHUNKS = [
 
 
 TIME_CHUNKS2 = [
-("", ""),
+#("", ""),
 ("15", "15 mins"),
 ("30", "30 mins"),
 ("40", "40 mins"),
@@ -535,7 +535,7 @@ TIME_CHUNKS2 = [
 ("180", "3 hours")]
 
 CATEGORY = [
-("", ""),
+#("", ""),
 ("Go for a run", "Go for a run"),
 ("Go for a walk", "Go for a walk"),
 #("Split a cab", "Split a cab"),

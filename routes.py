@@ -9,7 +9,6 @@ from web.joinhour import terms_handler
 from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler,match_making_handler, token_gen_handler, readyness_handler, convert_handler
 from web.joinhour.post_activity_completion_handler import PostActivityCompletionHandler
 
-from web.joinhour.post_activity_mgr_handlers import FeedbackEmailHandler
 
 
 secure_scheme = 'https'
