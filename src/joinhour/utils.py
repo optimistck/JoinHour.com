@@ -18,6 +18,7 @@ def minute_format(timedelta):
     return timedelta
 
 
+
 def get_expiration_duration(key, entity_type):
     if entity_type == 'Activity':
         return ActivityManager.get(key).expires_in()
