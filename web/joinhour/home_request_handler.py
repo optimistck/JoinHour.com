@@ -11,25 +11,8 @@ from google.appengine.ext import ndb
 from src.joinhour.models.match import Match
 from src.joinhour.models.user_activity import UserActivity
 from google.appengine.api import taskqueue
+from src.joinhour.utils import *
 
-
-def minute_format(value):
-    if value != Activity.EXPIRED and value != Interest.EXPIRED:
-        total_seconds = int(value.total_seconds())
-        hours, remainder = divmod(total_seconds,60*60)
-        minutes, seconds = divmod(remainder,60)
-        if hours > 0:
-            return str(hours) + ' hours ' + str(minutes) + ' minutes'
-        else:
-            return str(minutes) + ' minutes'
-    return value
-
-
-def expires_in(key,entity_type):
-    if entity_type == 'Activity':
-        return ActivityManager.get(key).expires_in()
-    else:
-        return InterestManager.get(key).expires_in()
 
 
 
@@ -43,7 +26,7 @@ def get_matching_activity_key(interest_key):
     return Match.query(Match.interest == interest_key).get().activity.urlsafe()
 
 jinja2.filters.FILTERS['minute_format'] = minute_format
-jinja2.filters.FILTERS['expires_in'] = expires_in
+jinja2.filters.FILTERS['expires_in'] = get_expiration_duration
 jinja2.filters.FILTERS['spots_remaining'] = spots_remaining
 jinja2.filters.FILTERS['get_matching_activity_key'] = get_matching_activity_key
 

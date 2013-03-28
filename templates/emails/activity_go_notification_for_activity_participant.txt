@@ -6,16 +6,19 @@ Your activity is a Go! All activity criteria has been met and the notification t
 Here is a quick summary for this activity :</p>
 <ul>
 	<li>
-		<em>Name</em> - {{activity.category}}</li>
+		<em>Name</em> - {{activity.category}}
 	</li>
 	<li>
-		<em>Activity Initiator</em> - {{owner_name}}</li>
+    	<em>Note</em> - {{activity.note}}
+    </li>
+	<li>
+		<em>Activity Initiator</em> - {{owner_name}}
 	</li>
 	<li>
-		<em>Must start in</em> - {{expires_in}} </li>
+		<em>Must start in</em> - {{expires_in}}
 	</li>
 	<li>
-		<em>All participants </em> - {{participants}}
+		<em>Participants </em> - {{participants}}
 	</li>
 </ul>
 
