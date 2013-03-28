@@ -10,7 +10,7 @@ from boilerplate import models
 from src.joinhour.activity_manager import ActivityManager
 from google.appengine.api import taskqueue
 from src.joinhour.models.activity import Activity
-# import handlers
+from src.joinhour.utils import *
 
 
 class JoinActivityHandler(BaseHandler):
@@ -46,7 +46,7 @@ class JoinActivityHandler(BaseHandler):
         activity_user = models.User.get_by_username(activity_manager.get_activity().username)
         #all users signed up for this activity
         participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_activity().key).fetch(projection = [UserActivity.user])
-        participants = []
+        participants = [activity_user.name + ' ' + activity_user.last_name]
         for participant in participants_list:
             participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))
 
@@ -58,7 +58,7 @@ class JoinActivityHandler(BaseHandler):
             "activity": activity_manager.get_activity(),
             "participant_username":user.name+' '+user.last_name,
             "complete": activity_manager.status() == Activity.COMPLETE,
-            "expires_in": activity_manager.expires_in(),
+            "expires_in": minute_format(activity_manager.expires_in()),
             "participants":','.join(participants)
         }
         body = self.jinja2.render_template('emails/activity_new_companion_notification_for_activity_owner.txt', **template_val)
@@ -71,13 +71,12 @@ class JoinActivityHandler(BaseHandler):
         #To the activity participants in case the activity is a GO
         if activity_manager.status() == Activity.COMPLETE :
             for participant in participants_list:
-                participants.remove(participant.user.get().name+' '+participant.user.get().last_name);
                 template_val = {
                     "app_name": self.app.config.get('app_name'),
                     "owner_name":activity_user.name+' '+activity_user.last_name,
                     "activity": activity_manager.get_activity(),
                     "participant_username":participant.user.get().name+' '+participant.user.get().last_name,
-                    "expires_in": activity_manager.expires_in(),
+                    "expires_in": minute_format(activity_manager.expires_in()),
                     "participants":','.join(participants)
                 }
                 body = self.jinja2.render_template('emails/activity_go_notification_for_activity_participant.txt', **template_val)
@@ -86,6 +85,8 @@ class JoinActivityHandler(BaseHandler):
                     'subject' : '[JoinHour.com]Your activity is a GO',
                     'body' : body
                 })
+
+
 
 
 
