@@ -1,6 +1,7 @@
 __author__ = 'aparbane'
 
 from src.joinhour.models.activity import Activity
+from src.joinhour.models.match import Match
 from src.joinhour.models.interest import Interest
 from src.joinhour.models.user_activity import UserActivity
 from src.joinhour.interest_manager import InterestManager
@@ -63,6 +64,9 @@ class ActivityManager(object):
         user = models.User.get_by_username(interest.username)
         success, message = ActivityManager.get(activity.key.urlsafe()).connect(user.key.id())
         interest.put()
+        match = Match(interest=interest.key,
+                      activity=activity.key)
+        match.put()
         #Notify interest owner
         return success, message, user.key.id(), activity.key.urlsafe()
     @classmethod

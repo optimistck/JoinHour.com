@@ -73,7 +73,7 @@ def jinja2_factory(app):
 
 def handle_error(request, response, exception):
     exc_type, exc_value, exc_tb = sys.exc_info()
-    exc_tb.print_tb()
+
     c = {
         'exception': str(exception),
         'url': request.url,
