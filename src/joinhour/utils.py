@@ -6,7 +6,6 @@ from src.joinhour.models.activity import Activity
 from src.joinhour.models.interest import Interest
 
 
-@staticmethod
 def minute_format(timedelta):
     if timedelta != Activity.EXPIRED and timedelta != Interest.EXPIRED:
         total_seconds = int(timedelta.total_seconds())
@@ -18,7 +17,7 @@ def minute_format(timedelta):
             return str(minutes) + ' minutes'
     return timedelta
 
-@staticmethod
+
 def get_expiration_duration(key, entity_type):
     if entity_type == 'Activity':
         return ActivityManager.get(key).expires_in()
