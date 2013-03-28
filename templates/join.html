@@ -18,7 +18,6 @@
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             {{ macros.field(form.category, label=_("I want to")) }}
-            <!--{{ macros.field(form.sub_category, label=_("and specifically")) }} -->
              {{ macros.field(form.duration, label=_("for")) }}
             {{ macros.field(form.expiration, label=_("willing to wait for a match for")) }}
             <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm just expressing an interest; someone else can organize</label>

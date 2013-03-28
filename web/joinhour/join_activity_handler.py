@@ -34,15 +34,6 @@ class JoinActivityHandler(BaseHandler):
             return self.redirect_to('activity')
 
     def post(self):
-        # if not self.form.validate():
-        #     return self.get()
-        # if not self.user:
-        #     return handlers.LoginHandler.get(self)
-        # #TODO: the building name needs to come from the user profile
-        user_id = self.user_id
-        # activity_id = self.form.activity_id
-        # message = _("Congratulations! You joined an activity for " + activity_id)
-        # self.add_message(message, 'success')
         return self.redirect_to('activity')
 
     @webapp2.cached_property
@@ -53,6 +44,7 @@ class JoinActivityHandler(BaseHandler):
         user = models.User.get_by_id(long(user_id))
         email_url = self.uri_for('taskqueue-send-email')
         activity_user = models.User.get_by_username(activity_manager.get_activity().username)
+        #all users signed up for this activity
         participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_activity().key).fetch(projection = [UserActivity.user])
         participants = []
         for participant in participants_list:

@@ -69,6 +69,7 @@ class HomeRequestHandler(RegisterBaseHandler):
         activities_from_db = Activity.query(Activity.username == user_info.username).fetch()
         self.view.activities = activities_from_db
         self.view.interests = Interest.query(Interest.username == user_info.username).fetch()
+
         self.view.past_activities = [activity for activity in activities_from_db if activity.status == Activity.COMPLETE]
         self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key).fetch()
         return self.render_template('home.html', **params)

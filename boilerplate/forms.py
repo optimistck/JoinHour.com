@@ -126,6 +126,7 @@ class JoinForm(BaseForm):
     duration = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
     expiration = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
     note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
+    message = fields.TextAreaField(_('Message'), [validators.Required(), validators.Length(max=65536)])
 ### JH
 
 class JoinActivityForm(BaseForm):
