@@ -26,7 +26,7 @@ Here is a quick summary for this activity :</p>
 		<em>Must start in</em> - {{expires_in}} </li>
 	</li>
 	<li>
-		<em>Your other companions </em> - {{participants}}
+		<em>All participants </em> - {{participants}}
 	</li>
 </ul>
 
