@@ -39,6 +39,10 @@ class Interest(ndb.Model):
         return cls.query(cls.key == key).get()
 
     @classmethod
+    def get_active_interests_by_building_not_mine(cls,building, username):
+        return cls.query(cls.building_name == building, Interest.username != username, cls.status.IN([Interest.FORMING,Interest.INITIATED])).fetch()
+
+    @classmethod
     def get_active_interests_by_category(cls,category):
         return cls.query(cls.category == category,cls.status.IN([Interest.FORMING,Interest.INITIATED])).fetch()
 
