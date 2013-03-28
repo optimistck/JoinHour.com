@@ -20,17 +20,13 @@ Here is a quick summary for this activity :</p>
 	</li>
 
 	<li>
-    	<em>Note</em> - {{activity.note}}
-    </li>
-
-	<li>
-		<em>Activity Initiator</em> - {{owner_name}}(you)
+		<em>Activity Initiator</em> - {{owner_name}}(you)</li>
 	</li>
 	<li>
-		<em>Must start in</em> - {{expires_in}}
+		<em>Must start in</em> - {{expires_in}} </li>
 	</li>
 	<li>
-		<em>Participants </em> - {{participants}}
+		<em>All participants </em> - {{participants}}
 	</li>
 </ul>
 
