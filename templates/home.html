@@ -150,7 +150,7 @@
                             </td>
                         {%  else %}
                             <td>
-                                <span class="label">{{i.status}}</span>
+                                <span class="label">{{i.status|status_filter}}</span>
                             </td>
                             <td>
                                 <a href="/?key={{ i.key.urlsafe()}}&action=delete"><button class="btn btn-primary">Delete</button></a>

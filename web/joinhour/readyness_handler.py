@@ -22,6 +22,8 @@ class ReadynessHandler(BaseHandler):
 
             if activity_key != '':
                 activity = ndb.Key(urlsafe=activity_key).get()
+                if not activity:
+                    return
                 if activity.status == Activity.COMPLETE:
 
                     userActivities = UserActivity.get_users_for_activity(activity.key)
