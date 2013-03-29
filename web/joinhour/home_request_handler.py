@@ -25,10 +25,14 @@ def spots_remaining(key):
 def get_matching_activity_key(interest_key):
     return Match.query(Match.interest == interest_key).get().activity.urlsafe()
 
+def status_filter(status):
+    if status == Interest.INITIATED:
+        return "Looking for a match"
 jinja2.filters.FILTERS['minute_format'] = minute_format
 jinja2.filters.FILTERS['expires_in'] = get_expiration_duration
 jinja2.filters.FILTERS['spots_remaining'] = spots_remaining
 jinja2.filters.FILTERS['get_matching_activity_key'] = get_matching_activity_key
+jinja2.filters.FILTERS['status_filter'] = status_filter
 
 class HomeRequestHandler(RegisterBaseHandler):
     """
