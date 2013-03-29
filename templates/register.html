@@ -24,9 +24,15 @@
                         {% endif %}
                         {{ macros.field(form.country, label=_("I want this because")) }}
                         <div class="form-actions">
-                                    <label class="checkbox">
-                        <input id="agree" type="checkbox" value="">I read the <a href="{{ uri_for("terms") }}" target="_blank">Privacy Policy</a> and agree with the <a href="{{ uri_for("terms") }}" target="_blank">Terms Of Service</a>. We collect just enough data to make meaningful connections.
-                        </label>    <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
+                            <label for="agree" class="control-label">
+                                <input type="checkbox" value="y" name="agree" id="agree" class="input-xlarge focused required">
+                                I read the <a href="{{ uri_for("terms") }}" target="_blank">Privacy Policy</a> and agree with the <a href="{{ uri_for("terms") }}" target="_blank">Terms Of Service</a>. We collect just enough data to make meaningful connections.
+                            </label>
+                        </div>
+
+
+                        <div class="form-actions">
+                        <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
                         </div>
                     </fieldset>
                 </form>
