@@ -6,6 +6,7 @@ import re
 import traceback
 import sys
 # related third party imports
+import urllib
 import webapp2
 from google.appengine.api.users import NotAllowedError
 from webapp2_extras import jinja2
@@ -33,7 +34,10 @@ def user_required(handler):
             if not auth:
                 try:
                     self.auth_config['login_url'] = self.uri_for('login', continue_url=self.request.path)
-                    self.redirect(self.auth_config['login_url'], abort=True)
+                    if len(self.request.params) > 0:
+                        self.redirect(self.auth_config['login_url']+'?'+urllib.urlencode(self.request.params), abort=True)
+                    else:
+                        self.redirect(self.auth_config['login_url'], abort=True)
                 except (AttributeError, KeyError), e:
                     self.abort(403)
             else:
