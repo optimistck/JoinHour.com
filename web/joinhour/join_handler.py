@@ -1,7 +1,7 @@
 from webapp2_extras.i18n import gettext as _
 from google.appengine.ext import ndb
 import webapp2
-from boilerplate.lib.basehandler import BaseHandler 
+from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.models.activity import Activity
@@ -14,14 +14,13 @@ class JoinHandler(BaseHandler):
     Handler for JoinHandler Form
     """
 
-    #TODO: load the categories and sub-categories from the pull-down menu
+    @user_required
     def get(self):
         params = {}
         return self.render_template('join.html', **params)
 
+    @user_required
     def post(self):
-        #TODO: the building name needs to come from the user profile
-
 
         if self.user:
             is_create_activity = self.request.get('type_radio') == 'activity'

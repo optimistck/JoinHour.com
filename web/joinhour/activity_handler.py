@@ -3,7 +3,7 @@ import webapp2
 from webapp2_extras.i18n import gettext as _
 
 # Boilerplate imports
-from boilerplate.lib.basehandler import BaseHandler
+from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import models
 import jinja2
 from  datetime import datetime
@@ -30,9 +30,8 @@ class ActivityHandler(BaseHandler):
     Handler for the Activity view, formerly the Leaderboard showing all active open activities and pasive interest broadcasts
     """
     #orig
+    @user_required
     def get(self):
-        if not self.user:
-            return self.redirect_to('login')
         user_info = models.User.get_by_id(long(self.user_id))
         building_name = user_info.building
         activities_from_db = Activity.query(Activity.building_name == building_name, Activity.username != user_info.username).fetch()

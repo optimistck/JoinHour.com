@@ -4,7 +4,7 @@ __author__ = 'ashahab'
 from webapp2_extras.i18n import gettext as _
 from google.appengine.ext import ndb
 import webapp2
-from boilerplate.lib.basehandler import BaseHandler
+from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.activity_manager import ActivityManager
@@ -18,7 +18,7 @@ class JoinActivityHandler(BaseHandler):
     Handler for JoinHandler Form
     """
 
-    #TODO: load the categories and sub-categories from the pull-down menu
+    @user_required
     def get(self):
         user_id = self.user_id
         key = self.request.get('key')
