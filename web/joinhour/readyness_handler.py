@@ -10,7 +10,7 @@ from webapp2_extras.appengine.auth.models import User
 from src.joinhour.activity_manager import ActivityManager
 from UserString import MutableString
 from src.joinhour.models.activity import Activity
-from boilerplate.models import User
+
 class ReadynessHandler(BaseHandler):
     """
     Handles the matching making requests.
@@ -19,13 +19,11 @@ class ReadynessHandler(BaseHandler):
     def get(self):
         try:
             activity_key = self.request.get('activity')
-
             if activity_key != '':
                 activity = ndb.Key(urlsafe=activity_key).get()
                 if not activity:
                     return
                 if activity.status == Activity.COMPLETE:
-
                     userActivities = UserActivity.get_users_for_activity(activity.key)
                     participants = self._process_notification(userActivities)
                     activity_owner = User.get_by_username(activity.username)

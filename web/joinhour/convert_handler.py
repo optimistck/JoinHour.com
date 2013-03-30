@@ -2,7 +2,7 @@ __author__ = 'ashahab'
 from webapp2_extras.i18n import gettext as _
 from google.appengine.ext import ndb
 import webapp2
-from boilerplate.lib.basehandler import BaseHandler
+from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.models.activity import Activity
@@ -21,6 +21,7 @@ class ConvertHandler(BaseHandler):
         params = {}
         return self.render_template('activity.html', **params)
 
+    @user_required
     def post(self):
         #TODO: the building name needs to come from the user profile
 
