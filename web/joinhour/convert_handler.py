@@ -39,7 +39,7 @@ class ConvertHandler(BaseHandler):
                 max_number_of_people_to_join=self.form.max_number_of_people_to_join.data.strip())
             if success:
                 message = _("The interest was converted successfully.")
-                self._push_notification(interest_owner, ActivityManager.get(activity_key))
+                self._push_notification(user_info, interest_owner, ActivityManager.get(activity_key))
                 self.add_message(message, 'success')
                 return self.redirect_to('activity')
             else:
@@ -51,10 +51,10 @@ class ConvertHandler(BaseHandler):
     def form(self):
         return forms.JoinForm(self)
 
-    def _push_notification(self,user_id,activity_manager):
-        user = models.User.get_by_id(long(user_id))
+    def _push_notification(self, activity_owner, user_id,activity_manager):
+        interest_owner = models.User.get_by_id(long(user_id))
         email_url = self.uri_for('taskqueue-send-email')
-        activity_user = user
+
         participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_activity().key).fetch(projection = [UserActivity.user])
         participants = []
         for participant in participants_list:
@@ -63,16 +63,16 @@ class ConvertHandler(BaseHandler):
         #To the activity owner
         template_val = {
             "app_name": self.app.config.get('app_name'),
-            "owner_name":activity_user.name+' '+activity_user.last_name,
+            "owner_name":interest_owner.name+' '+interest_owner.last_name,
             "activity": activity_manager.get_activity(),
-            "owner_username":user.name+' '+user.last_name,
+            "owner_username":activity_owner.name+' '+activity_owner.last_name,
             "complete": activity_manager.status() == Activity.COMPLETE,
             "expires_in": activity_manager.expires_in(),
             "participants":''.join(participants)
         }
         body = self.jinja2.render_template('emails/interest_converted_to_activity.txt', **template_val)
         taskqueue.add(url = email_url,params={
-            'to':activity_user.email,
+            'to':interest_owner.email,
             'subject' : '[JoinHour.com]Your interest is now an Activity',
             'body' : body
         })
