@@ -30,15 +30,16 @@
 
         {% for a in activities %}
             <tr>
-                <TD>{{ a.category }}</TD>
+                <TD>{{ a.category }}<br />
+                    Posted by <a href="/user_profile/?username={{ a.username }}">{{ a.username }}</a>
+                </TD>
                 <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
                 <TD>{{ a.duration }}</TD>
                 <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
                 <TD><a href="/join_activity/?key={{ a.key.urlsafe() }}">
                     <button class="btn btn-primary">JOIN</button>
                 </a></TD>
-
-                <TD>
+               <TD>
                     <a href="/activity_detail/?ID={{ a.key.urlsafe() }}">
                         <button class="btn btn-primary">Details</button>
                     </a>
@@ -110,7 +111,9 @@
         </div>
         {% for i in interests %}
             <tr>
-                <td>{{ i.category }}</td>
+                <TD>{{ i.category }}<br />
+                    Posted by <a href="/user_profile/?username={{ i.username }}">{{ i.username }}</a>
+                </TD>
                 <td>{{ i.key.urlsafe() | expires_in('Interest')  | minute_format}}</td>
                 <td>
                     <a href="#cancel_modal" role="button" class="open-cancel-confirm-dialog btn btn-primary"
