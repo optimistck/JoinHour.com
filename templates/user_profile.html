@@ -1,0 +1,21 @@
+{% extends base_layout %}
+
+{% block title %}
+    {% trans %}User Profile{% endtrans %} - {{app_name}}
+{% endblock %}
+
+{% block header_title %}
+        {% trans %}User Profile{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <h4>{{ user.name  }} {{ user.last_name  }}</h4>
+    <div class="hero-unit home_bp">
+        <div class="row">
+            <div class="span1"><img src="../img/user.jpg" alt=""></div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
