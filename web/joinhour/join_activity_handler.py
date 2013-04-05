@@ -11,7 +11,7 @@ from src.joinhour.activity_manager import ActivityManager
 from google.appengine.api import taskqueue
 from src.joinhour.models.activity import Activity
 from src.joinhour.utils import *
-
+from google.appengine.api import channel
 
 class JoinActivityHandler(BaseHandler):
     """
@@ -25,7 +25,10 @@ class JoinActivityHandler(BaseHandler):
         activity_manager = ActivityManager.get(key)
         (success, message) = activity_manager.connect(user_id)
         if success:
-            message = _("Congratulations! You joined an activity for " + ndb.Key(urlsafe=key).get().category)
+            activity = activity_manager._activity
+            message = _("Congratulations! You joined an activity for " + activity.category)
+            user_info = models.User.get_by_id(long(user_id))
+            channel.send_message(activity.username, "a user has joined your activity: " + user_info.username)
             self._push_notification(user_id,activity_manager)
             self.add_message(message, 'success')
             return self.redirect_to('activity')

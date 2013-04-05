@@ -12,7 +12,7 @@ from src.joinhour.models.match import Match
 from src.joinhour.models.user_activity import UserActivity
 from google.appengine.api import taskqueue
 from src.joinhour.utils import *
-
+from google.appengine.api import channel
 
 
 
@@ -52,13 +52,16 @@ class HomeRequestHandler(RegisterBaseHandler):
             activity_owner_name = activity_user.name + ' ' + activity_user.last_name
             for participant in participants:
                 self._push_notification(category,activity_owner_name,participant,self.request.get('reason'))
+
         user_info = models.User.get_by_id(long(self.user_id))
         activities_from_db = Activity.query(Activity.username == user_info.username).fetch()
         self.view.activities = activities_from_db
         self.view.interests = Interest.query(Interest.username == user_info.username).fetch()
-
         self.view.past_activities = [activity for activity in activities_from_db if activity.status == Activity.COMPLETE]
         self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key).fetch()
+
+        token = channel.create_channel(user_info.username)
+        params['token'] = token
         return self.render_template('home.html', **params)
 
     def _delete_entity(self,key):

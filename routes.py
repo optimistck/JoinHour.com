@@ -6,7 +6,7 @@ from webapp2_extras.routes import RedirectRoute
 from web import handlers
 from web.joinhour import get_activity_handler
 from web.joinhour import terms_handler
-from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler,match_making_handler, token_gen_handler, readyness_handler, convert_handler
+from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler,match_making_handler, token_gen_handler, readyness_handler, convert_handler, update_activity_handler
 from web.joinhour.post_activity_completion_handler import PostActivityCompletionHandler
 from web.joinhour.user_profile_handler import UserProfileHandler
 
@@ -32,7 +32,8 @@ _routes = [
     RedirectRoute('/match_maker/', match_making_handler.MatchMakingHandler, name='match_maker', strict_slash=True),
     RedirectRoute('/readyness_mail/', readyness_handler.ReadynessHandler, name='ready_email', strict_slash=True),
     RedirectRoute('/token_generator/', token_gen_handler.TokenGeneratorHandler, name='token_generator', strict_slash=True),
-    RedirectRoute('/user_profile/', UserProfileHandler, name='user_profile', strict_slash=True)
+    RedirectRoute('/user_profile/', UserProfileHandler, name='user_profile', strict_slash=True),
+    RedirectRoute('/update_activity_list/', update_activity_handler.UpdateActivityHandler, name='update_activities', strict_slash=True)
 ]
 
 def get_routes():
