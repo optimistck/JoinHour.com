@@ -28,6 +28,7 @@ class MatchMakingHandler(BaseHandler):
             print e
 
     def _process_notification(self,match_list):
+        #Fire a notification for each user on their channel
         for user in match_list:
             self._notify_interest_owner(user,match_list[user])
 

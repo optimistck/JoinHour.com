@@ -16,7 +16,7 @@
             <div class="alert alert-info"><i class="icon-edit icon-large"></i> Get connected: Post an <a href="{{ uri_for("join") }}">interest</a>, see <a href="{{ uri_for("how") }}"> how this works</a>, or browse for <a href="{{ uri_for("activity") }}">activities</a> you can join.
                     <BR>
                     </div>
-        <p>
+        <div id="activity_list">
             {% trans %}<H3>Activities you initiated</H3>{% endtrans %}
             <table class="table table-striped table-bordered table table-condensed">
                 <thead>
@@ -97,8 +97,7 @@
                     </tr>
                 {% endfor %}
             </table>
-        </p>
-
+           </div>
         <p>
         {% trans %}<H3>Activities you joined</H3>{% endtrans %}
         <table class="table table-striped table-bordered table table-condensed">
@@ -344,6 +343,7 @@
 {% endblock %}
 
 {% block mediaJS %}
+    <script src='/_ah/channel/jsapi'></script>
     <script type="text/javascript">
         $().ready(function() {
             $("#form_login_user").validate({
@@ -387,8 +387,55 @@
             $("#cancel_activity_id").click(function(){
                 document.location.href='/?key='+$("#activity_id").val()+"&action=cancel&reason="+$("#cancellation_reason").val();
             });
+            sendMessage = function(path, opt_param) {
+                path += '?g=' + '{{ user_id }}';
+                if (opt_param) {
+                    path += '&' + opt_param;
+                }
+                var xhr = new XMLHttpRequest();
+                xhr.open('POST', path, true);
+                xhr.send();
+            };
 
+
+            onMessage = function(m) {
+                $.ajax({
+                    type:"GET",
+                    dataType:"html",
+                    url:'/update_activity_list/',
+                    data: {'user_id':{{user_id}}}
+                }).done(function ( data ) {
+                            $("#activity_list").html(data)
+                        });
+            }
+            updateHtml = function(e) {
+                $("#activity_list").replaceWith(e)
+            }
+            onOpened = function(m) {
+
+            };
+            openChannel = function() {
+                var token = '{{ token }}';
+                var channel = new goog.appengine.Channel(token);
+                var handler = {
+                    'onopen': onOpened,
+                    'onmessage': onMessage,
+                    'onerror': function() {},
+                    'onclose': function() {}
+                };
+                var socket = channel.open(handler);
+                socket.onopen = onOpened;
+                socket.onmessage = onMessage;
+
+            }
+            initialize = function() {
+                openChannel();
+
+            }
+
+            setTimeout(initialize, 100);
         });
+
     </script>
 {% endblock %}
 
