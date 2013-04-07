@@ -80,6 +80,10 @@ class User(User):
     #: Blacklist of users that this user doesn't want to connect with
     #: this needs to be implemented right, probably in its own UserPrefernces model. This is just budget. Will use | separator to add black listed user names for this user.
     blacklist = ndb.StringProperty()
+
+    twitter_screen_name = ndb.StringProperty()
+
+    headline = ndb.StringProperty()
     
     @classmethod
     def get_by_email(cls, email):
