@@ -10,9 +10,15 @@
 
 {% block content %}
     <h4>{{ user.name  }} {{ user.last_name  }}</h4>
-    <div class="hero-unit home_bp">
-        <div class="row">
-            <div class="span1"><img src="../img/user.jpg" alt=""></div>
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="thumbnail">
+                <img src="/user/avatar/?user_name={{ user.username}}" />
+            </div>
+        </div>
+        <div class="span9">
+            <img src="../img/twitter.png" />
+            <span class=" badge badge-warning">{{ twitter_followers_count }} followers</span> <span class=" badge badge-info">{{ twitter_friends_count }} friends</span>
         </div>
     </div>
 
