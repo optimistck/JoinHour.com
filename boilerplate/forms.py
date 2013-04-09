@@ -51,10 +51,16 @@ class UserMixin(BaseForm):
     country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
     building = fields.SelectField(_('Building'), choices=utils.BUILDINGS)
 
+
 class UserEdit(BaseForm):
     username = fields.TextField(_('Username'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH), validators.regexp(utils.ALPHANUMERIC_REGEXP, message=_('Username invalid. Use only letters and numbers.'))])
     name = fields.TextField(_('Name'), [validators.Length(max=FIELD_MAXLENGTH)])
     last_name = fields.TextField(_('Last Name'), [validators.Length(max=FIELD_MAXLENGTH)])
+    twitter_screen_name = fields.TextField(_('Twitter'))
+    about_me = fields.TextAreaField(_('About me'))
+    interests = fields.TextField(_('Interests'))
+
+
 
 
 class PasswordResetCompleteForm(PasswordMixin, ConfirmPasswordMixin):
@@ -150,6 +156,7 @@ class EditProfileForm(UserMixin):
 
 class MiniEditProfileForm(UserEdit):
     pass
+
 
 class EditPasswordForm(PasswordMixin, ConfirmPasswordMixin, CurrentPasswordMixin):
     pass

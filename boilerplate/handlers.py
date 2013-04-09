@@ -1229,6 +1229,13 @@ class EditProfileHandler(BaseHandler):
             self.form.username.data = user_info.username
             self.form.name.data = user_info.name
             self.form.last_name.data = user_info.last_name
+            self.form.about_me.data = user_info.about_me
+            self.form.interests.data = user_info.interests
+            self.view.user_name = user_info.username
+            if user_info.twitter_screen_name is not None:
+                self.form.twitter_screen_name.data = user_info.twitter_screen_name
+            else:
+                self.form.twitter_screen_name.data = ""
             providers_info = user_info.get_social_providers_info()
             #logging.info("XXXX LOGGING:" + user_info.username)
             if not user_info.password:
@@ -1249,6 +1256,10 @@ class EditProfileHandler(BaseHandler):
         username = self.form.username.data.lower()
         name = self.form.name.data.strip()
         last_name = self.form.last_name.data.strip()
+        twitter_screen_name = self.form.twitter_screen_name.data.strip()
+        about_me = self.form.about_me.data.strip()
+        interests = self.form.interests.data.strip()
+        avatar = self.request.get('avatar')
         try:
             user_info = models.User.get_by_id(long(self.user_id))
 
@@ -1279,6 +1290,10 @@ class EditProfileHandler(BaseHandler):
                         return self.get()
                 user_info.name=name
                 user_info.last_name=last_name
+                user_info.twitter_screen_name = twitter_screen_name
+                user_info.about_me = about_me
+                user_info.interests = interests
+                user_info.avatar = avatar
                 user_info.put()
                 message+= " " + _('Thanks, your settings have been saved.')
                 self.add_message(message, 'success')
