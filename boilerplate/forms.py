@@ -57,6 +57,8 @@ class UserEdit(BaseForm):
     name = fields.TextField(_('Name'), [validators.Length(max=FIELD_MAXLENGTH)])
     last_name = fields.TextField(_('Last Name'), [validators.Length(max=FIELD_MAXLENGTH)])
     twitter_screen_name = fields.TextField(_('Twitter'))
+    about_me = fields.TextAreaField(_('About me'))
+    interests = fields.TextField(_('Interests'))
 
 
 
