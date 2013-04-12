@@ -1,0 +1,36 @@
+<p>Hello <strong>{{owner_name}}</strong>,</p>
+
+<p>
+{{cancelling_user_name}} has decided to cancel their participation to the activity.
+</p>
+
+<p>
+Here is a quick summary for this activity :</p>
+<ul>
+	<li>
+		<em>Name</em> - {{activity.category}}
+	</li>
+	<li>
+    	<em>Note</em> - {{activity.note}}
+    </li>
+	<li>
+		<em>Activity Initiator</em> - {{owner_name}}
+	</li>
+	<li>
+		<em>Must start in</em> - {{expires_in}}
+	</li>
+	<li>
+		<em>Participants </em> - {{participants}}
+	</li>
+</ul>
+
+<p>Thank you for using JoinHour.com<br>
+{{ app_name }} Team
+
+<BR>
+<p>
+If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. <br>
