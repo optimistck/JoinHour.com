@@ -31,7 +31,7 @@ class JoinHandler(BaseHandler):
                                                 username = user_info.username,note = self.form.note.data.strip(),ip = self.request.remote_addr,
                                                 min_number_of_people_to_join = self.form.min_number_of_people_to_join.data.strip(),
                                                 max_number_of_people_to_join = self.form.max_number_of_people_to_join.data.strip())
-                message = _("Your interest was registered successfully. We are searching for a match ... ")
+                message = _("Your activity was registered successfully.")
             else:
                 InterestManager.create_interest(building_name=building_name,category=self.form.category.data.strip(),duration=self.form.duration.data.strip(),expiration = self.form.expiration.data.strip(),
                                                 username = user_info.username)
