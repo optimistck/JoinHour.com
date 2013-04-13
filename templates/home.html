@@ -127,6 +127,7 @@
                         <tr>
                             <th>Name</th>
                             <th>Status</th>
+                            <th>Action</th>
                         </tr>
                         </thead>
                         {% for joined_activity in joined_activities %}
@@ -140,6 +141,13 @@
                                     {% else %}
                                         <span class="label">OVER</span>
                                     {% endif %}
+                                </TD>
+                                <TD>
+                                    <form id="cancel_activity" action="{{ uri_for("cancel_activity") }}" method="post">
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                                        <input type="hidden" name="activity_key" value="{{ joined_activity.activity.urlsafe() }}">
+                                        <button type="submit" class="btn btn-primary">{% trans %}Cancel{% endtrans %}</button>
+                                    </form>
                                 </TD>
                             </tr>
                         {% endfor %}
