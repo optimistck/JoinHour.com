@@ -1,21 +1,26 @@
 __author__ = 'ashahab'
 
+from urlparse import urlparse
+from UserString import MutableString
+from  datetime import datetime
+from datetime import timedelta
+import os
+import logging
+
+from google.appengine.api import taskqueue
+from google.appengine.ext import ndb
+from webapp2_extras.appengine.auth.models import User
+from google.appengine.api.taskqueue import Task
+
 from boilerplate.lib.basehandler import BaseHandler
 from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
-from google.appengine.api import taskqueue
-from urlparse import urlparse
-from google.appengine.ext import ndb
-from webapp2_extras.appengine.auth.models import User
 from src.joinhour.activity_manager import ActivityManager
-from UserString import MutableString
 from src.joinhour.models.activity import Activity
 
-class ReadynessHandler(BaseHandler):
-    """
-    Handles the matching making requests.
-    At the end of matchmaking pushes the result to notification queue.
-    """
+
+class ActivityLifeCycleHandler(BaseHandler):
+
     def get(self):
         try:
             activity_key = self.request.get('activity')
@@ -24,25 +29,39 @@ class ReadynessHandler(BaseHandler):
                 if not activity:
                     return
                 if activity.status == Activity.COMPLETE:
-                    userActivities = UserActivity.get_users_for_activity(activity.key)
-                    participants = self._process_notification(userActivities)
-                    activity_owner = User.get_by_username(activity.username)
-                    self._notify_participants(activity_owner, activity, participants)
+                    self._send_readyness_notification(activity)
+                    self._start_post_activity_completion_process(activity)
         except Exception , e:
-            print e
+            logging.warn(e)
 
-    def _process_notification(self,users_for_activity):
+    def _send_readyness_notification(self,activity):
+        userActivities = UserActivity.get_users_for_activity(activity.key)
         participants = MutableString()
-        for userActivity in users_for_activity:
+        for userActivity in userActivities:
             user = userActivity.user.get()
             participants += str(user.name)+' ' + str(user.last_name) + ' , '
             participants.rstrip(',')
+        activity_owner = User.get_by_username(activity.username)
+        self._notify_participants(activity_owner, activity, participants)
 
-        for userActivity in users_for_activity:
-            user = userActivity.user.get()
-            activity = userActivity.activity.get()
-            self._notify_participants(user, activity, participants)
-        return participants
+    def _start_post_activity_completion_process(self,activity):
+        if os.environ.get('ENV_TYPE') is None:
+            #Calculate the eta
+            expiration_time = int(str(self._activity.expiration))
+            if os.environ.get('SERVER_SOFTWARE','').startswith('Development'):
+                eta = 120
+            else :
+                eta = int(activity.duration) * 60
+                activity_start_time = activity.date_entered + timedelta(minutes=expiration_time)
+                now = datetime.utcnow()
+                if now < activity_start_time:
+                    eta = eta + (activity_start_time - now).total_seconds()
+
+            task = Task(url='/post_activity_completion/',method='GET',
+                        params={'activity_key': activity.key.urlsafe()},
+                        countdown=eta)
+            task.add('postActivityCompletion')
+
 
     def _notify_participants(self,user, activity, participants):
         activity_owner = models.User.get_by_username(activity.username)
@@ -64,6 +83,8 @@ class ReadynessHandler(BaseHandler):
             'subject' : '[JoinHour.com]Its a go!',
             'body' : body
         })
+
+
 
 
 
