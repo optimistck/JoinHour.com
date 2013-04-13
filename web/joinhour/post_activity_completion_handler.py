@@ -19,7 +19,7 @@ class PostActivityCompletionHandler(BaseHandler):
 
     def _handleFeedBack(self,activity):
         activity_feedback = ActivityFeedback()
-        activity_feedback.activity = activity
+        activity_feedback.activity = activity.key
         activity_feedback.put()
 
 

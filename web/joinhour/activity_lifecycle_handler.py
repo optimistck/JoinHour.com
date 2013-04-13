@@ -6,12 +6,9 @@ from  datetime import datetime
 from datetime import timedelta
 import os
 import logging
-
 from google.appengine.api import taskqueue
 from google.appengine.ext import ndb
-from webapp2_extras.appengine.auth.models import User
 from google.appengine.api.taskqueue import Task
-
 from boilerplate.lib.basehandler import BaseHandler
 from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
@@ -41,13 +38,13 @@ class ActivityLifeCycleHandler(BaseHandler):
             user = userActivity.user.get()
             participants += str(user.name)+' ' + str(user.last_name) + ' , '
             participants.rstrip(',')
-        activity_owner = User.get_by_username(activity.username)
+        activity_owner = models.User.get_by_username(activity.username)
         self._notify_participants(activity_owner, activity, participants)
 
     def _start_post_activity_completion_process(self,activity):
         if os.environ.get('ENV_TYPE') is None:
             #Calculate the eta
-            expiration_time = int(str(self._activity.expiration))
+            expiration_time = int(str(activity.expiration))
             if os.environ.get('SERVER_SOFTWARE','').startswith('Development'):
                 eta = 120
             else :
@@ -56,7 +53,6 @@ class ActivityLifeCycleHandler(BaseHandler):
                 now = datetime.utcnow()
                 if now < activity_start_time:
                     eta = eta + (activity_start_time - now).total_seconds()
-
             task = Task(url='/post_activity_completion/',method='GET',
                         params={'activity_key': activity.key.urlsafe()},
                         countdown=eta)
