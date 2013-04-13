@@ -1,29 +1,32 @@
 __author__ = 'aparbane'
 
+from  datetime import datetime
+from datetime import timedelta
+import os
+
+from google.appengine.ext import ndb
+from google.appengine.api.taskqueue import Task
+
 from src.joinhour.models.activity import Activity
 from src.joinhour.models.match import Match
 from src.joinhour.models.interest import Interest
 from src.joinhour.models.user_activity import UserActivity
 from src.joinhour.interest_manager import InterestManager
 from boilerplate import models
-from google.appengine.ext import ndb
-from  datetime import datetime
-from datetime import timedelta
-from google.appengine.api.taskqueue import Task
-import os
 
 
 class ActivityManager(object):
 
-    '''
-    TODO- Following a stateful model for this as of now. Do we need a more stateless implementation of activity manager in future?
-    Things to think about
-    * Concurrency
-    * Memory
-    '''
 
     @classmethod
     def create_activity(cls,**kwargs):
+        '''
+        Creates a new activity with the arguments specified.
+        After creation Starts initiates the matchmaker task for finding a possible match and also initiates the activity lifecycle task
+        :param cls:
+        :param kwargs:
+        :return: The newly created activity
+        '''
         activity = Activity(category = kwargs['category'],
                             duration = kwargs['duration'],
                             expiration = kwargs['expiration'],
@@ -42,12 +45,18 @@ class ActivityManager(object):
             expiration_time = int(str(activity.expiration))
             timezone_offset = datetime.now() - datetime.utcnow()
             task_execution_time = activity.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
-            goTask = Task(eta=task_execution_time, url='/readyness_mail/',method='GET',params={'activity': activity.key.urlsafe()})
-            goTask.add('readyness')
+            goTask = Task(eta=task_execution_time, url='/activity_life_cycle/',method='GET',params={'activity': activity.key.urlsafe()})
+            goTask.add('activityLifeCycle')
         return activity
 
     @classmethod
     def create_activity_from_interest(cls, **kwargs):
+        '''
+        Creates a new activity from an interest. Also joins the interest owner with the activity. The interest is marked as COMPLETE and the match table is populated.
+        :param cls:
+        :param kwargs:
+        :return:
+        '''
         interest = ndb.Key(urlsafe=kwargs['interest_id']).get()
         if InterestManager.get(interest.key.urlsafe()).expires_in() == Interest.EXPIRED:
             return False, "Cannot create activity from expired interest"
@@ -64,19 +73,32 @@ class ActivityManager(object):
         user = models.User.get_by_username(interest.username)
         success, message = ActivityManager.get(activity.key.urlsafe()).connect(user.key.id())
         interest.put()
+        #mark this as match found
         match = Match(interest=interest.key,
                       activity=activity.key)
         match.put()
         #Notify interest owner
         return success, message, user.key.id(), activity.key.urlsafe()
+
     @classmethod
     def get(cls,key):
+        '''
+        Returns a Handle to the activity manager for an activity key
+        :param cls:
+        :param key: ActivityKey
+        :return:
+        '''
         return ActivityManager(key)
 
     def __init__(self,key):
         self._activity = ndb.Key(urlsafe=key).get()
 
     def connect(self,user_id):
+        '''
+        Connects/Joins an user with provided user_id with the activity for the current activity manager
+        :param user_id:
+        :return:
+        '''
         (canJoin, message) = self.can_join(user_id)
         if not canJoin:
             return False, message
@@ -91,7 +113,6 @@ class ActivityManager(object):
         if self._activity.status == Activity.INITIATED or self._activity.status == Activity.FORMING:
             if self._is_complete():
                 self._change_status(Activity.COMPLETE)
-                self._on_activity_completion(self._activity)
             else:
                 self._change_status(Activity.FORMING)
         return True, message
@@ -149,32 +170,3 @@ class ActivityManager(object):
     def _change_status(self,new_status):
         self._activity.status = new_status
         self._activity.put()
-
-    def _on_activity_completion(self,activity):
-        #Fire the post activity completion handlers
-        if os.environ.get('ENV_TYPE') is None:
-            #Calculate the eta
-            expiration_time = int(str(self._activity.expiration))
-            if os.environ.get('SERVER_SOFTWARE','').startswith('Development'):
-                eta = 120
-            else :
-                eta = int(activity.duration) * 60
-                activity_start_time = activity.date_entered + timedelta(minutes=expiration_time)
-                now = datetime.utcnow()
-                if now < activity_start_time:
-                    eta = eta + (activity_start_time - now).total_seconds()
-
-            task = Task(url='/post_activity_completion/',method='GET',
-                        params={'activity_key': activity.key.urlsafe()},
-                        countdown=eta)
-            task.add('postActivityCompletion')
-        pass
-
-
-
-
-
-
-
-
-

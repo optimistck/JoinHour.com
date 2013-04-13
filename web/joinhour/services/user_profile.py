@@ -1,7 +1,8 @@
+__author__ = 'aparbane'
 from boilerplate import models
 from boilerplate.lib.basehandler import BaseHandler, user_required
 
-__author__ = 'aparbane'
+
 
 
 class Avatar(BaseHandler):
@@ -12,6 +13,7 @@ class Avatar(BaseHandler):
         if user_info is not None:
             self.response.headers['Content-Type'] = 'image/png'
             self.response.out.write(user_info.avatar)
+            return
         else:
             pass
 
