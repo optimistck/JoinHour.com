@@ -55,7 +55,7 @@ class HomeRequestHandler(RegisterBaseHandler):
 
         user_info = models.User.get_by_id(long(self.user_id))
         activities_from_db = Activity.query(Activity.username == user_info.username).fetch()
-        self.view.activities = activities_from_db
+        self.view.activities = [activity for activity in activities_from_db if activity.status != Activity.COMPLETE]
         self.view.interests = Interest.query(Interest.username == user_info.username).fetch()
         self.view.past_activities = [activity for activity in activities_from_db if activity.status == Activity.COMPLETE]
         self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key).fetch()

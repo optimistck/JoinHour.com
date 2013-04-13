@@ -93,6 +93,34 @@ class ActivityManager(object):
     def __init__(self,key):
         self._activity = ndb.Key(urlsafe=key).get()
 
+    def can_leave(self):
+        if self.expires_in() == Activity.EXPIRED:
+            return False, "You cannot leave an expired activity."
+        if self._activity.status == Activity.COMPLETE:
+            expiration_time = int(str(self._activity.expiration))
+            now = datetime.now()
+            timezone_offset = now - datetime.utcnow()
+            last_cancellation_time = self._activity.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
+            if now > last_cancellation_time:
+                return False, "You cannot leave 5 minutes before activity starts."
+        return True, "You can leave."
+
+    def unjoin(self, user_id):
+        (canLeave, message) = self.can_leave()
+        if not canLeave:
+            return False, message
+        user_info = models.User.get_by_id(long(user_id))
+        user_activity = UserActivity.get_by_user_activity(user_info.key, self._activity.key)
+        user_activity.key.delete()
+        self._activity.headcount -= 1
+        if not self._is_complete():
+            if self._activity.headcount > 0:
+                self._activity.status = Activity.FORMING
+            else:
+                self._activity.status = Activity.INITIATED
+        self._activity.put()
+        return True, "user " + user_info.username + " has been successfully removed from activity " + self._activity.category
+
     def connect(self,user_id):
         '''
         Connects/Joins an user with provided user_id with the activity for the current activity manager
