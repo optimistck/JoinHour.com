@@ -36,7 +36,7 @@ config = {
 
 # contact page email settings
 'contact_sender' : "PUT_SENDER_EMAIL_HERE",
-'contact_recipient' : "PUT_RECIPIENT_EMAIL_HERE",
+'contact_recipient' : "we+support@joinhour.com",
 
 # Password AES Encryption Parameters
 'aes_key' : "12_24_32_BYTES_KEY_FOR_PASSWORDS",
