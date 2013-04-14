@@ -12,6 +12,7 @@ from google.appengine.api import taskqueue
 from src.joinhour.models.activity import Activity
 from src.joinhour.utils import *
 from google.appengine.api import channel
+from src.joinhour.notification_manager import NotificationManager
 
 class JoinActivityHandler(BaseHandler):
     """
@@ -45,7 +46,6 @@ class JoinActivityHandler(BaseHandler):
 
     def _push_notification(self,user_id,activity_manager):
         user = models.User.get_by_id(long(user_id))
-        email_url = self.uri_for('taskqueue-send-email')
         activity_user = models.User.get_by_username(activity_manager.get_activity().username)
         #all users signed up for this activity
         participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_activity().key).fetch(projection = [UserActivity.user])
@@ -64,12 +64,11 @@ class JoinActivityHandler(BaseHandler):
             "expires_in": minute_format(activity_manager.expires_in()),
             "participants":','.join(participants)
         }
-        body = self.jinja2.render_template('emails/activity_new_companion_notification_for_activity_owner.txt', **template_val)
-        taskqueue.add(url = email_url,params={
-            'to':activity_user.email,
-            'subject' : '[JoinHour.com]New companion for your activity',
-            'body' : body
-        })
+        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager.push_notification(user.email,
+                                               '[JoinHour.com]New companion for your activity',
+                                               'emails/activity_new_companion_notification_for_activity_owner.txt',
+                                               template_val)
 
         #To the activity participants in case the activity is a GO
         if activity_manager.status() == Activity.COMPLETE :
@@ -82,12 +81,10 @@ class JoinActivityHandler(BaseHandler):
                     "expires_in": minute_format(activity_manager.expires_in()),
                     "participants":','.join(participants)
                 }
-                body = self.jinja2.render_template('emails/activity_go_notification_for_activity_participant.txt', **template_val)
-                taskqueue.add(url = email_url,params={
-                    'to':participant.user.get().email,
-                    'subject' : '[JoinHour.com]Your activity is a GO',
-                    'body' : body
-                })
+                notification_manager.push_notification(user.email,
+                                                       '[JoinHour.com]New companion for your activity',
+                                                       'emails/activity_go_notification_for_activity_participant.txt',
+                                                       template_val)
 
 
 
