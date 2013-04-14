@@ -11,6 +11,8 @@ from src.joinhour.interest_manager import InterestManager
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.models.user_activity import UserActivity
 from google.appengine.api import taskqueue
+from src.joinhour.notification_manager import NotificationManager
+
 class ConvertHandler(BaseHandler):
     """
     Handler for JoinHandler Form
@@ -71,9 +73,8 @@ class ConvertHandler(BaseHandler):
             "expires_in": activity_manager.expires_in(),
             "participants":''.join(participants)
         }
-        body = self.jinja2.render_template('emails/interest_converted_to_activity.txt', **template_val)
-        taskqueue.add(url = email_url,params={
-            'to':interest_owner.email,
-            'subject' : '[JoinHour.com]Your interest is now an Activity',
-            'body' : body
-        })
+        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager.push_notification(activity_owner.email,
+                                               '[JoinHour.com]Your interest is now an Activity',
+                                               'emails/interest_converted_to_activity.txt',
+                                               template_val)

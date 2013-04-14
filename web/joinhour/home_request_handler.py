@@ -5,7 +5,7 @@ import jinja2
 
 from src.joinhour.models.activity import Activity
 from src.joinhour.activity_manager import ActivityManager
-from src.joinhour.interest_manager import InterestManager
+from src.joinhour.notification_manager import NotificationManager
 from src.joinhour.models.interest import Interest
 from google.appengine.ext import ndb
 from src.joinhour.models.match import Match
@@ -82,19 +82,18 @@ class HomeRequestHandler(RegisterBaseHandler):
         return category,activity_username,participants
 
     def _push_notification(self,category,activity_owner_name,participant,reason_for_cancellation):
-        email_url = self.uri_for('taskqueue-send-email')
+
         template_val = {
             "app_name": self.app.config.get('app_name'),
             "activity_name": category,
             "activity_owner_name": activity_owner_name,
-            "participant_username":participant.name+' '+participant.last_name,
+            "participant_username": participant.name+' '+participant.last_name,
             "reason_for_cancellation":reason_for_cancellation
         }
-        body = self.jinja2.render_template('emails/activity_cancel_notification_for_participant.txt', **template_val)
-        taskqueue.add(url = email_url,params={
-            'to':participant.email,
-            'subject' : '[JoinHour.com]Activity cancellation notification',
-            'body' : body
-        })
+        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager.push_notification(participant.email,
+                                               '[JoinHour.com]Activity cancellation notification',
+                                               'emails/activity_cancel_notification_for_participant.txt',
+                                               template_val)
 
 
