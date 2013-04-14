@@ -8,6 +8,7 @@ from src.joinhour.models.user_activity import UserActivity
 from google.appengine.api import taskqueue
 from src.joinhour.utils import *
 from google.appengine.api import channel
+from src.joinhour.notification_manager import NotificationManager
 
 class CancelActivityHandler(BaseHandler):
     """
@@ -55,9 +56,8 @@ class CancelActivityHandler(BaseHandler):
             "expires_in": minute_format(activity_manager.expires_in()),
             "participants":','.join(participants)
         }
-        body = self.jinja2.render_template('emails/join_cancel_notification.txt', **template_val)
-        taskqueue.add(url = email_url,params={
-            'to':activity_owner.email,
-            'subject' : '[JoinHour.com]Cancellation',
-            'body' : body
-        })
+        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager.push_notification(activity_owner.email,
+                                               '[JoinHour.com]Cancellation',
+                                               'emails/join_cancel_notification.txt',
+                                               template_val)

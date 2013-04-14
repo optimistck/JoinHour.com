@@ -14,7 +14,7 @@ from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.models.activity import Activity
-
+from src.joinhour.notification_manager import NotificationManager
 
 class ActivityLifeCycleHandler(BaseHandler):
 
@@ -73,12 +73,11 @@ class ActivityLifeCycleHandler(BaseHandler):
             "participants": participants,
             "support_url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
         }
-        body = self.jinja2.render_template('emails/its_a_go_notification_for_participants.txt', **template_val)
-        taskqueue.add(url = email_url,params={
-            'to': user.email,
-            'subject' : '[JoinHour.com]Its a go!',
-            'body' : body
-        })
+        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager.push_notification(user.email,
+                                               '[JoinHour.com]Its a go!',
+                                               'emails/its_a_go_notification_for_participants.txt',
+                                               template_val)
 
 
 
