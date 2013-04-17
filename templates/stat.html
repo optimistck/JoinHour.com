@@ -15,35 +15,28 @@
 
     <H3>Activities you can join now</H3>
 
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered table table-condensed">
 
         <thead>
         <tr>
             <th>Category</th>
-            <th>Spots</th>
             <th>Duration</th>
             <th>Expires in</th>
-            <th>Join activity?</th>
-            <th>Details</th>
+            <th>Action</th>
         </tr>
         </thead>
 
         {% for a in activities %}
             <tr>
-                <TD>{{ a.category }}<br />
+                <TD><a href="/activity_detail/?ID={{ a.key.urlsafe() }}">{{ a.category }}</a><br />
                     Posted by <a href="/user_profile/?username={{ a.username }}">{{ a.username }}</a>
                 </TD>
-                <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
                 <TD>{{ a.duration }}</TD>
                 <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
                 <TD><a href="/join_activity/?key={{ a.key.urlsafe() }}">
                     <button class="btn btn-primary">JOIN</button>
                 </a></TD>
-               <TD>
-                    <a href="/activity_detail/?ID={{ a.key.urlsafe() }}">
-                        <button class="btn btn-primary">Details</button>
-                    </a>
-                </TD>
+
             </tr>
         {% endfor %}
     </table>
@@ -51,12 +44,13 @@
     </fieldset>
 
     <H3>Interests ready for a match</H3>
-    <table class="table table-striped table-bordered">
+    <table class="table table-striped table-bordered table table-condensed">
         <thead>
         <tr>
-            <th>Interest</th>
-            <th>Expires In</th>
-            <th>Convert to Activity?</th>
+            <th>Category</th>
+            <th>Duration</th>
+            <th>Expires in</th>
+            <th>Action</th>
         </tr>
         </thead>
         <div id="cancel_modal" class="modal hide fade">
@@ -114,10 +108,11 @@
                 <TD>{{ i.category }}<br />
                     Posted by <a href="/user_profile/?username={{ i.username }}">{{ i.username }}</a>
                 </TD>
+                <td>{{ i.duration}}</td>
                 <td>{{ i.key.urlsafe() | expires_in('Interest')  | minute_format}}</td>
                 <td>
                     <a href="#cancel_modal" role="button" class="open-cancel-confirm-dialog btn btn-primary"
-                       data-toggle="modal" data-id="{{ i.key.urlsafe()}}">Yes</a></td>
+                       data-toggle="modal" data-id="{{ i.key.urlsafe()}}">Convert to an activity</a></td>
             </tr>
         {% endfor %}
 

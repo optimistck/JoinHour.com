@@ -30,7 +30,7 @@ from src.joinhour.models.token import Token
 # local application/library specific imports
 import models
 import forms as forms
-from lib import utils, captcha, twitter
+from lib import captcha, twitter
 from lib.basehandler import BaseHandler
 from lib.basehandler import user_required
 from lib import facebook
@@ -39,7 +39,6 @@ from lib import facebook
 from google.appengine.ext import ndb
 
 ## JH - attempt to pass variables in URL
-import urllib
 
 
 
@@ -1232,6 +1231,8 @@ class EditProfileHandler(BaseHandler):
             self.form.about_me.data = user_info.about_me
             self.form.interests.data = user_info.interests
             self.view.user_name = user_info.username
+            if user_info.avatar is not  None:
+                self.view.hasAvatar = True
             if user_info.twitter_screen_name is not None:
                 self.form.twitter_screen_name.data = user_info.twitter_screen_name
             else:
@@ -1293,7 +1294,8 @@ class EditProfileHandler(BaseHandler):
                 user_info.twitter_screen_name = twitter_screen_name
                 user_info.about_me = about_me
                 user_info.interests = interests
-                user_info.avatar = avatar
+                if avatar is not None and str(avatar) != "":
+                    user_info.avatar = avatar
                 user_info.put()
                 message+= " " + _('Thanks, your settings have been saved.')
                 self.add_message(message, 'success')

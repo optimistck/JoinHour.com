@@ -23,12 +23,4 @@ class UserActivity(ndb.Model):
 
     @classmethod
     def get_by_user_activity(cls, user, activity):
-        """Returns a user object based on an email.
-
-        :param email:
-            String representing the user email. Examples:
-
-        :returns:
-            A user object.
-        """
         return cls.query(cls.user == user, cls.activity == activity).get()
