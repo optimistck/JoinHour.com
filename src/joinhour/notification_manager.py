@@ -1,32 +1,25 @@
 __author__ = 'ashahab'
-from  datetime import datetime
-from datetime import timedelta
-import os
 
-from google.appengine.ext import ndb
-from google.appengine.api.taskqueue import Task
-
-from src.joinhour.models.activity import Activity
-from src.joinhour.models.match import Match
-from src.joinhour.models.interest import Interest
-from src.joinhour.models.user_activity import UserActivity
-from src.joinhour.interest_manager import InterestManager
-from boilerplate import models
 from google.appengine.api import taskqueue
-from src.joinhour.utils import *
+import webapp2
+from webapp2_extras import jinja2
+
 class NotificationManager(object):
 
+
+
     @classmethod
-    def get(email_url):
-        return NotificationManager(email_url)
+    def get(cls):
+        return NotificationManager()
 
-    def __init__(self,app,email_url):
-        self.email_url = email_url
+    def __init__(self):
+        pass
 
-    def push_notification(self, to_email, subject, template_name, **template_val):
-        body = self.jinja2.render_template(template_name, **template_val)
-        taskqueue.add(url = self.email_url,params={
+    def push_notification(self, to_email, subject, template, **template_val):
+        email_body = jinja2.get_jinja2(factory=jinja2.Jinja2(webapp2.get_app()), app=webapp2.get_app()).render_template(template, **template_val)
+        email_url = webapp2.uri_for('taskqueue-send-email')
+        taskqueue.add(url=email_url,params={
             'to':to_email,
             'subject' : subject,
-            'body' : body
+            'body' : email_body
         })

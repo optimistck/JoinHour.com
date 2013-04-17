@@ -6,7 +6,6 @@ from  datetime import datetime
 from datetime import timedelta
 import os
 import logging
-from google.appengine.api import taskqueue
 from google.appengine.ext import ndb
 from google.appengine.api.taskqueue import Task
 from boilerplate.lib.basehandler import BaseHandler
@@ -73,11 +72,11 @@ class ActivityLifeCycleHandler(BaseHandler):
             "participants": participants,
             "support_url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
         }
-        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager = NotificationManager.get()
         notification_manager.push_notification(user.email,
                                                '[JoinHour.com]Its a go!',
                                                'emails/its_a_go_notification_for_participants.txt',
-                                               template_val)
+                                               **template_val)
 
 
 
