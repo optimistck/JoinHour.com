@@ -24,7 +24,7 @@ An ability to provide feedback is coming soon.
         <fieldset>
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            {{ macros.field(form.note, label=_("Note"), placeholder=_("your feedback ...")+" "+_("mind"), class="input-xlarge focused required") }}
+            {{ macros.field(form.activity_experience, label=_("Activity Experience")) }}
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans %}Submit Feedback{% endtrans %}</button>
             </div>

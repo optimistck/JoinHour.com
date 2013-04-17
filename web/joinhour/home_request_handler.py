@@ -1,20 +1,16 @@
+import jinja2
+from google.appengine.ext import ndb
+from google.appengine.api import channel
+
 from boilerplate.handlers import RegisterBaseHandler
 from boilerplate import models
-import jinja2
-
-
 from src.joinhour.models.activity import Activity
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.notification_manager import NotificationManager
 from src.joinhour.models.interest import Interest
-from google.appengine.ext import ndb
 from src.joinhour.models.match import Match
 from src.joinhour.models.user_activity import UserActivity
-from google.appengine.api import taskqueue
 from src.joinhour.utils import *
-from google.appengine.api import channel
-
-
 
 
 def spots_remaining(key):
@@ -55,11 +51,10 @@ class HomeRequestHandler(RegisterBaseHandler):
 
         user_info = models.User.get_by_id(long(self.user_id))
         activities_from_db = Activity.query(Activity.username == user_info.username).fetch()
-        self.view.activities = [activity for activity in activities_from_db if activity.status != Activity.COMPLETE]
-        self.view.interests = Interest.query(Interest.username == user_info.username).fetch()
+        self.view.activities = [activity for activity in activities_from_db if activity.status != Activity.EXPIRED]
+        self.view.interests = Interest.query(Interest.username == user_info.username,Interest.status != Interest.EXPIRED).fetch()
         self.view.past_activities = [activity for activity in activities_from_db if activity.status == Activity.COMPLETE]
         self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key).fetch()
-
         token = channel.create_channel(user_info.username)
         params['token'] = token
         return self.render_template('home.html', **params)
