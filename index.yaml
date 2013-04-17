@@ -68,6 +68,11 @@ indexes:
   - name: building_name
   - name: username
 
+- kind: Interest
+  properties:
+  - name: username
+  - name: status
+
 - kind: Love
   ancestor: yes
   properties:
