@@ -9,16 +9,27 @@
 {% endblock %}
 
 {% block content %}
-    <h4>{{ user.name  }} {{ user.last_name  }}</h4>
-    <div class="row-fluid">
-        <div class="span3">
-            <div class="thumbnail">
+
+
+    <div class="media">
+        <a class="pull-left" href="#">
+            {% if hasAvatar %}
                 <img src="/user/avatar/?user_name={{ user.username}}" />
-            </div>
-        </div>
-        <div class="span9">
-            <img src="../img/twitter.png" />
-            <span class=" badge badge-warning">{{ twitter_followers_count }} followers</span> <span class=" badge badge-info">{{ twitter_friends_count }} friends</span>
+            {% else %}
+                <img src="../img/user.jpg" />
+            {% endif %}
+        </a>
+        <div class="media-body">
+            <h4 class="media-heading">{{ user.name  }} {{ user.last_name  }}</h4>
+            {{ user.about_me }}
+            {{ user.interests }}<br><br><br>
+
+            <!-- Nested media object -->
+            {% if hasTwitter %}
+                <h4 class="media-heading">Twitter</h4>
+                <span class=" badge badge-warning">{{ twitter_followers_count }} followers</span> <span class=" badge badge-info">{{ twitter_friends_count }} friends</span>
+            {% endif %}
+
         </div>
     </div>
 
