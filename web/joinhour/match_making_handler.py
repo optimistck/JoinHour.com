@@ -1,11 +1,12 @@
 __author__ = 'aparbane'
 
+from urlparse import urlparse
+
 from boilerplate.lib.basehandler import BaseHandler
 from src.joinhour.matchmaker import MatchMaker
 from boilerplate import models
-from google.appengine.api import taskqueue
-from urlparse import urlparse
 from src.joinhour.notification_manager import NotificationManager
+
 
 class MatchMakingHandler(BaseHandler):
     """
@@ -42,11 +43,11 @@ class MatchMakingHandler(BaseHandler):
             "matches": matches,
             "url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
         }
-        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager = NotificationManager.get()
         notification_manager.push_notification(user.email,
                                                '[JoinHour.com]Match notification',
                                                'emails/match_found_notification_for_interest_owner.txt',
-                                               template_val)
+                                               **template_val)
 
 
 
