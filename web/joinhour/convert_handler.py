@@ -1,16 +1,12 @@
 __author__ = 'ashahab'
 from webapp2_extras.i18n import gettext as _
-from google.appengine.ext import ndb
 import webapp2
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.models.activity import Activity
-from src.joinhour.models.interest import Interest
-from src.joinhour.interest_manager import InterestManager
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.models.user_activity import UserActivity
-from google.appengine.api import taskqueue
 from src.joinhour.notification_manager import NotificationManager
 
 class ConvertHandler(BaseHandler):
@@ -73,8 +69,8 @@ class ConvertHandler(BaseHandler):
             "expires_in": activity_manager.expires_in(),
             "participants":''.join(participants)
         }
-        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager = NotificationManager.get()
         notification_manager.push_notification(activity_owner.email,
                                                '[JoinHour.com]Your interest is now an Activity',
                                                'emails/interest_converted_to_activity.txt',
-                                               template_val)
+                                               **template_val)

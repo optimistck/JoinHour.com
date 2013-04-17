@@ -85,10 +85,10 @@ class HomeRequestHandler(RegisterBaseHandler):
             "participant_username": participant.name+' '+participant.last_name,
             "reason_for_cancellation":reason_for_cancellation
         }
-        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager = NotificationManager.get()
         notification_manager.push_notification(participant.email,
                                                '[JoinHour.com]Activity cancellation notification',
                                                'emails/activity_cancel_notification_for_participant.txt',
-                                               template_val)
+                                               **template_val)
 
 

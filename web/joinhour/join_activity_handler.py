@@ -2,13 +2,11 @@ from src.joinhour.models.user_activity import UserActivity
 
 __author__ = 'ashahab'
 from webapp2_extras.i18n import gettext as _
-from google.appengine.ext import ndb
 import webapp2
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.activity_manager import ActivityManager
-from google.appengine.api import taskqueue
 from src.joinhour.models.activity import Activity
 from src.joinhour.utils import *
 from google.appengine.api import channel
@@ -64,11 +62,11 @@ class JoinActivityHandler(BaseHandler):
             "expires_in": minute_format(activity_manager.expires_in()),
             "participants":','.join(participants)
         }
-        notification_manager = NotificationManager.get(self.uri_for('taskqueue-send-email'))
+        notification_manager = NotificationManager.get()
         notification_manager.push_notification(user.email,
                                                '[JoinHour.com]New companion for your activity',
                                                'emails/activity_new_companion_notification_for_activity_owner.txt',
-                                               template_val)
+                                               **template_val)
 
         #To the activity participants in case the activity is a GO
         if activity_manager.status() == Activity.COMPLETE :
@@ -84,7 +82,7 @@ class JoinActivityHandler(BaseHandler):
                 notification_manager.push_notification(user.email,
                                                        '[JoinHour.com]New companion for your activity',
                                                        'emails/activity_go_notification_for_activity_participant.txt',
-                                                       template_val)
+                                                       **template_val)
 
 
 
