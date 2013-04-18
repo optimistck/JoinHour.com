@@ -210,7 +210,7 @@
                             {% for a in past_activities %}
                                 <tr>
                                     <TD>{{ a.category }}</TD>
-                                    <TD>{{ a.date_entered }}</TD>
+                                    <TD>{{ a.date_entered.strftime("%d/%m/%y")}}</TD>
                                     <TD>1 day and 3 hours</TD>
                                     <TD><a href="{{ uri_for("feedback") }}">
                                         <button class="btn btn-primary">Feedback</button>
