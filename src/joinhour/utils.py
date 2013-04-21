@@ -25,3 +25,5 @@ def get_expiration_duration(key, entity_type):
     else:
         return InterestManager.get(key).expires_in()
 
+def can_join(key, user_id):
+    ActivityManager.get(key).can_join(user_id)[0]
