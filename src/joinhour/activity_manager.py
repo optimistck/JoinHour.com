@@ -58,8 +58,8 @@ class ActivityManager(object):
         :return:
         '''
         interest = ndb.Key(urlsafe=kwargs['interest_id']).get()
-        if InterestManager.get(interest.key.urlsafe()).expires_in() == Interest.EXPIRED:
-            return False, "Cannot create activity from expired interest"
+        if InterestManager.get(interest.key.urlsafe()).expires_in() == Interest.EXPIRED or interest.status == interest.COMPLETE:
+            return False, "Cannot create activity from an expired or completed interest"
         #Create the activity
         activity = ActivityManager.create_activity(
                                         building_name=interest.building_name,category=interest.category,
