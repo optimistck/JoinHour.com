@@ -21,6 +21,10 @@ class Activity(ndb.Model):
     status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE])
     building_name = ndb.StringProperty()
 
+    @classmethod
+    def query_paged(cls, building_name, user_info, curs):
+        return Activity.query(Activity.building_name == building_name, Activity.username != user_info.username)\
+            .fetch_page(5, start_cursor=curs).order(cls._key)
 
     @classmethod
     def query_activity(cls, ancestor_key):
