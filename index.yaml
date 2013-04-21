@@ -14,12 +14,39 @@ indexes:
   properties:
   - name: building_name
   - name: date_entered
+
+- kind: Activity
+  properties:
+  - name: building_name
+  - name: date_entered
+  - name: __key__
+    direction: desc
+
+- kind: Activity
+  properties:
+  - name: building_name
+  - name: date_entered
+    direction: desc
+
+- kind: Activity
+  properties:
+  - name: building_name
+  - name: date_entered
+    direction: desc
+  - name: __key__
     direction: desc
 
 - kind: Activity
   properties:
   - name: building_name
   - name: username
+
+- kind: Activity
+  properties:
+  - name: building_name
+  - name: username
+  - name: __key__
+    direction: desc
 
 - kind: Activity
   ancestor: yes
