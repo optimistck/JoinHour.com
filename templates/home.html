@@ -208,7 +208,7 @@
                             {% for user_feedback in user_feedbacks %}
                                 <tr>
                                     <TD>{{ user_feedback.activity.get().category }}</TD>
-                                    <TD><a href="/user_feedback/?ID={{ a.key.urlsafe() }}">
+                                    <TD><a href="/user_feedback/?userfeedback_key={{ user_feedback.key.urlsafe() }}">
                                         <button class="btn btn-primary">Feedback</button>
                                     </a></TD>
                                 </tr>
