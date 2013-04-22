@@ -1,6 +1,8 @@
 __author__ = 'aparbane'
 from google.appengine.ext import ndb
-from src.joinhour.models.feedback import ActivityFeedback
+from src.joinhour.models.feedback import UserFeedback
+from src.joinhour.models.user_activity import UserActivity
+from boilerplate import models
 
 
 
@@ -18,8 +20,18 @@ class PostActivityCompletionHandler(BaseHandler):
 
 
     def _handleFeedBack(self,activity):
-        activity_feedback = ActivityFeedback()
-        activity_feedback.activity = activity.key
-        activity_feedback.put()
-
+        activity_user = models.User.get_by_username(activity.username)
+        #all users signed up for this activity
+        participants_list = UserActivity.query(UserActivity.activity == activity.key).fetch(projection = [UserActivity.user])
+        #Ask feedback from participants
+        for participant in participants_list:
+            user_feedback = UserFeedback()
+            user_feedback.activity = activity.key
+            user_feedback.user = participant.user
+            user_feedback.put()
+        #Ask feedback from owner
+        user_feedback = UserFeedback()
+        user_feedback.activity = activity.key
+        user_feedback.user = activity_user
+        user_feedback.put()
 
