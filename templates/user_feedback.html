@@ -1,0 +1,66 @@
+{% extends base_layout %}
+
+{% block title %}
+    {% trans %}Feedback{% endtrans %} - {{ app_name }}
+{% endblock %}
+{% block header_title %}
+    {% trans %}Feedback{% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+    <form id="form_feedback" action="{{ url|safe }}" method="post" class="well form-horizontal">
+        <input type="hidden" name="userfeedback_key" value="{{ user_feedback.key.urlsafe() }}">
+        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+        <div class="control-group">
+            <label class="control-label" for="inputEmail">Activity</label>
+            <div class="controls">
+                <span class="input-xlarge uneditable-input">{{ user_feedback.activity.get().category }}</span>
+            </div>
+        </div>
+        <div class="control-group">
+           <label class="control-label" for="activityExp">Activity Experience</label>
+           <div class="controls">
+               <label class="radio inline">
+                    <input type="radio" name="activity_exp" value="NEUTRAL" checked>Neutral</input>
+                </label>
+                <label class="radio inline">
+                    <input type="radio" name="activity_exp" value="NEGATIVE">Negative</input>
+                </label>
+
+                <label class="radio inline">
+                    <input type="radio" name="activity_exp" value="POSITIVE">Positive</input>
+                </label>
+               <label class="radio inline">
+                    <input type="radio" name="activity_exp" value="VERY_POSITIVE">Very positive</input>
+                </label>
+               <label class="radio inline">
+                    <input type="radio" name="activity_exp" value="SUPER_POSITIVE">Super positive</input>
+                </label>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Submit feedback</button>
+            </div>
+        </div>
+    </form>
+
+    </table>
+
+
+{% endblock %}
+
+{% block mediaJS %}
+    <script type="text/javascript">
+        $().ready(function () {
+            $("#form_contact").validate({
+                errorPlacement: function (error, element) {
+                    element.parent().parent().addClass("error");
+                    error.addClass("help-inline").appendTo(element.parent());
+                }
+            });
+        });
+    </script>
+{% endblock %}
+

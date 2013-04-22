@@ -1,6 +1,10 @@
 __author__ = 'aparbane'
 
-from src.joinhour.modes.feedback.UserFeedback
+from webapp2_extras.i18n import lazy_gettext as _
+
+from src.joinhour.models.feedback import UserFeedback
+from boilerplate.forms import BaseForm
+from wtforms import fields
 
 
 ACTIVITY_EXPERIENCE = [

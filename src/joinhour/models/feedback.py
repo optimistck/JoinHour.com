@@ -20,11 +20,14 @@ class UserFeedback(ndb.Model):
     POSITIVE = 'POSITIVE'
     VERY_POSITIVE = 'VERY_POSITIVE'
     SUPER_POSITIVE = 'SUPER_POSITIVE'
+    OPEN = 'OPEN'
+    CLOSED_WITHOUT_FEEDBACK = 'CLOSED_WITHOUT_FEEDBACK'
+    CLOSED_WITH_FEEDBACK = 'CLOSED_WITH_FEEDBACK'
     user = ndb.KeyProperty(kind=User,name='user')
-    activity_category = ndb.StringProperty()
-    activity_date = ndb.DateTimeProperty(auto_now_add=True)
+    activity = ndb.KeyProperty(kind=Activity,name='activity',required=True)
     activity_experience =  ndb.StringProperty(default=NEUTRAL,choices=[NEGATIVE,NEUTRAL,
                                                                                     POSITIVE,VERY_POSITIVE,SUPER_POSITIVE])
+    status = ndb.StringProperty(default=OPEN,choices=[OPEN,CLOSED_WITHOUT_FEEDBACK,CLOSED_WITH_FEEDBACK])
 
 
 class CompanionShipRating(ndb.Model):
