@@ -25,8 +25,9 @@ class ActivityLifeCycleHandler(BaseHandler):
                 if not activity:
                     return
                 if activity.status == Activity.COMPLETE:
-                    self._send_readyness_notification(activity)
                     self._start_post_activity_completion_process(activity)
+                    self._send_readyness_notification(activity)
+
         except Exception , e:
             logging.warn(e)
 
@@ -72,7 +73,7 @@ class ActivityLifeCycleHandler(BaseHandler):
             "participants": participants,
             "support_url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
         }
-        notification_manager = NotificationManager.get()
+        notification_manager = NotificationManager.get(self)
         notification_manager.push_notification(user.email,
                                                '[JoinHour.com]Its a go!',
                                                'emails/its_a_go_notification_for_participants.txt',

@@ -63,7 +63,7 @@ class JoinActivityHandler(BaseHandler):
             "participants":','.join(participants)
         }
         notification_manager = NotificationManager.get()
-        notification_manager.push_notification(user.email,
+        notification_manager.push_notification(activity_user.email,
                                                '[JoinHour.com]New companion for your activity',
                                                'emails/activity_new_companion_notification_for_activity_owner.txt',
                                                **template_val)
@@ -79,8 +79,8 @@ class JoinActivityHandler(BaseHandler):
                     "expires_in": minute_format(activity_manager.expires_in()),
                     "participants":','.join(participants)
                 }
-                notification_manager.push_notification(user.email,
-                                                       '[JoinHour.com]New companion for your activity',
+                notification_manager.push_notification(participant.user.get().email,
+                                                       '[JoinHour.com]Activity Go Notification',
                                                        'emails/activity_go_notification_for_activity_participant.txt',
                                                        **template_val)
 

@@ -12,6 +12,7 @@ from web.joinhour import activity_handler, home_request_handler, join_handler, t
 from web.joinhour.post_activity_completion_handler import PostActivityCompletionHandler
 from web.joinhour.services.user_profile import Avatar
 from web.joinhour.user_profile_handler import UserProfileHandler
+from web.joinhour.user_feedback_handler import UserFeedbackHandler
 
 
 
@@ -39,6 +40,7 @@ _routes = [
     RedirectRoute('/update_activity_list/', update_activity_handler.UpdateActivityHandler, name='update_activities', strict_slash=True),
     RedirectRoute('/user/avatar/', Avatar, name='avatar', strict_slash=True),
     RedirectRoute('/cancel_activity/', cancel_activity_handler.CancelActivityHandler, name='cancel_activity', strict_slash=True),
+    RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True)
 ]
 
 def get_routes():

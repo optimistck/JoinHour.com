@@ -10,6 +10,7 @@ from src.joinhour.notification_manager import NotificationManager
 from src.joinhour.models.interest import Interest
 from src.joinhour.models.match import Match
 from src.joinhour.models.user_activity import UserActivity
+from src.joinhour.models.feedback import UserFeedback
 from src.joinhour.utils import *
 
 
@@ -55,6 +56,7 @@ class HomeRequestHandler(RegisterBaseHandler):
         self.view.interests = Interest.query(Interest.username == user_info.username,Interest.status != Interest.EXPIRED).fetch()
         self.view.past_activities = [activity for activity in activities_from_db if activity.status == Activity.COMPLETE]
         self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key).fetch()
+        self.view.user_feedbacks = UserFeedback.query(UserFeedback.user == user_info.key,UserFeedback.status == UserFeedback.OPEN).fetch()
         token = channel.create_channel(user_info.username)
         params['token'] = token
         return self.render_template('home.html', **params)
