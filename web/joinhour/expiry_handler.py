@@ -1,7 +1,4 @@
 __author__ = 'ashahab'
-from webapp2_extras.i18n import gettext as _
-from google.appengine.ext import ndb
-import webapp2
 from boilerplate.lib.basehandler import BaseHandler
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.interest_manager import InterestManager
@@ -18,13 +15,13 @@ class ExpiryHandler(BaseHandler):
         activities =  Activity.query_all_unexpired_activity()
 
         for activity in activities:
-            if ActivityManager.get(activity.key.urlsafe()).expires_in() == Activity.EXPIRED:
+            if activity.status != Activity.COMPLETE and ActivityManager.get(activity.key.urlsafe()).expires_in() == Activity.EXPIRED:
                 activity.status = Activity.EXPIRED
                 activity.put()
 
         interests =  Interest.query_all_unexpired_interest()
 
         for interest in interests:
-            if InterestManager.get(interest.key.urlsafe()).expires_in() == Interest.EXPIRED:
+            if interest.status != Interest.COMPLETE and InterestManager.get(interest.key.urlsafe()).expires_in() == Interest.EXPIRED:
                 interest.status = Interest.EXPIRED
                 interest.put()
