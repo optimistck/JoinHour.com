@@ -111,7 +111,6 @@ class ActivityManager(object):
             return False, message
         user_info = models.User.get_by_id(long(user_id))
         user_activity = UserActivity.get_by_user_activity(user_info.key, self._activity.key)
-        user_activity.key.delete()
         self._activity.headcount -= 1
         if not self._is_complete():
             if self._activity.headcount > 0:
@@ -119,6 +118,7 @@ class ActivityManager(object):
             else:
                 self._activity.status = Activity.INITIATED
         self._activity.put()
+        user_activity.key.delete()
         return True, "user " + user_info.username + " has been successfully removed from activity " + self._activity.category
 
     def connect(self,user_id):
@@ -140,9 +140,10 @@ class ActivityManager(object):
         #An activity will be marked as COMPLETE if it satisfies the minm number of people required requirement
         if self._activity.status == Activity.INITIATED or self._activity.status == Activity.FORMING:
             if self._is_complete():
-                self._change_status(Activity.COMPLETE)
+                self._activity.status = Activity.COMPLETE
             else:
-                self._change_status(Activity.FORMING)
+                self._activity.status = Activity.FORMING
+        self._activity.put()
         return True, message
 
     def spots_remaining(self):
