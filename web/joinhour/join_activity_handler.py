@@ -1,16 +1,19 @@
-from src.joinhour.models.user_activity import UserActivity
+
 
 __author__ = 'ashahab'
 from webapp2_extras.i18n import gettext as _
 import webapp2
+from google.appengine.api import channel
+
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.activity_manager import ActivityManager
 from src.joinhour.models.activity import Activity
 from src.joinhour.utils import *
-from google.appengine.api import channel
 from src.joinhour.notification_manager import NotificationManager
+from src.joinhour.models.user_activity import UserActivity
+
 
 class JoinActivityHandler(BaseHandler):
     """
