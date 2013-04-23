@@ -1,7 +1,7 @@
 <p>Hello <strong>{{owner_name}}</strong>,</p>
 
 <p>
-Your interest has been converted to an activity  <strong>{{activity.category}}</strong>. <strong>{{owner_username}}</strong> is the owner of the activity.
+Your interest has been converted to an activity  <strong>{{activity.category}}</strong>. <strong>{{activity_owner_name}}</strong> is the owner of the activity.
 </p>
 
 <p>

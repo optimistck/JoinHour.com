@@ -64,13 +64,13 @@ class ConvertHandler(BaseHandler):
             "app_name": self.app.config.get('app_name'),
             "owner_name":interest_owner.name+' '+interest_owner.last_name,
             "activity": activity_manager.get_activity(),
-            "owner_username":activity_owner.name+' '+activity_owner.last_name,
+            "activity_owner_name": activity_owner.name+' '+activity_owner.last_name,
             "complete": activity_manager.status() == Activity.COMPLETE,
             "expires_in": activity_manager.expires_in(),
             "participants":''.join(participants)
         }
         notification_manager = NotificationManager.get()
-        notification_manager.push_notification(activity_owner.email,
+        notification_manager.push_notification(interest_owner.email,
                                                '[JoinHour.com]Your interest is now an Activity',
                                                'emails/interest_converted_to_activity.txt',
                                                **template_val)

@@ -146,6 +146,8 @@ class ActivityManager(object):
         return True, message
 
     def spots_remaining(self):
+        if self._activity.max_number_of_people_to_join == 'No limit':
+            return self._activity.max_number_of_people_to_join
         max_count = int(self._activity.max_number_of_people_to_join.split()[0])
         return max_count - self._activity.headcount
 
