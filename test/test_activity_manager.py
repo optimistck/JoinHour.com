@@ -88,6 +88,8 @@ class ActivityManagerTest(unittest.TestCase):
         self.assertEqual(True,activity_manager.can_join(user3.key.id())[0])
         activity_manager.connect(user3.key.id())
         self.assertEqual(False,activity_manager.can_join(user4.key.id())[0])
+        self.assertEqual(2,len(activity_manager.get_all_companions()))
+        self.assertEqual(3,len(activity_manager.get_all_participants()))
 
 
 

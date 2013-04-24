@@ -111,14 +111,13 @@ class ActivityManager(object):
             return False, message
         user_info = models.User.get_by_id(long(user_id))
         user_activity = UserActivity.get_by_user_activity(user_info.key, self._activity.key)
-        self._activity.headcount -= 1
+        user_activity.key.delete()
         if not self._is_complete():
-            if self._activity.headcount > 0:
+            if self.companion_count() > 0:
                 self._activity.status = Activity.FORMING
             else:
                 self._activity.status = Activity.INITIATED
-        self._activity.put()
-        user_activity.key.delete()
+            self._activity.put()
         return True, "user " + user_info.username + " has been successfully removed from activity " + self._activity.category
 
     def connect(self,user_id):
@@ -136,25 +135,24 @@ class ActivityManager(object):
         user_activity = UserActivity(user=user_info.key,
                                      activity=self._activity.key)
         user_activity.put()
-        self._activity.headcount += 1
         #An activity will be marked as COMPLETE if it satisfies the minm number of people required requirement
         if self._activity.status == Activity.INITIATED or self._activity.status == Activity.FORMING:
             if self._is_complete():
                 self._activity.status = Activity.COMPLETE
             else:
                 self._activity.status = Activity.FORMING
-        self._activity.put()
+            self._activity.put()
         return True, message
 
     def spots_remaining(self):
         if self._activity.max_number_of_people_to_join == 'No limit':
             return self._activity.max_number_of_people_to_join
         max_count = int(self._activity.max_number_of_people_to_join.split()[0])
-        return max_count - self._activity.headcount
+        return max_count - self.companion_count()
 
     def _is_complete(self):
         min_count = int(self._activity.min_number_of_people_to_join.split()[0])
-        return min_count <= self._activity.headcount
+        return min_count <= self.companion_count()
 
     def mark_expired(self):
         self._change_status(Activity.EXPIRED)
@@ -174,9 +172,8 @@ class ActivityManager(object):
         elif self._activity.max_number_of_people_to_join == 'No Limit':
             return True, "Success"
         else:
-            headcount = self._activity.headcount
             max_count = int(self._activity.max_number_of_people_to_join.split()[0])
-            if headcount < max_count:
+            if self.companion_count() < max_count:
                 return True, "Success"
             return False, "This activity is full."
 
@@ -201,3 +198,15 @@ class ActivityManager(object):
     def _change_status(self,new_status):
         self._activity.status = new_status
         self._activity.put()
+
+    def companion_count(self):
+        return UserActivity.query(UserActivity.activity == self._activity.key).count()
+
+    def get_all_companions(self):
+        return UserActivity.query(UserActivity.activity == self._activity.key).fetch(projection = [UserActivity.user])
+
+    def get_all_participants(self):
+        companions = self.get_all_companions()
+        activity_user = models.User.get_by_username(self.get_activity().username)
+        companions.append(activity_user)
+        return companions
