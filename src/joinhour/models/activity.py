@@ -17,7 +17,6 @@ class Activity(ndb.Model):
     date_entered = ndb.DateTimeProperty()
     username = ndb.StringProperty()
     ip = ndb.StringProperty()
-    headcount = ndb.IntegerProperty(default=0)
     status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE])
     building_name = ndb.StringProperty()
 
