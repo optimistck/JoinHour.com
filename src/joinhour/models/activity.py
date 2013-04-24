@@ -1,5 +1,6 @@
 __author__ = 'aparbane'
 from google.appengine.ext import ndb
+from activity_interest_summary import ActivityInterestSummary
 
 class Activity(ndb.Model):
 
@@ -19,6 +20,21 @@ class Activity(ndb.Model):
     ip = ndb.StringProperty()
     status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE])
     building_name = ndb.StringProperty()
+
+    def get_summary(self):
+        return ActivityInterestSummary(
+            category=self.category,
+            date_entered=self.date_entered,
+            username=self.username,
+            duration=self.duration,
+            expiration=self.expiration,
+            status=self.status,
+            building_name=self.building_name,
+            min_number_of_people_to_join=self.min_number_of_people_to_join,
+            max_number_of_people_to_join=self.max_number_of_people_to_join,
+            ip=self.ip,
+            headcount=self.headcount
+        )
 
     @classmethod
     def query_paged(cls, building_name, user_info, curs):
