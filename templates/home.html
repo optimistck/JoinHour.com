@@ -170,7 +170,7 @@
                             <tr>
                                 <td>{{ i.category }}</td>
                                 <td>{{ i.key.urlsafe() | expires_in('Interest') | minute_format }}</td>
-                                {% if i.status == 'COMPLETE' %}
+                                {% if i.status == 'COMPLETE_MATCH_FOUND' %}
                                     <td>
                                         <span class="label label-success">Match found</span>
                                     </td>
