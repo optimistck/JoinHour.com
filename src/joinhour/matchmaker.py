@@ -1,12 +1,14 @@
+__author__ = 'aparbane'
+
+from datetime import timedelta
+import math
+
 from google.appengine.ext import ndb
+
 from src.joinhour.models.activity import Activity
 from src.joinhour.models.interest import Interest
-
-__author__ = 'aparbane'
-from datetime import timedelta
 from src.joinhour.models.match import Match
 from boilerplate.lib import utils
-import math
 
 
 class MatchMaker(object):
@@ -62,7 +64,7 @@ class MatchMaker(object):
         :return: A dictionary of the form (username,[Match])
         """
         for interest in interest_list:
-            if interest.status == 'EXPIRED' or interest.status == 'COMPLETE':
+            if interest.status == 'EXPIRED' or interest.status == 'COMPLETE' or interest.status == 'COMPLETE_CONVERTED' or interest.status == 'COMPLETE_JOINED':
                 continue
             for activity in activity_list:
                 #Do we really need this in the core algorithm?
@@ -77,7 +79,7 @@ class MatchMaker(object):
                     continue
                 match_found = cls.isMatch(interest, activity)
                 if match_found:
-                    interest.status = Interest.COMPLETE
+                    interest.status = Interest.COMPLETE_MATCH_FOUND
                     interest.put()
                     match = Match(interest=interest.key,
                                   activity=activity.key)

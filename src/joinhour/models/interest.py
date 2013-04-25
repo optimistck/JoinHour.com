@@ -5,13 +5,15 @@ class Interest(ndb.Model):
     INITIATED = 'INITIATED'
     FORMING = 'FORMING'
     EXPIRED = 'EXPIRED'
-    COMPLETE = 'COMPLETE'
+    COMPLETE_MATCH_FOUND = 'COMPLETE_MATCH_FOUND'
+    COMPLETE_JOINED = 'COMPLETE_JOINED'
+    COMPLETE_CONVERTED = 'COMPLETE_CONVERTED'
     category = ndb.StringProperty()
     date_entered = ndb.DateTimeProperty()
     username = ndb.StringProperty()
     duration = ndb.StringProperty()
     expiration = ndb.StringProperty()
-    status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE])
+    status = ndb.StringProperty(default=INITIATED,choices=[INITIATED,FORMING,EXPIRED,COMPLETE_MATCH_FOUND,COMPLETE_JOINED,COMPLETE_CONVERTED])
     building_name = ndb.StringProperty()
 
     @classmethod
@@ -20,7 +22,7 @@ class Interest(ndb.Model):
 
     @classmethod
     def query_all_unexpired_interest(cls):
-        return cls.query(cls.status != Interest.EXPIRED)
+        return cls.query(cls.status.IN([Interest.FORMING,Interest.INITIATED]))
 
     @classmethod
     def get_by_status(cls, status):
