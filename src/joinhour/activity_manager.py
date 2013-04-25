@@ -8,7 +8,6 @@ from google.appengine.ext import ndb
 from google.appengine.api.taskqueue import Task
 
 from src.joinhour.models.activity import Activity
-from src.joinhour.models.match import Match
 from src.joinhour.models.interest import Interest
 from src.joinhour.models.user_activity import UserActivity
 from src.joinhour.interest_manager import InterestManager
@@ -69,13 +68,10 @@ class ActivityManager(object):
                                         min_number_of_people_to_join = kwargs['min_number_of_people_to_join'],
                                         max_number_of_people_to_join = kwargs['max_number_of_people_to_join'])
         #mark interest complete
-        interest.status = interest.COMPLETE
+        interest.status = interest.COMPLETE_JOINED
         user = models.User.get_by_username(interest.username)
         success, message = ActivityManager.get(activity.key.urlsafe()).connect(user.key.id())
         interest.put()
-        #mark this as match found
-        match = Match(interest=interest.key,
-                      activity=activity.key)
         match.put()
         #Notify interest owner
         return success, message, user.key.id(), activity.key.urlsafe()
