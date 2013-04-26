@@ -4,6 +4,8 @@ from event import Event
 
 class Activity(Event):
 
+
+
     min_number_of_people_to_join = ndb.StringProperty()
     max_number_of_people_to_join = ndb.StringProperty()
     note = ndb.StringProperty()
@@ -25,6 +27,8 @@ class Activity(Event):
     @classmethod
     def get_activities_by_building(cls,building_name):
         return cls.query(cls.building_name == building_name).order(-cls.date_entered).fetch()
+
+
 
 
 

@@ -2,16 +2,20 @@ __author__ = 'ashahab'
 from google.appengine.ext import ndb
 
 class Event(ndb.Model):
+
+
+
     INITIATED = 'INITIATED'
     FORMING = 'FORMING'
     EXPIRED = 'EXPIRED'
     COMPLETE = 'COMPLETE'
+    STATUS_CHOICES = [INITIATED,FORMING,EXPIRED,COMPLETE]
     category = ndb.StringProperty()
     date_entered = ndb.DateTimeProperty()
     username = ndb.StringProperty()
     duration = ndb.StringProperty()
     expiration = ndb.StringProperty()
-    status = ndb.StringProperty(default=INITIATED, choices=[INITIATED, FORMING, EXPIRED, COMPLETE])
+    status = ndb.StringProperty(default=INITIATED, choices = STATUS_CHOICES)
     building_name = ndb.StringProperty()
 
     @classmethod
@@ -37,3 +41,9 @@ class Event(ndb.Model):
     @classmethod
     def get_by_key(cls, key):
         return cls.query(cls.key == key).get()
+
+
+
+
+
+
