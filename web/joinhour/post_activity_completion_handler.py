@@ -20,7 +20,7 @@ class PostActivityCompletionHandler(BaseHandler):
 
 
     def _handleFeedBack(self,activity):
-        activity_user = models.User.get_by_username(activity.username)
+       activity_user = models.User.get_by_username(activity.username)
         #all users signed up for this activity
         participants_list = UserActivity.query(UserActivity.activity == activity.key).fetch(projection = [UserActivity.user])
         #Ask feedback from participants
@@ -32,6 +32,6 @@ class PostActivityCompletionHandler(BaseHandler):
         #Ask feedback from owner
         user_feedback = UserFeedback()
         user_feedback.activity = activity.key
-        user_feedback.user = activity_user
+        user_feedback.user = activity_user.key
         user_feedback.put()
 
