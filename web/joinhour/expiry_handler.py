@@ -12,14 +12,14 @@ class ExpiryHandler(BaseHandler):
 
     #TODO: load the categories and sub-categories from the pull-down menu
     def get(self):
-        activities =  Activity.query_all_unexpired_activity()
+        activities =  Activity.query_all_unexpired()
 
         for activity in activities:
             if activity.status != Activity.COMPLETE and ActivityManager.get(activity.key.urlsafe()).expires_in() == Activity.EXPIRED:
                 activity.status = Activity.EXPIRED
                 activity.put()
 
-        interests =  Interest.query_all_unexpired_interest()
+        interests =  Interest.query_all_unexpired()
 
         for interest in interests:
             if interest.status != Interest.COMPLETE and InterestManager.get(interest.key.urlsafe()).expires_in() == Interest.EXPIRED:

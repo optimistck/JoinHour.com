@@ -52,7 +52,6 @@ class ActivityHandler(BaseHandler):
                 else:
                     filtered_not_joinable_activities.append(activity)
                 count += 1
-        # filtered_joinable_activities.extend(filtered_not_joinable_activities)
         self.view.activities = filtered_joinable_activities
         self.view.not_joinable_activities = filtered_not_joinable_activities
         self.view.interests = [interest for interest in
