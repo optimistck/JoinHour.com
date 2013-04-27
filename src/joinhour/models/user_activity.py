@@ -1,14 +1,14 @@
 __author__ = 'ashahab'
 from google.appengine.ext import ndb
 from webapp2_extras.appengine.auth.models import User
-from src.joinhour.models.activity import Activity
+from src.joinhour.models.event import Event
 
 
 class UserActivity(ndb.Model):
 
     user = ndb.KeyProperty(kind=User,
                            name='user')
-    activity = ndb.KeyProperty(kind=Activity,
+    event = ndb.KeyProperty(kind=Event,
                                name='activity')
 
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
@@ -23,4 +23,4 @@ class UserActivity(ndb.Model):
 
     @classmethod
     def get_by_user_activity(cls, user, activity):
-        return cls.query(cls.user == user, cls.activity == activity).get()
+        return cls.query(cls.user == user, cls.event == activity).get()

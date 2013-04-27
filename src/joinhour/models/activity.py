@@ -1,14 +1,14 @@
 __author__ = 'aparbane'
-from google.appengine.ext import ndb
 from event import Event
 
 class Activity(Event):
-
+    pass
+    '''
 
 
     min_number_of_people_to_join = ndb.StringProperty()
     max_number_of_people_to_join = ndb.StringProperty()
-    note = ndb.StringProperty()
+
     ip = ndb.StringProperty()
 
     @classmethod
@@ -29,7 +29,7 @@ class Activity(Event):
         return cls.query(cls.building_name == building_name).order(-cls.date_entered).fetch()
 
 
-
+    '''
 
 
 

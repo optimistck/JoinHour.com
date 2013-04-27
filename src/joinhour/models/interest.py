@@ -1,12 +1,11 @@
 __author__ = 'aparbane'
-from google.appengine.ext import ndb
 
 from event import Event
 
 
 class Interest(Event):
-
-
+    pass
+    '''
 
     COMPLETE_MATCH_FOUND = 'COMPLETE_MATCH_FOUND'
     COMPLETE_JOINED = 'COMPLETE_JOINED'
@@ -32,7 +31,7 @@ class Interest(Event):
     def get_interests_by_building(cls, building_name):
         return cls.query(cls.building_name == building_name).order(-cls.date_entered).fetch()
 
-
+    '''
 
 
 

@@ -11,7 +11,7 @@ from google.appengine.api.taskqueue import Task
 from boilerplate.lib.basehandler import BaseHandler
 from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
-from src.joinhour.activity_manager import ActivityManager
+from src.joinhour.event_manager import EventManager
 from src.joinhour.models.activity import Activity
 from src.joinhour.notification_manager import NotificationManager
 
@@ -69,7 +69,7 @@ class ActivityLifeCycleHandler(BaseHandler):
             "participant_username": user.name+' '+user.last_name,
             "activity_category": activity.category,
             "owner_name": activity_owner.name+' '+activity_owner.last_name,
-            "expires_in": ActivityManager.get(activity.key.urlsafe()).expires_in(),
+            "expires_in": EventManager.get(activity.key.urlsafe()).expires_in(),
             "participants": participants,
             "support_url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
         }

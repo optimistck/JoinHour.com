@@ -5,7 +5,7 @@ from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.models.activity import Activity
-from src.joinhour.activity_manager import ActivityManager
+from src.joinhour.event_manager import EventManager
 from src.joinhour.models.user_activity import UserActivity
 from src.joinhour.notification_manager import NotificationManager
 
@@ -29,7 +29,7 @@ class ConvertHandler(BaseHandler):
             building_name = user_info.building
             interest_id = self.request.get('interest_id')
 
-            success, message, interest_owner, activity_key = ActivityManager.create_activity_from_interest(
+            success, message, interest_owner, activity_key = EventManager.create_activity_from_interest(
                 interest_id=interest_id,
                 ip=self.request.remote_addr,
                 username=user_info.username,
@@ -38,7 +38,7 @@ class ConvertHandler(BaseHandler):
                 max_number_of_people_to_join=self.form.max_number_of_people_to_join.data.strip())
             if success:
                 message = _("The interest was converted successfully.")
-                self._push_notification(user_info, interest_owner, ActivityManager.get(activity_key))
+                self._push_notification(user_info, interest_owner, EventManager.get(activity_key))
                 self.add_message(message, 'success')
                 return self.redirect_to('activity')
             else:
@@ -54,7 +54,7 @@ class ConvertHandler(BaseHandler):
         interest_owner = models.User.get_by_id(long(user_id))
         email_url = self.uri_for('taskqueue-send-email')
 
-        participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_activity().key).fetch(projection = [UserActivity.user])
+        participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_event().key).fetch(projection = [UserActivity.user])
         participants = []
         for participant in participants_list:
             participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))
@@ -63,7 +63,7 @@ class ConvertHandler(BaseHandler):
         template_val = {
             "app_name": self.app.config.get('app_name'),
             "owner_name":interest_owner.name+' '+interest_owner.last_name,
-            "activity": activity_manager.get_activity(),
+            "activity": activity_manager.get_event(),
             "activity_owner_name": activity_owner.name+' '+activity_owner.last_name,
             "complete": activity_manager.status() == Activity.COMPLETE,
             "expires_in": activity_manager.expires_in(),

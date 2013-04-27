@@ -66,6 +66,12 @@ indexes:
   - name: date_entered
     direction: desc
 
+- kind: Event
+  properties:
+  - name: building_name
+  - name: date_entered
+    direction: desc
+
 - kind: Feedback
   ancestor: yes
   properties:

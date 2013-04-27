@@ -5,7 +5,7 @@ from google.appengine.api import channel
 from boilerplate.handlers import RegisterBaseHandler
 from boilerplate import models
 from src.joinhour.models.activity import Activity
-from src.joinhour.activity_manager import ActivityManager
+from src.joinhour.event_manager import EventManager
 from src.joinhour.notification_manager import NotificationManager
 from src.joinhour.models.interest import Interest
 from src.joinhour.models.match import Match
@@ -15,7 +15,7 @@ from src.joinhour.utils import *
 
 
 def spots_remaining(key):
-    return ActivityManager.get(key).spots_remaining()
+    return EventManager.get(key).spots_remaining()
 
 
 

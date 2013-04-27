@@ -6,7 +6,7 @@ from google.appengine.api import channel
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
-from src.joinhour.activity_manager import ActivityManager
+from src.joinhour.event_manager import EventManager
 from src.joinhour.models.activity import Activity
 from src.joinhour.utils import *
 from src.joinhour.notification_manager import NotificationManager
@@ -22,8 +22,8 @@ class JoinActivityHandler(BaseHandler):
     def get(self):
         user_id = self.user_id
         key = self.request.get('key')
-        activity_manager = ActivityManager.get(key)
-        status_before_join = activity_manager.get_activity().status
+        activity_manager = EventManager.get(key)
+        status_before_join = activity_manager.get_event().status
         (success, message) = activity_manager.connect(user_id)
         if success:
             activity = activity_manager._activity
@@ -46,9 +46,9 @@ class JoinActivityHandler(BaseHandler):
 
     def _push_notification(self, user_id, activity_manager, status_before_join):
         user = models.User.get_by_id(long(user_id))
-        activity_user = models.User.get_by_username(activity_manager.get_activity().username)
+        activity_user = models.User.get_by_username(activity_manager.get_event().username)
         #all users signed up for this activity
-        participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_activity().key).fetch(
+        participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_event().key).fetch(
             projection=[UserActivity.user])
         participants = [activity_user.name + ' ' + activity_user.last_name]
         for participant in participants_list:
@@ -59,7 +59,7 @@ class JoinActivityHandler(BaseHandler):
         template_val = {
             "app_name": self.app.config.get('app_name'),
             "owner_name": activity_user.name + ' ' + activity_user.last_name,
-            "activity": activity_manager.get_activity(),
+            "activity": activity_manager.get_event(),
             "participant_username": user.name + ' ' + user.last_name,
             "complete": activity_manager.status() == Activity.COMPLETE,
             "expires_in": minute_format(activity_manager.expires_in()),
@@ -78,7 +78,7 @@ class JoinActivityHandler(BaseHandler):
                     template_val = {
                         "app_name": self.app.config.get('app_name'),
                         "owner_name": activity_user.name + ' ' + activity_user.last_name,
-                        "activity": activity_manager.get_activity(),
+                        "activity": activity_manager.get_event(),
                         "participant_username": participant.user.get().name + ' ' + participant.user.get().last_name,
                         "expires_in": minute_format(activity_manager.expires_in()),
                         "participants": ','.join(participants)

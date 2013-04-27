@@ -1,16 +1,9 @@
 __author__ = 'ashahab'
-import webapp2
 from boilerplate.lib.basehandler import BaseHandler
-from boilerplate import forms
-from src.joinhour.token_generator import TokenGenerator
-from webapp2_extras.i18n import gettext as _
-from boilerplate.handlers import RegisterBaseHandler
 from boilerplate import models
-import jinja2
-
 
 from src.joinhour.models.activity import Activity
-from src.joinhour.activity_manager import ActivityManager
+
 
 class UpdateActivityHandler(BaseHandler):
     """

@@ -9,133 +9,59 @@
 
 {% block content %}
 
-    {% trans %}Browse all open activities and interests for your building.{% endtrans %}
-    <BR><BR>
+   <h4 class="section-title">
+        Events at  {{ building }}
+    </h4>
 
-
-    <H3>Activities you can join now</H3>
-
-    <table class="table table-striped table-bordered table table-condensed">
-
-        <thead>
-        <tr>
-            <th>Category</th>
-            <th>Duration</th>
-            <th>Expires in</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-
-        {% for a in activities %}
-            <tr>
-                <TD><a href="/activity_detail/?ID={{ a.key.urlsafe() }}">{{ a.category }}</a><br />
-                    Posted by <a href="/user_profile/?username={{ a.username }}">{{ a.username }}</a>
-                </TD>
-                <TD>{{ a.duration }}</TD>
-                <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
-                <TD>
-                        <a href="/join_activity/?key={{ a.key.urlsafe() }}">
-                        <button class="btn btn-primary">JOIN</button>
-
-                </a></TD>
-
-            </tr>
-        {% endfor %}
-        {% for a in not_joinable_activities %}
-            <tr>
-                <TD><a href="/activity_detail/?ID={{ a.key.urlsafe() }}">{{ a.category }}</a><br />
-                    Posted by <a href="/user_profile/?username={{ a.username }}">{{ a.username }}</a>
-                </TD>
-                <TD>{{ a.duration }}</TD>
-                <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
-                <TD></TD>
-            </tr>
-        {% endfor %}
-    </table>
-    {% if cursor %}
-        <a class="btn" href="/activity/?cursor={{cursor}}">more..</a>
-    {% endif %}
-    </fieldset>
-
-    <H3>Interests ready for a match</H3>
-    <table class="table table-striped table-bordered table table-condensed">
-        <thead>
-        <tr>
-            <th>Category</th>
-            <th>Duration</th>
-            <th>Expires in</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <div id="cancel_modal" class="modal hide fade">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-                <h3>Convert this Interest to an Activity</h3>
-            </div>
-
-            <form action="/convert_to_activity/" method="post">
-                <div class="modal-body">
-                <input type="hidden" name="exception" value="{{ exception }}">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="interest_id" id="interest_id">
-                    <div class="control-group">
-                        <label class="control-label" for="min_number_of_people_to_join">with min </label>
-                        <select id="min_number_of_people_to_join" name="min_number_of_people_to_join">
-                            <option value="1 person">1 person</option>
-                            <option value="2 people">2 people</option>
-                            <option value="3 people">3 people</option>
-                        </select>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="max_number_of_people_to_join">no more
-                            than </label>
-
-                        <div class="controls">
-                            <select id="max_number_of_people_to_join" name="max_number_of_people_to_join">
-                                <option value="1 person">1 person</option>
-                                <option value="2 people">2 people</option>
-                                <option value="3 people">3 people</option>
-                                <option value="4 people">4 people</option>
-                                <option value="5 people">5 people</option>
-                                <option value="No limit">No limit</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="note">Details *</label>
-
-                        <div class="controls">
-                            <input class="input-xlarge focused required" id="note" name="note"
-                                   placeholder="e.g., where we're meeting and  going" type="text" value="">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                <input type="submit" value="Convert" name="commit" id="message_submit" class="btn btn-primary"/>
-                    <button type="button" class="close" data-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-
+    <div class="section-stats">
+        <span class="stat">
+          <a href="/directory/">48 Activities</a>
+        </span>
+        &middot;
+        <span class="stat">
+            <a href="/nearby_neighborhoods_prefs/">
+                258 Nearby neighbors
+            </a>
+        </span>
+    </div>
+    <div class="media">
+    {% for e in events %}
+        <div class="media-object">
+            <a href="/user_profile/?username={{ e.username }}">
+                <!--img class="avatar" src="../img/user.jpg"/-->
+                <img class="avatar" src="/user/avatar/?user_name={{ e.username}}" />
+            </a>
         </div>
-        {% for i in interests %}
-            <tr>
-                <TD>{{ i.category }}<br />
-                    Posted by <a href="/user_profile/?username={{ i.username }}">{{ i.username }}</a>
-                </TD>
-                <td>{{ i.duration}}</td>
-                <td>{{ i.key.urlsafe() | expires_in('Interest')  | minute_format}}</td>
-                <td>
-                    <a href="#cancel_modal" role="button" class="open-cancel-confirm-dialog btn btn-primary"
-                       data-toggle="modal" data-id="{{ i.key.urlsafe()}}">Convert to an activity</a></td>
-            </tr>
-        {% endfor %}
-
-    </table>
-
-    See an interest you like? Create an activity and connect!
-    <BR><BR><BR><BR>
-
-
+        <div class="media-body">
+            <div data-class="main-content-area">
+                <h4 class="media-heading">
+                    <span class="subject">
+                        <a href="/activity_detail/?ID={{ e.key.urlsafe() }}">{{ e.category }}</a>
+                    </span>
+                    <span class="timestamp">{{ e.date_entered }}</span>
+                </h4>
+                <h5 class="media-author">
+                    <span class="user-name"><a href="/user_profile/?username={{ e.username }}">Aparup Banerjee</a></span>
+                    <span class="media-location"> {{ building }} </span>
+                </h5>
+                <p data-class="post-content">
+                    {{ e.note }}
+                </p>
+                <div class="media-scope">
+                    Starting in  {{ e.key.urlsafe() |expires_in('Activity')  | minute_format}}  for {{ e.duration }} minutes
+                </div>
+                <div class="media-actions">
+                     <span>
+                        <a class="btn btn-mini" href="/join_activity/?key={{ e.key.urlsafe() }}">
+                            <span data-class="label">Join</span>
+                            <span data-class="count" class="count">2</span>
+                        </a>
+                     </span>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
 
 {% endblock %}
 

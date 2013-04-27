@@ -1,7 +1,6 @@
 __author__ = 'aparbane'
 
-from src.joinhour.activity_manager import ActivityManager
-from src.joinhour.interest_manager import InterestManager
+from src.joinhour.event_manager import EventManager
 from src.joinhour.models.activity import Activity
 from src.joinhour.models.interest import Interest
 
@@ -20,10 +19,7 @@ def minute_format(timedelta):
 
 
 def get_expiration_duration(key, entity_type):
-    if entity_type == 'Activity':
-        return ActivityManager.get(key).expires_in()
-    else:
-        return InterestManager.get(key).expires_in()
+    return EventManager.get(key).expires_in()
 
 def can_join(key, user_id):
-    ActivityManager.get(key).can_join(user_id)[0]
+    EventManager.get(key).can_join(user_id)[0]
