@@ -7,10 +7,37 @@
     box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
 
+.btn-liveboard {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+    -webkit-border-radius: 2px;
+    -moz-border-radius: 2px;
+    border-radius: 2px;
+    color: #126b42;
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.2);
+    background-color: #daebe3;
+   background-image: -moz-linear-gradient(top, #e1efe8, #d0e6db);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#e1efe8), to(#d0e6db));
+    background-image: -webkit-linear-gradient(top, #e1efe8, #d0e6db);
+    background-image: -o-linear-gradient(top, #e1efe8, #d0e6db);
+    background-image: linear-gradient(to bottom, #e1efe8, #d0e6db);
+    background-repeat: repeat-x;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffe1efe8', endColorstr='#ffd0e6db', GradientType=0);
+    border-color: #d0e6db #d0e6db #9eccb5;
+    border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+    *background-color: #d0e6db;
+    filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+    border: 1px solid #c3e0d3;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
 .btn-mini {
     line-height: 170%;
     padding: 3px 9px;
     text-transform: uppercase;
+
 }
 
 .btn-mini .caret {
@@ -149,7 +176,14 @@
     max-width: 100px;
 }
 
-.media {
+hr {
+  margin: 5px 0;
+  border: 0;
+  border-top: 1px solid #efefef;
+  border-bottom: 1px solid #efefef;
+}
+
+.media{
     *zoom: 1;
     border-bottom: 1px solid #efefef;
     margin-top: 0;

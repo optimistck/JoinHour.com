@@ -18,7 +18,8 @@ jinja2.filters.FILTERS['minute_format'] = minute_format
 jinja2.filters.FILTERS['expires_in'] = get_expiration_duration
 jinja2.filters.FILTERS['spots_remaining'] = spots_remaining
 jinja2.filters.FILTERS['can_join'] = can_join
-
+jinja2.filters.FILTERS['count_participants'] = count_participants
+jinja2.filters.FILTERS['dateformat'] = dateformat
 
 class ActivityHandler(BaseHandler):
     """

@@ -14,7 +14,8 @@
     </h4>
 
     <div class="section-stats">
-        <span class="stat">
+        <hr/>
+         <span class="stat">
           <a href="/directory/">48 Activities</a>
         </span>
         &middot;
@@ -23,7 +24,8 @@
                 258 Nearby neighbors
             </a>
         </span>
-    </div>
+        <hr/>
+     </div>
     <div class="media">
     {% for e in events %}
         <div class="media-object">
@@ -38,7 +40,7 @@
                     <span class="subject">
                         <a href="/activity_detail/?ID={{ e.key.urlsafe() }}">{{ e.category }}</a>
                     </span>
-                    <span class="timestamp">{{ e.date_entered }}</span>
+                    <span class="timestamp">{{ e.date_entered | dateformat  }}</span>
                 </h4>
                 <h5 class="media-author">
                     <span class="user-name"><a href="/user_profile/?username={{ e.username }}">Aparup Banerjee</a></span>
@@ -48,18 +50,26 @@
                     {{ e.note }}
                 </p>
                 <div class="media-scope">
-                    Starting in  {{ e.key.urlsafe() |expires_in('Activity')  | minute_format}}  for {{ e.duration }} minutes
+                    Starting in  {{ e.key.urlsafe() |expires_in  | minute_format}}  for {{ e.duration }} minutes
                 </div>
                 <div class="media-actions">
                      <span>
-                        <a class="btn btn-mini" href="/join_activity/?key={{ e.key.urlsafe() }}">
-                            <span data-class="label">Join</span>
-                            <span data-class="count" class="count">2</span>
-                        </a>
+                        {% if e.type ==  'ACTIVITY' %}
+                            <a class="btn btn-primary btn-mini" href="/join_activity/?key={{ e.key.urlsafe() }}">
+                                <span data-class="label">Join</span>
+                                <span data-class="count" class="count">{{e.key.urlsafe() | count_participants  }}</span>
+                            </a>
+                        {% else %}
+                            <a class="btn btn-primary btn-mini" href="/join_activity/?key={{ e.key.urlsafe() }}">
+                                <span data-class="label">Convert to Activity</span>
+                            </a>
+                        {% endif %}
                      </span>
                 </div>
             </div>
+
         </div>
+        <hr/>
     {% endfor %}
     </div>
 
