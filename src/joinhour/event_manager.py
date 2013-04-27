@@ -90,7 +90,7 @@ class EventManager(object):
         )
         event.put()
         if os.environ.get('ENV_TYPE') is None:
-            task = Task(url='/match_maker/',method='GET',params={'interest': interest.key.urlsafe()})
+            task = Task(url='/match_maker/',method='GET',params={'interest': event.key.urlsafe()})
             task.add('matchmaker')
         return event
 

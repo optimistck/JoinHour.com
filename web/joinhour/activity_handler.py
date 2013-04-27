@@ -3,6 +3,7 @@ import webapp2
 # Boilerplate imports
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import models
+from google.appengine.ext import ndb
 import jinja2
 
 from src.joinhour.models.event import Event
@@ -29,42 +30,27 @@ class ActivityHandler(BaseHandler):
     def get(self):
         user_info = models.User.get_by_id(long(self.user_id))
         building_name = user_info.building
-        self.view.events = Event.query(Event.building_name == building_name).order(-Event.date_entered)
         self.view.building = building_name
-        '''
-        TODO - For Abin to Implement Pagination
+
         cursorString = str(self.request.get('cursor'))
         curs = ndb.Cursor(urlsafe=cursorString.lstrip('Cursor(').rstrip(')'))
         q = Event.query( Event.building_name == building_name).order(-Event.date_entered, Event.key)
         count = 1
-        filtered_not_joinable_activities = []
-        filtered_joinable_activities = []
+        events = []
         q_iter = q.iter(produce_cursors=True, start_cursor= curs)
-        for activity in q_iter:
+        for event in q_iter:
             if count > 5:
                 break
-            if activity.username != user_info.username:
-                if EventManager.get(activity.key.urlsafe()).can_join(self.user_id)[0]:
-                    filtered_joinable_activities.append(activity)
-                else:
-                    filtered_not_joinable_activities.append(activity)
-                count += 1
-        self.view.building = building_name
-        self.view.activities = filtered_joinable_activities
-        self.view.not_joinable_activities = filtered_not_joinable_activities
-        self.view.interests = [interest for interest in
-                               Interest.get_active_interests_by_building_not_mine(building_name, user_info.username) if
-                               EventManager.get(interest.key.urlsafe()).expires_in() != Event.EXPIRED]
+            events.append(event)
+            count += 1
 
-
-
+        self.view.events = events
+        params = {}
         if q_iter.has_next():
             params = {'cursor': q_iter.cursor_after(),
-                      'exception': self.request.get('exception'),
-                      'user_id': self.user_id
+                      'exception': self.request.get('exception')
             }
-        '''
-        params = {'user_id': self.user_id}
+
         return self.render_template('stat.html', **params)
 
 
