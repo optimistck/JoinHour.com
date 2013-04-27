@@ -1,8 +1,10 @@
+from UserString import MutableString
 from src.joinhour.models.event import Event
 
 __author__ = 'aparbane'
 
 from src.joinhour.event_manager import EventManager
+from boilerplate import models
 
 
 def minute_format(timedelta):
@@ -22,11 +24,32 @@ def get_expiration_duration(key):
 def can_join(key, user_id):
     EventManager.get(key).can_join(user_id)[0]
 
-def count_participants(key):
+
+
+def display_status(key,user_id):
     event_manager = EventManager.get(key)
-    if event_manager.get_event().type == Event.EVENT_TYPE_ACTIVITY:
-        return len(event_manager.get_all_companions())
-    return 0
+    activity = event_manager.get_event()
+    user = models.User.get_by_id(long(user_id))
+    if user.username == activity.username:
+        return activity.status
+    else:
+       can_join = event_manager.can_join(user_id)[0]
+       if can_join:
+           return "JOIN"
+       else:
+           return activity.status
+
+def display_companions(key,user_id):
+    event_manager = EventManager.get(key)
+    activity = event_manager.get_event()
+    user = models.User.get_by_id(long(user_id))
+    is_owner = user.username == activity.username
+    companions = event_manager.get_all_companions()
+    message = MutableString()
+
+
+
+
 
 def dateformat(value,format='%H:%M'):
     #return value.strftime(format)

@@ -13,13 +13,21 @@ from src.joinhour.utils import *
 def spots_remaining(key):
     return EventManager.get(key).spots_remaining()
 
+def get_all_companions(key):
+    companions = []
+    for companion in EventManager.get(key).get_all_companions():
+        username = companion.user.get().username
+        companions.append('<a href="/user_profile/?username='+username+'">'+username+'</a>')
+    return companions
+
 
 jinja2.filters.FILTERS['minute_format'] = minute_format
 jinja2.filters.FILTERS['expires_in'] = get_expiration_duration
 jinja2.filters.FILTERS['spots_remaining'] = spots_remaining
 jinja2.filters.FILTERS['can_join'] = can_join
-jinja2.filters.FILTERS['count_participants'] = count_participants
+jinja2.filters.FILTERS['get_all_companions'] = get_all_companions
 jinja2.filters.FILTERS['dateformat'] = dateformat
+jinja2.filters.FILTERS['display_status'] = display_status
 
 class ActivityHandler(BaseHandler):
     """

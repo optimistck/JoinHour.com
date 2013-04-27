@@ -4,14 +4,62 @@
     {% trans %}Live Activity Board{% endtrans %} - {{ app_name }}
 {% endblock %}
 {% block header_title %}
-    {% trans %}Live Activity Board{% endtrans %}
+    {% trans %}Live Activity Board of {{ building }}{% endtrans %}
 {% endblock %}
 
 {% block content %}
 
-   <h4 class="section-title">
-        Events at  {{ building }}
-    </h4>
+    <div id="cancel_modal" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
+            <h3>Convert this Interest to an Activity</h3>
+        </div>
+
+        <form action="/convert_to_activity/" method="post">
+            <div class="modal-body">
+                <input type="hidden" name="exception" value="{{ exception }}">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                <input type="hidden" name="interest_id" id="interest_id">
+
+                <div class="control-group">
+                    <label class="control-label" for="min_number_of_people_to_join">with min </label>
+                    <select id="min_number_of_people_to_join" name="min_number_of_people_to_join">
+                        <option value="1 person">1 person</option>
+                        <option value="2 people">2 people</option>
+                        <option value="3 people">3 people</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="max_number_of_people_to_join">no more
+                        than </label>
+
+                    <div class="controls">
+                        <select id="max_number_of_people_to_join" name="max_number_of_people_to_join">
+                            <option value="1 person">1 person</option>
+                            <option value="2 people">2 people</option>
+                            <option value="3 people">3 people</option>
+                            <option value="4 people">4 people</option>
+                            <option value="5 people">5 people</option>
+                            <option value="No limit">No limit</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="note">Details *</label>
+
+                    <div class="controls">
+                        <input class="input-xlarge focused required" id="note" name="note"
+                               placeholder="e.g., where we're meeting and  going" type="text" value="">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <input type="submit" value="Convert" name="commit" id="message_submit" class="btn btn-primary"/>
+                <button type="button" class="close" data-dismiss="modal">Cancel</button>
+            </div>
+        </form>
+
+    </div>
 
     <div class="section-stats">
         <hr/>
@@ -25,52 +73,81 @@
             </a>
         </span>
         <hr/>
-     </div>
+    </div>
     <div class="media">
-    {% for e in events %}
-        <div class="media-object">
-            <a href="/user_profile/?username={{ e.username }}">
-                <!--img class="avatar" src="../img/user.jpg"/-->
-                <img class="avatar" src="/user/avatar/?user_name={{ e.username}}" />
-            </a>
-        </div>
-        <div class="media-body">
-            <div data-class="main-content-area">
-                <h4 class="media-heading">
+        {% for e in events %}
+            <div class="media-object">
+                <a href="/user_profile/?username={{ e.username }}">
+                    <!--img class="avatar" src="../img/user.jpg"/-->
+                    <img class="avatar" src="/user/avatar/?user_name={{ e.username }}"/>
+                </a>
+            </div>
+            <div class="media-body">
+                <div data-class="main-content-area">
+                    <h4 class="media-heading">
                     <span class="subject">
                         <a href="/activity_detail/?ID={{ e.key.urlsafe() }}">{{ e.category }}</a>
                     </span>
-                    <span class="timestamp">{{ e.date_entered | dateformat  }}</span>
-                </h4>
-                <h5 class="media-author">
-                    <span class="user-name"><a href="/user_profile/?username={{ e.username }}">Aparup Banerjee</a></span>
-                    <span class="media-location"> {{ building }} </span>
-                </h5>
-                <p data-class="post-content">
-                    {{ e.note }}
-                </p>
-                <div class="media-scope">
-                    Starting in  {{ e.key.urlsafe() |expires_in  | minute_format}}  for {{ e.duration }} minutes
-                </div>
-                <div class="media-actions">
+                        <span class="timestamp">{{ e.date_entered | dateformat }}</span>
+                    </h4>
+                    <h5 class="media-author">
+                        <span class="user-name">Posted by <a
+                                href="/user_profile/?username={{ e.username }}">{{ e.username }}</a></span>
+                    </h5>
+
+                    <p data-class="post-content">
+                        {{ e.note }}
+                    </p>
+
+                    <div class="media-scope">
+                        Starting in {{ e.key.urlsafe() |expires_in  | minute_format}} for {{ e.duration }} minutes
+                    </div>
+                    <div class="media-actions">
                      <span>
                         {% if e.type ==  'ACTIVITY' %}
-                            <a class="btn btn-primary btn-mini" href="/join_activity/?key={{ e.key.urlsafe() }}">
-                                <span data-class="label">Join</span>
-                                <span data-class="count" class="count">{{e.key.urlsafe() | count_participants  }}</span>
-                            </a>
+                            {% set activity_display_status = e.key.urlsafe() | display_status(user_id) %}
+
+                            {% if activity_display_status == 'JOIN' %}
+                                <a class="btn btn-primary btn-mini " href="/join_activity/?key={{ e.key.urlsafe() }}">
+                                    <span data-class="label">Join</span>
+                                </a>
+                            {% else %}
+                                <a class="btn btn-inverse btn-mini liked"  }}">
+                                <span data-class="label">{{ activity_display_status }}</span>
+                                </a>
+                            {% endif %}
                         {% else %}
-                            <a class="btn btn-primary btn-mini" href="/join_activity/?key={{ e.key.urlsafe() }}">
-                                <span data-class="label">Convert to Activity</span>
-                            </a>
+                            {% if e.status == 'INITIATED' %}
+                                <a class="open-cancel-confirm-dialog btn btn-primary btn-mini" data-toggle="modal" data-id="{{ e.key.urlsafe()}}"">
+                                    <span data-class="label">Convert to Activity</span>
+                                </a>
+                            {% endif %}
+
                         {% endif %}
                      </span>
+                    </div>
                 </div>
-            </div>
+                {% if e.type == 'ACTIVITY' and e.status != 'INITIATED' %}
+                    {% set activity_participants = e.key.urlsafe() | get_all_companions %}
+                    {% if activity_participants | length > 0 %}
+                        <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
+                        <div class="media-thanks" data-class="like-container">
+                            <p>
+                                <span class="comment-count"><i class="glyphicon-star"></i></span>
+                                {% if  activity_participants | length > 1 %}
+                                    <span>{{ activity_participants | join }} have joined</span>
+                                {% else %}
+                                    <span>{{ activity_participants | join }} has joined</span>
+                                {% endif %}
+                            </p>
+                        </div>
+                    </div>
+                    {% endif %}
 
-        </div>
-        <hr/>
-    {% endfor %}
+                {% endif %}
+            </div>
+            <hr/>
+        {% endfor %}
     </div>
 
 {% endblock %}

@@ -7,7 +7,6 @@ from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.event_manager import EventManager
-from src.joinhour.models.activity import Activity
 from src.joinhour.utils import *
 from src.joinhour.notification_manager import NotificationManager
 from src.joinhour.models.user_activity import UserActivity
@@ -26,7 +25,7 @@ class JoinActivityHandler(BaseHandler):
         status_before_join = activity_manager.get_event().status
         (success, message) = activity_manager.connect(user_id)
         if success:
-            activity = activity_manager._activity
+            activity = activity_manager.get_event()
             message = _("Congratulations! You joined an activity for " + activity.category)
             user_info = models.User.get_by_id(long(user_id))
             channel.send_message(activity.username, "a user has joined your activity: " + user_info.username)
@@ -61,7 +60,7 @@ class JoinActivityHandler(BaseHandler):
             "owner_name": activity_user.name + ' ' + activity_user.last_name,
             "activity": activity_manager.get_event(),
             "participant_username": user.name + ' ' + user.last_name,
-            "complete": activity_manager.status() == Activity.COMPLETE,
+            "complete": activity_manager.status() == Event.COMPLETE,
             "expires_in": minute_format(activity_manager.expires_in()),
             "participants": ','.join(participants)
         }
@@ -73,7 +72,7 @@ class JoinActivityHandler(BaseHandler):
 
         #To the activity participants in case the activity is a GO
         if status_before_join != 'COMPLETE':
-            if activity_manager.status() == Activity.COMPLETE:
+            if activity_manager.status() == Event.COMPLETE:
                 for participant in participants_list:
                     template_val = {
                         "app_name": self.app.config.get('app_name'),

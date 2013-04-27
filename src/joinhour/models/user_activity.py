@@ -8,7 +8,7 @@ class UserActivity(ndb.Model):
 
     user = ndb.KeyProperty(kind=User,
                            name='user')
-    event = ndb.KeyProperty(kind=Event,
+    activity = ndb.KeyProperty(kind=Event,
                                name='activity')
 
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
@@ -23,4 +23,4 @@ class UserActivity(ndb.Model):
 
     @classmethod
     def get_by_user_activity(cls, user, activity):
-        return cls.query(cls.user == user, cls.event == activity).get()
+        return cls.query(cls.user == user, cls.activity == activity).get()

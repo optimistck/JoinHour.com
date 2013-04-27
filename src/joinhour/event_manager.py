@@ -147,7 +147,7 @@ class EventManager(object):
         #Need to validate whether the same user has signed up for the same activity
         user_info = models.User.get_by_id(long(user_id))
         user_activity = UserActivity(user=user_info.key,
-                                     event=self._event.key)
+                                     activity=self._event.key)
         user_activity.put()
         #An activity will be marked as COMPLETE if it satisfies the minm number of people required requirement
         if self._event.status == Event.INITIATED or self._event.status == Event.FORMING:
@@ -214,10 +214,10 @@ class EventManager(object):
         self._event.put()
 
     def companion_count(self):
-        return UserActivity.query(UserActivity.event == self._event.key).count()
+        return UserActivity.query(UserActivity.activity == self._event.key).count()
 
     def get_all_companions(self):
-        return UserActivity.query(UserActivity.event == self._event.key).fetch(projection = [UserActivity.user])
+        return UserActivity.query(UserActivity.activity == self._event.key).fetch(projection = [UserActivity.user])
 
     def get_all_participants(self):
         companions = self.get_all_companions()
