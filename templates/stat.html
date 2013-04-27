@@ -149,7 +149,9 @@
             <hr/>
         {% endfor %}
     </div>
-
+    {% if cursor %}
+        <a class="btn" href="/activity/?cursor={{cursor}}">more..</a>
+    {% endif %}
 {% endblock %}
 
 {% block mediaJS %}
