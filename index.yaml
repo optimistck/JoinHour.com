@@ -72,6 +72,12 @@ indexes:
   - name: date_entered
     direction: desc
 
+- kind: Event
+  properties:
+  - name: type
+  - name: username
+  - name: status
+
 - kind: Feedback
   ancestor: yes
   properties:

@@ -11,7 +11,7 @@ class ActivityFeedback(ndb.Model):
     OPEN = 'OPEN'
     CLOSED_WITHOUT_FEEDBACK = 'CLOSED_WITHOUT_FEEDBACK'
     CLOSED_WITH_FEEDBACK = 'CLOSED_WITH_FEEDBACK'
-    activity = ndb.KeyProperty(kind=Activity,name='activity',required=True)
+    activity = ndb.KeyProperty(kind=Event,name='activity',required=True)
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
     status = ndb.StringProperty(default = OPEN,choices=[OPEN,CLOSED_WITHOUT_FEEDBACK,CLOSED_WITH_FEEDBACK])
 
