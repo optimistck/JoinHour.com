@@ -1,3 +1,5 @@
+from src.joinhour.models.event import Event
+
 __author__ = 'ashahab'
 
 from urlparse import urlparse
@@ -12,7 +14,6 @@ from boilerplate.lib.basehandler import BaseHandler
 from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
 from src.joinhour.event_manager import EventManager
-from src.joinhour.models.activity import Activity
 from src.joinhour.notification_manager import NotificationManager
 
 class ActivityLifeCycleHandler(BaseHandler):
@@ -24,7 +25,7 @@ class ActivityLifeCycleHandler(BaseHandler):
                 activity = ndb.Key(urlsafe=activity_key).get()
                 if not activity:
                     return
-                if activity.status == Activity.COMPLETE:
+                if activity.status == Event.COMPLETE:
                     self._start_post_activity_completion_process(activity)
                     self._send_readyness_notification(activity)
 

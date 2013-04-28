@@ -4,10 +4,8 @@ from google.appengine.api import channel
 
 from boilerplate.handlers import RegisterBaseHandler
 from boilerplate import models
-from src.joinhour.models.activity import Activity
 from src.joinhour.event_manager import EventManager
 from src.joinhour.notification_manager import NotificationManager
-from src.joinhour.models.interest import Interest
 from src.joinhour.models.match import Match
 from src.joinhour.models.user_activity import UserActivity
 from src.joinhour.models.feedback import UserFeedback
@@ -23,7 +21,7 @@ def get_matching_activity_key(interest_key):
     return Match.query(Match.interest == interest_key).get().activity.urlsafe()
 
 def status_filter(status):
-    if status == Interest.INITIATED:
+    if status == Event.INITIATED:
         return "Looking for a match"
 jinja2.filters.FILTERS['minute_format'] = minute_format
 jinja2.filters.FILTERS['expires_in'] = get_expiration_duration
@@ -51,10 +49,9 @@ class HomeRequestHandler(RegisterBaseHandler):
                 self._push_notification(category,activity_owner_name,participant,self.request.get('reason'))
 
         user_info = models.User.get_by_id(long(self.user_id))
-        activities_from_db = Activity.query(Activity.username == user_info.username).fetch()
-        self.view.activities = [activity for activity in activities_from_db if activity.status != Activity.EXPIRED]
-        self.view.interests = Interest.query(Interest.username == user_info.username,Interest.status != Interest.EXPIRED).fetch()
-        self.view.past_activities = [activity for activity in activities_from_db if activity.status == Activity.COMPLETE]
+        activities_from_db = Event.query(Event.username == user_info.username,Event.type == Event.EVENT_TYPE_ACTIVITY).fetch()
+        self.view.activities = [activity for activity in activities_from_db if activity.status != Event.EXPIRED]
+        self.view.interests = Event.query(Event.username == user_info.username,Event.status != Event.EXPIRED, Event.type == Event.EVENT_TYPE_INTEREST).fetch()
         self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key).fetch()
         self.view.user_feedbacks = UserFeedback.query(UserFeedback.user == user_info.key,UserFeedback.status == UserFeedback.OPEN).fetch()
         token = channel.create_channel(user_info.username)

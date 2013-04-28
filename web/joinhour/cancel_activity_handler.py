@@ -2,10 +2,10 @@ __author__ = 'ashahab'
 from google.appengine.api import channel
 
 from boilerplate.lib.basehandler import BaseHandler, user_required
-from src.joinhour.models.activity import Activity
 from src.joinhour.event_manager import EventManager
 from boilerplate import models
 from src.joinhour.models.user_activity import UserActivity
+from src.joinhour.models.event import Event
 from src.joinhour.utils import *
 from src.joinhour.notification_manager import NotificationManager
 
@@ -52,7 +52,7 @@ class CancelActivityHandler(BaseHandler):
             "owner_name":activity_owner.name+' '+activity_owner.last_name,
             "activity": activity_manager.get_event(),
             "cancelling_user_name":cancelling_user.name+' '+cancelling_user.last_name,
-            "complete": activity_manager.status() == Activity.COMPLETE,
+            "complete": activity_manager.status() == Event.COMPLETE,
             "expires_in": minute_format(activity_manager.expires_in()),
             "participants":','.join(participants)
         }

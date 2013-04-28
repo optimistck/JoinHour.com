@@ -28,8 +28,8 @@ class Event(ndb.Model):
     max_number_of_people_to_join = ndb.StringProperty()
 
     @classmethod
-    def query_all_unexpired(cls):
-        return cls.query(cls.status != Event.EXPIRED)
+    def query_all_active_events(cls):
+        return cls.query(cls.status.IN([INITIATED, FORMING]))
 
     @classmethod
     def query_event(cls, ancestor_key):
@@ -72,6 +72,15 @@ class Event(ndb.Model):
     def get_active_interests_by_category_and_building(cls, category, building_name):
         return cls.query(cls.type == Event.EVENT_TYPE_INTEREST,cls.category == category, cls.building_name == building_name,
                          cls.status.IN([Event.INITIATED, Event.FORMING])).fetch()
+
+    @classmethod
+    def get_active_activities_by_category_and_building(cls,category,building_name):
+        return cls.query(cls.type == Event.EVENT_TYPE_ACTIVITY,cls.category == category,cls.building_name == building_name,cls.status.IN([Event.INITIATED,Event.FORMING])).fetch()
+
+    @classmethod
+    def get_active_activities_by_category(cls,category):
+        return cls.query(cls.type == Event.EVENT_TYPE_ACTIVITY,cls.category == category,cls.status.IN([Event.INITIATED,Event.FORMING])).fetch()
+
 
 
 

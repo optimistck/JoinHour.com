@@ -1,10 +1,11 @@
+from src.joinhour.models.event import Event
+
 __author__ = 'ashahab'
 from webapp2_extras.i18n import gettext as _
 import webapp2
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
-from src.joinhour.models.activity import Activity
 from src.joinhour.event_manager import EventManager
 from src.joinhour.models.user_activity import UserActivity
 from src.joinhour.notification_manager import NotificationManager
@@ -65,7 +66,7 @@ class ConvertHandler(BaseHandler):
             "owner_name":interest_owner.name+' '+interest_owner.last_name,
             "activity": activity_manager.get_event(),
             "activity_owner_name": activity_owner.name+' '+activity_owner.last_name,
-            "complete": activity_manager.status() == Activity.COMPLETE,
+            "complete": activity_manager.status() == Event.COMPLETE,
             "expires_in": activity_manager.expires_in(),
             "participants":''.join(participants)
         }

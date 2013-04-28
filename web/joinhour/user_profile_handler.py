@@ -1,8 +1,9 @@
+__author__ = 'aparbane'
 from boilerplate import models
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from src.joinhour.social_media import twitter
 
-__author__ = 'aparbane'
+
 
 
 class UserProfileHandler(BaseHandler):

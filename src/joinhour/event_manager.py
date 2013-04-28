@@ -35,17 +35,14 @@ class EventManager(object):
                             date_entered = datetime.utcnow()
         )
         event.put()
-        '''
-        TODO Aparup, uncomment when refactoring is complete
         if os.environ.get('ENV_TYPE') is None:
-            task = Task(url='/match_maker/',method='GET',params={'event': event.key.urlsafe()})
+            task = Task(url='/match_maker/',method='GET',params={'activity': event.key.urlsafe()})
             task.add('matchmaker')
             expiration_time = int(str(event.expiration))
             timezone_offset = datetime.now() - datetime.utcnow()
             task_execution_time = event.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
             goTask = Task(eta=task_execution_time, url='/activity_life_cycle/',method='GET',params={'event': event.key.urlsafe()})
             goTask.add('activityLifeCycle')
-        '''
         return event
 
     @classmethod
@@ -56,8 +53,8 @@ class EventManager(object):
         :param kwargs:
         :return:
         '''
-        interest_event = ndb.Key(urlsafe=kwargs['interest_id']).get()
-        if EventManager.get(interest_event.key.urlsafe()).expires_in() == Event.EXPIRED or Event.status == Event.COMPLETE:
+        interest = ndb.Key(urlsafe=kwargs['interest_id']).get()
+        if EventManager.get(interest.key.urlsafe()).expires_in() == Event.EXPIRED or Event.status == Event.COMPLETE:
             return False, "Cannot create activity from an expired or completed interest"
         #Create the activity
         event = EventManager.create_activity(
@@ -68,12 +65,11 @@ class EventManager(object):
                                         min_number_of_people_to_join = kwargs['min_number_of_people_to_join'],
                                         max_number_of_people_to_join = kwargs['max_number_of_people_to_join'])
         #mark interest complete
-        interest_event.status = Event.COMPLETE_JOINED
+        interest.status = Event.COMPLETE_JOINED
         user = models.User.get_by_username(interest.username)
         success, message = EventManager.get(event.key.urlsafe()).connect(user.key.id())
         interest.put()
-        match.put()
-        #Notify interest owner
+         #Notify interest owner
         return success, message, user.key.id(), event.key.urlsafe()
 
     @classmethod
