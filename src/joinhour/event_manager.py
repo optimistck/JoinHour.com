@@ -7,7 +7,7 @@ import os
 from google.appengine.ext import ndb
 from google.appengine.api.taskqueue import Task
 
-from src.joinhour.models.activity import Event
+from src.joinhour.models.event import Event
 from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
 
