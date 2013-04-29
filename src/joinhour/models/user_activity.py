@@ -6,6 +6,8 @@ from src.joinhour.models.event import Event
 
 class UserActivity(ndb.Model):
 
+    ACTIVE = 'ACTIVE'
+    CANCELLED = 'CANCELLED'
     user = ndb.KeyProperty(kind=User,
                            name='user')
     activity = ndb.KeyProperty(kind=Event,
@@ -13,13 +15,15 @@ class UserActivity(ndb.Model):
 
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
 
+    status = ndb.StringProperty(default=ACTIVE, choices=[ACTIVE,CANCELLED])
+
     @classmethod
     def query_user_activity(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 
     @classmethod
     def get_users_for_activity(cls, activity):
-        return cls.query(cls.activity == activity).fetch()
+        return cls.query(cls.activity == activity, cls.status == UserActivity.ACTIVE).fetch()
 
     @classmethod
     def get_by_user_activity(cls, user, activity):

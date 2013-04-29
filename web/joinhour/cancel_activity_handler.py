@@ -4,7 +4,6 @@ from google.appengine.api import channel
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from src.joinhour.event_manager import EventManager
 from boilerplate import models
-from src.joinhour.models.user_activity import UserActivity
 from src.joinhour.models.event import Event
 from src.joinhour.utils import *
 from src.joinhour.notification_manager import NotificationManager
@@ -40,7 +39,7 @@ class CancelActivityHandler(BaseHandler):
         email_url = self.uri_for('taskqueue-send-email')
         activity_owner = models.User.get_by_username(activity_manager.get_event().username)
         #all users signed up for this activity
-        participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_event().key).fetch(projection = [UserActivity.user])
+        participants_list = activity_manager.get_all_companions()
         participants = [activity_owner.name + ' ' + activity_owner.last_name]
         for participant in participants_list:
             participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))

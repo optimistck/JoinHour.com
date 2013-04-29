@@ -121,7 +121,8 @@ class EventManager(object):
             return False, message
         user_info = models.User.get_by_id(long(user_id))
         user_activity = UserActivity.get_by_user_activity(user_info.key, self._event.key)
-        user_activity.key.delete()
+        user_activity.status = UserActivity.CANCELLED
+        user_activity.put()
         if not self._is_complete():
             if self.companion_count() > 0:
                 self._event.status = Event.FORMING
@@ -129,6 +130,18 @@ class EventManager(object):
                 self._event.status = Event.INITIATED
             self._event.put()
         return True, "user " + user_info.username + " has been successfully removed from activity " + self._event.category
+
+    def cancel(self):
+        user_activities = UserActivity.query(UserActivity.activity == self._event.key, UserActivity.status == UserActivity.ACTIVE)
+        for user_activity in user_activities:
+            user_activity.status = UserActivity.CANCELLED
+            user_activity.put()
+        self.get_event().status = Event.CANCELLED
+        self.get_event().put()
+        return True
+
+
+
 
     def connect(self,user_id):
         '''
@@ -210,10 +223,10 @@ class EventManager(object):
         self._event.put()
 
     def companion_count(self):
-        return UserActivity.query(UserActivity.activity == self._event.key).count()
+        return UserActivity.query(UserActivity.activity == self._event.key, UserActivity.status == UserActivity.ACTIVE).count()
 
     def get_all_companions(self):
-        return UserActivity.query(UserActivity.activity == self._event.key).fetch(projection = [UserActivity.user])
+        return UserActivity.query(UserActivity.activity == self._event.key, UserActivity.status == UserActivity.ACTIVE).fetch(projection = [UserActivity.user])
 
     def get_all_participants(self):
         companions = self.get_all_companions()

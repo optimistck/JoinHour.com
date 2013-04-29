@@ -47,7 +47,7 @@ class JoinActivityHandler(BaseHandler):
         user = models.User.get_by_id(long(user_id))
         activity_user = models.User.get_by_username(activity_manager.get_event().username)
         #all users signed up for this activity
-        participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_event().key).fetch(
+        participants_list = UserActivity.query(UserActivity.activity == activity_manager.get_event().key,UserActivity.status == UserActivity.ACTIVE).fetch(
             projection=[UserActivity.user])
         participants = [activity_user.name + ' ' + activity_user.last_name]
         for participant in participants_list:
