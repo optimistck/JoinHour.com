@@ -34,20 +34,22 @@ class ActivityHandler(BaseHandler):
     """
     Handler for the Activity view, formerly the Leaderboard showing all active open activities and pasive interest broadcasts
     """
-    @user_required
     def get(self):
         user_info = models.User.get_by_id(long(self.user_id))
         building_name = user_info.building
         self.view.building = building_name
 
         cursorString = str(self.request.get('cursor'))
+        emptyCursor = False
+        if len(cursorString)==0 :
+            emptyCursor = True
         curs = ndb.Cursor(urlsafe=cursorString.lstrip('Cursor(').rstrip(')'))
         q = Event.query( Event.building_name == building_name).order(-Event.date_entered, Event.key)
         count = 1
         events = []
         q_iter = q.iter(produce_cursors=True, start_cursor= curs)
         for event in q_iter:
-            if count > 5:
+            if count > 3:
                 break
             events.append(event)
             count += 1
@@ -58,9 +60,10 @@ class ActivityHandler(BaseHandler):
             params = {'cursor': q_iter.cursor_after(),
                       'exception': self.request.get('exception')
             }
-
-        return self.render_template('stat.html', **params)
-
+        if emptyCursor:
+            return self.render_template('stat.html', **params)
+        else:
+            return self.render_template('event_list.html', **params)
 
 
 

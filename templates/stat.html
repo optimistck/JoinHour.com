@@ -61,35 +61,35 @@
 
     </div>
     <hr/>
-    <div class="media">
+    <div class="media" id="events" style="overflow-y: scroll; height: 300px">
         {% for e in events %}
-            <div class="media-object">
-                <a href="/user_profile/?username={{ e.username }}">
-                    <!--img class="avatar" src="../img/user.jpg"/-->
-                    <img class="avatar" src="/user/avatar/?user_name={{ e.username }}"/>
-                </a>
-            </div>
-            <div class="media-body">
-                <div data-class="main-content-area">
-                    <h4 class="media-heading">
+                <div class="media-object">
+                    <a href="/user_profile/?username={{ e.username }}">
+                        <!--img class="avatar" src="../img/user.jpg"/-->
+                        <img class="avatar" src="/user/avatar/?user_name={{ e.username }}"/>
+                    </a>
+                </div>
+                <div class="media-body">
+                    <div data-class="main-content-area">
+                        <h4 class="media-heading">
                     <span class="subject">
                         <a href="/activity_detail/?ID={{ e.key.urlsafe() }}">{{ e.category }}</a>
                     </span>
-                        <span class="timestamp">{{ e.date_entered | dateformat }}</span>
-                    </h4>
-                    <h5 class="media-author">
+                            <span class="timestamp">{{ e.date_entered | dateformat }}</span>
+                        </h4>
+                        <h5 class="media-author">
                         <span class="user-name">Posted by <a
                                 href="/user_profile/?username={{ e.username }}">{{ e.username }}</a></span>
-                    </h5>
+                        </h5>
 
-                    <p data-class="post-content">
-                        {{ e.note }}
-                    </p>
+                        <p data-class="post-content">
+                            {{ e.note }}
+                        </p>
 
-                    <div class="media-scope">
-                        Starting in {{ e.key.urlsafe() |expires_in  | minute_format}} for {{ e.duration }} minutes
-                    </div>
-                    <div class="media-actions">
+                        <div class="media-scope">
+                            Starting in {{ e.key.urlsafe() |expires_in  | minute_format}} for {{ e.duration }} minutes
+                        </div>
+                        <div class="media-actions">
                      <span>
                         {% if e.type ==  'ACTIVITY' %}
                             {% set activity_display_status = e.key.urlsafe() | display_status(user_id) %}
@@ -105,40 +105,42 @@
                             {% endif %}
                         {% else %}
                             {% if e.status == 'INITIATED' %}
-                                <a class="open-cancel-confirm-dialog btn btn-primary btn-mini" data-toggle="modal" data-id="{{ e.key.urlsafe()}}"">
-                                    <span data-class="label">Convert to Activity</span>
+                                <a class="open-cancel-confirm-dialog btn btn-primary btn-mini" data-toggle="modal"
+                                   data-id="{{ e.key.urlsafe()}}"">
+                                <span data-class="label">Convert to Activity</span>
                                 </a>
                             {% endif %}
 
                         {% endif %}
                      </span>
-                    </div>
-                </div>
-                {% if e.type == 'ACTIVITY' and e.status != 'INITIATED' %}
-                    {% set activity_participants = e.key.urlsafe() | get_all_companions %}
-                    {% if activity_participants | length > 0 %}
-                        <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
-                        <div class="media-thanks" data-class="like-container">
-                            <p>
-                                <span class="comment-count"><i class="glyphicon-star"></i></span>
-                                {% if  activity_participants | length > 1 %}
-                                    <span>{{ activity_participants | join }} have joined</span>
-                                {% else %}
-                                    <span>{{ activity_participants | join }} has joined</span>
-                                {% endif %}
-                            </p>
                         </div>
                     </div>
-                    {% endif %}
+                    {% if e.type == 'ACTIVITY' and e.status != 'INITIATED' %}
+                        {% set activity_participants = e.key.urlsafe() | get_all_companions %}
+                        {% if activity_participants | length > 0 %}
+                            <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
+                                <div class="media-thanks" data-class="like-container">
+                                    <p>
+                                        <span class="comment-count"><i class="glyphicon-star"></i></span>
+                                        {% if  activity_participants | length > 1 %}
+                                            <span>{{ activity_participants | join }} have joined</span>
+                                        {% else %}
+                                            <span>{{ activity_participants | join }} has joined</span>
+                                        {% endif %}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
 
-                {% endif %}
-            </div>
-            <hr/>
+                    {% endif %}
+                </div>
+                <hr/>
         {% endfor %}
+        {% if cursor %}
+            <a href="/activity/?cursor={{cursor}}"> </a>
+        {% endif %}
     </div>
-    {% if cursor %}
-        <a class="btn" href="/activity/?cursor={{cursor}}">more..</a>
-    {% endif %}
+
 {% endblock %}
 
 {% block mediaJS %}
@@ -155,7 +157,14 @@
                 $(".modal-body #interest_id").val(interest_id);
                 $('#cancel_modal').modal('show');
             });
+
+            $('#events').jscroll({
+                loadingHtml: '<img src="loading.gif" alt="Loading" /> Loading...',
+                padding: 20,
+                debug: true
+            });
         });
+
     </script>
 {% endblock %}
 
