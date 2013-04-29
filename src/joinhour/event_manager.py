@@ -54,21 +54,20 @@ class EventManager(object):
         :return:
         '''
         interest = ndb.Key(urlsafe=kwargs['interest_id']).get()
-        if EventManager.get(interest.key.urlsafe()).expires_in() == Event.EXPIRED or Event.status == Event.COMPLETE:
+        if EventManager.get(interest.key.urlsafe()).expires_in() == Event.EXPIRED or interest.status == Event.COMPLETE:
             return False, "Cannot create activity from an expired or completed interest"
+        interest.status = Event.COMPLETE_CONVERTED
+        interest.put()
         #Create the activity
         event = EventManager.create_activity(
                                         building_name=interest.building_name,category=interest.category,
                                         duration=interest.duration,expiration = interest.expiration,
-                                        username = kwargs['username'],note = kwargs['note'],
-                                        ip = kwargs['ip'],
+                                        username = kwargs['username'],note = interest.note,
                                         min_number_of_people_to_join = kwargs['min_number_of_people_to_join'],
                                         max_number_of_people_to_join = kwargs['max_number_of_people_to_join'])
         #mark interest complete
-        interest.status = Event.COMPLETE_JOINED
         user = models.User.get_by_username(interest.username)
         success, message = EventManager.get(event.key.urlsafe()).connect(user.key.id())
-        interest.put()
          #Notify interest owner
         return success, message, user.key.id(), event.key.urlsafe()
 
@@ -213,9 +212,9 @@ class EventManager(object):
         else:
             expiration_time = int(str(self._event.expiration))
             now = datetime.utcnow()
-            activity_creation_date = self._event.date_entered
-            if now < (activity_creation_date + timedelta(minutes=expiration_time)):
-                return  (activity_creation_date + timedelta(minutes=expiration_time)) - now
+            event_creation_date = self._event.date_entered
+            if now < (event_creation_date + timedelta(minutes=expiration_time)):
+                return  (event_creation_date + timedelta(minutes=expiration_time)) - now
             return Event.EXPIRED
 
     def _change_status(self,new_status):

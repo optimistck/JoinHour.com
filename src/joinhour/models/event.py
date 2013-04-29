@@ -30,7 +30,7 @@ class Event(ndb.Model):
 
     @classmethod
     def query_all_active_events(cls):
-        return cls.query(cls.status.IN([INITIATED, FORMING]))
+        return cls.query(cls.status.IN([Event.INITIATED, Event.FORMING]))
 
     @classmethod
     def query_event(cls, ancestor_key):

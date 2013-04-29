@@ -65,7 +65,7 @@ class EventManagerTest(unittest.TestCase):
             last_name = "User3_lastname",
             email = "user3@example.com",
             password = "foo",
-            username = "user2",
+            username = "user3",
             building = "building_1"
         )
         user3.put()
@@ -74,7 +74,7 @@ class EventManagerTest(unittest.TestCase):
             last_name = "User4_lastname",
             email = "user4@example.com",
             password = "foo",
-            username = "user2",
+            username = "user4",
             building = "building_1"
         )
         user4.put()
@@ -87,9 +87,22 @@ class EventManagerTest(unittest.TestCase):
         self.assertEqual(False,activity_manager.can_join(user2.key.id())[0])
         self.assertEqual(True,activity_manager.can_join(user3.key.id())[0])
         activity_manager.connect(user3.key.id())
+        self.assertEqual(Event.COMPLETE,activity_created.status)
         self.assertEqual(False,activity_manager.can_join(user4.key.id())[0])
-        self.assertEqual(2,len(activity_manager.get_all_companions()))
-        self.assertEqual(3,len(activity_manager.get_all_participants()))
+        self.assertEqual(2,activity_manager.companion_count())
+        #Now have 3 Unjoin activity
+        activity_manager.unjoin(user3.key.id())
+        self.assertEqual(Event.COMPLETE,activity_created.status)
+        self.assertEqual(1,activity_manager.companion_count())
+        #Now check if User4 can join
+        self.assertEqual(True,activity_manager.can_join(user4.key.id())[0])
+        activity_manager.connect(user4.key.id())
+        self.assertEqual(2,activity_manager.companion_count())
+        self.assertEqual(Event.COMPLETE,activity_created.status)
+        activity_manager.unjoin(user4.key.id())
+        activity_manager.unjoin(user2.key.id())
+        self.assertEqual(Event.INITIATED,activity_created.status)
+        self.assertEqual(0,activity_manager.companion_count())
 
     def test_create_interest(self):
         EventManager.create_interest(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
@@ -100,11 +113,55 @@ class EventManagerTest(unittest.TestCase):
         self.assertEqual(3,len(Event.get_interests_by_building('building_1')))
         self.assertEqual(2,len(Event.get_interests_by_building('building_2')))
 
+
     def test_load_interest_mgr(self):
         interest_created = EventManager.create_interest(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
         interest_from_interest_mgr = EventManager.get(interest_created.key.urlsafe()).get_event()
         self.assertEqual(interest_created.key.urlsafe(),interest_from_interest_mgr.key.urlsafe())
         self.assertEqual(Event.INITIATED,interest_from_interest_mgr.status)
+
+    def test_create_convert_interest2_activity(self):
+        user1 = User(
+                    name = "User1_name",
+                    last_name = "User1_lastname",
+                    email = "user@example.com",
+                    password = "foo",
+                    username = "user1",
+                    building = "building_1"
+        )
+        user1.put()
+        user2 = User(
+                    name = "User2_name",
+                    last_name = "User2_lastname",
+                    email = "user2@example.com",
+                    password = "foo",
+                    username = "user2",
+                    building = "building_1"
+        )
+        user2.put()
+        user3 = User(
+            name = "User3_name",
+            last_name = "User3_lastname",
+            email = "user3@example.com",
+            password = "foo",
+            username = "user3",
+            building = "building_1"
+        )
+        user3.put()
+        interest_created = EventManager.create_interest(category='Category1',duration='40',expiration='180',username=user1.username,building_name ='building_1',note='test_note')
+        interest_from_interest_mgr = EventManager.get(interest_created.key.urlsafe()).get_event()
+        self.assertEqual(interest_created.key.urlsafe(),interest_from_interest_mgr.key.urlsafe())
+        self.assertEqual(Event.INITIATED,interest_from_interest_mgr.status)
+        activity_key = EventManager.create_activity_from_interest(interest_id=interest_created.key.urlsafe(),username=user2.username,min_number_of_people_to_join='2',max_number_of_people_to_join='3')[3]
+        self.assertEqual(Event.COMPLETE_CONVERTED,interest_created.status)
+        activity_manager = EventManager.get(activity_key)
+        activity_created = activity_manager.get_event()
+        self.assertEqual(Event.FORMING,activity_created.status)
+        self.assertEqual(1,activity_manager.companion_count())
+        activity_manager.connect(user3.key.id())
+        self.assertEqual(Event.COMPLETE,activity_created.status)
+        self.assertEqual(2,activity_manager.companion_count())
+
 
 
 
