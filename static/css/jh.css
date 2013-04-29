@@ -164,6 +164,27 @@
     max-width: 32px;
 }
 
+.modal .basic-info, .single-column .basic-info {
+    -webkit-background-size: auto 80px;
+    -moz-background-size: auto 80px;
+    -o-background-size: auto 80px;
+    background-size: auto 80px;
+    background-repeat: no-repeat;
+    background-position: center top;
+    *zoom: 1;
+    padding: 10px 15px 5px;
+}
+
+.modal .basic-info:before, .single-column .basic-info:before, .modal .basic-info:after, .single-column .basic-info:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+
+.modal .basic-info:after, .single-column .basic-info:after {
+    clear: both;
+}
+
 .modal .basic-info .avatar, .single-column .basic-info .avatar, .modal .basic-info .avatar-generic, .single-column .basic-info .avatar-generic {
     float: left;
     -webkit-box-shadow: 0px 0px 2px rgba(0, 0, 0, .3);
@@ -175,6 +196,553 @@
     margin-right: 20px;
     max-width: 100px;
 }
+
+.modal .basic-info .date-large, .single-column .basic-info .date-large {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+}
+
+.modal .basic-info .date-large .month, .single-column .basic-info .date-large .month {
+    font-size: 20px;
+    line-height: 100%;
+    margin: 0 0 0;
+}
+
+.modal .basic-info .date-large .date, .single-column .basic-info .date-large .date {
+    font-size: 48.125px;
+    line-height: 100%;
+    margin-top: 0;
+}
+
+.modal .basic-info h4, .single-column .basic-info h4 {
+    font-size: 20px;
+    margin-bottom: 3px;
+    margin-top: 0px;
+}
+
+.modal .basic-info .neighborhood-name, .single-column .basic-info .neighborhood-name {
+    color: #505955;
+    font-size: 17.5px;
+}
+
+.modal .basic-info .actions, .single-column .basic-info .actions {
+    margin: 10px 0 15px;
+}
+
+.modal .basic-info .actions .btn, .single-column .basic-info .actions .btn, .modal .basic-info .actions .btn+.btn-group, .single-column .basic-info .actions .btn+.btn-group {
+    margin-left: 5px;
+}
+
+.modal .basic-info .actions .btn:first-child, .single-column .basic-info .actions .btn:first-child, .modal .basic-info .actions .btn+.btn-group:first-child, .single-column .basic-info .actions .btn+.btn-group:first-child {
+    margin-left: 0;
+}
+
+.modal .basic-info .actions .btn-mini, .single-column .basic-info .actions .btn-mini {
+    font-size: 11.9px;
+    font-weight: normal;
+    padding: 3px 10px;
+}
+
+.modal .basic-info .actions .btn-mini b.caret, .single-column .basic-info .actions .btn-mini b.caret {
+    margin-top: 9px;
+}
+
+.modal .basic-info .actions a, .single-column .basic-info .actions a {
+    margin-left: 5px;
+}
+
+.modal .basic-info .actions .dropdown, .single-column .basic-info .actions .dropdown {
+    margin-left: 5px;
+    display: inline-block;
+}
+
+.modal .more-info, .single-column .more-info {
+    position: relative;
+}
+
+.modal .more-info h4, .single-column .more-info h4 {
+    *zoom: 1;
+    border-bottom: 1px solid #dddddd;
+    font-size: 13.020000000000001px;
+    font-weight: normal;
+    margin: 10px 0;
+    padding: 3px 10px;
+    text-transform: uppercase;
+}
+
+.modal .more-info h4:before, .single-column .more-info h4:before, .modal .more-info h4:after, .single-column .more-info h4:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+
+.modal .more-info h4:after, .single-column .more-info h4:after {
+    clear: both;
+}
+
+.modal .more-info h4 .actions, .single-column .more-info h4 .actions {
+    font-size: 13.020000000000001px;
+    float: right;
+    text-transform: none;
+}
+
+.modal .more-info h4 .actions a, .single-column .more-info h4 .actions a {
+    margin-right: 10px;
+}
+
+.modal .more-info h4 .actions a:last-child, .single-column .more-info h4 .actions a:last-child {
+    margin-right: 0;
+}
+
+.modal .more-info h4+ul.list, .single-column .more-info h4+ul.list {
+    margin-top: -11px;
+}
+
+.modal .more-info>p, .single-column .more-info>p, .modal .more-info>div.actions, .single-column .more-info>div.actions {
+    padding: 0 15px;
+    margin-bottom: 20px;
+}
+
+.modal .more-info>p:first-child, .single-column .more-info>p:first-child, .modal .more-info>div.actions:first-child, .single-column .more-info>div.actions:first-child {
+    margin-top: 20px;
+}
+
+.modal .more-info>p+p, .single-column .more-info>p+p, .modal .more-info>div.actions+p, .single-column .more-info>div.actions+p, .modal .more-info>p+ul, .single-column .more-info>p+ul, .modal .more-info>div.actions+ul, .single-column .more-info>div.actions+ul {
+    margin-top: -10px;
+}
+
+.modal .more-info>p>i, .single-column .more-info>p>i, .modal .more-info>div.actions>i, .single-column .more-info>div.actions>i {
+    vertical-align: text-bottom;
+}
+
+.modal .more-info .map-legend, .single-column .more-info .map-legend {
+    font-size: 13.020000000000001px;
+    margin-top: 3px;
+}
+
+.modal .more-info ul.list li, .single-column .more-info ul.list li {
+    padding-left: 15px;
+}
+
+.modal .more-info ul.list li .avatar, .single-column .more-info ul.list li .avatar {
+    left: 15px;
+}
+
+.modal .more-info table, .single-column .more-info table {
+    margin: 0 10px 10px 10px;
+}
+
+.modal .more-info table th, .single-column .more-info table th, .modal .more-info table td, .single-column .more-info table td {
+    width: auto;
+}
+
+.modal .more-info table th, .single-column .more-info table th {
+    font-size: 13.020000000000001px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.modal dl dt, .single-column dl dt, .modal form dt, .single-column form dt, .modal dl .control-label, .single-column dl .control-label, .modal form .control-label, .single-column form .control-label {
+    color: #505955;
+    font-size: 11.9px;
+    font-weight: normal;
+    text-transform: uppercase;
+}
+
+.modal dl dd, .single-column dl dd, .modal form dd, .single-column form dd {
+    margin: 0 0 10px 0;
+}
+
+.modal dl.dl-horizontal, .single-column dl.dl-horizontal, .modal form.dl-horizontal, .single-column form.dl-horizontal, .modal dl.form-horizontal, .single-column dl.form-horizontal, .modal form.form-horizontal, .single-column form.form-horizontal {
+    padding: 0 10px;
+}
+
+.modal dl.dl-horizontal .control-group, .single-column dl.dl-horizontal .control-group, .modal form.dl-horizontal .control-group, .single-column form.dl-horizontal .control-group, .modal dl.form-horizontal .control-group, .single-column dl.form-horizontal .control-group, .modal form.form-horizontal .control-group, .single-column form.form-horizontal .control-group {
+    margin-bottom: 15px;
+}
+
+.modal dl.dl-horizontal dt, .single-column dl.dl-horizontal dt, .modal form.dl-horizontal dt, .single-column form.dl-horizontal dt, .modal dl.form-horizontal dt, .single-column dl.form-horizontal dt, .modal form.form-horizontal dt, .single-column form.form-horizontal dt, .modal dl.dl-horizontal .control-label, .single-column dl.dl-horizontal .control-label, .modal form.dl-horizontal .control-label, .single-column form.dl-horizontal .control-label, .modal dl.form-horizontal .control-label, .single-column dl.form-horizontal .control-label, .modal form.form-horizontal .control-label, .single-column form.form-horizontal .control-label {
+    text-align: left;
+}
+
+.modal dl.dl-horizontal dd, .single-column dl.dl-horizontal dd, .modal form.dl-horizontal dd, .single-column form.dl-horizontal dd, .modal dl.form-horizontal dd, .single-column dl.form-horizontal dd, .modal form.form-horizontal dd, .single-column form.form-horizontal dd, .modal dl.dl-horizontal .controls, .single-column dl.dl-horizontal .controls, .modal form.dl-horizontal .controls, .single-column form.dl-horizontal .controls, .modal dl.form-horizontal .controls, .single-column dl.form-horizontal .controls, .modal form.form-horizontal .controls, .single-column form.form-horizontal .controls {
+    margin-left: 0;
+    padding-right: 0;
+}
+
+.modal dl.dl-horizontal dd .avatar, .single-column dl.dl-horizontal dd .avatar, .modal form.dl-horizontal dd .avatar, .single-column form.dl-horizontal dd .avatar, .modal dl.form-horizontal dd .avatar, .single-column dl.form-horizontal dd .avatar, .modal form.form-horizontal dd .avatar, .single-column form.form-horizontal dd .avatar, .modal dl.dl-horizontal .controls .avatar, .single-column dl.dl-horizontal .controls .avatar, .modal form.dl-horizontal .controls .avatar, .single-column form.dl-horizontal .controls .avatar, .modal dl.form-horizontal .controls .avatar, .single-column dl.form-horizontal .controls .avatar, .modal form.form-horizontal .controls .avatar, .single-column form.form-horizontal .controls .avatar {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 15px;
+    max-width: 100px;
+}
+
+.modal dl.form-vertical, .single-column dl.form-vertical, .modal form.form-vertical, .single-column form.form-vertical {
+    margin-top: 20px;
+    padding: 0 15px;
+}
+
+.modal .modal-body form, .single-column .modal-body form {
+    padding: 0;
+}
+
+.modal .profile-stats .lead-label, .single-column .profile-stats .lead-label, .modal .profile-stats .invitation-label, .single-column .profile-stats .invitation-label, .modal .profile-stats .founder-label, .single-column .profile-stats .founder-label, .modal .profile-stats .mute-label, .single-column .profile-stats .mute-label, .modal .profile-stats .meta-info-label, .single-column .profile-stats .meta-info-label, .modal .profile-stats .lead-label a, .single-column .profile-stats .lead-label a, .modal .profile-stats .invitation-label a, .single-column .profile-stats .invitation-label a, .modal .profile-stats .founder-label a, .single-column .profile-stats .founder-label a, .modal .profile-stats .mute-label a, .single-column .profile-stats .mute-label a, .modal .profile-stats .meta-info-label a, .single-column .profile-stats .meta-info-label a {
+    font-size: 11px;
+}
+
+.modal .profile-stats .lead-label i, .single-column .profile-stats .lead-label i, .modal .profile-stats .invitation-label i, .single-column .profile-stats .invitation-label i, .modal .profile-stats .founder-label i, .single-column .profile-stats .founder-label i, .modal .profile-stats .mute-label i, .single-column .profile-stats .mute-label i, .modal .profile-stats .meta-info-label i, .single-column .profile-stats .meta-info-label i, .modal .profile-stats .lead-label a i, .single-column .profile-stats .lead-label a i, .modal .profile-stats .invitation-label a i, .single-column .profile-stats .invitation-label a i, .modal .profile-stats .founder-label a i, .single-column .profile-stats .founder-label a i, .modal .profile-stats .mute-label a i, .single-column .profile-stats .mute-label a i, .modal .profile-stats .meta-info-label a i, .single-column .profile-stats .meta-info-label a i {
+    font-size: 9px;
+    margin-right: 5px;
+}
+
+.modal .profile-stats span, .single-column .profile-stats span {
+    margin-right: 10px;
+}
+
+.single-column form h5 {
+    text-transform: uppercase;
+    margin-top: 30px;
+}
+
+.single-column form h5:first-child {
+    margin-top: 10px;
+}
+
+.single-column form .switch {
+    margin-right: 10px;
+}
+
+.single-column form#profile_editor_form {
+    padding: 0 !important;
+}
+
+.single-column form#profile_editor_form .header+.more-info h4:first-child {
+    margin-top: 0;
+}
+
+.single-column form#profile_editor_form h4+.control-group {
+    padding-top: 5px;
+}
+
+.single-column form#profile_editor_form div.control-group {
+    position: relative;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.single-column form#profile_editor_form div.control-group .avatar-preview {
+    width: 100px;
+    height: 100px;
+    display: block;
+    float: left;
+}
+
+.single-column form#profile_editor_form div.control-group .avatar-preview img {
+    height: 100px;
+    width: 100px;
+}
+
+.single-column form#profile_editor_form div.control-group .avatar-controls {
+    padding-left: 120px;
+}
+
+.single-column form#profile_editor_form div.control-group:last-child {
+    padding-bottom: 15px;
+}
+
+.single-column form#profile_editor_form [data-class="pet-form"], .single-column form#profile_editor_form [data-class="child-form"] {
+    margin-bottom: 10px;
+}
+
+.single-column form#profile_editor_form [data-class="pet-form"] input[type="text"], .single-column form#profile_editor_form [data-class="child-form"] input[type="text"] {
+    width: 130px;
+    margin-right: 8px;
+}
+
+.single-column form#profile_editor_form [data-class="pet-form"] input[type="text"]+span, .single-column form#profile_editor_form [data-class="child-form"] input[type="text"]+span {
+    margin-right: 8px;
+}
+
+.single-column form#profile_editor_form [data-class="pet-form"] select, .single-column form#profile_editor_form [data-class="child-form"] select {
+    width: 130px;
+    margin-right: 10px;
+}
+
+.single-column form#profile_editor_form label+#change_photo {
+    padding-left: 20px;
+    margin-bottom: 3px;
+}
+
+.single-column form#profile_editor_form #change_photo #facebook_login_button+.help-block {
+    margin-top: 5px;
+}
+
+.single-column form#profile_editor_form .help-block+input[type="text"] {
+    margin-top: 3px;
+}
+
+.single-column form#profile_editor_form #id_upd-spouse+span.help-inline {
+    padding: 6px 0 0 10px;
+}
+
+.single-column .basic-info {
+    -webkit-background-size: auto 100px;
+    -moz-background-size: auto 100px;
+    -o-background-size: auto 100px;
+    background-size: auto 100px;
+    -webkit-border-radius: 3px 3px 0 0;
+    -moz-border-radius: 3px 3px 0 0;
+    border-radius: 3px 3px 0 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    background-position: center top;
+    border: 1px solid #dddddd;
+    margin: 0 0 10px 0;
+    min-height: 135px;
+    padding: 15px 15px 20px;
+}
+
+.single-column .basic-info h4 {
+    margin-bottom: 5px;
+}
+
+.single-column .basic-info h5 {
+    color: #777777;
+    font-weight: normal;
+    margin: 0 0 5px;
+}
+
+.single-column .basic-info h5 i {
+    vertical-align: text-bottom;
+}
+
+.single-column .basic-info p {
+    font-size: 13.020000000000001px;
+    line-height: 140%;
+    margin: 0 0 5px;
+}
+
+.single-column .basic-info p a {
+    color: #211922;
+}
+
+.single-column .basic-info p a:hover {
+    color: #326bb1;
+}
+
+.single-column .basic-info .actions {
+    margin: 0;
+}
+
+.single-column .basic-info .avatar, .single-column .basic-info .avatar-generic {
+    margin: 0 15px 0 0;
+}
+
+.single-column .basic-info .date-large+h4, .single-column .basic-info .date-large+h4+p, .single-column .basic-info .date-large+h4+p+.actions {
+    padding-left: 80px;
+}
+
+.single-column .basic-info+ul.nav {
+    background-color: #f3f5f3;
+    border: 1px solid #dddddd;
+    border-top: none;
+    margin-bottom: 20px;
+    margin-top: -10px;
+}
+
+.single-column .basic-info+.more-info, .single-column .basic-info+.alert {
+    margin-top: 20px;
+}
+
+[role="complementary"] {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+[role="complementary"] .module {
+    border-bottom: 0px solid #efefef;
+    margin-bottom: 15px;
+}
+
+[role="complementary"] .module h5:first-child {
+    margin-top: 0;
+}
+
+[role="complementary"] .module h5 {
+    border-bottom: 1px solid #efefef;
+    color: #777777;
+    font-size: 11.9px;
+    font-weight: normal;
+    height: 10px;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+}
+
+[role="complementary"] .module h5 i {
+    margin-top: 2px;
+    margin-right: 1px;
+    vertical-align: top;
+}
+
+[role="complementary"] .module h5:first-line {
+    background-color: #ffffff;
+}
+
+[role="complementary"] .module h5:after {
+    content: '\0000a0';
+}
+
+[role="complementary"] .module .map {
+    margin-bottom: 10px;
+}
+
+[role="complementary"] .module .group-photo {
+    width: 250px;
+    height: 250px;
+    margin-bottom: 10px;
+}
+
+[role="complementary"] .module p {
+    color: #777777;
+    font-size: 13.020000000000001px;
+    line-height: 18px;
+    max-width: 250px;
+}
+
+[role="complementary"] .module .caption {
+    color: #777777;
+    font-size: 13.020000000000001px;
+    margin-bottom: 0;
+}
+
+[role="complementary"] .module .caption i {
+    vertical-align: text-bottom;
+}
+
+[role="complementary"] .module ul.facepile {
+    margin-bottom: 10px;
+}
+
+[role="complementary"] .module ul.facepile li {
+    display: inline-table;
+    margin-right: 4px;
+}
+
+[role="complementary"] .module ul.facepile li a {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 34px;
+    height: 34px;
+    background-color: #505955;
+    color: #ffffff;
+    display: inline-table;
+    font-size: 13.020000000000001px;
+    font-weight: bold;
+    line-height: 100%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+[role="complementary"] .module ul.facepile li a img {
+    width: 34px;
+    height: 34px;
+    max-width: 34px;
+}
+
+[role="complementary"] .module ul.facepile li a span {
+    display: inline-table;
+    margin-top: 11px;
+}
+
+[role="complementary"] .module ul.events li {
+    color: #777777;
+    font-size: 13.020000000000001px;
+    margin-bottom: 3px;
+}
+
+[role="complementary"] .module ul.events li a {
+    display: block;
+}
+
+[role="complementary"] .module ul.neighbors li {
+    *zoom: 1;
+    margin-bottom: 10px;
+}
+
+[role="complementary"] .module ul.neighbors li:before, [role="complementary"] .module ul.neighbors li:after {
+    display: table;
+    content: "";
+    line-height: 0;
+}
+
+[role="complementary"] .module ul.neighbors li:after {
+    clear: both;
+}
+
+[role="complementary"] .module ul.neighbors li img {
+    width: 34px;
+    height: 34px;
+    float: left;
+    margin-right: 10px;
+}
+
+[role="complementary"] .module ul.neighbors li a:hover {
+    text-decoration: none;
+}
+
+[role="complementary"] .module ul.neighbors li .user-name, [role="complementary"] .module ul.neighbors li .location {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    color: #326bb1;
+    font-size: 13.020000000000001px;
+    line-height: 140%;
+    vertical-align: top;
+}
+
+[role="complementary"] .module ul.neighbors li .location {
+    color: #777777;
+    display: block;
+    font-size: 13.020000000000001px;
+}
+
+[role="complementary"] .module:last-child {
+    border-bottom: none;
+}
+
+
+[role="main"] ul.nav-pills {
+    margin-bottom: 0;
+}
+
+[role="main"] ul.nav-pills li a {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    color: #505955;
+    font-size: 11.9px;
+    padding: 5px 12px;
+    line-height: 150%;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+[role="main"] ul.nav-pills li a:hover {
+    -webkit-border-radius: 0;
+    -moz-border-radius: 0;
+    border-radius: 0;
+    background: none;
+    color: #1e1c1c;
+}
+
+
 
 hr {
   margin: 5px 0;

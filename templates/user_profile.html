@@ -1,35 +1,51 @@
 {% extends base_layout %}
 
 {% block title %}
-    {% trans %}User Profile{% endtrans %} - {{app_name}}
+    {% trans %}User Profile{% endtrans %} - {{ app_name }}
 {% endblock %}
 
 {% block header_title %}
-        {% trans %}User Profile{% endtrans %}
+    {% trans %}User Profile{% endtrans %}
 {% endblock %}
 
 {% block content %}
+    <div role="main" class="span single-column ">
+        <div class="container">
+            <div class="row">
+                <div class="basic-info">
+                    {% if hasAvatar %}
+                        <a href="/user/avatar/?user_name={{ user.username }}">
+                            <img class="avatar" src="/user/avatar/?user_name={{ user.username }}"/>
+                        </a>
+                    {% else %}
+                        <a href="../img/user.jpg">
+                            <img class="avatar" src="../img/user.jpg"/>
+                        </a>
+                        <img src="../img/user.jpg"/>
+                    {% endif %}
+                    <h4>
+                        <span class="user-name">{{ user.name }} {{ user.last_name }}</span>
+                    </h4>
+                    <h5>
+                        {{ user.username }}
+                    </h5>
+                </div>
+                <div class="more-info">
+                    <h4>About</h4>
+                    <dl class="dl-horizontal">
+                        <dt>About me</dt>
+                        <dd>
 
+                            <span class="meta">{{ user.about_me }}</span>
 
-    <div class="media">
-        <a class="pull-left" href="#">
-            {% if hasAvatar %}
-                <img src="/user/avatar/?user_name={{ user.username}}" />
-            {% else %}
-                <img src="../img/user.jpg" />
-            {% endif %}
-        </a>
-        <div class="media-body">
-            <h4 class="media-heading">{{ user.name  }} {{ user.last_name  }}</h4>
-            {{ user.about_me }}
-            {{ user.interests }}<br><br><br>
-
-            <!-- Nested media object -->
-            {% if hasTwitter %}
-                <h4 class="media-heading">Twitter</h4>
-                <span class=" badge badge-warning">{{ twitter_followers_count }} followers</span> <span class=" badge badge-info">{{ twitter_friends_count }} friends</span>
-            {% endif %}
-
+                        </dd>
+                        <dt>My Interests</dt>
+                        <dd>
+                            <span class="meta">{{ user.interests }}</span>
+                        </dd>
+                    </dl>
+                </div>
+            </div>
         </div>
     </div>
 
