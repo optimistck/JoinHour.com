@@ -39,15 +39,18 @@ class ActivityHandler(BaseHandler):
         user_info = models.User.get_by_id(long(self.user_id))
         building_name = user_info.building
         self.view.building = building_name
-        cursor = Cursor(urlsafe=cursorStr.lstrip('Cursor(').rstrip(')'))
-        events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(3, start_cursor=cursor)
-        self.view.events = events
-        self.view.cursor = next_cursor
-        self.view.more = more
-
         if cursorStr is not None and cursorStr != "":
+            cursor = Cursor(urlsafe=cursorStr.lstrip('Cursor(').rstrip(')'))
+            events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(5, start_cursor=cursor)
+            self.view.events = events
+            self.view.cursor = next_cursor
+            self.view.more = more
             return self.render_template('event_list.html', **params)
         else:
+            events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(5)
+            self.view.events = events
+            self.view.cursor = next_cursor
+            self.view.more = more
             return self.render_template('stat.html', **params)
 
 

@@ -160,8 +160,8 @@
                 $(".modal-body #interest_id").val(interest_id);
                 $('#cancel_modal').modal('show');
             });
-
-            $(window).paged_scroll({
+        });
+        $(window).paged_scroll({
                 handleScroll: function (page, container, doneCallback)
                 {
                     if(more == 'True')
@@ -176,18 +176,16 @@
                     }
                     return true
                 },
-                // Uncomment to enable infinite scroll
-                pagesToScroll : 10,
+                pagesToScroll : null,
                 triggerFromBottom: '50',
                 loading:{
                     html  :''
                 },
+                loader: '<div class="loader"></div>',
                 debug: true,
                 targetElement: $('#events')
 
             });
-
-        });
 
     </script>
 {% endblock %}
