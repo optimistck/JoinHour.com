@@ -1,11 +1,10 @@
 #google imports
-import webapp2
 # Boilerplate imports
-from boilerplate.lib.basehandler import BaseHandler, user_required
-from boilerplate import models
-from google.appengine.ext import ndb
 import jinja2
+from google.appengine.datastore.datastore_query import Cursor
 
+from boilerplate.lib.basehandler import BaseHandler
+from boilerplate import models
 from src.joinhour.models.event import Event
 from src.joinhour.event_manager import EventManager
 from src.joinhour.utils import *
@@ -35,39 +34,25 @@ class ActivityHandler(BaseHandler):
     Handler for the Activity view, formerly the Leaderboard showing all active open activities and pasive interest broadcasts
     """
     def get(self):
+        params = {}
+        cursorStr = str(self.request.get('cursor'))
         user_info = models.User.get_by_id(long(self.user_id))
         building_name = user_info.building
         self.view.building = building_name
-
-        cursorString = str(self.request.get('cursor'))
-        emptyCursor = False
-        if len(cursorString)==0 :
-            emptyCursor = True
-        curs = ndb.Cursor(urlsafe=cursorString.lstrip('Cursor(').rstrip(')'))
-        q = Event.query( Event.building_name == building_name).order(-Event.date_entered, Event.key)
-        count = 1
-        events = []
-        q_iter = q.iter(produce_cursors=True, start_cursor= curs)
-        for event in q_iter:
-            if count > 3:
-                break
-            events.append(event)
-            count += 1
-
-        self.view.events = events
-        params = {}
-        if q_iter.has_next():
-            params = {'cursor': q_iter.cursor_after(),
-                      'exception': self.request.get('exception')
-            }
-        if emptyCursor:
-            return self.render_template('stat.html', **params)
-        else:
+        if cursorStr is not None and cursorStr != "":
+            cursor = Cursor(urlsafe=cursorStr)
+            events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(5, start_cursor=cursor)
+            self.view.events = events
+            self.view.cursor = next_cursor
+            self.view.more = more
             return self.render_template('event_list.html', **params)
+        else:
+            events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(5)
+            self.view.events = events
+            self.view.cursor = next_cursor
+            self.view.more = more
+            return self.render_template('stat.html', **params)
 
 
 
-    @webapp2.cached_property
-    def form(self):
-        return forms.StatForm(self)
 

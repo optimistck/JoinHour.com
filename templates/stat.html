@@ -61,7 +61,8 @@
 
     </div>
     <hr/>
-    <div class="media" id="events" style="overflow-y: scroll; height: 300px">
+    <div id="events" class="media">
+        <cursor id="events_cursor" hasmore='{{ more }}' next_cursor='{{ cursor.urlsafe() }}'/>
         {% for e in events %}
                 <div class="media-object">
                     <a href="/user_profile/?username={{ e.username }}">
@@ -145,6 +146,8 @@
 
 {% block mediaJS %}
     <script type="text/javascript">
+        var cursor = $('#events_cursor').attr("next_cursor") ;
+        var more = $('#events_cursor').attr("hasMore");
         $().ready(function () {
             $("#form_contact").validate({
                 errorPlacement: function (error, element) {
@@ -158,11 +161,30 @@
                 $('#cancel_modal').modal('show');
             });
 
-            $('#events').jscroll({
-                loadingHtml: '<img src="loading.gif" alt="Loading" /> Loading...',
-                padding: 20,
-                debug: true
+            $(window).paged_scroll({
+                handleScroll: function (page, container, doneCallback)
+                {
+                    if(more == 'True')
+                    {
+                        $.get("/append_event_list/?cursor="+cursor,function(data)
+                        {
+                            html = $.parseHTML( data )
+                            more = $('#events_cursor',  html).attr('hasMore');
+                            cursor = $('#events_cursor', html).attr('next_cursor')
+                            $('#events').append(data);
+                        });
+                    }
+                    return true
+                },
+                // Uncomment to enable infinite scroll
+                pagesToScroll : 10,
+                triggerFromBottom: '50',
+                loader: '<div class="loader"></div>',
+                debug: true,
+                targetElement: $('#events')
+
             });
+
         });
 
     </script>
