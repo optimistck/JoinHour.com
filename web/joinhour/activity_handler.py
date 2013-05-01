@@ -40,7 +40,7 @@ class ActivityHandler(BaseHandler):
         building_name = user_info.building
         self.view.building = building_name
         cursor = Cursor(urlsafe=cursorStr.lstrip('Cursor(').rstrip(')'))
-        events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(3, start_cursor=cursor)
+        events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(5, start_cursor=cursor)
         self.view.events = events
         self.view.cursor = next_cursor
         self.view.more = more
