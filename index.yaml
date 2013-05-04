@@ -66,6 +66,18 @@ indexes:
   - name: date_entered
     direction: desc
 
+- kind: Event
+  properties:
+  - name: building_name
+  - name: date_entered
+    direction: desc
+
+- kind: Event
+  properties:
+  - name: type
+  - name: username
+  - name: status
+
 - kind: Feedback
   ancestor: yes
   properties:
@@ -140,6 +152,12 @@ indexes:
   - name: username
   - name: __key__
     direction: desc
+
+- kind: UserActivity
+  properties:
+  - name: activity
+  - name: status
+  - name: user
 
 - kind: UserActivity
   properties:

@@ -1,11 +1,11 @@
 import webapp2
+from google.appengine.ext import ndb
+
 from boilerplate.lib.basehandler import BaseHandler
 from boilerplate import forms
 from boilerplate import models
-from webapp2_extras.i18n import gettext as _
-from src.joinhour.models.activity import Activity
 from src.joinhour.models.love import Love
-from google.appengine.ext import ndb
+
 
 class LoveHandler(BaseHandler):
 

@@ -4,143 +4,21 @@
     {% trans %}Live Activity Board{% endtrans %} - {{ app_name }}
 {% endblock %}
 {% block header_title %}
-    {% trans %}Live Activity Board{% endtrans %}
+    {% trans %}Live Activity Board of {{ building }}{% endtrans %}
 {% endblock %}
-
 {% block content %}
-
-    {% trans %}Browse all open activities and interests for your building.{% endtrans %}
-    <BR><BR>
-
-
-    <H3>Activities you can join now</H3>
-
-    <table class="table table-striped table-bordered table table-condensed">
-
-        <thead>
-        <tr>
-            <th>Category</th>
-            <th>Duration</th>
-            <th>Expires in</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-
-        {% for a in activities %}
-            <tr>
-                <TD><a href="/activity_detail/?ID={{ a.key.urlsafe() }}">{{ a.category }}</a><br />
-                    Posted by <a href="/user_profile/?username={{ a.username }}">{{ a.username }}</a>
-                </TD>
-                <TD>{{ a.duration }}</TD>
-                <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
-                <TD>
-                        <a href="/join_activity/?key={{ a.key.urlsafe() }}">
-                        <button class="btn btn-primary">JOIN</button>
-
-                </a></TD>
-
-            </tr>
-        {% endfor %}
-        {% for a in not_joinable_activities %}
-            <tr>
-                <TD><a href="/activity_detail/?ID={{ a.key.urlsafe() }}">{{ a.category }}</a><br />
-                    Posted by <a href="/user_profile/?username={{ a.username }}">{{ a.username }}</a>
-                </TD>
-                <TD>{{ a.duration }}</TD>
-                <TD>{{ a.key.urlsafe() |expires_in('Activity')  | minute_format}}</TD>
-                <TD></TD>
-            </tr>
-        {% endfor %}
-    </table>
-    {% if cursor %}
-        <a class="btn" href="/activity/?cursor={{cursor}}">more..</a>
-    {% endif %}
-    </fieldset>
-
-    <H3>Interests ready for a match</H3>
-    <table class="table table-striped table-bordered table table-condensed">
-        <thead>
-        <tr>
-            <th>Category</th>
-            <th>Duration</th>
-            <th>Expires in</th>
-            <th>Action</th>
-        </tr>
-        </thead>
-        <div id="cancel_modal" class="modal hide fade">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-                <h3>Convert this Interest to an Activity</h3>
-            </div>
-
-            <form action="/convert_to_activity/" method="post">
-                <div class="modal-body">
-                <input type="hidden" name="exception" value="{{ exception }}">
-                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                <input type="hidden" name="interest_id" id="interest_id">
-                    <div class="control-group">
-                        <label class="control-label" for="min_number_of_people_to_join">with min </label>
-                        <select id="min_number_of_people_to_join" name="min_number_of_people_to_join">
-                            <option value="1 person">1 person</option>
-                            <option value="2 people">2 people</option>
-                            <option value="3 people">3 people</option>
-                        </select>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="max_number_of_people_to_join">no more
-                            than </label>
-
-                        <div class="controls">
-                            <select id="max_number_of_people_to_join" name="max_number_of_people_to_join">
-                                <option value="1 person">1 person</option>
-                                <option value="2 people">2 people</option>
-                                <option value="3 people">3 people</option>
-                                <option value="4 people">4 people</option>
-                                <option value="5 people">5 people</option>
-                                <option value="No limit">No limit</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label" for="note">Details *</label>
-
-                        <div class="controls">
-                            <input class="input-xlarge focused required" id="note" name="note"
-                                   placeholder="e.g., where we're meeting and  going" type="text" value="">
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                <input type="submit" value="Convert" name="commit" id="message_submit" class="btn btn-primary"/>
-                    <button type="button" class="close" data-dismiss="modal">Cancel</button>
-                </div>
-            </form>
-
-        </div>
-        {% for i in interests %}
-            <tr>
-                <TD>{{ i.category }}<br />
-                    Posted by <a href="/user_profile/?username={{ i.username }}">{{ i.username }}</a>
-                </TD>
-                <td>{{ i.duration}}</td>
-                <td>{{ i.key.urlsafe() | expires_in('Interest')  | minute_format}}</td>
-                <td>
-                    <a href="#cancel_modal" role="button" class="open-cancel-confirm-dialog btn btn-primary"
-                       data-toggle="modal" data-id="{{ i.key.urlsafe()}}">Convert to an activity</a></td>
-            </tr>
-        {% endfor %}
-
-    </table>
-
-    See an interest you like? Create an activity and connect!
-    <BR><BR><BR><BR>
-
-
+    {% include "interest2activity_popup.html" %}
+    <hr/>
+    <div id="events" class="media">
+        {% include "event_list.html" %}
+    </div>
 
 {% endblock %}
 
 {% block mediaJS %}
     <script type="text/javascript">
+        var cursor = $('#events_cursor').attr("next_cursor") ;
+        var more = $('#events_cursor').attr("hasMore");
         $().ready(function () {
             $("#form_contact").validate({
                 errorPlacement: function (error, element) {
@@ -154,6 +32,32 @@
                 $('#cancel_modal').modal('show');
             });
         });
+        $(window).paged_scroll({
+                handleScroll: function (page, container, doneCallback)
+                {
+                    if(more == 'True')
+                    {
+                        $.get("/append_event_list/?cursor="+cursor,function(data)
+                        {
+                            html = $.parseHTML( data )
+                            more = $('#events_cursor',  html).attr('hasMore');
+                            cursor = $('#events_cursor', html).attr('next_cursor')
+                            $('#events').append(data);
+                        });
+                    }
+                    return true
+                },
+                pagesToScroll : null,
+                triggerFromBottom: '50',
+                loading:{
+                    html  :''
+                },
+                loader: '<div class="loader"></div>',
+                debug: true,
+                targetElement: $('#events')
+
+            });
+
     </script>
 {% endblock %}
 

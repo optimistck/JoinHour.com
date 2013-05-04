@@ -1,15 +1,17 @@
 __author__ = 'aparbane'
 
 from google.appengine.ext import ndb
+
+from src.joinhour.models.event import Event
 from boilerplate.models import User
-from src.joinhour.models.activity import Activity
+
 
 class ActivityFeedback(ndb.Model):
 
     OPEN = 'OPEN'
     CLOSED_WITHOUT_FEEDBACK = 'CLOSED_WITHOUT_FEEDBACK'
     CLOSED_WITH_FEEDBACK = 'CLOSED_WITH_FEEDBACK'
-    activity = ndb.KeyProperty(kind=Activity,name='activity',required=True)
+    activity = ndb.KeyProperty(kind=Event,name='activity',required=True)
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
     status = ndb.StringProperty(default = OPEN,choices=[OPEN,CLOSED_WITHOUT_FEEDBACK,CLOSED_WITH_FEEDBACK])
 
@@ -24,7 +26,7 @@ class UserFeedback(ndb.Model):
     CLOSED_WITHOUT_FEEDBACK = 'CLOSED_WITHOUT_FEEDBACK'
     CLOSED_WITH_FEEDBACK = 'CLOSED_WITH_FEEDBACK'
     user = ndb.KeyProperty(kind=User,name='user')
-    activity = ndb.KeyProperty(kind=Activity,name='activity',required=True)
+    activity = ndb.KeyProperty(kind=Event,name='activity',required=True)
     activity_experience =  ndb.StringProperty(default=NEUTRAL,choices=[NEGATIVE,NEUTRAL,
                                                                                     POSITIVE,VERY_POSITIVE,SUPER_POSITIVE])
     status = ndb.StringProperty(default=OPEN,choices=[OPEN,CLOSED_WITHOUT_FEEDBACK,CLOSED_WITH_FEEDBACK])
