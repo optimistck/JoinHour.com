@@ -28,6 +28,7 @@ jinja2.filters.FILTERS['can_join'] = can_join
 jinja2.filters.FILTERS['get_all_companions'] = get_all_companions
 jinja2.filters.FILTERS['dateformat'] = dateformat
 jinja2.filters.FILTERS['display_status'] = display_status
+jinja2.filters.FILTERS['hasAvatar'] = hasAvatar
 
 class ActivityHandler(BaseHandler):
     """

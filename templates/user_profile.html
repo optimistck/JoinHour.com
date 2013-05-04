@@ -13,16 +13,7 @@
         <div class="container">
             <div class="row">
                 <div class="basic-info">
-                    {% if hasAvatar %}
-                        <a href="/user/avatar/?user_name={{ user.username }}">
-                            <img class="avatar" src="/user/avatar/?user_name={{ user.username }}"/>
-                        </a>
-                    {% else %}
-                        <a href="../img/user.jpg">
-                            <img class="avatar" src="../img/user.jpg"/>
-                        </a>
-                        <img src="../img/user.jpg"/>
-                    {% endif %}
+                    {{ macros.show_avatar(username) }}
                     <h4>
                         <span class="user-name">{{ user.name }} {{ user.last_name }}</span>
                     </h4>

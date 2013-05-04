@@ -1,7 +1,7 @@
+__author__ = 'aparbane'
 from UserString import MutableString
 from src.joinhour.models.event import Event
 
-__author__ = 'aparbane'
 
 from src.joinhour.event_manager import EventManager
 from boilerplate import models
@@ -26,14 +26,14 @@ def can_join(key, user_id):
 
 
 
-def display_status(key,user_id):
+def display_status(key,username):
     event_manager = EventManager.get(key)
     activity = event_manager.get_event()
-    user = models.User.get_by_id(long(user_id))
+    user = models.User.get_by_username(username)
     if user.username == activity.username:
         return activity.status
     else:
-       can_join = event_manager.can_join(user_id)[0]
+       can_join = event_manager.can_join(user.key.id())[0]
        if can_join:
            return "JOIN"
        else:
@@ -47,9 +47,11 @@ def display_companions(key,user_id):
     companions = event_manager.get_all_companions()
     message = MutableString()
 
-
-
-
+def hasAvatar(username):
+    user = models.User.get_by_username(username)
+    if user.avatar is not  None:
+        return True
+    return False
 
 def dateformat(value,format='%H:%M'):
     #return value.strftime(format)
