@@ -1,14 +1,9 @@
-from webapp2_extras.appengine.auth.models import User
 from google.appengine.ext import ndb
 
 #JH experimental
 
-import cgi
 import datetime
-import urllib
-import webapp2
 from google.appengine.ext import db
-from google.appengine.api import users
 
 
 class Greeting(db.Model):
@@ -25,7 +20,7 @@ def guestbook_key(guestbook_name=None):
 #JH experimental END
 
 
-# Originally meant to call this ActivityManager, but changed the name to just an Actvity
+# Originally meant to call this EventManager, but changed the name to just an Actvity
 class Activity(ndb.Model):
     """
     The object that manages the activity from its creation to its completion.

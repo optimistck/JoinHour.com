@@ -1,13 +1,14 @@
 __author__ = 'aparbane'
+from UserString import MutableString
+from src.joinhour.models.event import Event
 
-from src.joinhour.activity_manager import ActivityManager
-from src.joinhour.interest_manager import InterestManager
-from src.joinhour.models.activity import Activity
-from src.joinhour.models.interest import Interest
+
+from src.joinhour.event_manager import EventManager
+from boilerplate import models
 
 
 def minute_format(timedelta):
-    if timedelta != Activity.EXPIRED and timedelta != Interest.EXPIRED:
+    if timedelta != Event.EXPIRED and timedelta != Event.EXPIRED:
         total_seconds = int(timedelta.total_seconds())
         hours, remainder = divmod(total_seconds, 60*60)
         minutes, seconds = divmod(remainder, 60)
@@ -17,13 +18,43 @@ def minute_format(timedelta):
             return str(minutes) + ' minutes'
     return timedelta
 
-
-
-def get_expiration_duration(key, entity_type):
-    if entity_type == 'Activity':
-        return ActivityManager.get(key).expires_in()
-    else:
-        return InterestManager.get(key).expires_in()
+def get_expiration_duration(key):
+    return EventManager.get(key).expires_in()
 
 def can_join(key, user_id):
-    ActivityManager.get(key).can_join(user_id)[0]
+    EventManager.get(key).can_join(user_id)[0]
+
+
+
+def display_status(key,username):
+    event_manager = EventManager.get(key)
+    activity = event_manager.get_event()
+    user = models.User.get_by_username(username)
+    if user.username == activity.username:
+        return activity.status
+    else:
+       can_join = event_manager.can_join(user.key.id())[0]
+       if can_join:
+           return "JOIN"
+       else:
+           return activity.status
+
+def display_companions(key,user_id):
+    event_manager = EventManager.get(key)
+    activity = event_manager.get_event()
+    user = models.User.get_by_id(long(user_id))
+    is_owner = user.username == activity.username
+    companions = event_manager.get_all_companions()
+    message = MutableString()
+
+def hasAvatar(username):
+    user = models.User.get_by_username(username)
+    if user.avatar is not  None:
+        return True
+    return False
+
+def dateformat(value,format='%H:%M'):
+    #return value.strftime(format)
+    return value.ctime()
+
+

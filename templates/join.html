@@ -20,13 +20,14 @@
             {{ macros.field(form.category, label=_("I want to")) }}
              {{ macros.field(form.duration, label=_("for")) }}
             {{ macros.field(form.expiration, label=_("willing to wait for a match for")) }}
+            {{ macros.field(form.note, label=_("Details"),placeholder=_("e.g., where we're meeting and ")+" "+_("going"), class="input-xlarge focused required") }}
             <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm just expressing an interest; someone else can organize</label>
             <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')">I want to organize and specify activity details</label>
             <span id="initiate_activity_details" style="display: none;">
             {{ macros.field(form.min_number_of_people_to_join, label=_("with min"),disabled=true) }}
             {{ macros.field(form.max_number_of_people_to_join, label=_("no more than"),disabled=true) }}
-            {{ macros.field(form.note, label=_("Details"),disabled=true, placeholder=_("e.g., where we're meeting and ")+" "+_("going"), class="input-xlarge focused required") }}
             </span>
+
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans %}Post{% endtrans %}</button>
             </div>
@@ -50,14 +51,12 @@
         if(document.getElementById('express_interest_radio').checked)
         {
             document.getElementById(id).style.display = 'none';
-            document.getElementById('note').disabled = true
             document.getElementById('min_number_of_people_to_join').disabled = true
             document.getElementById('max_number_of_people_to_join').disabled = true
         }
         else if(document.getElementById('initiate_activity_radio').checked)
         {
             document.getElementById(id).style.display = 'block';
-            document.getElementById('note').disabled = false
             document.getElementById('min_number_of_people_to_join').disabled = false
             document.getElementById('max_number_of_people_to_join').disabled = false
         }

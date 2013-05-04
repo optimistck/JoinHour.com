@@ -4,9 +4,8 @@ from datetime import timedelta
 import math
 
 from google.appengine.ext import ndb
+from src.joinhour.models.event import Event
 
-from src.joinhour.models.activity import Activity
-from src.joinhour.models.interest import Interest
 from src.joinhour.models.match import Match
 from boilerplate.lib import utils
 
@@ -22,7 +21,7 @@ class MatchMaker(object):
         Match between An interest and the list of valid activities in the store for a building
         """
         interest = ndb.Key(urlsafe=interest_key).get()
-        activity_list = Activity.get_active_activities_by_category_and_building(interest.category,
+        activity_list = Event.get_active_activities_by_category_and_building(interest.category,
                                                                                 interest.building_name)
         return cls.match_interests_with_activities([interest], activity_list, {})
 
@@ -32,7 +31,7 @@ class MatchMaker(object):
         Match between An activity and the list of valid interests in the data store for a building
         """
         activity = ndb.Key(urlsafe=activity_key).get()
-        interest_list = Interest.get_active_interests_by_category_and_building(activity.category,
+        interest_list = Event.get_active_interests_by_category_and_building(activity.category,
                                                                                activity.building_name);
         return cls.match_interests_with_activities(interest_list, [activity], {})
 
@@ -46,8 +45,8 @@ class MatchMaker(object):
         for category in cls._get_categories():
             if category[0] == '':
                 continue
-            interest_list = Interest.get_active_interests_by_category(category[0])
-            activity_list = Activity.get_active_activities_by_category(category[0])
+            interest_list = Event.get_active_interests_by_category(category[0])
+            activity_list = Event.get_active_activities_by_category(category[0])
             cls.match_interests_with_activities(interest_list,activity_list,match_result_list)
         return match_result_list
 
@@ -79,7 +78,7 @@ class MatchMaker(object):
                     continue
                 match_found = cls.isMatch(interest, activity)
                 if match_found:
-                    interest.status = Interest.COMPLETE_MATCH_FOUND
+                    interest.status = Event.COMPLETE_MATCH_FOUND
                     interest.put()
                     match = Match(interest=interest.key,
                                   activity=activity.key)

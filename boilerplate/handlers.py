@@ -978,7 +978,7 @@ class PassiveInterestHandler(BaseHandler):
 
         message = _('Your interest was registered successfully.')
         self.add_message(message, 'success')
-        return self.redirect_to('stat')
+        return self.redirect_to('home')
 
     @webapp2.cached_property
     def form(self):
@@ -1015,51 +1015,11 @@ class InitiateActivityHandler(BaseHandler):
 
             message = _("Your activity was registered successfully. We are searching for a match...")
             self.add_message(message, 'success')
-            return self.redirect_to('stat')
+            return self.redirect_to('home')
 
     @webapp2.cached_property
     def form(self):
         return forms.InitiateActvityForm(self)
-
-class StatHandler(BaseHandler):
-    """
-    Handler for the Stat view, formerly the Leaderboard showing all active open activities and pasive interest broadcasts
-    """
-    #orig
-    def get(self):
-        #JH: this needs to be dynamic
-        building_name = 'building_name'
-        self.view.interests = models.Passive_Interest.query().fetch(20)
-        #For active
-        ancestor_key = ndb.Key("ActivityKey", building_name)
-        self.view.activities = models.TheActivity.query_activity(ancestor_key).fetch(20)
-        #JH: passing of params is not applicable for the variables with self.view.XXXXX - they get passed right on to .html via {{}}
-        params = {}
-        return self.render_template('stat.html', **params)
-  
-    def post(self):
-        is_delete = self.request.POST.get('delete_item') 
-        is_save = self.request.POST.get('save_item') 
-        if is_delete: 
-            message = _('You clicked: Details - the go to page is right, the data pull not wired')
-            entity_key = _('You clicked Details in the entity_key')
-        elif is_save: 
-            message = _('You clicked: JOIN - this needs to be wired')
-            entity_key = _('You clicked JOIN in the entity_key')
-        else: 
-            raise Exception('no form action given') 
-        
-        self.add_entity_key_to_pass(entity_key)
-        logging.info('******************')
-        logging.info(self.entity_keys)
-        self.add_message(message, 'success')
-        return self.redirect_to('activity_detail')
-
-
-    @webapp2.cached_property
-    def form(self):
-        return forms.StatForm(self)
-
 
 class FeedbackHandler(BaseHandler):
     """

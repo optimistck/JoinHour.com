@@ -37,3 +37,89 @@
 {% endif %}
 {%- endmacro %}
 
+{% macro show_event(event,username) -%}
+        {% set activity_display_status = event.key.urlsafe() | display_status(username) %}
+        {% set activity_participants = event.key.urlsafe() | get_all_companions %}
+        <div class="media-object">
+            {{ show_avatar(username) }}
+        </div>
+        <div class="media-body">
+            <div data-class="main-content-area">
+                <h4 class="media-heading">
+                            <span class="subject">
+                                <a href="/activity_detail/?ID={{ event.key.urlsafe() }}">{{ event.category }}</a>
+                            </span>
+                    <span class="timestamp">{{ event.date_entered | dateformat }}</span>
+                </h4>
+                <p data-class="post-content">
+                    {{ event.note }}
+                </p>
+                <h5 class="media-author">
+                        <span class="user-name">Posted by <a
+                                href="/user_profile/?username={{ event.username }}">{{ event.username }}</a></span>
+                </h5>
+                {% set expiration = event.key.urlsafe() |expires_in  | minute_format %}
+                {% if expiration == 'EXPIRED' %}
+                    <div class="media-scope">
+                        EXPIRED
+                    </div>
+                {% else %}
+                    <div class="media-scope">
+                         Starting in {{ expiration }} for {{ event.duration }} minutes
+                    </div>
+                {% endif %}
+                <div class="media-actions">
+                    <span>
+                                {% if event.type ==  'ACTIVITY' %}
+                                    {% if activity_display_status == 'JOIN' %}
+                                        <a class="btn btn-primary btn-mini " href="/join_activity/?key={{ event.key.urlsafe() }}">
+                                            <span data-class="label">Join</span>
+                                        </a>
+                                    {% else %}
+                                        <a class="btn btn-inverse btn-mini liked"  }}">
+                                            <span data-class="label">{{ activity_display_status }}</span>
+                                        </a>
+                                    {% endif %}
+                                {% else %}
+                                    {% if event.status == 'INITIATED' %}
+                                        <a class="open-cancel-confirm-dialog btn btn-primary btn-mini" data-toggle="modal"
+                                           data-id="{{ event.key.urlsafe()}}"">
+                                        <span data-class="label">Convert to Activity</span>
+                                        </a>
+                                    {% endif %}
+
+                                {% endif %}
+                     </span>
+                </div>
+
+             </div>
+            {% if event.type == 'ACTIVITY' and event.status != 'INITIATED' %}
+                {% if activity_participants | length > 0 %}
+                    <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
+                        <div class="media-thanks" data-class="like-container">
+                            <p>
+                                <span class="comment-count"><i class="glyphicon-star"></i></span>
+                                <span>Participants : {{ activity_participants | join }}</span>
+                            </p>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endif %}
+        </div>
+        <hr/>
+{%- endmacro %}
+
+{% macro show_avatar(username) -%}
+    {% if username | hasAvatar %}
+           <a href="/user/avatar/?user_name={{ username }}">
+                <img class="avatar" src="/user/avatar/?user_name={{ username }}"/>
+           </a>
+     {% else %}
+            <a href="../img/user.jpg">
+                <img class="avatar" src="../img/user.jpg"/>
+            </a>
+     {% endif %}
+{%- endmacro %}
+
+
+

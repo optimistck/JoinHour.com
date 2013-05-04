@@ -1,0 +1,51 @@
+<div id="cancel_modal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
+        <h3>Convert this Interest to an Activity</h3>
+    </div>
+
+    <form action="/convert_to_activity/" method="post">
+        <div class="modal-body">
+            <input type="hidden" name="exception" value="{{ exception }}">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <input type="hidden" name="interest_id" id="interest_id">
+
+            <div class="control-group">
+                <label class="control-label" for="min_number_of_people_to_join">with min </label>
+                <select id="min_number_of_people_to_join" name="min_number_of_people_to_join">
+                    <option value="1 person">1 person</option>
+                    <option value="2 people">2 people</option>
+                    <option value="3 people">3 people</option>
+                </select>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="max_number_of_people_to_join">no more
+                    than </label>
+
+                <div class="controls">
+                    <select id="max_number_of_people_to_join" name="max_number_of_people_to_join">
+                        <option value="1 person">1 person</option>
+                        <option value="2 people">2 people</option>
+                        <option value="3 people">3 people</option>
+                        <option value="4 people">4 people</option>
+                        <option value="5 people">5 people</option>
+                        <option value="No limit">No limit</option>
+                    </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="note">Details *</label>
+
+                <div class="controls">
+                    <input class="input-xlarge focused required" id="note" name="note"
+                           placeholder="e.g., where we're meeting and  going" type="text" value="">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <input type="submit" value="Convert" name="commit" id="message_submit" class="btn btn-primary"/>
+            <button type="button" class="close" data-dismiss="modal">Cancel</button>
+        </div>
+    </form>
+
+</div>

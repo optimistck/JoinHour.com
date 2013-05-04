@@ -27,9 +27,12 @@
     <!-- EMPTY
     <link rel="stylesheet" href="/css/style.css">
     -->
+
     <link rel="stylesheet" href="/css/boilerplate.min.css">
     <link rel="stylesheet" href="/css/bootstrap-fileupload.min.css">
     <link rel="stylesheet" href="/css/bootstrap.transloadit.css">
+    <link rel="stylesheet" href="/css/jh.css">
+
 
     <link rel="stylesheet" href="/css/font-awesome.min.css">
 
@@ -97,7 +100,19 @@
                         {% if user_id %}
                         <li class="divider-vertical"></li>
                         <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">@{{ username }} <b class="caret"></b></a>
+                            {% if username | hasAvatar %}
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img class="avatar" src="/user/avatar/?user_name={{ username }}" width="22" height="22"/>
+                                    <span>{{ username }}</span>
+                                    <b class="caret"></b></a>
+                                </a>
+                            {% else %}
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <img class="avatar" src="../img/user.jpg" width="22" height="22" />
+                                     <span>{{ username }}</span>
+                                     <b class="caret"></b></a>
+                                </a>
+                            {% endif %}
                             <ul class="dropdown-menu">
                                 <li><a href="{{ uri_for("edit-profile") }}">{% trans %}Edit Profile{% endtrans %}</a></li>
                                 <li class="divider"></li>
@@ -215,11 +230,14 @@
     <!-- JavaScript at the bottom for fast page loading -->
     <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+
     <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
     <script>window.jQuery || document.write('<script src="/boilerplate/js/libs/jquery.min.js"><\/script>')</script>
     <script src="/boilerplate/js/libs/bootstrap.min.js"></script>
     <script src="/js/bootstrap-fileupload.min.js"></script>
-
+    <script src="/js/jquery.js"></script>
+    <script src="/js/jquery-paged-scroll.min.js"></script>
+    <!--ipt src="/js/jquery.jscroll.js"></script-->
 
 
     <!-- scripts concatenated and minified via build script -->
