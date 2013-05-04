@@ -38,6 +38,7 @@ _routes = [
     RedirectRoute('/token_generator/', token_gen_handler.TokenGeneratorHandler, name='token_generator', strict_slash=True),
     RedirectRoute('/user_profile/', UserProfileHandler, name='user_profile', strict_slash=True),
     RedirectRoute('/update_activity_list/', update_activity_handler.UpdateActivityHandler, name='update_activities', strict_slash=True),
+    RedirectRoute('/append_event_list/', activity_handler.ActivityHandler, name='update_events', strict_slash=True),
     RedirectRoute('/user/avatar/', Avatar, name='avatar', strict_slash=True),
     RedirectRoute('/cancel_activity/', cancel_activity_handler.CancelActivityHandler, name='cancel_activity', strict_slash=True),
     RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True)

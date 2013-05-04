@@ -6,7 +6,7 @@ from boilerplate import models
 
 
 
-class UpdateActivityHandler(BaseHandler):
+class UpdateEventHandler(BaseHandler):
 
     def get(self):
         """ Returns a simple HTML for contact form """
