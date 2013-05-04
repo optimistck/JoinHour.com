@@ -61,7 +61,7 @@
                 {% set expiration = event.key.urlsafe() |expires_in  | minute_format %}
                 {% if expiration == 'EXPIRED' %}
                     <div class="media-scope">
-                        EXPIRED
+                        CLOSED
                     </div>
                 {% else %}
                     <div class="media-scope">

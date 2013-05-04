@@ -10,6 +10,7 @@ from google.appengine.api.taskqueue import Task
 from src.joinhour.models.event import Event
 from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
+import logging
 
 
 class EventManager(object):
@@ -119,11 +120,12 @@ class EventManager(object):
         if not canLeave:
             return False, message
         user_info = models.User.get_by_id(long(user_id))
+        companion_count = self.companion_count() - 1
         user_activity = UserActivity.get_by_user_activity(user_info.key, self._event.key)
         user_activity.status = UserActivity.CANCELLED
         user_activity.put()
-        if not self._is_complete():
-            if self.companion_count() > 0:
+        if not self._is_complete(companion_count):
+            if companion_count > 0:
                 self._event.status = Event.FORMING
             else:
                 self._event.status = Event.INITIATED
@@ -153,13 +155,15 @@ class EventManager(object):
             return False, message
 
         #Need to validate whether the same user has signed up for the same activity
+        #Count the number of companions first to handle the eventual consistency pattern for ndb
+        companion_count = self.companion_count() + 1
         user_info = models.User.get_by_id(long(user_id))
         user_activity = UserActivity(user=user_info.key,
                                      activity=self._event.key)
         user_activity.put()
         #An activity will be marked as COMPLETE if it satisfies the minm number of people required requirement
         if self._event.status == Event.INITIATED or self._event.status == Event.FORMING:
-            if self._is_complete():
+            if self._is_complete(companion_count):
                 self._event.status = Event.COMPLETE
             else:
                 self._event.status = Event.FORMING
@@ -172,9 +176,9 @@ class EventManager(object):
         max_count = int(self._event.max_number_of_people_to_join.split()[0])
         return max_count - self.companion_count()
 
-    def _is_complete(self):
+    def _is_complete(self,companion_count):
         min_count = int(self._event.min_number_of_people_to_join.split()[0])
-        return min_count <= self.companion_count()
+        return min_count <= companion_count
 
     def mark_expired(self):
         self._change_status(Event.EXPIRED)
@@ -222,7 +226,9 @@ class EventManager(object):
         self._event.put()
 
     def companion_count(self):
-        return UserActivity.query(UserActivity.activity == self._event.key, UserActivity.status == UserActivity.ACTIVE).count()
+        companions = UserActivity.query(UserActivity.activity == self._event.key, UserActivity.status == UserActivity.ACTIVE).count()
+        logging.info(companions)
+        return companions
 
     def get_all_companions(self):
         return UserActivity.query(UserActivity.activity == self._event.key, UserActivity.status == UserActivity.ACTIVE).fetch(projection = [UserActivity.user])
