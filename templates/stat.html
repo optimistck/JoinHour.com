@@ -7,10 +7,11 @@
     {% trans %}Live Activity Board of {{ building }}{% endtrans %}
 {% endblock %}
 {% block content %}
-    {% include "interest2activity_popup.html" %}
+
     <hr/>
+    {% include "interest2activity_popup.html" %}
     <div id="events" class="media">
-        {% include "event_list.html" %}
+       {% include "event_list.html" %}
     </div>
 
 {% endblock %}

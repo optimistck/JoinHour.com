@@ -27,12 +27,12 @@ jinja2.filters.FILTERS['spots_remaining'] = spots_remaining
 jinja2.filters.FILTERS['can_join'] = can_join
 jinja2.filters.FILTERS['get_all_companions'] = get_all_companions
 jinja2.filters.FILTERS['dateformat'] = dateformat
-jinja2.filters.FILTERS['display_status'] = display_status
 jinja2.filters.FILTERS['hasAvatar'] = hasAvatar
+jinja2.filters.FILTERS['event_attributes'] = event_attributes
 
 class ActivityHandler(BaseHandler):
     """
-    Handler for the Activity view, formerly the Leaderboard showing all active open activities and pasive interest broadcasts
+    Handler for the liveboard
     """
     def get(self):
         params = {}
@@ -49,6 +49,7 @@ class ActivityHandler(BaseHandler):
             return self.render_template('event_list.html', **params)
         else:
             return self.render_template('stat.html', **params)
+
 
 
 
