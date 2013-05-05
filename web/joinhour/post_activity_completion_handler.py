@@ -3,17 +3,21 @@ from google.appengine.ext import ndb
 from src.joinhour.models.feedback import UserFeedback
 from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
+import logging
 
 from boilerplate.lib.basehandler import BaseHandler
 
 
 class PostActivityCompletionHandler(BaseHandler):
     def get(self):
-        activity_key = self.request.get('activity_key')
-        activity = ndb.Key(urlsafe=activity_key).get()
-        #Double check if the activity still exists and still complete
-        if activity is not None and activity.status == 'COMPLETE':
-            self._handleFeedBack(activity)
+        try:
+            activity_key = self.request.get('activity_key')
+            activity = ndb.Key(urlsafe=activity_key).get()
+            #Double check if the activity still exists and still complete
+            if activity is not None and activity.status == 'COMPLETE':
+                self._handleFeedBack(activity)
+        except Exception , e:
+            logging.warn(e)
 
 
     def _handleFeedBack(self, activity):

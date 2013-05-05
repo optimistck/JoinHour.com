@@ -1,3 +1,5 @@
+from src.joinhour.models.notification import Notification
+
 __author__ = 'ashahab'
 from webapp2_extras.i18n import gettext as _
 import webapp2
@@ -22,14 +24,13 @@ class JoinActivityHandler(BaseHandler):
         user_id = self.user_id
         key = self.request.get('key')
         activity_manager = EventManager.get(key)
-        status_before_join = activity_manager.get_event().status
         (success, message) = activity_manager.connect(user_id)
         if success:
             activity = activity_manager.get_event()
             message = _("Congratulations! You joined an activity for " + activity.category)
             user_info = models.User.get_by_id(long(user_id))
             channel.send_message(activity.username, "a user has joined your activity: " + user_info.username)
-            self._push_notification(user_id, activity_manager, status_before_join)
+            self._push_notification(user_id, activity_manager)
             self.add_message(message, 'success')
             return self.redirect_to('activity')
         else:
@@ -43,7 +44,7 @@ class JoinActivityHandler(BaseHandler):
     def form(self):
         return forms.JoinActivityForm(self)
 
-    def _push_notification(self, user_id, activity_manager, status_before_join):
+    def _push_notification(self, user_id, activity_manager):
         user = models.User.get_by_id(long(user_id))
         activity_user = models.User.get_by_username(activity_manager.get_event().username)
         #all users signed up for this activity
@@ -64,28 +65,28 @@ class JoinActivityHandler(BaseHandler):
             "expires_in": minute_format(activity_manager.expires_in()),
             "participants": ','.join(participants)
         }
-        notification_manager = NotificationManager.get()
-        notification_manager.push_notification(activity_user.email,
+        notification_manager = NotificationManager.get(self)
+        notification_manager.push_notification2(activity_user.email,
                                                '[JoinHour.com]New companion for your activity',
-                                               'emails/activity_new_companion_notification_for_activity_owner.txt',
-                                               **template_val)
+                                               'emails/activity_new_companion_notification_for_activity_owner.txt',Notification.NEW_COMPANION,
+                                               activity_manager.get_event(),participant.user.get(),False,**template_val)
 
         #To the activity participants in case the activity is a GO
-        if status_before_join != 'COMPLETE':
-            if activity_manager.status() == Event.COMPLETE:
-                for participant in participants_list:
-                    template_val = {
-                        "app_name": self.app.config.get('app_name'),
-                        "owner_name": activity_user.name + ' ' + activity_user.last_name,
-                        "activity": activity_manager.get_event(),
-                        "participant_username": participant.user.get().name + ' ' + participant.user.get().last_name,
-                        "expires_in": minute_format(activity_manager.expires_in()),
-                        "participants": ','.join(participants)
-                    }
-                    notification_manager.push_notification(participant.user.get().email,
-                                                           '[JoinHour.com]Activity Go Notification',
-                                                           'emails/activity_go_notification_for_activity_participant.txt',
-                                                           **template_val)
+        if activity_manager.status() == Event.COMPLETE:
+            for participant in participants_list:
+                template_val = {
+                    "app_name": self.app.config.get('app_name'),
+                    "owner_name": activity_user.name + ' ' + activity_user.last_name,
+                    "activity": activity_manager.get_event(),
+                    "participant_username": participant.user.get().name + ' ' + participant.user.get().last_name,
+                    "expires_in": minute_format(activity_manager.expires_in()),
+                    "participants": ','.join(participants)
+                }
+                notification_manager.push_notification2(participant.user.get().email,
+                                                       '[JoinHour.com]Activity Go Notification',
+                                                       'emails/activity_go_notification_for_activity_participant.txt',Notification.GO_NOTIFICATION,activity_manager.get_event(),participant.user.get(),True,
+                                                       **template_val)
+
 
 
 

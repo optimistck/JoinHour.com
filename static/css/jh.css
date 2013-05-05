@@ -164,6 +164,10 @@
     max-width: 32px;
 }
 
+.modal {
+    -webkit-font-smoothing: antialiased;
+}
+
 .modal .basic-info, .single-column .basic-info {
     -webkit-background-size: auto 80px;
     -moz-background-size: auto 80px;

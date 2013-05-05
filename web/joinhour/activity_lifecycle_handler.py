@@ -1,7 +1,7 @@
-from src.joinhour.models.event import Event
 
 __author__ = 'ashahab'
 
+from src.joinhour.models.event import Event
 from urlparse import urlparse
 from UserString import MutableString
 from  datetime import datetime

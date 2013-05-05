@@ -42,7 +42,7 @@ class EventManager(object):
             expiration_time = int(str(event.expiration))
             timezone_offset = datetime.now() - datetime.utcnow()
             task_execution_time = event.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
-            goTask = Task(eta=task_execution_time, url='/activity_life_cycle/',method='GET',params={'event': event.key.urlsafe()})
+            goTask = Task(eta=task_execution_time, url='/activity_life_cycle/',method='GET',params={'activity': event.key.urlsafe()})
             goTask.add('activityLifeCycle')
         return event
 
@@ -68,8 +68,10 @@ class EventManager(object):
                                         max_number_of_people_to_join = kwargs['max_number_of_people_to_join'])
         #mark interest complete
         user = models.User.get_by_username(interest.username)
-        success, message = EventManager.get(event.key.urlsafe()).connect(user.key.id())
-         #Notify interest owner
+        if interest.username != event.username:
+            success, message = EventManager.get(event.key.urlsafe()).connect(user.key.id())
+        else:
+            success,message = True,"Success"
         return success, message, user.key.id(), event.key.urlsafe()
 
     @classmethod

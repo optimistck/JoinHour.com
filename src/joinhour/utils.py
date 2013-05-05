@@ -25,28 +25,6 @@ def can_join(key, user_id):
     EventManager.get(key).can_join(user_id)[0]
 
 
-
-def display_status(key,username):
-    event_manager = EventManager.get(key)
-    activity = event_manager.get_event()
-    user = models.User.get_by_username(username)
-    if user.username == activity.username:
-        return activity.status
-    else:
-       can_join = event_manager.can_join(user.key.id())[0]
-       if can_join:
-           return "JOIN"
-       else:
-           return activity.status
-
-def display_companions(key,user_id):
-    event_manager = EventManager.get(key)
-    activity = event_manager.get_event()
-    user = models.User.get_by_id(long(user_id))
-    is_owner = user.username == activity.username
-    companions = event_manager.get_all_companions()
-    message = MutableString()
-
 def hasAvatar(username):
     user = models.User.get_by_username(username)
     if user.avatar is not  None:
@@ -56,5 +34,43 @@ def hasAvatar(username):
 def dateformat(value,format='%H:%M'):
     #return value.strftime(format)
     return value.ctime()
+
+
+def event_attributes(event_key, username):
+    event_attributes = {}
+    event_manager = EventManager.get(event_key)
+    event = event_manager.get_event()
+    user = models.User.get_by_username(username)
+    type = event.type
+    expiration = event_manager.expires_in()
+    event_attributes['expiration'] = expiration
+    status = event.status
+    if type == Event.EVENT_TYPE_ACTIVITY:
+        can_join = event_manager.can_join(user.key.id())[0]
+        if can_join:
+            event_attributes['can_join'] = True
+        if status == Event.COMPLETE:
+            event_attributes['status'] = 'COMPLETE'
+        elif status == Event.INITIATED:
+            if expiration != 'EXPIRED':
+                event_attributes['status'] = 'CREATED'
+        elif status == Event.EXPIRED:
+            event_attributes['status'] = 'CLOSED'
+        elif status == Event.FORMING:
+            if expiration != 'EXPIRED':
+                event_attributes['status'] = 'FORMING'
+        else:
+            event_attributes['status'] = 'CLOSED'
+    else:
+        if status == Event.INITIATED:
+            if expiration == 'EXPIRED':
+                event_attributes['status'] = 'CLOSED'
+                event_attributes['can_convert'] = False
+            else:
+                event_attributes['status'] = 'CREATED'
+                event_attributes['can_convert'] = True
+        elif status == Event.COMPLETE_CONVERTED:
+            event_attributes['status'] = 'COMPLETE_CONVERTED'
+    return event_attributes
 
 

@@ -14,26 +14,18 @@ class ConvertHandler(BaseHandler):
     Handler for JoinHandler Form
     """
 
-    #TODO: load the categories and sub-categories from the pull-down menu
     def get(self):
         params = {}
         return self.render_template('activity.html', **params)
 
     @user_required
     def post(self):
-        #TODO: the building name needs to come from the user profile
-
-
         if self.user:
             user_info = models.User.get_by_id(long(self.user_id))
-            building_name = user_info.building
             interest_id = self.request.get('interest_id')
-
             success, message, interest_owner, activity_key = EventManager.create_activity_from_interest(
                 interest_id=interest_id,
-                ip=self.request.remote_addr,
                 username=user_info.username,
-                note=self.form.note.data.strip(),
                 min_number_of_people_to_join=self.form.min_number_of_people_to_join.data.strip(),
                 max_number_of_people_to_join=self.form.max_number_of_people_to_join.data.strip())
             if success:
@@ -52,8 +44,6 @@ class ConvertHandler(BaseHandler):
 
     def _push_notification(self, activity_owner, user_id,activity_manager):
         interest_owner = models.User.get_by_id(long(user_id))
-        email_url = self.uri_for('taskqueue-send-email')
-
         participants_list = activity_manager.get_all_companions()
         participants = []
         for participant in participants_list:
@@ -69,7 +59,7 @@ class ConvertHandler(BaseHandler):
             "expires_in": activity_manager.expires_in(),
             "participants":''.join(participants)
         }
-        notification_manager = NotificationManager.get()
+        notification_manager = NotificationManager.get(self)
         notification_manager.push_notification(interest_owner.email,
                                                '[JoinHour.com]Your interest is now an Activity',
                                                'emails/interest_converted_to_activity.txt',
