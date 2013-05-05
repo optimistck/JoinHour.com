@@ -37,11 +37,15 @@ class MatchMakingHandler(BaseHandler):
         user = models.User.get_by_username(username)
 
         url_object = urlparse(self.request.url)
+        if url_object.port is not None:
+            url_str = url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
+        else:
+            url_str = url_object.scheme + '://' + str(url_object.hostname)
         template_val = {
             "app_name": self.app.config.get('app_name'),
             "interest_creator_name": user.name+' '+user.last_name,
             "matches": matches,
-            "url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
+            "url" : url_str
         }
         notification_manager = NotificationManager.get()
         notification_manager.push_notification(user.email,
