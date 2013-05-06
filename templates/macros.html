@@ -41,89 +41,94 @@
         {% set event_attributes = event.key.urlsafe() | event_attributes(username) %}
         {% set activity_participants = event.key.urlsafe() | get_all_companions %}
         {% set expiration = event.key.urlsafe() |expires_in  | minute_format %}
-        <div class="media-object">
-            {{ show_avatar(username) }}
-        </div>
-        <div class="media-body">
-            <div data-class="main-content-area">
-                <!-- Event heading-->
-                <h4 class="media-heading">
-                            <!-- Subject-->
-                            <span class="subject">
-                                <a href="/activity_detail/?ID={{ event.key.urlsafe() }}">{{ event.category }}</a>
-                            </span>
-                    <!-- Timestamp-->
-                    <span class="timestamp">{{ event.date_entered | dateformat }}</span>
-                </h4>
-                <!-- Event Note text-->
-                <p data-class="post-content">
-                    {{ event.note }}
-                </p>
-                <!-- Posted by-->
-                <h5 class="media-author">
-                        <span class="user-name">Posted by <a
-                                href="/user_profile/?username={{ event.username }}">{{ event.username }}</a></span>
-                </h5>
-                <!-- Status text-->
-               {% if event_attributes['expiration'] == 'EXPIRED'  %}
-                    {% if event_attributes['status'] == 'COMPLETE' %}
+
+            <div class="media-object">
+                {{ show_avatar(event.username) }}
+            </div>
+            <div class="media-body">
+                <div data-class="main-content-area">
+                    <!-- Event heading-->
+                    <h4 class="media-heading">
+                                <!-- Subject-->
+                                <span class="subject">
+                                    <a href="/activity_detail/?ID={{ event.key.urlsafe() }}">{{ event.category }}</a>
+                                </span>
+                        <!-- Timestamp-->
+                        <span class="timestamp">{{ event.date_entered | dateformat }}</span>
+                    </h4>
+                    <!-- Event Note text-->
+                    <p data-class="post-content">
+                        {{ event.note }}
+                    </p>
+                    <!-- Posted by-->
+                    <h5 class="media-author">
+                            <span class="user-name">Posted by <a
+                                    href="/user_profile/?username={{ event.username }}">{{ event.username }}</a></span>
+                    </h5>
+                    <!-- Status text-->
+                   {% if event_attributes['expiration'] == 'EXPIRED'  %}
+                        {% if event_attributes['status'] == 'COMPLETE' %}
+                            <div class="media-scope">
+                                COMPLETE
+                            </div>
+                        {% else %}
+                           <div class="media-scope">
+                                CLOSED
+                            </div>
+                         {% endif %}
+                   {% elif event_attributes['status'] == 'CREATED' or event_attributes['status'] == 'FORMING' or event_attributes['status'] == 'COMPLETE'%}
                         <div class="media-scope">
-                            COMPLETE
+                            Starting in {{ expiration }} for {{ event.duration }} minutes
                         </div>
-                    {% else %}
-                       <div class="media-scope">
-                            CLOSED
+                    {% elif event_attributes['status'] == 'COMPLETE_CONVERTED' %}
+                        <div class="media-scope">
+                            Converted to activity
                         </div>
-                     {% endif %}
-               {% elif event_attributes['status'] == 'CREATED' or event_attributes['status'] == 'FORMING' or event_attributes['status'] == 'COMPLETE'%}
-                    <div class="media-scope">
-                        Starting in {{ expiration }} for {{ event.duration }} minutes
+                    {% elif event_attributes['status'] == 'CLOSED' %}
+                        <div class="media-scope">
+                             CLOSED
+                        </div>
+                    {% endif %}
+                    <!-- Event actions -->
+                    <div class="media-actions">
+                        <span>
+                              <!-- Join -->
+                              {%  if event_attributes['can_join'] %}
+                                    <a class="btn btn-primary btn-mini " href="/join_activity/?key={{ event.key.urlsafe() }}">
+                                          <span data-class="label">Join</span>
+                                     </a>
+                                <!-- Convert to activity -->
+                               {% elif event_attributes['can_convert'] %}
+                                     <a href="#cancel_modal" class="open-cancel-confirm-dialog btn btn-primary btn-mini" data-toggle="modal"
+                                            data-id="{{ event.key.urlsafe()}}"">
+                                            <span data-class="label">Convert to Activity</span>
+                                     </a>
+                               {% elif expiration != 'EXPIRED' and event.status == 'COMPLETE' and event.type == 'ACTIVITY' %}
+                                     <a class="btn btn-inverse btn-mini liked"  }}">
+                                                <span data-class="label">GO</span>
+                                     </a>
+                               {% endif %}
+                         </span>
                     </div>
-                {% elif event_attributes['status'] == 'COMPLETE_CONVERTED' %}
-                    <div class="media-scope">
-                        Converted to activity
-                    </div>
-                {% elif event_attributes['status'] == 'CLOSED' %}
-                    <div class="media-scope">
-                         CLOSED
-                    </div>
+                 </div>
+                {% if event.type == 'ACTIVITY' and event.status != 'INITIATED' %}
+                    {% if activity_participants | length > 0 %}
+                        <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
+                            <div class="arrow">
+                                <b class="arrow-up-dark"></b>
+                                <b class="arrow-up"></b>
+                            </div>
+                            <div class="media-thanks" data-class="like-container">
+                                <p>
+                                    <span class="comment-count"><i class="glyphicon-star"></i></span>
+                                    <span>Participants : {{ activity_participants | join(',') }}</span>
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
                 {% endif %}
-                <!-- Event actions -->
-                <div class="media-actions">
-                    <span>
-                          <!-- Join -->
-                          {%  if event_attributes['can_join'] %}
-                                <a class="btn btn-primary btn-mini " href="/join_activity/?key={{ event.key.urlsafe() }}">
-                                      <span data-class="label">Join</span>
-                                 </a>
-                            <!-- Convert to activity -->
-                           {% elif event_attributes['can_convert'] %}
-                                 <a href="#cancel_modal" class="open-cancel-confirm-dialog btn btn-primary btn-mini" data-toggle="modal"
-                                        data-id="{{ event.key.urlsafe()}}"">
-                                        <span data-class="label">Convert to Activity</span>
-                                 </a>
-                           {% elif expiration != 'EXPIRED' and event.status == 'COMPLETE' and event.type == 'ACTIVITY' %}
-                                 <a class="btn btn-inverse btn-mini liked"  }}">
-                                            <span data-class="label">GO</span>
-                                 </a>
-                           {% endif %}
-                     </span>
-                </div>
-             </div>
-            {% if event.type == 'ACTIVITY' and event.status != 'INITIATED' %}
-                {% if activity_participants | length > 0 %}
-                    <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
-                        <div class="media-thanks" data-class="like-container">
-                            <p>
-                                <span class="comment-count"><i class="glyphicon-star"></i></span>
-                                <span>Participants : {{ activity_participants | join }}</span>
-                            </p>
-                        </div>
-                    </div>
-                {% endif %}
-            {% endif %}
-        </div>
-        <hr/>
+            </div>
+            <hr/>
 {%- endmacro %}
 
 {% macro show_avatar(username) -%}
