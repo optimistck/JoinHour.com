@@ -466,23 +466,16 @@
                 goodPassText: '{% trans %}Good Password{% endtrans %}',
                 strongPassText: '{% trans %}Secure Password{% endtrans %}'
             });
+
             $(document).on("click", ".open-cancel-confirm-dialog", function () {
                 var activity_id = $(this).data('id');
                 $(".modal-body #activity_id").val(activity_id);
                 $('#cancel_modal').modal('show');
             });
+
             $("#cancel_activity_id").click(function () {
                 document.location.href = '/?key=' + $("#activity_id").val() + "&action=cancel&reason=" + $("#cancellation_reason").val();
             });
-            sendMessage = function (path, opt_param) {
-                path += '?g=' + '{{ user_id }}';
-                if (opt_param) {
-                    path += '&' + opt_param;
-                }
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', path, true);
-                xhr.send();
-            };
 
 
             onMessage = function (m) {
@@ -495,12 +488,15 @@
                             $("#activity_list").html(data)
                         });
             }
+
             updateHtml = function (e) {
                 $("#activity_list").replaceWith(e)
             }
+
             onOpened = function (m) {
 
             };
+
             openChannel = function () {
                 var token = '{{ token }}';
                 var channel = new goog.appengine.Channel(token);
@@ -515,14 +511,12 @@
                 var socket = channel.open(handler);
                 socket.onopen = onOpened;
                 socket.onmessage = onMessage;
-
             }
             initialize = function () {
                 openChannel();
-
             }
 
-            setTimeout(initialize, 100);
+            //setTimeout(initialize, 100);
         });
 
     </script>

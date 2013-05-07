@@ -17,7 +17,8 @@ class Event(ndb.Model):
     EVENT_TYPE_INTEREST = 'INTEREST'
     STATUS_CHOICES = [INITIATED,FORMING,EXPIRED,COMPLETE,COMPLETE_MATCH_FOUND,COMPLETE_JOINED,COMPLETE_CONVERTED,CANCELLED]
     category = ndb.StringProperty()
-    date_entered = ndb.DateTimeProperty()
+    date_entered = ndb.DateTimeProperty(auto_now_add=True)
+    date_updated = ndb.DateTimeProperty(auto_now=True)
     username = ndb.StringProperty()
     duration = ndb.StringProperty()
     expiration = ndb.StringProperty()
@@ -27,6 +28,10 @@ class Event(ndb.Model):
     type = ndb.StringProperty(default=EVENT_TYPE_ACTIVITY,choices= [EVENT_TYPE_ACTIVITY,EVENT_TYPE_INTEREST])
     min_number_of_people_to_join = ndb.StringProperty()
     max_number_of_people_to_join = ndb.StringProperty()
+
+    @classmethod
+    def query_all_events_since(cls, last_push_date):
+        return cls.query(date_updated > last_push_date)
 
     @classmethod
     def query_all_active_events(cls):

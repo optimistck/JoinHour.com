@@ -2,7 +2,8 @@
 # Boilerplate imports
 import jinja2
 from google.appengine.datastore.datastore_query import Cursor
-
+from google.appengine.api import memcache
+from google.appengine.api import channel
 from boilerplate.lib.basehandler import BaseHandler
 from boilerplate import models
 from src.joinhour.models.event import Event
@@ -44,6 +45,8 @@ class ActivityHandler(BaseHandler):
         self.view.events = events
         self.view.cursor = next_cursor
         self.view.more = more
+        token = channel.create_channel(user_info.username)
+        params['token'] = token
         if cursorStr is not None and cursorStr != "":
             return self.render_template('event_list.html', **params)
         else:

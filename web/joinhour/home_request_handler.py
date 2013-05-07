@@ -57,8 +57,8 @@ class HomeRequestHandler(RegisterBaseHandler):
         self.view.interests = Event.query(Event.username == user_info.username,Event.status != Event.EXPIRED, Event.type == Event.EVENT_TYPE_INTEREST).fetch()
         self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key, UserActivity.status == UserActivity.ACTIVE).fetch()
         self.view.user_feedbacks = UserFeedback.query(UserFeedback.user == user_info.key,UserFeedback.status == UserFeedback.OPEN).fetch()
-        token = channel.create_channel(user_info.username)
-        params['token'] = token
+        # token = channel.create_channel(user_info.username)
+        # params['token'] = token
         return self.render_template('home.html', **params)
 
 

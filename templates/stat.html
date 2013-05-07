@@ -145,6 +145,7 @@
 {% endblock %}
 
 {% block mediaJS %}
+    <script src='/_ah/channel/jsapi'></script>
     <script type="text/javascript">
         var cursor = $('#events_cursor').attr("next_cursor") ;
         var more = $('#events_cursor').attr("hasMore");
@@ -160,6 +161,41 @@
                 $(".modal-body #interest_id").val(interest_id);
                 $('#cancel_modal').modal('show');
             });
+            onMessage = function (m) {
+                //$.ajax({
+                //    type: "GET",
+                //    dataType: "html",
+                //    url: '/new_activities/',
+                //    data: {'user_id':{{user_id}}}
+                //}).done(function (data) {
+                //            $("#activity_list").html(data)
+                //        });
+            }
+
+            onOpened = function (m) {
+
+            };
+
+            openChannel = function () {
+                var token = '{{ token }}';
+                var channel = new goog.appengine.Channel(token);
+                var handler = {
+                    'onopen': onOpened,
+                    'onmessage': onMessage,
+                    'onerror': function () {
+                    },
+                    'onclose': function () {
+                    }
+                };
+                var socket = channel.open(handler);
+                socket.onopen = onOpened;
+                socket.onmessage = onMessage;
+            }
+            initialize = function () {
+                openChannel();
+            }
+
+            setTimeout(initialize, 100);
         });
         $(window).paged_scroll({
                 handleScroll: function (page, container, doneCallback)
