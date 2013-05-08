@@ -21,12 +21,15 @@ class ConnectedHandler(BaseHandler):
         client = memcache.Client()
         while True: # Retry loop
             logged_in_users = client.gets(key)
-            if logged_in_users is not none:
+            if not logged_in_users:
                 logged_in_users = set()
-            logged_in_users.add(client_id)
-            if client.cas(key, logged_in_users):
+                logged_in_users.add(client_id)
+                client.set(key, logged_in_users)
                 break
-        return self.redirect_to('home')
+            else:
+                logged_in_users.add(client_id)
+                if client.cas(key, logged_in_users):
+                    break
 
 class DisconnectedHandler(BaseHandler):
     def get(self):
@@ -38,9 +41,9 @@ class DisconnectedHandler(BaseHandler):
         client = memcache.Client()
         while True: # Retry loop
             logged_in_users = client.gets(key)
-            if logged_in_users is not none:
+            if not logged_in_users:
                 break;
-            logged_in_users.discard(client_id)
-            if client.cas(key, logged_in_users):
-                break
-        return self.redirect_to('home')
+            else:
+                logged_in_users.discard(client_id)
+                if client.cas(key, logged_in_users):
+                    break

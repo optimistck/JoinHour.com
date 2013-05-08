@@ -45,7 +45,7 @@ _routes = [
     RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True),
     RedirectRoute('/new_activities/', new_activity_handler.NewActivityHandler, name='new_activities', strict_slash=True),
     RedirectRoute('/_ah/channel/connected/', channel_handler.ConnectedHandler, name='connected', strict_slash=True),
-    RedirectRoute('/_ah/channel/connected/', channel_handler.DisconnectedHandler, name='disconnected', strict_slash=True)
+    RedirectRoute('/_ah/channel/disconnected/', channel_handler.DisconnectedHandler, name='disconnected', strict_slash=True)
 ]
 
 def get_routes():
