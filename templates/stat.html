@@ -64,6 +64,7 @@
     <div id="events" class="media">
         <cursor id="events_cursor" hasmore='{{ more }}' next_cursor='{{ cursor.urlsafe() }}'/>
         {% for e in events %}
+            <div id="{{ e.key.urlsafe() }}">
                 <div class="media-object">
                     <a href="/user_profile/?username={{ e.username }}">
                         <!--img class="avatar" src="../img/user.jpg"/-->
@@ -136,6 +137,7 @@
                     {% endif %}
                 </div>
                 <hr/>
+            </div>
         {% endfor %}
         {% if cursor %}
             <a href="/activity/?cursor={{cursor}}"> </a>
@@ -161,15 +163,8 @@
                 $(".modal-body #interest_id").val(interest_id);
                 $('#cancel_modal').modal('show');
             });
-            onMessage = function (m) {
-                //$.ajax({
-                //    type: "GET",
-                //    dataType: "html",
-                //    url: '/new_activities/',
-                //    data: {'user_id':{{user_id}}}
-                //}).done(function (data) {
-                //            $("#activity_list").html(data)
-                //        });
+            onMessage = function (json_result) {
+                alert("id" + json_result.id);
             }
 
             onOpened = function (m) {

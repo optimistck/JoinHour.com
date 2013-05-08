@@ -31,7 +31,7 @@ class Event(ndb.Model):
 
     @classmethod
     def query_all_events_since(cls, last_push_date):
-        return cls.query(date_updated > last_push_date)
+        return cls.query(cls.date_updated is None or cls.date_updated > last_push_date)
 
     @classmethod
     def query_all_active_events(cls):

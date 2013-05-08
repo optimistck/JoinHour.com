@@ -9,7 +9,7 @@ from web.joinhour import terms_handler
 from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, \
     tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler,match_making_handler, \
     token_gen_handler, convert_handler, update_activity_handler, cancel_activity_handler, activity_lifecycle_handler,\
-    new_activity_handler,channel_handler
+    new_activity_handler,channel_handler, event_push_handler
 from web.joinhour.post_activity_completion_handler import PostActivityCompletionHandler
 from web.joinhour.services.user_profile import Avatar
 from web.joinhour.user_profile_handler import UserProfileHandler
@@ -45,7 +45,8 @@ _routes = [
     RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True),
     RedirectRoute('/new_activities/', new_activity_handler.NewActivityHandler, name='new_activities', strict_slash=True),
     RedirectRoute('/_ah/channel/connected/', channel_handler.ConnectedHandler, name='connected', strict_slash=True),
-    RedirectRoute('/_ah/channel/disconnected/', channel_handler.DisconnectedHandler, name='disconnected', strict_slash=True)
+    RedirectRoute('/_ah/channel/disconnected/', channel_handler.DisconnectedHandler, name='disconnected', strict_slash=True),
+    RedirectRoute('/event_push/', event_push_handler.EventPushHandler, name='event_push', strict_slash=True)
 ]
 
 def get_routes():

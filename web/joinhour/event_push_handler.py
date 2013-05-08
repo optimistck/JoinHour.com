@@ -7,6 +7,7 @@ from src.joinhour.event_manager import EventManager
 from google.appengine.api import channel
 from  datetime import datetime
 from datetime import timedelta
+import json
 from google.appengine.api import memcache
 import os
 import logging
@@ -30,8 +31,10 @@ class EventPushHandler(BaseHandler):
             for event in events:
                 #filter by building
                 #render a page for each event, indicating "add/update"
-                template = 'some rendered template'
-            channel.send_message(user.username, template)
+                self.view.e = event
+                template = self.render_template('event.html')
+                json_result = json.dumps({'id':event.key.urlsafe(),'html':template})
+                channel.send_message(user.username, json_result)
 
         last_push_record.last_push = datetime.utcnow()
         last_push_record.put()
