@@ -1,3 +1,5 @@
+from src.joinhour.models.feedback import UserFeedback
+
 __author__ = 'aparbane'
 from UserString import MutableString
 from src.joinhour.models.event import Event
@@ -47,8 +49,11 @@ def event_attributes(event_key, username):
     status = event.status
     if type == Event.EVENT_TYPE_ACTIVITY:
         can_join = event_manager.can_join(user.key.id())[0]
+        can_leave = event_manager.can_leave(user.key.id())[0]
         if can_join:
             event_attributes['can_join'] = True
+        elif can_leave:
+            event_attributes['can_leave'] = True
         if status == Event.COMPLETE:
             event_attributes['status'] = 'COMPLETE'
         elif status == Event.INITIATED:
@@ -61,6 +66,10 @@ def event_attributes(event_key, username):
                 event_attributes['status'] = 'FORMING'
         else:
             event_attributes['status'] = 'CLOSED'
+        feedback = UserFeedback.query(UserFeedback.user == user.key,UserFeedback.status == UserFeedback.OPEN,UserFeedback.activity == event.key).fetch()
+        if len(feedback) > 0:
+            event_attributes['has_feedback'] = True
+            event_attributes['feedback'] = feedback[0]
     else:
         if status == Event.INITIATED:
             if expiration == 'EXPIRED':

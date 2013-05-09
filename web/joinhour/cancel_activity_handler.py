@@ -16,7 +16,7 @@ class CancelActivityHandler(BaseHandler):
 
     @user_required
     def get(self):
-        return self.redirect_to('home')
+        return self.post()
 
     @user_required
     def post(self):
