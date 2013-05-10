@@ -2,7 +2,6 @@
 {% block content %}
     <cursor id="events_cursor" hasmore="{{ more }}" next_cursor='{{ cursor }}'/>
      <events>
-
     {% for event in events %}
         {{ macros.show_event(event,username) }}
     {% endfor %}

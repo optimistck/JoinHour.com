@@ -1,4 +1,5 @@
 from src.joinhour.models.feedback import UserFeedback
+from src.joinhour.models.match import Match
 
 __author__ = 'aparbane'
 from UserString import MutableString
@@ -36,6 +37,9 @@ def hasAvatar(username):
 def dateformat(value,format='%H:%M'):
     #return value.strftime(format)
     return value.ctime()
+
+def get_matching_activities(interest_key):
+    return Match.query(Match.interest == interest_key).fetch()
 
 
 def event_attributes(event_key, username):

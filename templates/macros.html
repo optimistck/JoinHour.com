@@ -148,7 +148,54 @@
                             </div>
                         </div>
                     {% endif %}
-                {% endif %}
+                {% elif event.type == 'INTEREST' and event.status == 'COMPLETE_MATCH_FOUND' %}
+                    <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
+                        <div class="arrow">
+                             <b class="arrow-up-dark"></b>
+                             <b class="arrow-up"></b>
+                         </div>
+                         <div class="media-thanks" data-class="like-container">
+                             <p>
+                                <span class="comment-count"><i class="icon-star"></i></span>
+                                <span>Matching activities for you</span>
+                             </p>
+                         </div>
+                    {% for match in event.key | get_matching_activities %}
+                        {% set matching_activity = match.activity.get() %}
+                        {% set activity_attributes = matching_activity.key.urlsafe() | event_attributes(username) %}
+                        <div class="media-comment">
+                                    <div class="media-object">
+                                        {{ show_avatar(matching_activity.username) }}
+                                    </div>
+                                    <div class="media-body">
+                                    <h4 class="media-heading">
+                                        <span class="subject">
+                                            <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a>
+                                        </span>
+                                    </h4>
+                                    <p data-class="post-content">
+                                        {{ matching_activity.note }}
+                                    </p>
+                                    <h5 class="media-author">
+                                        <span class="user-name">Posted by
+                                            <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity.username }}</a>
+                                        </span>
+                                    </h5>
+                                    <div class="media-actions">
+                                        <span>
+                                            {%  if activity_attributes['can_join'] %}
+                                                <a class="btn btn-primary btn-mini" href="/join_activity/?key={{ matching_activity.key.urlsafe() }}">
+                                                    <span data-class="label">Join</span>
+                                                </a>
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    </div>
+                                </div>
+
+                    {% endfor %}
+                    </div>
+               {% endif %}
             </div>
             <hr/>
 {%- endmacro %}

@@ -29,6 +29,7 @@ jinja2.filters.FILTERS['get_all_companions'] = get_all_companions
 jinja2.filters.FILTERS['dateformat'] = dateformat
 jinja2.filters.FILTERS['hasAvatar'] = hasAvatar
 jinja2.filters.FILTERS['event_attributes'] = event_attributes
+jinja2.filters.FILTERS['get_matching_activities'] = get_matching_activities
 
 class ActivityHandler(BaseHandler):
     """
