@@ -52,11 +52,18 @@ class HomeRequestHandler(RegisterBaseHandler):
             for participant in participants:
                 self._push_notification(category,activity_owner_name,participant,self.request.get('reason'))
         user_info = models.User.get_by_id(long(self.user_id))
-        activities_from_db = Event.query(Event.username == user_info.username,Event.type == Event.EVENT_TYPE_ACTIVITY).fetch()
-        self.view.activities = [activity for activity in activities_from_db if activity.status != Event.EXPIRED]
-        self.view.interests = Event.query(Event.username == user_info.username,Event.status != Event.EXPIRED, Event.type == Event.EVENT_TYPE_INTEREST).fetch()
-        self.view.joined_activities = UserActivity.query(UserActivity.user == user_info.key, UserActivity.status == UserActivity.ACTIVE).fetch()
-        self.view.user_feedbacks = UserFeedback.query(UserFeedback.user == user_info.key,UserFeedback.status == UserFeedback.OPEN).fetch()
+        my_activities = Event.query(Event.username == user_info.username,
+                                             Event.type == Event.EVENT_TYPE_ACTIVITY,Event.status != Event.EXPIRED).fetch()
+        my_interests = Event.query(Event.username == user_info.username,
+                                             Event.type == Event.EVENT_TYPE_INTEREST,Event.status != Event.EXPIRED).fetch()
+        user_activities = UserActivity.query(UserActivity.user == user_info.key,
+                                                   UserActivity.status == UserActivity.ACTIVE).fetch()
+        joined_activities = []
+        for user_activity in user_activities:
+            joined_activities.append(user_activity.activity.get())
+        self.view.my_activities = my_activities
+        self.view.my_interests = my_interests
+        self.view.joined_activities = joined_activities
         token = channel.create_channel(user_info.username)
         params['token'] = token
         return self.render_template('home.html', **params)

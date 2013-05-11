@@ -29,6 +29,7 @@ jinja2.filters.FILTERS['get_all_companions'] = get_all_companions
 jinja2.filters.FILTERS['dateformat'] = dateformat
 jinja2.filters.FILTERS['hasAvatar'] = hasAvatar
 jinja2.filters.FILTERS['event_attributes'] = event_attributes
+jinja2.filters.FILTERS['get_matching_activities'] = get_matching_activities
 
 class ActivityHandler(BaseHandler):
     """
@@ -41,7 +42,7 @@ class ActivityHandler(BaseHandler):
         building_name = user_info.building
         self.view.building = building_name
         cursor = Cursor(urlsafe=cursorStr.lstrip('Cursor(').rstrip(')'))
-        events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(5, start_cursor=cursor)
+        events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(15, start_cursor=cursor)
         self.view.events = events
         self.view.cursor = next_cursor
         self.view.more = more
