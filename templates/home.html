@@ -15,223 +15,38 @@
             or browse for <a href="{{ uri_for("activity") }}">activities</a> you can join.
             <BR>
         </div>
-        <div id="accordion-resizer" class="ui-widget-content">
-            <div id="accordion">
-                {% trans %}<H3>Activities you initiated</H3>{% endtrans %}
-                <div id="activity_list">
-                    <table class="table table-striped table-bordered table table-condensed">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Spots Remaining</th>
-                            <th>Expires in</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        <div id="cancel_modal" class="modal hide fade">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal"
-                                        aria-hidden="false">&times;</button>
-                                <h3>Cancel this activity?</h3>
-                            </div>
-                            <div class="modal-body">
-                                <input type="hidden" name="activity_id" id="activity_id"/>
-
-                                <p>We understand something must have come up for which you are cancelling this activity.
-                                    Could you please provide us with a note which can best describe your cancellation
-                                    reason?
-                                    Providing a reason is optional, but this will help us in informing other
-                                    participants.
-                                </p>
-                                <label>Reason</label>
-                                <input type="text" placeholder="Type something…" id="cancellation_reason"
-                                       name="cancellation_reason">
-                            </div>
-
-                            <div class="modal-footer">
-                                <a href="/" class="btn">I have changed my mind</a>
-                                <button class="btn btn-primary" type="submit" id="cancel_activity_id">Yes cancel the
-                                    activity
-                                </button>
-                            </div>
-
-                        </div>
-
-                        {% for a in activities %}
-
-                            <tr>
-                                <TD>{{ a.category }}</TD>
-                                <TD>{{ a.key.urlsafe() |spots_remaining()}}</TD>
-                                <TD>{{ a.key.urlsafe() |expires_in  | minute_format}}</TD>
-                                {% if a.key.urlsafe() |expires_in != 'EXPIRED' %}
-                                    {% if a.status == 'COMPLETE' %}
-                                        <TD>
-                                            <span class="label label-success">GO</span>
-                                        </TD>
-                                        <TD>
-                                            <a href="#cancel_modal" role="button"
-                                               class="open-cancel-confirm-dialog btn btn-primary" data-toggle="modal"
-                                               data-id="{{ a.key.urlsafe()}}">Cancel</a>
-                                        </TD>
-                                    {% elif  a.status == 'FORMING' %}
-                                        <TD>
-                                            <span class="label label-info">FORMING</span>
-                                        </TD>
-                                        <TD>
-                                            <a href="#cancel_modal" role="button"
-                                               class="open-cancel-confirm-dialog btn btn-primary" data-toggle="modal"
-                                               data-id="{{ a.key.urlsafe() }}">Cancel</a>
-                                        </TD>
-                                    {% else %}
-                                        <TD>
-                                            <span class="label">{{ a.status }}</span>
-                                        </TD>
-                                        <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete">
-                                            <button class="btn btn-primary">Delete</button>
-                                        </a></TD>
-                                    {% endif %}
-                                {% else %}
-                                    {% if a.status == 'COMPLETE' %}
-                                        <TD>
-                                            <span class="label label-success">GO</span>
-                                        </TD>
-                                        <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete">
-                                            <button class="btn btn-primary">Delete</button>
-                                        </a></TD>
-                                    {% elif  a.status == 'FORMING' %}
-                                        <TD>
-                                            <span class="label label-info">FORMING</span>
-                                        </TD>
-                                        <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete">
-                                            <button class="btn btn-primary">Delete</button>
-                                        </a></TD>
-                                    {% else %}
-                                        <TD>
-                                            <span class="label">{{ a.status }}</span>
-                                        </TD>
-                                        <TD><a href="/?key={{ a.key.urlsafe() }}&action=delete">
-                                            <button class="btn btn-primary">Delete</button>
-                                        </a></TD>
-                                    {% endif %}
-                                {% endif %}
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-
-                {% trans %}<H3>Activities you joined</H3>{% endtrans %}
-                <div id="joined_activities">
-                    <table class="table table-striped table-bordered table table-condensed">
-                        <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-                        {% for joined_activity in joined_activities %}
-                            <tr>
-                                <TD>{{ joined_activity.activity.get().category }}</TD>
-                                <TD>
-                                    {% if joined_activity.activity.get().status == 'COMPLETE' %}
-                                        <span class="label label-success">GO</span>
-                                    {% elif joined_activity.activity.get().status == 'FORMING' %}
-                                        <span class="label label-info">FORMING</span>
-                                    {% else %}
-                                        <span class="label">OVER</span>
-                                    {% endif %}
-                                </TD>
-                                <TD>
-                                    <form id="cancel_activity" action="{{ uri_for("cancel_activity") }}" method="post">
-                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                                        <input type="hidden" name="activity_key" value="{{ joined_activity.activity.urlsafe() }}">
-                                        <button type="submit" class="btn btn-primary">{% trans %}Cancel{% endtrans %}</button>
-                                    </form>
-                                </TD>
-                            </tr>
-                        {% endfor %}
-                    </table>
-                </div>
-
-                {% trans %}<H3>Interests you posted</H3>{% endtrans %}
-                <div id="interests">
-                    <table class="table table-striped table-bordered table table-condensed">
-                        <thead>
-                        <tr>
-                            <th>Category</th>
-                            <th>Expires in</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                        </thead>
-
-                        {% for i in interests %}
-                            <tr>
-                                <td>{{ i.category }}</td>
-                                <td>{{ i.key.urlsafe() | expires_in | minute_format }}</td>
-                                {% if i.status == 'COMPLETE_MATCH_FOUND' %}
-                                    <td>
-                                        <span class="label label-success">Match found</span>
-                                    </td>
-                                    <td>
-                                        <a href="/activity_detail/?ID={{ i.key | get_matching_activity_key }}">
-                                            <button class="btn btn-primary">See the match</button>
-                                        </a></td>
-                                    </td>
-                                {% else %}
-                                    <td>
-                                        <span class="label">{{ i.status|status_filter }}</span>
-                                    </td>
-                                    <td>
-                                        <a href="/?key={{ i.key.urlsafe()}}&action=delete">
-                                            <button class="btn btn-primary">Delete</button>
-                                        </a>
-                                    </td>
-                                {% endif %}
-                            </tr>
-
-                        {% endfor %}
-                    </table>
-                </div>
-                {% if user_feedbacks %}
-
-                    {% trans %}<H3>How did it go?</H3>{% endtrans %}
-                    <div id="user_feedbacks">
-                        <table class="table table-striped table-bordered">
-                            <thead>
-                            <tr>
-                                <th>Activity</th>
-                                <th>Action</th>
-                            </tr>
-                            </thead>
-                            {% for user_feedback in user_feedbacks %}
-                                <tr>
-                                    <TD>{{ user_feedback.activity.get().category }}</TD>
-                                    <TD><a href="/user_feedback/?userfeedback_key={{ user_feedback.key.urlsafe() }}">
-                                        <button class="btn btn-primary">Feedback</button>
-                                    </a></TD>
-                                </tr>
-                            {% endfor %}
-                        </table>
-                    </div>
-                {% endif %}
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#pane1" data-toggle="tab">Activities you have posted</a>
+                </li>
+                <li><a href="#pane2" data-toggle="tab">Activities you have joined</a></li>
+                <li><a href="#pane3" data-toggle="tab">Interests you have posted</a></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            {% include "interest2activity_popup.html" %}
+            <div id="pane1" class="tab-pane active">
+               <div id="events" class="media">
+                    {% for event in  my_activities%}
+                        {{ macros.show_event(event,username) }}
+                    {% endfor %}
+               </div>
             </div>
-        </div>
-        <BR>
-        <BR><BR>
-        <!--
-                <p>
-                {% trans %}TEMP: Developer's helper: other pages not easily accessible{% endtrans %}
-                <BR>
-                    <UL>
-                        <LI><a href="{{ uri_for("tip") }}">{% trans %}Tip us!{% endtrans %}</a> link.
-                        <LI><a href="{{ uri_for("feedback") }}">{% trans %}Feedback{% endtrans%}</a> link.
-                        <LI><a href="{{ uri_for("love") }}">{% trans %}Love{% endtrans%}</a> link.   
-                    </UL>
-                </p>
-            -->
-        </div>
+            <div id="pane2" class="tab-pane">
+                <div id="events" class="media">
+                     {% for event in  joined_activities%}
+                           {{ macros.show_event(event,username) }}
+                     {% endfor %}
+               </div>
+            </div>
+            <div id="pane3" class="tab-pane">
+                <div id="events" class="media">
+                    {% for event in  my_interests%}
+                           {{ macros.show_event(event,username) }}
+                    {% endfor %}
+                </div>
+            </div>
+        </div><!-- /.tab-content -->
     {% else %}
         <div class="row">
             <div class="span6">

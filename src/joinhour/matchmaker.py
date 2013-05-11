@@ -63,7 +63,7 @@ class MatchMaker(object):
         :return: A dictionary of the form (username,[Match])
         """
         for interest in interest_list:
-            if interest.status == 'EXPIRED' or interest.status == 'COMPLETE' or interest.status == 'COMPLETE_CONVERTED' or interest.status == 'COMPLETE_JOINED':
+            if interest.status == 'EXPIRED' or interest.status == 'COMPLETE_CONVERTED' or interest.status == 'COMPLETE_CONVERTED' or interest.status == 'COMPLETE_JOINED':
                 continue
             for activity in activity_list:
                 #Do we really need this in the core algorithm?

@@ -42,6 +42,7 @@ _routes = [
     RedirectRoute('/user/avatar/', Avatar, name='avatar', strict_slash=True),
     RedirectRoute('/cancel_activity/', cancel_activity_handler.CancelActivityHandler, name='cancel_activity', strict_slash=True),
     RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True)
+
 ]
 
 def get_routes():

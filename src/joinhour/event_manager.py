@@ -105,9 +105,15 @@ class EventManager(object):
     def __init__(self,key):
         self._event = ndb.Key(urlsafe=key).get()
 
-    def can_leave(self):
+    def can_leave(self,user_id=None):
         if self.expires_in() == Event.EXPIRED:
             return False, "You cannot leave an expired activity."
+        if user_id is not None:
+            user = models.User.get_by_id(long(user_id))
+            count = UserActivity.query(UserActivity.activity == self._event.key, UserActivity.user == user.key,
+                                       UserActivity.status == UserActivity.ACTIVE).count()
+            if count == 0:
+                return False,"This is not your activity"
         if self._event.status == Event.COMPLETE:
             expiration_time = int(str(self._event.expiration))
             now = datetime.now()
