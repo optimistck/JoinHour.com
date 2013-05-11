@@ -11,7 +11,6 @@ from web.joinhour import activity_handler, home_request_handler, join_handler, t
     token_gen_handler, convert_handler, update_activity_handler, cancel_activity_handler, activity_lifecycle_handler
 from web.joinhour.post_activity_completion_handler import PostActivityCompletionHandler
 from web.joinhour.services.user_profile import Avatar
-from web.joinhour.my_corner_handler import MyCornerHandler
 from web.joinhour.user_profile_handler import UserProfileHandler
 from web.joinhour.user_feedback_handler import UserFeedbackHandler
 
@@ -42,8 +41,7 @@ _routes = [
     RedirectRoute('/append_event_list/', activity_handler.ActivityHandler, name='update_events', strict_slash=True),
     RedirectRoute('/user/avatar/', Avatar, name='avatar', strict_slash=True),
     RedirectRoute('/cancel_activity/', cancel_activity_handler.CancelActivityHandler, name='cancel_activity', strict_slash=True),
-    RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True),
-    RedirectRoute('/my_corner/',MyCornerHandler,name="my_corner",strict_slash=True)
+    RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True)
 
 ]
 

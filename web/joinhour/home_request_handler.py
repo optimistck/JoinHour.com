@@ -56,8 +56,11 @@ class HomeRequestHandler(RegisterBaseHandler):
                                              Event.type == Event.EVENT_TYPE_ACTIVITY,Event.status != Event.EXPIRED).fetch()
         my_interests = Event.query(Event.username == user_info.username,
                                              Event.type == Event.EVENT_TYPE_INTEREST,Event.status != Event.EXPIRED).fetch()
-        joined_activities = UserActivity.query(UserActivity.user == user_info.key,
+        user_activities = UserActivity.query(UserActivity.user == user_info.key,
                                                    UserActivity.status == UserActivity.ACTIVE).fetch()
+        joined_activities = []
+        for user_activity in user_activities:
+            joined_activities.append(user_activity.activity.get())
         self.view.my_activities = my_activities
         self.view.my_interests = my_interests
         self.view.joined_activities = joined_activities

@@ -167,5 +167,11 @@ indexes:
 
 - kind: UserActivity
   properties:
+  - name: status
+  - name: user
+  - name: activity
+
+- kind: UserActivity
+  properties:
   - name: user
   - name: activity
