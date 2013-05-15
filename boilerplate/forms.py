@@ -148,6 +148,8 @@ class RegisterForm(PasswordMixin, ConfirmPasswordMixin, UserMixin):
 # mobile form does not require c_password as last letter is shown while typing and typing is difficult on mobile
 class RegisterMobileForm(PasswordMixin, UserMixin):
     email = fields.TextField(_('Email'), [validators.Required(), validators.Length(min=7, max=FIELD_MAXLENGTH), validators.regexp(utils.EMAIL_REGEXP, message=_('Invalid email address.'))])
+    security_code = fields.TextField(_('Security Code'))
+    agree = fields.BooleanField(_('Agree'), [validators.Required()])
     pass
 
 
