@@ -437,7 +437,9 @@ class CallbackSocialLoginHandler(BaseHandler):
             fb = facebook.GraphAPI(access_token)
             user_data = fb.get_object('me')
             logging.info('facebook user_data: ' + str(user_data))
+
             if self.user:
+                logging.info('user' + str(self.user))
                 # new association with facebook
                 user_info = models.User.get_by_id(long(self.user_id))
                 if models.SocialUser.check_unique(user_info.key, 'facebook', str(user_data['id'])):
@@ -462,9 +464,11 @@ class CallbackSocialLoginHandler(BaseHandler):
                 # login with Facebook
                 social_user = models.SocialUser.get_by_provider_and_uid('facebook',
                     str(user_data['id']))
+                logging.info('Social user: ' + str(social_user))
                 if social_user:
                     # Social user exists. Need authenticate related site account
                     user = social_user.user.get()
+                    logging.info('user: ' + str(user))
                     self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
                     logVisit = models.LogVisit(
                         user = user.key,
@@ -476,6 +480,7 @@ class CallbackSocialLoginHandler(BaseHandler):
                     if continue_url:
                         self.redirect(continue_url)
                     else:
+                        logging.info('redirecting home')
                         self.redirect_to('home')
                 else:
                     uid = str(user_data['id'])
@@ -615,6 +620,8 @@ class CallbackSocialLoginHandler(BaseHandler):
         """Social user does not exist yet so create it with the federated identity provided (uid)
         and create prerequisite user and log the user account in
         """
+
+        logging.info("creating account for: " + uid)
         provider_display_name = models.SocialUser.PROVIDERS_INFO[provider_name]['label']
         if models.SocialUser.check_unique_uid(provider_name, uid):
             # create user

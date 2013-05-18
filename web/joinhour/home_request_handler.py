@@ -1,4 +1,5 @@
 import jinja2
+import logging
 from google.appengine.api import channel
 
 from boilerplate.handlers import RegisterBaseHandler
@@ -35,6 +36,7 @@ class HomeRequestHandler(RegisterBaseHandler):
 
     def get(self):
         params = {}
+        logging.info("in home request handler")
         if not self.user:
             return self.render_template('home.html', **params)
         action = str(self.request.get('action'))
@@ -51,7 +53,9 @@ class HomeRequestHandler(RegisterBaseHandler):
             activity_owner_name = activity_user.name + ' ' + activity_user.last_name
             for participant in participants:
                 self._push_notification(category,activity_owner_name,participant,self.request.get('reason'))
+        logging.info('user_id' + self.user_id)
         user_info = models.User.get_by_id(long(self.user_id))
+        logging.info('user_info' + str(user_info))
         my_activities = Event.query(Event.username == user_info.username,
                                              Event.type == Event.EVENT_TYPE_ACTIVITY,Event.status != Event.EXPIRED).fetch()
         my_interests = Event.query(Event.username == user_info.username,

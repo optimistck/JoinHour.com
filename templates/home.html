@@ -7,7 +7,7 @@
 {% endblock %}
 
 {% block content %}
-
+    <div id="fb-root"></div>
     {% if user_id %}
         <div>
         <div class="alert alert-info"><i class="icon-edit icon-large"></i> Get connected: Post an <a
@@ -233,21 +233,8 @@
 {% block mediaJS %}
     <script src='/_ah/channel/jsapi'></script>
     <script type="text/javascript">
+
         $().ready(function () {
-            $(function () {
-                $("#accordion").accordion({
-                    heightStyle: "fill"
-                });
-            });
-            $(function () {
-                $("#accordion-resizer").resizable({
-                    minHeight: 140,
-                    minWidth: 200,
-                    resize: function () {
-                        $("#accordion").accordion("refresh");
-                    }
-                });
-            });
             $("#form_login_user").validate({
                 submitHandler: function (form) {
                     form.submit();
@@ -289,55 +276,6 @@
             $("#cancel_activity_id").click(function () {
                 document.location.href = '/?key=' + $("#activity_id").val() + "&action=cancel&reason=" + $("#cancellation_reason").val();
             });
-            sendMessage = function (path, opt_param) {
-                path += '?g=' + '{{ user_id }}';
-                if (opt_param) {
-                    path += '&' + opt_param;
-                }
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', path, true);
-                xhr.send();
-            };
-
-
-            onMessage = function (m) {
-                $.ajax({
-                    type: "GET",
-                    dataType: "html",
-                    url: '/update_activity_list/',
-                    data: {'user_id':{{user_id}}}
-                }).done(function (data) {
-                            $("#activity_list").html(data)
-                        });
-            }
-            updateHtml = function (e) {
-                $("#activity_list").replaceWith(e)
-            }
-            onOpened = function (m) {
-
-            };
-            openChannel = function () {
-                var token = '{{ token }}';
-                var channel = new goog.appengine.Channel(token);
-                var handler = {
-                    'onopen': onOpened,
-                    'onmessage': onMessage,
-                    'onerror': function () {
-                    },
-                    'onclose': function () {
-                    }
-                };
-                var socket = channel.open(handler);
-                socket.onopen = onOpened;
-                socket.onmessage = onMessage;
-
-            }
-            initialize = function () {
-                openChannel();
-
-            }
-
-            setTimeout(initialize, 100);
         });
 
     </script>
