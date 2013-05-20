@@ -210,6 +210,7 @@ class LoginHandler(BaseHandler):
                         uid = str(fb_data['id']),
                         extra_data = fb_data
                     )
+                    logging.info('creating social user in LoginHandler: ' + str(social_user))
                     social_user.put()
 
             # check linkedin association
@@ -439,7 +440,7 @@ class CallbackSocialLoginHandler(BaseHandler):
             logging.info('facebook user_data: ' + str(user_data))
 
             if self.user:
-                logging.info('user' + str(self.user))
+                logging.info('user ' + str(self.user))
                 # new association with facebook
                 user_info = models.User.get_by_id(long(self.user_id))
                 if models.SocialUser.check_unique(user_info.key, 'facebook', str(user_data['id'])):
@@ -449,6 +450,7 @@ class CallbackSocialLoginHandler(BaseHandler):
                         uid = str(user_data['id']),
                         extra_data = user_data
                     )
+                    logging.info('creating social user in CallbackSocialLogin.get: ' + str(social_user))
                     social_user.put()
 
                     message = _('Facebook association added!')
@@ -632,6 +634,7 @@ class CallbackSocialLoginHandler(BaseHandler):
             auth_id = "%s:%s" % (provider_name, uid)
             if email:
                 unique_properties = ['email']
+                logging.info('adding unique property: ' + str(email))
                 user_info = self.auth.store.user_model.create_user(
                     auth_id, unique_properties, email=email,
                     activated=True
@@ -656,6 +659,7 @@ class CallbackSocialLoginHandler(BaseHandler):
             if user_data:
                 social_user.extra_data = user_data
                 self.session[provider_name] = json.dumps(user_data) # TODO is this needed?
+            logging.info('creating social user in CallbackSocial: ' + str(social_user))
             social_user.put()
             # authenticate user
             self.auth.set_session(self.auth.store.user_to_dict(user), remember=True)
@@ -842,6 +846,7 @@ class RegisterHandler(RegisterBaseHandler):
                             uid = str(fb_data['id']),
                             extra_data = fb_data
                         )
+                        logging.info('creating social user in RegisterHandler: ' + str(social_user))
                         social_user.put()
                 #check linkedin association
                 li_data = json.loads(self.session['linkedin'])
@@ -1200,12 +1205,14 @@ class EditProfileHandler(BaseHandler):
             self.view.user_name = user_info.username
             if user_info.avatar is not  None:
                 self.view.hasAvatar = True
+            logging.info('found user ' + str(user_info) + ' for user id: ' + str(self.user_id))
+
             if user_info.twitter_screen_name is not None:
                 self.form.twitter_screen_name.data = user_info.twitter_screen_name
             else:
                 self.form.twitter_screen_name.data = ""
             providers_info = user_info.get_social_providers_info()
-            #logging.info("XXXX LOGGING:" + user_info.username)
+            logging.info("XXXX provider:" + str(providers_info))
             if not user_info.password:
                 params['local_account'] = False
             else:
