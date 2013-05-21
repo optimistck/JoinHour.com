@@ -83,16 +83,21 @@ def handle_error(request, response, exception):
         'url': request.url,
     }
 
+    lines = traceback.format_exception(exc_type, exc_value, exc_tb)
+
+
+    message         = '<strong>Type:</strong> ' + exc_type.__name__ + "<br />" + \
+                          '<strong>Description:</strong> ' + c['exception'] + "<br />" + \
+                          '<strong>URL:</strong> ' + c['url'] + "<br />" + \
+                          '<strong>Traceback:</strong> <br />' + '<br />'.join(lines)
+
+    logging.error(message)
+
     if request.app.config.get('send_mail_developer') is not False:
         # send email
         subject         = "[{}] ERROR {}".format(request.app.config.get('environment').upper(), request.app.config.get('app_name'))
 
-        lines = traceback.format_exception(exc_type, exc_value, exc_tb)
 
-        message         = '<strong>Type:</strong> ' + exc_type.__name__ + "<br />" + \
-                          '<strong>Description:</strong> ' + c['exception'] + "<br />" + \
-                          '<strong>URL:</strong> ' + c['url'] + "<br />" + \
-                          '<strong>Traceback:</strong> <br />' + '<br />'.join(lines)
 
         email_body_path = "emails/error.txt"
         if c['exception'] is not 'Error saving Email Log in datastore':

@@ -19,6 +19,12 @@ def spots_remaining(key):
 def get_matching_activity_key(interest_key):
     return Match.query(Match.interest == interest_key).get().activity.urlsafe()
 
+def isValidUser(user_id):
+    user_info = models.User.get_by_id(long(user_id))
+    if user_info is not None and user_info.building is not None:
+        return True
+    return False
+
 def status_filter(status):
     if status == Event.INITIATED:
         return "Looking for a match"
@@ -27,6 +33,7 @@ jinja2.filters.FILTERS['expires_in'] = get_expiration_duration
 jinja2.filters.FILTERS['spots_remaining'] = spots_remaining
 jinja2.filters.FILTERS['get_matching_activity_key'] = get_matching_activity_key
 jinja2.filters.FILTERS['status_filter'] = status_filter
+jinja2.filters.FILTERS['isValidUser'] = isValidUser
 
 class HomeRequestHandler(RegisterBaseHandler):
     """
@@ -41,7 +48,7 @@ class HomeRequestHandler(RegisterBaseHandler):
             user_info = models.User.get_by_id(long(self.user_id))
             if user_info.building is None:
                 logging.info('no building assigned to user')
-                self.redirect_to('edit-profile')
+                self.redirect_to('complete_profile_social_user')
 
         action = str(self.request.get('action'))
         if action == 'delete':
@@ -70,7 +77,7 @@ class HomeRequestHandler(RegisterBaseHandler):
         self.view.my_activities = my_activities
         self.view.my_interests = my_interests
         self.view.joined_activities = joined_activities
-        token = channel.create_channel(user_info.username)
+        token = channel.create_channel(self.user_id)
         params['token'] = token
         return self.render_template('home.html', **params)
 

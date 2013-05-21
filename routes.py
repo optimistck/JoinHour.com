@@ -10,6 +10,7 @@ from web.joinhour import activity_handler, home_request_handler, join_handler, t
     tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler,match_making_handler, \
     token_gen_handler, convert_handler, update_activity_handler, cancel_activity_handler, activity_lifecycle_handler, \
     about_handler
+from web.joinhour.complete_profile_social_user_handler import CompleteProfileSocialUserHandler
 from web.joinhour.post_activity_completion_handler import PostActivityCompletionHandler
 from web.joinhour.services.user_profile import Avatar
 from web.joinhour.user_profile_handler import UserProfileHandler
@@ -43,7 +44,8 @@ _routes = [
     RedirectRoute('/append_event_list/', activity_handler.ActivityHandler, name='update_events', strict_slash=True),
     RedirectRoute('/user/avatar/', Avatar, name='avatar', strict_slash=True),
     RedirectRoute('/cancel_activity/', cancel_activity_handler.CancelActivityHandler, name='cancel_activity', strict_slash=True),
-    RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True)
+    RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True),
+    RedirectRoute('/complete_profile_social_user/', CompleteProfileSocialUserHandler, name='complete_profile_social_user', strict_slash=True)
 
 ]
 

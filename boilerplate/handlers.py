@@ -463,7 +463,7 @@ class CallbackSocialLoginHandler(BaseHandler):
                     self.redirect(continue_url)
                 else:
                     logging.info('user created redirecting to edit-profile page')
-                    self.redirect_to('edit-profile')
+                    self.redirect_to('home')
             else:
                 # login with Facebook
                 social_user = models.SocialUser.get_by_provider_and_uid('facebook',
@@ -679,7 +679,7 @@ class CallbackSocialLoginHandler(BaseHandler):
             self.redirect(continue_url)
         else:
             logging.info('redirecting to edit_profile')
-            self.redirect_to('edit-profile')
+            self.redirect_to('home')
 
 class DeleteSocialProviderHandler(BaseHandler):
     """
