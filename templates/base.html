@@ -195,7 +195,7 @@
                         {% if not user_id %}
                         <li{% if path == uri_for("register") %} class="active"{% endif %}><a href="{{ uri_for("register") }}">{% trans %}<i class="icon-spinner icon-spin"></i> Sign Up{% endtrans %}</a></li>
                         <li{% if path == uri_for("how") %} class="active"{% endif %}><a href="{{ uri_for("how") }}">{% trans %}How It Works{% endtrans %}</a></li>
-                        <li{% if path == uri_for("register") %} class="active"{% endif %}><a href="{{ uri_for("register") }}">{% trans %} Property Managers{% endtrans %}</a></li>
+                        <li{% if path == uri_for("property_managers") %} class="active"{% endif %}><a href="{{ uri_for("property_managers") }}">{% trans %}Property Managers{% endtrans %}</a></li>
                         <!-- Code if the user has logged in-->
                         {% elif user_id %}
                         <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Post{% endtrans %}</a></li>
