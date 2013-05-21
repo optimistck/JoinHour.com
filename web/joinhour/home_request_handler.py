@@ -37,6 +37,12 @@ class HomeRequestHandler(RegisterBaseHandler):
         params = {}
         if not self.user:
             return self.render_template('home.html', **params)
+        if self.user:
+            user_info = models.User.get_by_id(long(self.user_id))
+            if user_info.building is None:
+                logging.info('no building assigned to user')
+                self.redirect_to('edit-profile')
+
         action = str(self.request.get('action'))
         if action == 'delete':
             event_manager = EventManager.get(self.request.get('key'))

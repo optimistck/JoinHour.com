@@ -182,6 +182,10 @@ class LoginHandler(BaseHandler):
                 self.add_message(message, 'error')
                 return self.redirect_to('home')
 
+            if user.building is None:
+                logging.info('logged in correctly but building is null')
+                return self.redirect_to('edit_profile')
+
             # check twitter association in session
             twitter_helper = twitter.TwitterAuth(self)
             twitter_association_data = twitter_helper.get_association_data()
@@ -455,8 +459,10 @@ class CallbackSocialLoginHandler(BaseHandler):
                     message = _('This Facebook account is already in use!')
                     self.add_message(message,'error')
                 if continue_url:
+                    logging.info('taking to continue url facebook')
                     self.redirect(continue_url)
                 else:
+                    logging.info('user created redirecting to edit-profile page')
                     self.redirect_to('edit-profile')
             else:
                 # login with Facebook
@@ -474,10 +480,13 @@ class CallbackSocialLoginHandler(BaseHandler):
                     )
                     logVisit.put()
                     if continue_url:
+                        logging.info('using continue url after logging in the user')
                         self.redirect(continue_url)
                     else:
+                        logging.info('redirecting to home')
                         self.redirect_to('home')
                 else:
+                    logging.info('trying to create account from email for social provider')
                     uid = str(user_data['id'])
                     email = str(user_data.get('email'))
                     self.create_account_from_social_provider(provider_name, uid, email, continue_url, user_data)
@@ -659,15 +668,17 @@ class CallbackSocialLoginHandler(BaseHandler):
                 timestamp = utils.get_date_time()
             )
             logVisit.put()
-
+            logging.info('social user created')
             message = _('Welcome!  You have been registered as a new user through %s and logged in.' % provider_display_name)
             self.add_message(message, 'success')
         else:
             message = _('This %s account is already in use.' % provider_display_name)
             self.add_message(message, 'error')
         if continue_url:
+            logging.info('redirecting to continue_url')
             self.redirect(continue_url)
         else:
+            logging.info('redirecting to edit_profile')
             self.redirect_to('edit-profile')
 
 class DeleteSocialProviderHandler(BaseHandler):
@@ -1183,8 +1194,10 @@ class EditProfileHandler(BaseHandler):
         #this is a good example of how the data needs to be pulled from the DB and prepoulated on Get. Use of params.
         params = {}
         if self.user:
-            logging.info("XXXXXXXXXXXXXX LOGGING: GOT into the EditProfileHandler")
+            logging.info("XXXXXXXXXXXXXX LOGGING: GOT into the EditProfileHandler"+self.user_id)
             user_info = models.User.get_by_id(long(self.user_id))
+            logging.info("XXXX LOGGING:" + str(user_info))
+            logging.info("XXXX LOGGING:" + str(self.user))
             self.form.username.data = user_info.username
             self.form.name.data = user_info.name
             self.form.last_name.data = user_info.last_name
@@ -1198,7 +1211,6 @@ class EditProfileHandler(BaseHandler):
             else:
                 self.form.twitter_screen_name.data = ""
             providers_info = user_info.get_social_providers_info()
-            #logging.info("XXXX LOGGING:" + user_info.username)
             if not user_info.password:
                 params['local_account'] = False
             else:
