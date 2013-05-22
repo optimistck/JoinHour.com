@@ -51,8 +51,8 @@ config = {
 # get your own consumer key and consumer secret by registering at https://developers.facebook.com/apps
 #Very Important: set the site_url= your domain in the application settings in the facebook app settings page
 # callback url must be: http://[YOUR DOMAIN]/login/facebook/complete
-'fb_api_key' : '101896303343339',
-'fb_secret' : 'be2135f61266136a0fe5ab5d93d8f9f0',
+#'fb_api_key' : '101896303343339',
+#'fb_secret' : 'be2135f61266136a0fe5ab5d93d8f9f0',
 
 #Linkedin Login
 #Get you own api key and secret from https://www.linkedin.com/secure/developer
@@ -85,7 +85,7 @@ config = {
 
 # Enable Federated login (OpenID and OAuth)
 # Google App Engine Settings must be set to Authentication Options: Federated Login
-'enable_federated_login' : True,
+'enable_federated_login' : False,
 
 # jinja2 base layout template
 'base_layout' : 'base.html',
