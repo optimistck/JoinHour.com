@@ -1,0 +1,31 @@
+{% extends base_layout %}
+
+{% block header_title_lead %}{% endblock %}{% block title %}
+        {% trans %}On Demand In-Person Connections Based on Interest and Availability{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+        {% trans %}My Corner{% endtrans %}
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="tabbable tabs-left"> <!-- Only required for left/right tabs -->
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab1" data-toggle="tab">Section 1</a></li>
+    <li><a href="#tab2" data-toggle="tab">Section 2</a></li>
+  </ul>
+  <div class="tab-content">
+    <div class="tab-pane active" id="tab1">
+      <p>I'm in Section 1.</p>
+      <p><iframe width="560" height="315" src="http://www.youtube.com/embed/Q87ujbXvtzU" frameborder="0" allowfullscreen></iframe></p>
+    </div>
+    <div class="tab-pane" id="tab2">
+      <p>Howdy, I'm in Section 2.</p>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

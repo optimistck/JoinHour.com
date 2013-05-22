@@ -14,6 +14,7 @@ from web.joinhour.post_activity_completion_handler import PostActivityCompletion
 from web.joinhour.services.user_profile import Avatar
 from web.joinhour.user_profile_handler import UserProfileHandler
 from web.joinhour.user_feedback_handler import UserFeedbackHandler
+from web.joinhour import property_managers_handler
 
 
 
@@ -21,7 +22,8 @@ secure_scheme = 'https'
 
 _routes = [
     RedirectRoute('/', home_request_handler.HomeRequestHandler, name='home', strict_slash=True),
-    RedirectRoute('/terms', terms_handler.TermsHandler, name='terms', strict_slash=True),
+    RedirectRoute('/property_managers/', property_managers_handler.PropertyManagersHandler, name='property_managers', strict_slash=True),
+    RedirectRoute('/terms/', terms_handler.TermsHandler, name='terms', strict_slash=True),
     RedirectRoute('/about/', about_handler.AboutHandler, name='about', strict_slash=True),
     RedirectRoute('/secure/', handlers.SecureRequestHandler, name='secure', strict_slash=True),
     RedirectRoute('/tip/',tip_handler.TipHandler, name='tip', strict_slash=True),
