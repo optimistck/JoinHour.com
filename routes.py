@@ -8,7 +8,8 @@ from web.joinhour import get_activity_handler
 from web.joinhour import terms_handler
 from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, \
     tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler,match_making_handler, \
-    token_gen_handler, convert_handler, update_activity_handler, cancel_activity_handler, activity_lifecycle_handler
+    token_gen_handler, convert_handler, update_activity_handler, cancel_activity_handler, activity_lifecycle_handler, \
+    about_handler
 from web.joinhour.post_activity_completion_handler import PostActivityCompletionHandler
 from web.joinhour.services.user_profile import Avatar
 from web.joinhour.user_profile_handler import UserProfileHandler
@@ -23,6 +24,7 @@ _routes = [
     RedirectRoute('/', home_request_handler.HomeRequestHandler, name='home', strict_slash=True),
     RedirectRoute('/property_managers/', property_managers_handler.PropertyManagersHandler, name='property_managers', strict_slash=True),
     RedirectRoute('/terms/', terms_handler.TermsHandler, name='terms', strict_slash=True),
+    RedirectRoute('/about/', about_handler.AboutHandler, name='about', strict_slash=True),
     RedirectRoute('/secure/', handlers.SecureRequestHandler, name='secure', strict_slash=True),
     RedirectRoute('/tip/',tip_handler.TipHandler, name='tip', strict_slash=True),
     RedirectRoute('/tip/thankyou/', thank_you_handler.ThankYouHandler, name='thankyou', strict_slash=True),
