@@ -1,3 +1,5 @@
+from boilerplate.lib import utils
+
 __author__ = 'aparbane'
 
 from webapp2_extras.i18n import lazy_gettext as _
@@ -16,4 +18,8 @@ ACTIVITY_EXPERIENCE = [
 
 class UserFeedbackForm(BaseForm):
     activity_experience = fields.SelectField(_('Activity Experience'),ACTIVITY_EXPERIENCE)
+
+
+class CompleteProfileForSocialUserForm(BaseForm):
+    building = fields.SelectField(_('Building'), choices=utils.BUILDINGS)
 

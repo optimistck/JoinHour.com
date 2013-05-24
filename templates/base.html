@@ -97,7 +97,7 @@
 
                         <!-- Code if the user has logged in-->
                         {% endif %}
-                        {% if user_id %}
+                        {% if user_id and user_id | isValidUser %}
                         <li class="divider-vertical"></li>
                         <li class="dropdown">
                             {% if username | hasAvatar %}
@@ -197,10 +197,12 @@
                         <li{% if path == uri_for("how") %} class="active"{% endif %}><a href="{{ uri_for("how") }}">{% trans %}How It Works{% endtrans %}</a></li>
 
                         <!-- Code if the user has logged in-->
-                        {% elif user_id %}
+                        {% elif user_id and user_id | isValidUser%}
                         <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Post{% endtrans %}</a></li>
                         <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Board{% endtrans %}</a></li>
                         <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/">{% trans %}My Corner{% endtrans %}</a></li>
+
+
                         
                         {% endif %}
                     </ul>

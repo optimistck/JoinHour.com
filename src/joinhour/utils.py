@@ -1,3 +1,4 @@
+import logging
 from src.joinhour.models.feedback import UserFeedback
 from src.joinhour.models.match import Match
 
@@ -30,6 +31,9 @@ def can_join(key, user_id):
 
 def hasAvatar(username):
     user = models.User.get_by_username(username)
+    if user is None:
+        logging.info('user is none')
+        return False;
     if user.avatar is not  None:
         return True
     return False
