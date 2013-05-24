@@ -153,6 +153,7 @@ class LogEmail(ndb.Model):
 
 
 class SocialUser(ndb.Model):
+    '''
     PROVIDERS_INFO = { # uri is for OpenID only (not OAuth)
         'google': {'name': 'google', 'label': 'Google', 'uri': 'gmail.com'},
         'github': {'name': 'github', 'label': 'Github', 'uri': ''},
@@ -161,6 +162,10 @@ class SocialUser(ndb.Model):
         'myopenid': {'name': 'myopenid', 'label': 'MyOpenid', 'uri': 'myopenid.com'},
         'twitter': {'name': 'twitter', 'label': 'Twitter', 'uri': ''},
         'yahoo': {'name': 'yahoo', 'label': 'Yahoo!', 'uri': 'yahoo.com'},
+    }
+    '''
+    PROVIDERS_INFO = { # uri is for OpenID only (not OAuth)
+        'facebook': {'name': 'facebook', 'label': 'Facebook', 'uri': ''}
     }
 
     user = ndb.KeyProperty(kind=User)
