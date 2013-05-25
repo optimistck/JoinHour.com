@@ -1,3 +1,5 @@
+from src.joinhour.models.event import Event
+
 __author__ = 'aparbane'
 from google.appengine.ext import ndb
 from src.joinhour.models.feedback import UserFeedback
@@ -14,7 +16,8 @@ class PostActivityCompletionHandler(BaseHandler):
             activity_key = self.request.get('activity_key')
             activity = ndb.Key(urlsafe=activity_key).get()
             #Double check if the activity still exists and still complete
-            if activity is not None and activity.status == 'COMPLETE':
+            if activity is not None and activity.status == Event.FORMED_INITIATED:
+                activity.status = Event.COMPLETE_NEEDS_FEEDBACK
                 self._handleFeedBack(activity)
         except Exception , e:
             logging.warn(e)
