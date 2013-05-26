@@ -1,7 +1,7 @@
 {% extends base_layout %}
 
 {% block title %}
-        {% trans %}Post{% endtrans %} - {{app_name}}
+        {% trans %}Post your interest and availability {% endtrans %} - {{app_name}}
 {% endblock %}
 {% block header_title %}
         {% trans %}Post{% endtrans %}
@@ -20,10 +20,11 @@
             {{ macros.field(form.category, label=_("I want to")) }}
              {{ macros.field(form.duration, label=_("for")) }}
             {{ macros.field(form.expiration, label=_("willing to wait for a match for")) }}
-            {{ macros.field(form.note, label=_("Details"),placeholder=_("e.g., where we're meeting and ")+" "+_("going"), class="input-xlarge focused required") }}
-            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm just expressing an interest; someone else can organize</label>
-            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')">I want to organize and specify activity details</label>
+            
+            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm flexible, and I will join others</label>
+            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')">I’ll set the details, and let others join me</label>
             <span id="initiate_activity_details" style="display: none;">
+            {{ macros.field(form.note, label=_("Meet / Location"),placeholder=_("e.g., where we're meeting and ")+" "+_("going"), class="input-xlarge focused required") }}
             {{ macros.field(form.min_number_of_people_to_join, label=_("with min"),disabled=true) }}
             {{ macros.field(form.max_number_of_people_to_join, label=_("no more than"),disabled=true) }}
             </span>
