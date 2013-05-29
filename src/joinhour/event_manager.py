@@ -47,7 +47,6 @@ class EventManager(object):
             task = Task(url='/match_maker/',method='GET',params={'interest': event.key.urlsafe()})
             task.add('matchmaker')
             logging.info('event created')
-            logging.info('life cycle mgmt task started with eta'+str(task_execution_time))
             logging.info('match maker task queued')
         return event
 
