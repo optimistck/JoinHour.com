@@ -25,29 +25,29 @@ class EventManager(object):
                             building_name = kwargs['building_name'],
         )
 
-        if kwargs('expiration') is not None or kwargs['expiration'] != "":
-            event.expiration = kwargs('expiration')
-        if kwargs('start_time') is not None or kwargs['start_time'] != "":
-            event.start_time = kwargs('start_time')
-        if kwargs('duration') is not None or kwargs['duration'] != "":
-            event.duration = kwargs('duration')
-        if kwargs('min_number_of_people_to_join') is not None or kwargs['min_number_of_people_to_join'] != "":
-            event.min_number_of_people_to_join = kwargs('min_number_of_people_to_join')
+        if 'expiration' in kwargs and kwargs['expiration'] != "":
+            event.expiration = kwargs['expiration']
+        if 'start_time' in kwargs and kwargs['start_time'] != "":
+            event.start_time = kwargs['start_time']
+        if 'duration' in kwargs and kwargs['duration'] != "":
+            event.duration = kwargs['duration']
+        if 'min_number_of_people_to_join' in kwargs and kwargs['min_number_of_people_to_join'] != "":
+            event.min_number_of_people_to_join = kwargs['min_number_of_people_to_join']
             event.type = Event.EVENT_TYPE_ACTIVITY
-        if kwargs('max_number_of_people_to_join') is not None or kwargs['max_number_of_people_to_join'] != "":
-            event.max_number_of_people_to_join = kwargs('max_number_of_people_to_join')
-        if kwargs('note') is not None or kwargs['note'] != "":
-            event.note = kwargs('note')
-        if kwargs('meeting_place') is not None or kwargs['meeting_place'] != "":
-            event.meeting_place = kwargs('meeting_place')
-        if kwargs('activity_location') is not None or kwargs['activity_location'] != "":
-            event.meeting_place = kwargs('activity_location')
+        if 'max_number_of_people_to_join' in  kwargs and kwargs['max_number_of_people_to_join'] != "":
+            event.max_number_of_people_to_join = kwargs['max_number_of_people_to_join']
+        if 'note' in kwargs and kwargs['note'] != "":
+            event.note = kwargs['note']
+        if 'meeting_place' in kwargs and kwargs['meeting_place'] != "":
+            event.meeting_place = kwargs['meeting_place']
+        if 'activity_location' in kwargs and kwargs['activity_location'] != "":
+            event.meeting_place = kwargs['activity_location']
         event.put()
         if os.environ.get('ENV_TYPE') is None:
             #Queue it for life cycle management
             if event.start_time is not None and event.start_time != "":
                 task_execution_time = event.start_time - timedelta(minutes=5)
-            elif event.expiration is not None and event.expiration != "":
+            if event.expiration is not None and event.expiration != "":
                 expiration_time = int(str(event.expiration))
                 timezone_offset = datetime.now() - datetime.utcnow()
                 task_execution_time = event.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
@@ -128,7 +128,6 @@ class EventManager(object):
         (canJoin, message) = self.can_join(user_id)
         if not canJoin:
             return False, message
-
         #Need to validate whether the same user has signed up for the same activity
         #Count the number of companions first to handle the eventual consistency pattern for ndb
         companion_count = self.companion_count() + 1
@@ -136,12 +135,28 @@ class EventManager(object):
         user_activity = UserActivity(user=user_info.key,
                                      activity=self._event.key)
         user_activity.put()
-        #An activity will be marked as COMPLETE if it satisfies the minm number of people required requirement
+        #An activity will be marked as FORMED_OPEN if it satisfies the minm number of people required requirement
         if self._event.status == Event.FORMING:
             if self._can_complete(companion_count):
                 self._event.status = Event.FORMED_OPEN
-            self._event.put()
+                self._event.put()
+                self._on_event_formation()
         return True, message
+
+    def join_flex_interest(self,user_id,**kwargs):
+        self._event.type = Event.EVENT_TYPE_ACTIVITY
+        if 'min_number_of_people_to_join' in kwargs and kwargs['min_number_of_people_to_join'] != "":
+            self._event.min_number_of_people_to_join = kwargs['min_number_of_people_to_join']
+        if 'max_number_of_people_to_join' in  kwargs and kwargs['max_number_of_people_to_join'] != "":
+            self._event.max_number_of_people_to_join = kwargs['max_number_of_people_to_join']
+        if 'note' in kwargs and kwargs['note'] != "":
+            self._event.note = kwargs['note']
+        if 'meeting_place' in kwargs and kwargs['meeting_place'] != "":
+            self._event.meeting_place = kwargs['meeting_place']
+        if 'activity_location' in kwargs and kwargs['activity_location'] != "":
+            self._event.meeting_place = kwargs['activity_location']
+        self._event.put()
+        self.connect(user_id)
 
     def spots_remaining(self):
         if self._event.max_number_of_people_to_join == 'No limit':
@@ -217,4 +232,15 @@ class EventManager(object):
         elif self._event.expiration is not None and self._event.expiration != "":
             expiration_time = int(str(self._event.expiration))
             return self._event.date_entered + timedelta(minutes=expiration_time)
+
+    def _on_event_formation(self):
+        #Queue it for life cycle management
+        if os.environ.get('ENV_TYPE') is None:
+            if self._event.start_time is not None and self._event.start_time != "":
+                task_execution_time = self._event.start_time - timedelta(minutes=5)
+            if self._event.expiration is not None and self._event.expiration != "":
+                task_execution_time = datetime.utcnow() + timedelta(minutes=5)
+            goTask = Task(eta=task_execution_time, url='/activity_life_cycle/',method='GET',params={'activity': self._event.key.urlsafe()})
+            goTask.add('activityLifeCycle')
+
 

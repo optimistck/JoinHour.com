@@ -25,7 +25,7 @@ class ActivityLifeCycleHandler(BaseHandler):
                 activity = ndb.Key(urlsafe=activity_key).get()
                 if not activity:
                     return
-                if activity.status == Event.FORMED_OPEN:
+                if activity.status == Event.FORMED_INITIATED:
                     activity.status = Event.FORMED_INITIATED
                     activity.put()
                     self._start_post_activity_completion_process(activity)
