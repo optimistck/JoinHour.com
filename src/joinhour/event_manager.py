@@ -44,16 +44,6 @@ class EventManager(object):
             event.meeting_place = kwargs['activity_location']
         event.put()
         if os.environ.get('ENV_TYPE') is None:
-            #Queue it for life cycle management
-            if event.start_time is not None and event.start_time != "":
-                task_execution_time = event.start_time - timedelta(minutes=5)
-            if event.expiration is not None and event.expiration != "":
-                expiration_time = int(str(event.expiration))
-                timezone_offset = datetime.now() - datetime.utcnow()
-                task_execution_time = event.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
-            goTask = Task(eta=task_execution_time, url='/activity_life_cycle/',method='GET',params={'activity': event.key.urlsafe()})
-            goTask.add('activityLifeCycle')
-            #Queue it for match making
             task = Task(url='/match_maker/',method='GET',params={'interest': event.key.urlsafe()})
             task.add('matchmaker')
             logging.info('event created')
