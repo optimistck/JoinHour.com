@@ -35,7 +35,7 @@ class Event(ndb.Model):
     #this is to specify the time the user is willing to wait for
     expiration = ndb.StringProperty()
     #activity status
-    status = ndb.StringProperty(default=INITIATED, choices = STATUS_CHOICES)
+    status = ndb.StringProperty(default=FORMING, choices = STATUS_CHOICES)
     #TODO Any additional notes specified by the user
     note = ndb.StringProperty()
     #interest type - Flex Interest or Specific
@@ -90,20 +90,20 @@ class Event(ndb.Model):
 
     @classmethod
     def get_active_interests_by_category(cls, category):
-        return cls.query(cls.type == Event.EVENT_TYPE_INTEREST,cls.category == category, cls.status.IN([Event.FORMING, Event.INITIATED])).fetch()
+        return cls.query(cls.type == Event.EVENT_TYPE_INTEREST,cls.category == category, cls.status.IN([Event.FORMING, Event.FORMED_OPEN])).fetch()
 
     @classmethod
     def get_active_interests_by_category_and_building(cls, category, building_name):
         return cls.query(cls.type == Event.EVENT_TYPE_INTEREST,cls.category == category, cls.building_name == building_name,
-                         cls.status.IN([Event.INITIATED, Event.FORMING])).fetch()
+                         cls.status.IN([Event.FORMED_OPEN, Event.FORMING])).fetch()
 
     @classmethod
     def get_active_activities_by_category_and_building(cls,category,building_name):
-        return cls.query(cls.type == Event.EVENT_TYPE_ACTIVITY,cls.category == category,cls.building_name == building_name,cls.status.IN([Event.INITIATED,Event.FORMING])).fetch()
+        return cls.query(cls.type == Event.EVENT_TYPE_ACTIVITY,cls.category == category,cls.building_name == building_name,cls.status.IN([Event.FORMED_OPEN,Event.FORMING])).fetch()
 
     @classmethod
     def get_active_activities_by_category(cls,category):
-        return cls.query(cls.type == Event.EVENT_TYPE_ACTIVITY,cls.category == category,cls.status.IN([Event.INITIATED,Event.FORMING])).fetch()
+        return cls.query(cls.type == Event.EVENT_TYPE_ACTIVITY,cls.category == category,cls.status.IN([Event.FORMED_OPEN,Event.FORMING])).fetch()
 
 
 
