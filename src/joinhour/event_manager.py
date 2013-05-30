@@ -49,7 +49,7 @@ class EventManager(object):
         if 'meeting_place' in kwargs and kwargs['meeting_place'] != "":
             event.meeting_place = kwargs['meeting_place']
         if 'activity_location' in kwargs and kwargs['activity_location'] != "":
-            event.meeting_place = kwargs['activity_location']
+            event.activity_location = kwargs['activity_location']
         event.put()
         if os.environ.get('ENV_TYPE') is None:
             task = Task(url='/match_maker/',method='GET',params={'interest': event.key.urlsafe()})
