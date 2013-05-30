@@ -1,11 +1,7 @@
-
 __author__ = 'ashahab'
-
 from src.joinhour.models.event import Event
 from urlparse import urlparse
 from UserString import MutableString
-from  datetime import datetime
-from datetime import timedelta
 import os
 import logging
 from google.appengine.ext import ndb
@@ -25,7 +21,7 @@ class ActivityLifeCycleHandler(BaseHandler):
                 activity = ndb.Key(urlsafe=activity_key).get()
                 if not activity:
                     return
-                if activity.status == Event.FORMED_INITIATED:
+                if activity.status == Event.FORMED_OPEN:
                     activity.status = Event.FORMED_INITIATED
                     activity.put()
                     self._start_post_activity_completion_process(activity)

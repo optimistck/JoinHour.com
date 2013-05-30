@@ -18,9 +18,17 @@ class EventManager(object):
 
     @classmethod
     def create(cls,**kwargs):
+        '''
+        Creates an Interest based on the arguments passed in kwargs
+        Once an interest is created is added to matchmaker queue
+        :param cls:
+        :param kwargs:
+        :return:
+        '''
+
         event = Event(category = kwargs['category'],
                             date_entered = datetime.utcnow(),
-                            type = Event.EVENT_TYPE_INTEREST,
+                            type = Event.EVENT_TYPE_FLEX_INTEREST,
                             username = kwargs['username'],
                             building_name = kwargs['building_name'],
         )
@@ -33,7 +41,7 @@ class EventManager(object):
             event.duration = kwargs['duration']
         if 'min_number_of_people_to_join' in kwargs and kwargs['min_number_of_people_to_join'] != "":
             event.min_number_of_people_to_join = kwargs['min_number_of_people_to_join']
-            event.type = Event.EVENT_TYPE_ACTIVITY
+            event.type = Event.EVENT_TYPE_SPECIFIC_INTEREST
         if 'max_number_of_people_to_join' in  kwargs and kwargs['max_number_of_people_to_join'] != "":
             event.max_number_of_people_to_join = kwargs['max_number_of_people_to_join']
         if 'note' in kwargs and kwargs['note'] != "":
@@ -53,7 +61,7 @@ class EventManager(object):
     @classmethod
     def get(cls,key):
         '''
-        Returns a Handle to the activity manager for an activity key
+        Returns a Handle to the event manager for an event
         :param cls:
         :param key: ActivityKey
         :return:
@@ -63,9 +71,9 @@ class EventManager(object):
     def __init__(self,key):
         self._event = ndb.Key(urlsafe=key).get()
 
-    #TODO
+
     def can_leave(self,user_id=None):
-        if self.expires_in() == Event.EXPIRED or self._event.status in Event.NOT_JOINABLE_STATUS_CHOICES:
+        if self.expires_in() == Event.EXPIRED or self._event.status in Event.NON_EDITABLE_STATUS_CHOICES:
             return False, "You cannot leave an expired/closed/initiated/cancelled interest."
         if user_id is not None:
             user = models.User.get_by_id(long(user_id))
@@ -74,12 +82,14 @@ class EventManager(object):
             if count == 0:
                 return False,"This is not your activity"
         if self._event.status == Event.FORMED_OPEN:
-            expiration_time = int(str(self._event.expiration))
-            now = datetime.now()
-            timezone_offset = now - datetime.utcnow()
-            last_cancellation_time = self._event.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
-            if now > last_cancellation_time:
-                return False, "You cannot leave 5 minutes before activity starts."
+            #TODO Needs some work here to figure out till what time an event can be cancelled
+            if self._event.expiration is not None:
+                expiration_time = int(str(self._event.expiration))
+                now = datetime.now()
+                timezone_offset = now - datetime.utcnow()
+                last_cancellation_time = self._event.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
+                if now > last_cancellation_time:
+                    return False, "You cannot leave 5 minutes before activity starts."
         return True, "You can leave."
 
     def unjoin(self, user_id):
@@ -133,7 +143,7 @@ class EventManager(object):
         return True, message
 
     def join_flex_interest(self,user_id,**kwargs):
-        self._event.type = Event.EVENT_TYPE_ACTIVITY
+        self._event.type = Event.EVENT_TYPE_SPECIFIC_INTEREST
         if 'min_number_of_people_to_join' in kwargs and kwargs['min_number_of_people_to_join'] != "":
             self._event.min_number_of_people_to_join = kwargs['min_number_of_people_to_join']
         if 'max_number_of_people_to_join' in  kwargs and kwargs['max_number_of_people_to_join'] != "":
@@ -162,7 +172,7 @@ class EventManager(object):
 
     def can_join(self, userId):
         #First check the status
-        if self.expires_in() == Event.EXPIRED or self._event.status in Event.NOT_JOINABLE_STATUS_CHOICES:
+        if self.expires_in() == Event.EXPIRED or self._event.status in Event.NON_EDITABLE_STATUS_CHOICES:
             return False, "Event is already expired/cancelled or closed"
         #Are there any activities with this user and this activity?
         user_info = models.User.get_by_id(long(userId))
@@ -222,6 +232,7 @@ class EventManager(object):
             expiration_time = int(str(self._event.expiration))
             return self._event.date_entered + timedelta(minutes=expiration_time)
 
+    #TODO Recheck these calculations
     def _on_event_formation(self):
         #Queue it for life cycle management
         if os.environ.get('ENV_TYPE') is None:

@@ -154,7 +154,7 @@ class EventManagerTest(unittest.TestCase):
         self.assertEqual(interest_created.key.urlsafe(),interest_from_interest_mgr.key.urlsafe())
         self.assertEqual(Event.FORMING,interest_from_interest_mgr.status)
         interest_manager.join_flex_interest(user2.key.id(),min_number_of_people_to_join='2',max_number_of_people_to_join='3')
-        self.assertEqual(Event.EVENT_TYPE_ACTIVITY,interest_created.type)
+        self.assertEqual(Event.EVENT_TYPE_SPECIFIC_INTEREST,interest_created.type)
         self.assertEqual(Event.FORMING,interest_created.status)
         self.assertEqual(1,interest_manager.companion_count())
         interest_manager.connect(user3.key.id())

@@ -1,10 +1,11 @@
+__author__ = 'aparup'
+
 import logging
 import webapp2
 from boilerplate import models
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from web.joinhour.ui import forms
 
-__author__ = 'aparup'
 
 class CompleteProfileSocialUserHandler(BaseHandler):
 

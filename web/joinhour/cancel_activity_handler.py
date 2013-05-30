@@ -1,6 +1,5 @@
 __author__ = 'ashahab'
 from google.appengine.api import channel
-
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from src.joinhour.event_manager import EventManager
 from boilerplate import models
@@ -11,7 +10,7 @@ from src.joinhour.notification_manager import NotificationManager
 
 class CancelActivityHandler(BaseHandler):
     """
-    Handler for JoinHandler Form
+    Handler for Cancelling an interest by the interest owner
     """
 
     @user_required
