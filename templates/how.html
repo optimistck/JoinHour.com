@@ -4,16 +4,69 @@
         {% trans %}How JoinHour works{% endtrans %} - {{app_name}}
 {% endblock %}
 {% block header_title %}
-        {% trans %}How JoinHour works{% endtrans %}
+        {% trans %} {% endtrans %}
 {% endblock %}
 
 {% block content %}
 
 
-<div class="row-fluid">
-    <div class="span6"><img src="../img/how-post.png" class="img-rounded"></div>
-    <div class="span6"><img src="../img/how-match.png" class="img-rounded"></div>
-</div>
+        <div>
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a href="#pane1" data-toggle="tab">Post. Connect. Enjoy.</a>
+                </li>
+                <li><a href="#pane2" data-toggle="tab">How this works</a></li>
+            </ul>
+        </div>
+        <div class="tab-content">
+            <div id="pane1" class="tab-pane active">
+               <div id="events" class="media">
+                <div class="well"><p class="text-center"><H4>JoinHour enables you to connect in real time with good people in your building to do ordinary activities together.</H4></p> </div>
+    
+
+                        <div class="row-fluid">
+                            <div class="span4"><img src="../img/carousel-01-BikeRide.jpg" class="img-rounded"></div>
+                            <div class="span5">
+                                <p class="text-left">
+                                    You got home late. It’s 6:18 PM. You’d like to go for a run, but the couch looks so cozy. Yet you know you feel better after you run. Post an interest for 30 minutes to see if someone else wants to join you. If someone commits, it’s a go. If nobody does, you’re on your own.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span4">
+                                <p class="text-left">
+                                    Into photography? Got your DSLR? Shooting solo is fun. Shooting in a small group of hobbyist is awesome. Shoot, compare, talk. Initiate an activity for 2 hours on a sunny day, set the topic, and take some shots.
+                                </p>
+                            </div>
+                            <div class="span4"><img src="../img/carousel-05-play-outside.jpg" class="img-rounded"></div>
+                        </div>
+                        <div class="row-fluid">
+                            <div class="span4"><img src="../img/carousel-04-tennis.jpg" class="img-rounded"></div>
+                            <div class="span5">
+                                <p class="text-left">
+                                    Bryan is a single professional whose best buddy is his pit bull mix, Chance. He loves taking his friendly pup on walks or to the dog park. After work, he’d enjoy a walking buddy or two with dogs to socialize with Chance and to explore new neighborhoods or paths. Since Bryan doesn’t always know when he’ll get home and his friends live at least 20 minutes away, he’d love to be able to connect with a neighbor for a last minute walk.
+                                </p>
+                            </div>
+                        </div>         
+
+
+
+               </div>
+            </div>
+            <div id="pane2" class="tab-pane">
+                <div id="events" class="media">
+                    <div class="row-fluid">
+                        <div class="span6"><img src="../img/how-post.png" class="img-rounded"></div>
+                        <div class="span6"><img src="../img/how-match.png" class="img-rounded"></div>
+                    </div>
+               </div>
+            </div>
+            </div>
+        </div><!-- /.tab-content -->
+
+
+
+
 
 {% if user_id %}
 <div class="well"><p class="text-center"><STRONG><i class="icon-edit icon-large"></i> Congrats! You're now ready to <a href="{{ uri_for("join") }}">post.</a></STRONG></p> 
