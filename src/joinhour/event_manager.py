@@ -71,6 +71,22 @@ class EventManager(object):
     def __init__(self,key):
         self._event = ndb.Key(urlsafe=key).get()
 
+    def can_cancel(self,user_id=None):
+        if self.expires_in() == Event.EXPIRED or self._event.status in Event.NON_EDITABLE_STATUS_CHOICES:
+            return False, "You cannot leave an expired/closed/initiated/cancelled interest."
+        if user_id is not None:
+            user = models.User.get_by_id(long(user_id))
+            if self.get_event().username != user.username:
+                return False,"This is not your activity"
+        if self._event.expiration is not None:
+            expiration_time = int(str(self._event.expiration))
+            now = datetime.now()
+            timezone_offset = now - datetime.utcnow()
+            last_cancellation_time = self._event.date_entered + timedelta(minutes=expiration_time) - timedelta(minutes=5) + timezone_offset
+            if now > last_cancellation_time:
+                return False, "You cannot cancel 5 minutes before activity starts."
+        return True, "You can cancel."
+
 
     def can_leave(self,user_id=None):
         if self.expires_in() == Event.EXPIRED or self._event.status in Event.NON_EDITABLE_STATUS_CHOICES:
@@ -104,16 +120,19 @@ class EventManager(object):
         if not self._can_complete(companion_count):
             self._event.status = Event.FORMING
             self._event.put()
-        return True, "user " + user_info.username + " has been successfully removed from activity " + self._event.category
+        return True, "You have successfully left the activity " + self._event.category
 
     def cancel(self):
+        (canCancel, message) = self.can_cancel()
+        if not canCancel:
+            return False, message
         user_activities = UserActivity.query(UserActivity.activity == self._event.key, UserActivity.status == UserActivity.ACTIVE)
         for user_activity in user_activities:
             user_activity.status = UserActivity.CANCELLED
             user_activity.put()
         self.get_event().status = Event.CANCELLED
         self.get_event().put()
-        return True
+        return True, "Your activity has been successfully canceled."
 
 
 
