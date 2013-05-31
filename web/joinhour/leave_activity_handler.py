@@ -8,7 +8,7 @@ from src.joinhour.utils import *
 from src.joinhour.notification_manager import NotificationManager
 
 
-class CancelActivityHandler(BaseHandler):
+class LeaveActivityHandler(BaseHandler):
     """
     Handler for Cancelling an interest by the interest owner
     """
@@ -31,7 +31,7 @@ class CancelActivityHandler(BaseHandler):
         #fire a notification to the activity owner
         else:
             self.add_message(message, 'error')
-        return self.redirect_to('home')
+        return self.redirect_to('activity')
 
 
     def _push_notification(self,cancelling_user,activity_manager):
