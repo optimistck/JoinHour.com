@@ -1,0 +1,31 @@
+{% extends base_layout %}
+
+{% block title %}
+    {% trans %}Landing{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+    {% trans %} {% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+<H3>Landing</H3> 
+        
+{% endblock %}
+
+
+
+{% block mediaJS %}
+    <script type="text/javascript">
+        $().ready(function() {
+            $("#form_contact").validate({
+                errorPlacement: function(error, element) {
+                    element.parent().parent().addClass("error");
+                    error.addClass("help-inline").appendTo( element.parent() );
+                }
+            });
+        });
+    </script>
+{% endblock %}
+
+<a href="/Admin_Console?filter=Financial"><button type="button" >Financial</button></a>
