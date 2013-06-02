@@ -59,6 +59,22 @@ handlers:
   static_files: boilerplate/static/img/\1
   upload: boilerplate/static/img/(.*\.(gif|png|jpg))
 
+# Unify entry. Also had to put a / in front of assets to make it /assets in the image references
+
+- url: /assets/js/
+  mime_type: text/javascript
+  static_dir: static/assets/js
+
+- url: /assets/plugins/
+  mime_type: text/javascript
+  static_dir: static/assets/plugins
+
+- url: /assets
+  mime_type: text/css
+  static_dir: static/assets
+
+# End Unify
+
 - url: /css
   mime_type: text/css
   static_dir: static/css
