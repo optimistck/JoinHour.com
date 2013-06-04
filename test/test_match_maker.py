@@ -29,15 +29,15 @@ class MatchMakerTest(unittest.TestCase):
         interest_list = []
         activity_list = []
         #Create some interests
-        interest_list.append(EventManager.create_interest(category='Go for a run',duration='40',expiration='180',username='testuser1',building_name='building1',note='test_node'))
-        interest_list.append(EventManager.create_interest(category='Go for a run',duration='40',expiration='180',username='testuser2',building_name='building1',note='test_node'))
-        interest_list.append(EventManager.create_interest(category='Go for a run',duration='20',expiration='180',username='testuser1',building_name='building1',note='test_node'))
+        interest_list.append(EventManager.create(category='Go for a run',duration='40',expiration='180',username='testuser1',building_name='building1',note='test_node'))
+        interest_list.append(EventManager.create(category='Go for a run',duration='40',expiration='180',username='testuser2',building_name='building1',note='test_node'))
+        interest_list.append(EventManager.create(category='Go for a run',duration='20',expiration='180',username='testuser1',building_name='building1',note='test_node'))
 
         #Create some activities
-        activity_list.append(EventManager.create_activity(category='Go for a run',duration='40',expiration='180',username='testuser',
-                                                              building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside'))
-        activity_list.append(EventManager.create_activity(category='Play pool',duration='40',expiration='180',username='testuser',
-                                                             building_name='building1',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside'))
+        activity_list.append(EventManager.create(category='Go for a run',duration='40',expiration='180',username='testuser',
+                                                              building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='1',max_number_of_people_to_join='1',note='meet me at shadyside'))
+        activity_list.append(EventManager.create(category='Play pool',duration='40',expiration='180',username='testuser',
+                                                             building_name='building1',ip='127.0.0.1',min_number_of_people_to_join='1',max_number_of_people_to_join='1',note='meet me at shadyside'))
 
         #Assert if interests and activities are created fine
         self.assertEqual(3,len(Event.get_active_interests_by_category('Go for a run')))
@@ -49,20 +49,20 @@ class MatchMakerTest(unittest.TestCase):
         self.assertEqual(2, len(match_list))
         self.assertEqual(1, len(match_list['testuser1']))
         self.assertEqual(1, len(match_list['testuser2']))
-        interest = EventManager.create_interest(category='Play pool',duration='40',expiration='180',username='testuser1',building_name='building1',note='test_node')
+        interest = EventManager.create(category='Play pool',duration='40',expiration='180',username='testuser1',building_name='building1',note='test_node')
         interest_list.append(interest)
         match_list = MatchMaker.match_interest_with_activities(interest.key.urlsafe())
         self.assertEqual(1, len(match_list))
         self.assertEqual(1, len(match_list['testuser1']))
 
-        activity = EventManager.create_activity(category='Play pool',duration='40',expiration='180',username='testuser',
-                                        building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside')
+        activity = EventManager.create(category='Play pool',duration='40',expiration='180',username='testuser',
+                                        building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='1',max_number_of_people_to_join='1',note='meet me at shadyside')
 
         match_list = MatchMaker.match_activity_with_interests(activity.key.urlsafe())
-        self.assertEqual(0, len(match_list))
+        self.assertEqual(1, len(match_list))
 
-        activity = EventManager.create_activity(category='Go for a run',duration='20',expiration='180',username='testuser',
-                                                   building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='',max_number_of_people_to_join='',note='meet me at shadyside')
+        activity = EventManager.create(category='Go for a run',duration='20',expiration='180',username='testuser',
+                                                   building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='1',max_number_of_people_to_join='1',note='meet me at shadyside')
 
         match_list = MatchMaker.match_activity_with_interests(activity.key.urlsafe())
         self.assertEqual(1, len(match_list))
