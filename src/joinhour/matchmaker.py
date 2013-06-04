@@ -78,7 +78,7 @@ class MatchMaker(object):
                     continue
                 match_found = cls.isMatch(interest, activity)
                 if match_found:
-                    interest.status = Event.COMPLETE_MATCH_FOUND
+                    #interest.status = Event.COMPLETE_MATCH_FOUND
                     interest.put()
                     match = Match(interest=interest.key,
                                   activity=activity.key)
@@ -104,8 +104,9 @@ class MatchMaker(object):
         activity_start_time = activity.date_entered
         activity_expiration_time = activity_start_time + timedelta(minutes=int(str(activity.expiration)))
         if abs((activity_expiration_time - interest_expiration_time).total_seconds()) < cls.TIME_INTERVAL_TOLERANCE_SECONDS:
-            if cls._compare_duration(interest_duration, activity_duration):
-                return True
+            if interest_duration is not None and activity_duration is not None:
+                if cls._compare_duration(interest_duration, activity_duration):
+                    return True
 
     @classmethod
     def _compare_duration(cls, duration1, duration2):

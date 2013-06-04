@@ -66,9 +66,9 @@ class HomeRequestHandler(RegisterBaseHandler):
                 self._push_notification(category,activity_owner_name,participant,self.request.get('reason'))
         user_info = models.User.get_by_id(long(self.user_id))
         my_activities = Event.query(Event.username == user_info.username,
-                                             Event.type == Event.EVENT_TYPE_ACTIVITY,Event.status != Event.EXPIRED).fetch()
+                                             Event.type == Event.EVENT_TYPE_SPECIFIC_INTEREST,Event.status != Event.EXPIRED).fetch()
         my_interests = Event.query(Event.username == user_info.username,
-                                             Event.type == Event.EVENT_TYPE_INTEREST,Event.status != Event.EXPIRED).fetch()
+                                             Event.type == Event.EVENT_TYPE_FLEX_INTEREST,Event.status != Event.EXPIRED).fetch()
         user_activities = UserActivity.query(UserActivity.user == user_info.key,
                                                    UserActivity.status == UserActivity.ACTIVE).fetch()
         joined_activities = []

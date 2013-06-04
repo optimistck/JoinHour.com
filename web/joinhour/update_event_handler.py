@@ -12,7 +12,7 @@ class UpdateEventHandler(BaseHandler):
         """ Returns a simple HTML for contact form """
 
         user_info = models.User.get_by_id(long(self.request.get('user_id')))
-        self.view.activities = Event.query(Event.username == user_info.username, Event.type == Event.EVENT_TYPE_ACTIVITY).fetch()
+        self.view.activities = Event.query(Event.username == user_info.username, Event.type == Event.EVENT_TYPE_SPECIFIC_INTEREST).fetch()
 
         params = {
             "exception" : self.request.get('exception')

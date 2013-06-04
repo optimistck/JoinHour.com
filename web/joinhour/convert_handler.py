@@ -9,6 +9,7 @@ from boilerplate import models
 from src.joinhour.event_manager import EventManager
 from src.joinhour.notification_manager import NotificationManager
 
+#TODO This needs to be rewritten - Look at EventManager.join_flex_interest()
 class ConvertHandler(BaseHandler):
     """
     Handler for JoinHandler Form

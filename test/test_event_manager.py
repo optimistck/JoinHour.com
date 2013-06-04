@@ -25,20 +25,20 @@ class EventManagerTest(unittest.TestCase):
     def tearDown(self):
         self.testbed.deactivate()
 
-    def test_create_activity(self):
-        EventManager.create_activity(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
-        EventManager.create_activity(category='Category2',duration='40',expiration='180',username='testuser2',building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note2')
-        EventManager.create_activity(category='Category3',duration='40',expiration='180',username='testuser1',building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note2')
-        EventManager.create_activity(category='Category4',duration='40',expiration='180',username='testuser3',building_name='building_2',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note3')
-        EventManager.create_activity(category='Category5',duration='40',expiration='180',username='testuser4',building_name='building_2',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note4')
+    def test_create_specific_interest(self):
+        EventManager.create(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
+        EventManager.create(category='Category2',duration='40',expiration='180',username='testuser2',building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note2')
+        EventManager.create(category='Category3',duration='40',expiration='180',username='testuser1',building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note2')
+        EventManager.create(category='Category4',duration='40',expiration='180',username='testuser3',building_name='building_2',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note3')
+        EventManager.create(category='Category5',duration='40',expiration='180',username='testuser4',building_name='building_2',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note4')
         self.assertEqual(3,len(Event.get_activities_by_building('building_1')))
         self.assertEqual(2,len(Event.get_activities_by_building('building_2')))
 
     def test_load_activity_mgr(self):
-        activity_created = EventManager.create_activity(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
+        activity_created = EventManager.create(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
         activity_from_activity_mgr = EventManager.get(activity_created.key.urlsafe()).get_event()
         self.assertEqual(activity_created.key.urlsafe(),activity_from_activity_mgr.key.urlsafe())
-        self.assertEqual(Event.INITIATED,activity_from_activity_mgr.status)
+        self.assertEqual(Event.FORMING,activity_from_activity_mgr.status)
 
 
     def test_join(self):
@@ -78,49 +78,49 @@ class EventManagerTest(unittest.TestCase):
             building = "building_1"
         )
         user4.put()
-        activity_created = EventManager.create_activity(category='Category1',duration='40',expiration='180',username=user1.username,building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
+        activity_created = EventManager.create(category='Category1',duration='40',expiration='180',username=user1.username,building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
         activity_manager = EventManager.get(activity_created.key.urlsafe())
         self.assertEqual(activity_created.key.urlsafe(),activity_manager.get_event().key.urlsafe())
         self.assertEqual(True,activity_manager.can_join(user2.key.id())[0])
         activity_manager.connect(user2.key.id())
-        self.assertEqual(Event.COMPLETE,activity_created.status)
+        self.assertEqual(Event.FORMED_OPEN,activity_created.status)
         self.assertEqual(False,activity_manager.can_join(user2.key.id())[0])
         self.assertEqual(True,activity_manager.can_join(user3.key.id())[0])
         activity_manager.connect(user3.key.id())
-        self.assertEqual(Event.COMPLETE,activity_created.status)
+        self.assertEqual(Event.FORMED_OPEN,activity_created.status)
         self.assertEqual(False,activity_manager.can_join(user4.key.id())[0])
         self.assertEqual(2,activity_manager.companion_count())
         #Now have 3 Unjoin activity
         activity_manager.unjoin(user3.key.id())
-        self.assertEqual(Event.COMPLETE,activity_created.status)
+        self.assertEqual(Event.FORMED_OPEN,activity_created.status)
         self.assertEqual(1,activity_manager.companion_count())
         #Now check if User4 can join
         self.assertEqual(True,activity_manager.can_join(user4.key.id())[0])
         activity_manager.connect(user4.key.id())
         self.assertEqual(2,activity_manager.companion_count())
-        self.assertEqual(Event.COMPLETE,activity_created.status)
+        self.assertEqual(Event.FORMED_OPEN,activity_created.status)
         activity_manager.unjoin(user4.key.id())
         activity_manager.unjoin(user2.key.id())
-        self.assertEqual(Event.INITIATED,activity_created.status)
+        self.assertEqual(Event.FORMING,activity_created.status)
         self.assertEqual(0,activity_manager.companion_count())
 
-    def test_create_interest(self):
-        EventManager.create_interest(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
-        EventManager.create_interest(category='Category2',duration='40',expiration='180',username='testuser2',building_name ='building_1',note='test_note')
-        EventManager.create_interest(category='Category3',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
-        EventManager.create_interest(category='Category4',duration='40',expiration='180',username='testuser3',building_name='building_2',note='test_note')
-        EventManager.create_interest(category='Category5',duration='40',expiration='180',username='testuser4',building_name='building_2',note='test_note')
+    def test_create_flex_interest(self):
+        EventManager.create(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
+        EventManager.create(category='Category2',duration='40',expiration='180',username='testuser2',building_name ='building_1',note='test_note')
+        EventManager.create(category='Category3',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
+        EventManager.create(category='Category4',duration='40',expiration='180',username='testuser3',building_name='building_2',note='test_note')
+        EventManager.create(category='Category5',duration='40',expiration='180',username='testuser4',building_name='building_2',note='test_note')
         self.assertEqual(3,len(Event.get_interests_by_building('building_1')))
         self.assertEqual(2,len(Event.get_interests_by_building('building_2')))
 
 
     def test_load_interest_mgr(self):
-        interest_created = EventManager.create_interest(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
+        interest_created = EventManager.create(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
         interest_from_interest_mgr = EventManager.get(interest_created.key.urlsafe()).get_event()
         self.assertEqual(interest_created.key.urlsafe(),interest_from_interest_mgr.key.urlsafe())
-        self.assertEqual(Event.INITIATED,interest_from_interest_mgr.status)
+        self.assertEqual(Event.FORMING,interest_from_interest_mgr.status)
 
-    def test_create_convert_interest2_activity(self):
+    def test_join_flex_interest(self):
         user1 = User(
                     name = "User1_name",
                     last_name = "User1_lastname",
@@ -148,19 +148,18 @@ class EventManagerTest(unittest.TestCase):
             building = "building_1"
         )
         user3.put()
-        interest_created = EventManager.create_interest(category='Category1',duration='40',expiration='180',username=user1.username,building_name ='building_1',note='test_note')
-        interest_from_interest_mgr = EventManager.get(interest_created.key.urlsafe()).get_event()
+        interest_created = EventManager.create(category='Category1',duration='40',expiration='180',username=user1.username,building_name ='building_1',note='test_note')
+        interest_manager = EventManager.get(interest_created.key.urlsafe())
+        interest_from_interest_mgr = interest_manager.get_event()
         self.assertEqual(interest_created.key.urlsafe(),interest_from_interest_mgr.key.urlsafe())
-        self.assertEqual(Event.INITIATED,interest_from_interest_mgr.status)
-        activity_key = EventManager.create_activity_from_interest(interest_id=interest_created.key.urlsafe(),username=user2.username,min_number_of_people_to_join='2',max_number_of_people_to_join='3')[3]
-        self.assertEqual(Event.COMPLETE_CONVERTED,interest_created.status)
-        activity_manager = EventManager.get(activity_key)
-        activity_created = activity_manager.get_event()
-        self.assertEqual(Event.FORMING,activity_created.status)
-        self.assertEqual(1,activity_manager.companion_count())
-        activity_manager.connect(user3.key.id())
-        self.assertEqual(Event.COMPLETE,activity_created.status)
-        self.assertEqual(2,activity_manager.companion_count())
+        self.assertEqual(Event.FORMING,interest_from_interest_mgr.status)
+        interest_manager.join_flex_interest(user2.key.id(),min_number_of_people_to_join='2',max_number_of_people_to_join='3')
+        self.assertEqual(Event.EVENT_TYPE_SPECIFIC_INTEREST,interest_created.type)
+        self.assertEqual(Event.FORMING,interest_created.status)
+        self.assertEqual(1,interest_manager.companion_count())
+        interest_manager.connect(user3.key.id())
+        self.assertEqual(Event.FORMED_OPEN,interest_created.status)
+        self.assertEqual(2,interest_manager.companion_count())
 
 
 

@@ -1,11 +1,7 @@
-
 __author__ = 'ashahab'
-
 from src.joinhour.models.event import Event
 from urlparse import urlparse
 from UserString import MutableString
-from  datetime import datetime
-from datetime import timedelta
 import os
 import logging
 from google.appengine.ext import ndb
@@ -25,7 +21,9 @@ class ActivityLifeCycleHandler(BaseHandler):
                 activity = ndb.Key(urlsafe=activity_key).get()
                 if not activity:
                     return
-                if activity.status == Event.COMPLETE:
+                if activity.status == Event.FORMED_OPEN:
+                    activity.status = Event.FORMED_INITIATED
+                    activity.put()
                     self._start_post_activity_completion_process(activity)
                     self._send_readyness_notification(activity)
 
@@ -44,16 +42,8 @@ class ActivityLifeCycleHandler(BaseHandler):
 
     def _start_post_activity_completion_process(self,activity):
         if os.environ.get('ENV_TYPE') is None:
-            #Calculate the eta
-            expiration_time = int(str(activity.expiration))
             if os.environ.get('SERVER_SOFTWARE','').startswith('Development'):
                 eta = 120
-            else :
-                eta = int(activity.duration) * 60
-                activity_start_time = activity.date_entered + timedelta(minutes=expiration_time)
-                now = datetime.utcnow()
-                if now < activity_start_time:
-                    eta = eta + (activity_start_time - now).total_seconds()
             task = Task(url='/post_activity_completion/',method='GET',
                         params={'activity_key': activity.key.urlsafe()},
                         countdown=eta)
