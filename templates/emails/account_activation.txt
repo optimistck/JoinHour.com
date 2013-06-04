@@ -1,16 +1,15 @@
 <p>Hello <strong>{{username}}</strong>,</p>
 
 <p>
-Thank you for registering with {{ app_name }} as @{{username}}. In order to activate your account,
-please verify your email by clicking this link:
+Thank you for registering with {{ app_name }}. Activate your account to connect with your neighbors clicking this link:
 </p>
 
 {{confirmation_url}}
 
 <p>
-If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+If you have any questions, comments, or thoughts on {{ app_name }}, please send us an email :</br>
 {{support_url}}
 </p>
 
-<p>We, the people, not computers, read and respond to every email. <br>
+<p>We, the people, not computers, read and respond to every email. Thank you!<br>
 {{ app_name }} Team

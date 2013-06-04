@@ -1,0 +1,23 @@
+<p>Hello <strong>{{activity_creator_username}}</strong>,</p>
+
+<p>
+Your activity {{activity_category}} will start in a few minutes at {{activity_start_time}}. 
+<BR>
+Meet others at {{activity.meeting_place}}. Activity location: {{activity.location}}
+</p>
+
+
+Activity participants:</em> {{participants}}
+
+</p>
+
+<p>Have fun, arrive on time, and thank you for using JoinHour.com<br>
+{{ app_name }} Team
+
+<BR>
+<p>
+If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>

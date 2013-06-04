@@ -1,0 +1,37 @@
+<p>Hello <strong>{{owner_name}}</strong>,</p>
+
+<p>
+Your activity <strong>{{activity.category}}</strong> is set to start at {{activity_start_time}} as scheduled.</p>
+
+
+<p>
+Activity details:</p>
+<ul>
+	<li>
+    	<em>Meeting place:</em> {{activity.meeting_place}}
+    	</li>
+	<li>
+    	<em>Activity location:</em> {{activity.location}}
+    	</li>
+	 <li>
+	<em>Activity organizer</em>: {{owner_name}} (you)
+	 </li>
+	<li>
+	<em>People joining:</em> {{participants}}
+	</li>
+</ul>
+
+
+
+
+<p>We'll send all participants a reminder 5 minutes before the start. Please arrive on time to have fun with good people around you. Thank you for using JoinHour.com. Cheers!<br>
+
+{{ app_name }} Team
+
+<BR>
+<p>
+P.S. If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>
