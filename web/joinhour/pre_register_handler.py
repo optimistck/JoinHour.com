@@ -12,17 +12,9 @@ class PreRegisterHandler(BaseHandler):
     def get(self):
         """ Returns a simple HTML for contact form """
 
-        if self.user:
-            user_info = models.User.get_by_id(long(self.user_id))
-            if user_info.name or user_info.last_name:
-                self.form.name.data = user_info.name + " " + user_info.last_name
-
         params = {
             "exception" : self.request.get('exception')
         }
-        building_name = "building_name"
-        ancestor_key = ndb.Key("loveKey", building_name)
-        self.view.loves = Love.query().fetch(20)
         return self.render_template('preregister.html', **params)
     def post(self):
         """ validate contact form """

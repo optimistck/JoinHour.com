@@ -30,7 +30,6 @@
 
     <link rel="stylesheet" href="/css/boilerplate.min.css">
     <link rel="stylesheet" href="/css/bootstrap-fileupload.min.css">
-    <link rel="stylesheet" href="/css/bootstrap.transloadit.css">
     <link rel="stylesheet" href="/css/jh.css">
 
 
@@ -193,7 +192,7 @@
                         <!-- The sub nav menu changes depending if a user has logged in or not-->
 
                         {% if not user_id %}
-                        <li{% if path == uri_for("register") %} class="active"{% endif %}><a href="{{ uri_for("register") }}">{% trans %}<i class="icon-spinner icon-spin"></i> Sign Up{% endtrans %}</a></li>
+                        <li{% if path == uri_for("preregister") %} class="active"{% endif %}><a href="{{ uri_for("preregister") }}">{% trans %}<i class="icon-spinner icon-spin"></i> Sign Up{% endtrans %}</a></li>
                         <li{% if path == uri_for("propmanagers") %} class="active"{% endif %}><a href="{{ uri_for("propmanagers") }}">{% trans %}Property Managers{% endtrans %}</a></li>
                         <li{% if path == uri_for("how") %} class="active"{% endif %}><a href="{{ uri_for("how") }}">{% trans %}Residents{% endtrans %}</a></li>
 
@@ -246,15 +245,9 @@
     <!-- scripts concatenated and minified via build script -->
     <script src="/boilerplate/js/plugins.js"></script>
     <script src="/boilerplate/js/script.js"></script>
-    <script src="/js/bootstrap.transloadit.js"></script>
-    <script src="/js/jquery.easing.js"></script>
-    <script src="/js/jquery.jsonp.js"></script>
-    <script src="/js/json2.js"></script>
-    <!-- This is a modified version of Transloadit's official script -->
-    <script src="/js/jquery.transloadit2.js"></script>
     <!-- This is the bootstrap specific JS -->
-    <script src="/js/bootstrap.transloadit.js"></script>
     <script src="/js/script.js"></script>
+    <script src="/js/bootstrap-typeahead.js"></script>
     {% if locale_language_id != "en" %}
         {% if locale_iso.language == "pt" and locale_iso.territory == "BR" %}
     <script src="/boilerplate/js/libs/jquery_validation/localization/messages_{{ locale_iso.language }}_{{ locale_iso.territory }}.js"></script>
