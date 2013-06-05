@@ -142,9 +142,10 @@
                             <div class="media-thanks" data-class="like-container">
                                 <p>
                                     <span class="comment-count"><i class="icon-star"></i></span>
-                                    <span>Participants : {{ activity_participants | join(',') }}</span>
+                                    <span>Participants : {{ activity_participants | join(',') }}  , Spots Remaining : {{ event_attributes['spots_remaining'] }}</span>
                                 </p>
                             </div>
+
                         </div>
                     {% endif %}
                 {% elif event.type == 'INTEREST' and event.status == 'COMPLETE_MATCH_FOUND' and event.username == username%}
