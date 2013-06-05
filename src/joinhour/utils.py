@@ -81,6 +81,7 @@ def event_attributes(event_key, username):
         if len(feedback) > 0:
             event_attributes['has_feedback'] = True
             event_attributes['feedback'] = feedback[0]
+        event_attributes['spots_remaining'] = event_manager.spots_remaining()
     else:
         if status == Event.INITIATED:
             if expiration == 'EXPIRED':
