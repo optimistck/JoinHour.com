@@ -53,26 +53,25 @@ class JoinActivityHandler(BaseHandler):
         participants = [activity_user.name + ' ' + activity_user.last_name]
         for participant in participants_list:
             participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))
-
-
         #To the activity owner
-        template_val = {
-            "app_name": self.app.config.get('app_name'),
-            "owner_name": activity_user.name + ' ' + activity_user.last_name,
-            "activity": activity_manager.get_event(),
-            "participant_username": user.name + ' ' + user.last_name,
-            "complete": activity_manager.status() == Event.COMPLETE,
-            "expires_in": minute_format(activity_manager.expires_in()),
-            "participants": ','.join(participants)
-        }
-        notification_manager = NotificationManager.get(self)
-        notification_manager.push_notification2(activity_user.email,
-                                               '[JoinHour.com]New companion for your activity',
-                                               'emails/activity_new_companion_notification_for_activity_owner.txt',Notification.NEW_COMPANION,
-                                               activity_manager.get_event(),participant.user.get(),False,**template_val)
+        if activity_manager.status() in [Event.FORMED_OPEN, Event.FORMED_INITIATED]:
+            template_val = {
+                "app_name": self.app.config.get('app_name'),
+                "owner_name": activity_user.name + ' ' + activity_user.last_name,
+                "activity": activity_manager.get_event(),
+                "participant_username": user.name + ' ' + user.last_name,
+                "complete": activity_manager.status() == Event.COMPLETE,
+                "expires_in": minute_format(activity_manager.expires_in()),
+                "participants": ','.join(participants)
+            }
+            notification_manager = NotificationManager.get(self)
+            notification_manager.push_notification2(activity_user.email,
+                                               '[JoinHour.com]Activity Go Notification',
+                                               'emails/activity_go_notification_for_activity_participant.txt',Notification.GO_NOTIFICATION,
+                                               activity_manager.get_event(),activity_user,True,**template_val)
 
         #To the activity participants in case the activity is a GO
-        if activity_manager.status() == Event.COMPLETE:
+        if activity_manager.status() in [Event.FORMED_OPEN, Event.FORMED_INITIATED]:
             for participant in participants_list:
                 template_val = {
                     "app_name": self.app.config.get('app_name'),
