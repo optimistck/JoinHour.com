@@ -51,20 +51,19 @@
                     <h4 class="media-heading">
                                 <!-- Subject-->
                                 <span class="subject">
-                                    <a href="/activity_detail/?ID={{ event.key.urlsafe() }}">{{ event.category }}</a>
+                                    <a href="/activity_detail/?ID={{ event.key.urlsafe() }}">{{ event.category }}</a> with <a
+                                    href="/user_profile/?username={{ event.username }}">{{ event.username }}</a>
                                 </span>
                         <!-- Timestamp-->
                         <!--span class="timestamp">{{ event.date_entered | dateformat }}</span-->
                     </h4>
                     <!-- Event Note text-->
                     <p data-class="post-content">
-                        {{ event.note }}
+                        Activity Location: {{ event.note }}
+                        <BR>
+                        Meeting Place: {{ event.activity_location}}
                     </p>
-                    <!-- Posted by-->
-                    <h5 class="media-author">
-                            <span class="user-name">Posted by <a
-                                    href="/user_profile/?username={{ event.username }}">{{ event.username }}</a></span>
-                    </h5>
+
                     <!-- Status text-->
                    {% if event_attributes['expiration'] == 'EXPIRED'  %}
                         {% if event_attributes['status'] == 'COMPLETE' %}
