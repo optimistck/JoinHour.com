@@ -59,9 +59,9 @@
                     </h4>
                     <!-- Event Note text-->
                     <p data-class="post-content">
-                        Activity Location: {{ event.note }}
+                        Activity Location: {{ event.activity_location }}
                         <BR>
-                        Meeting Place: {{ event.activity_location}}
+                        Meeting Place: {{ event.meeting_place}}
                     </p>
 
                     <!-- Status text-->
@@ -130,7 +130,7 @@
                          </span>
                     </div>
                  </div>
-                {% if event.type == 'ACTIVITY' and event.status != 'INITIATED' %}
+                {% if event.type == 'INTEREST_SPECIFIC' and event.status != 'FORMING' %}
                     {% if activity_participants | length > 0 %}
                         <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
                             <div class="arrow">
