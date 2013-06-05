@@ -18,6 +18,7 @@ class PostActivityCompletionHandler(BaseHandler):
             #Double check if the activity still exists and still complete
             if activity is not None and activity.status == Event.FORMED_INITIATED:
                 activity.status = Event.COMPLETE_NEEDS_FEEDBACK
+                activity.put()
                 self._handleFeedBack(activity)
         except Exception , e:
             logging.warn(e)
