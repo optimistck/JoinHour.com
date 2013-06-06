@@ -39,10 +39,10 @@ class EventManager(object):
             event.start_time = kwargs['start_time']
         if 'duration' in kwargs and kwargs['duration'] != "":
             event.duration = kwargs['duration']
-        if 'min_number_of_people_to_join' in kwargs and kwargs['min_number_of_people_to_join'] != "":
+        if 'min_number_of_people_to_join' in kwargs and kwargs['min_number_of_people_to_join'] != 'None' and kwargs['min_number_of_people_to_join'] != "":
             event.min_number_of_people_to_join = kwargs['min_number_of_people_to_join']
             event.type = Event.EVENT_TYPE_SPECIFIC_INTEREST
-        if 'max_number_of_people_to_join' in  kwargs and kwargs['max_number_of_people_to_join'] != "":
+        if 'max_number_of_people_to_join' in  kwargs and kwargs['max_number_of_people_to_join'] != 'None' and kwargs['max_number_of_people_to_join'] != "":
             event.max_number_of_people_to_join = kwargs['max_number_of_people_to_join']
         if 'note' in kwargs and kwargs['note'] != "":
             event.note = kwargs['note']
