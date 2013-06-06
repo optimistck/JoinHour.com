@@ -47,7 +47,7 @@ class MatchMakerTest(unittest.TestCase):
 
         match_list = MatchMaker.match_all()
         self.assertEqual(2, len(match_list))
-        self.assertEqual(1, len(match_list['testuser1']))
+        self.assertEqual(2, len(match_list['testuser1']))
         self.assertEqual(1, len(match_list['testuser2']))
         interest = EventManager.create(category='Play pool',duration='40',expiration='180',username='testuser1',building_name='building1',note='test_node')
         interest_list.append(interest)
@@ -65,8 +65,8 @@ class MatchMakerTest(unittest.TestCase):
                                                    building_name ='building1',ip='127.0.0.1',min_number_of_people_to_join='1',max_number_of_people_to_join='1',note='meet me at shadyside')
 
         match_list = MatchMaker.match_activity_with_interests(activity.key.urlsafe())
-        self.assertEqual(1, len(match_list))
-        self.assertEqual(1, len(match_list['testuser1']))
+        self.assertEqual(2, len(match_list))
+        self.assertEqual(2, len(match_list['testuser1']))
 
 
 if __name__ == '__main__':

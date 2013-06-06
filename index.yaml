@@ -79,6 +79,11 @@ indexes:
   - name: username
   - name: status
 
+- kind: Event
+  properties:
+  - name: username
+  - name: status
+
 - kind: Feedback
   ancestor: yes
   properties:
