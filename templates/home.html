@@ -17,35 +17,30 @@
         </div>
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#pane1" data-toggle="tab">Activities you have posted</a>
+                    <a href="#pane1" data-toggle="tab">Interests you have posted</a>
                 </li>
-                <li><a href="#pane2" data-toggle="tab">Activities you have joined</a></li>
-                <li><a href="#pane3" data-toggle="tab">Interests you have posted</a></li>
+                <li><a href="#pane2" data-toggle="tab">Interests you have joined</a></li>
+
             </ul>
         </div>
         <div class="tab-content">
             {% include "interest2activity_popup.html" %}
             <div id="pane1" class="tab-pane active">
+               <hr/>
                <div id="events" class="media">
-                    {% for event in  my_activities%}
+                    {% for event in  my_interests%}
                         {{ macros.show_event(event,username) }}
                     {% endfor %}
                </div>
             </div>
             <div id="pane2" class="tab-pane">
                 <div id="events" class="media">
-                     {% for event in  joined_activities%}
+                     {% for event in  joined_interests%}
                            {{ macros.show_event(event,username) }}
                      {% endfor %}
                </div>
             </div>
-            <div id="pane3" class="tab-pane">
-                <div id="events" class="media">
-                    {% for event in  my_interests%}
-                           {{ macros.show_event(event,username) }}
-                    {% endfor %}
-                </div>
-            </div>
+
         </div><!-- /.tab-content -->
     {% else %}
         <div class="row">
