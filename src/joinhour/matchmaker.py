@@ -63,7 +63,7 @@ class MatchMaker(object):
         :return: A dictionary of the form (username,[Match])
         """
         for interest in interest_list:
-            if interest.status == 'EXPIRED' or interest.status == 'COMPLETE_CONVERTED' or interest.status == 'COMPLETE_CONVERTED' or interest.status == 'COMPLETE_JOINED':
+            if interest.status in Event.NON_EDITABLE_STATUS_CHOICES:
                 continue
             for activity in activity_list:
                 #Do we really need this in the core algorithm?
@@ -72,13 +72,13 @@ class MatchMaker(object):
                     #Do we really need this in the core algorithm?
                 if activity.building_name != interest.building_name:
                     continue
-                if activity.status == 'EXPIRED' or activity.status == 'COMPLETE':
+                if activity.status in Event.NON_EDITABLE_STATUS_CHOICES:
                     continue
                 if Match.already_tested_for_match(activity.key, interest.key) is not None:
                     continue
-                match_found = cls.isMatch(interest, activity)
+                #match_found = cls.isMatch(interest, activity)
+                match_found = interest.category == activity.category
                 if match_found:
-                    #interest.status = Event.COMPLETE_MATCH_FOUND
                     interest.put()
                     match = Match(interest=interest.key,
                                   activity=activity.key)
