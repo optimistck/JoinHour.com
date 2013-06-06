@@ -1,6 +1,6 @@
 import webapp2
 from google.appengine.ext import ndb
-
+from webapp2_extras.i18n import gettext as _
 from boilerplate.lib.basehandler import BaseHandler
 from boilerplate import forms
 from boilerplate import models
@@ -27,19 +27,27 @@ class PreRegisterHandler(BaseHandler):
             "email" : email
         }
         #check whether this building is online
-        building_count = Building.query(Building.building_name = building_name, Building.online=True).count()
-        if building_count == 0:
-
+        building_online = Building.query(Building.building_name == building_name, Building.online == True).get()
+        if not building_online:
+            pUser = Preregistered_User.query(Preregistered_User.email==email).get()
+            if not pUser:
+                pUser = Preregistered_User()
+                pUser.building_name = building_name
+                pUser.email = email
+                pUser.put()
+            message = _('Thank you for registering with us. We will inform you when the building is ready.')
+            self.add_message(message, 'success')
+            self.redirect_to('preregister')
+        else:
+            self.redirect_to('register', **params)
         #if online, redirect to full-registration page, with the building and email filled-in
 
-        self.redirect_to('register', **params)
+
         #if offline, save it, and thank the user
 
 
-        message = _('Thank you for registering with us We will inform you when the building is ready.')
-        self.add_message(message, 'success')
-        self.redirect_to('preregister')
+
 
     @webapp2.cached_property
     def form(self):
-        return forms.LoveForm(self)
+        return forms.PreRegisterForm(self)
