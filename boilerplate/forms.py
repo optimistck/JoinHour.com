@@ -90,6 +90,10 @@ class LoveForm(BaseForm):
     #TO DO: remove. Added to make shit work.
     activity_status = fields.TextAreaField(_('activity_status'), [validators.Required(), validators.Length(max=65536)])
 
+class PreRegisterForm(BaseForm):
+    email = fields.TextField(_('Email'), [validators.Required(), validators.Length(min=7, max=FIELD_MAXLENGTH), validators.regexp(utils.EMAIL_REGEXP, message=_('Invalid email address.'))])
+    building_name = fields.TextField(_('Building Name'))
+
 class TokenForm(BaseForm):
     num_tokens = fields.TextField(_('Number of Tokens'), [validators.Required(), validators.NumberRange(min=1, max=1000, message="Number must be between 1 and 1000")])
 
