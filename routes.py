@@ -47,7 +47,7 @@ _routes = [
     RedirectRoute('/cancel_activity/', cancel_activity_handler.CancelActivityHandler, name='cancel_activity', strict_slash=True),
     RedirectRoute('/user_feedback/', UserFeedbackHandler, name='user_feedback', strict_slash=True),
     RedirectRoute('/propmanagers/', propmanagers_handler.PropManagersHandler, name='propmanagers', strict_slash=True),
-    RedirectRoute('/preregister/', pre_register_handler.PreRegisterHandler, name='pre_register', strict_slash=True),
+    RedirectRoute('/preregister/', pre_register_handler.PreRegisterHandler, name='preregister', strict_slash=True),
     RedirectRoute('/complete_profile_social_user/', CompleteProfileSocialUserHandler, name='complete_profile_social_user', strict_slash=True)
 
 ]
