@@ -1,0 +1,78 @@
+{% extends base_layout %}
+
+{% block header_title %}
+    {% trans %}Buildings{% endtrans %}
+{% endblock %}
+
+{% block content %}
+    <div id="events" class="media">
+        <ul>
+        {% for building in  buildings%}
+            <li>{{ building.building_name }} : {{ building.online }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span6">
+                <!-- TO DO form ID need to change -->
+                <form id="form_buildings" action="{{ url|safe }}" method="post" class="well form-horizontal">
+
+                    <fieldset>
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                        <!-- TO DO put building names here, DB load in the future -->
+                        {{ macros.field(form.building_name, label=_("Building name")) }}
+                        {{ macros.field(form.online, label=_("Online")) }}
+
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="span3">
+                <I>Select your building to connect with neighbors.</I><BR><BR>
+
+                <I>We value your privacy. We ask for just enough info to make meaningful connections.</I><BR>
+            </div>
+
+        </div>
+    </div>
+
+
+{% endblock %}
+
+{% block mediaJS %}
+
+    <script type="text/javascript">
+        $().ready(function () {
+            $("#form_register").validate({
+                submitHandler: function (form) {
+                    form.submit();
+                },
+                rules: {
+                    password: 'required',
+                    c_password: {
+                        required: true,
+                        equalTo: '#password'
+                    }
+                },
+                errorPlacement: function (error, element) {
+                    element.parent().parent().addClass("error");
+                    error.addClass("help-inline").appendTo(element.parent());
+                }
+            });
+
+            $("#password").passStrength({
+                shortPassText: '{% trans %}Short Password{% endtrans %}',
+                badPassText: '{% trans %}Insecure Password{% endtrans %}',
+                goodPassText: '{% trans %}Good Password{% endtrans %}',
+                strongPassText: '{% trans %}Secure Password{% endtrans %}'
+            });
+
+        });
+    </script>
+{% endblock %}
+
+
