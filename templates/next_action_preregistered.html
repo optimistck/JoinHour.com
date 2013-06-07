@@ -1,0 +1,66 @@
+{% extends base_layout %}
+
+{% block title %}
+        {% trans %}How JoinHour works{% endtrans %} - {{app_name}}
+{% endblock %}
+{% block header_title %}
+        {% trans %} {% endtrans %}
+{% endblock %}
+
+{% block content %}
+
+
+   <div class="row-fluid">
+        <div class="span12 coming-soon">
+            <h1>The Good News!</h1>
+            <p>There are other people in your vicinity who have registered!</p><br>
+            <h2>The Bad News...</h2>
+            <p>Your property management company has not activated JoinHour. We'll let them know that there is +1 interest in this digital amenity, and we'll be in touch soon on our progress and the launch date.</p>
+            <h3>In the meanwhile</h3>
+            <p>See how neighbors<a href="{{ uri_for("how") }}"> use </a> JoinHour. Or drop us a <a href="{{ uri_for("contact") }}"> note</a>. We'll finish the registraiton as soon your building is ready to launch. And Thank You.</p><br>
+        </div>
+    </div>
+   
+
+{% endblock %}
+
+{% block mediaJS %}
+    <script type="text/javascript">
+        $().ready(function() {
+            $("#form_login_user").validate({
+                submitHandler: function(form) {
+                    form.submit();
+                },
+                errorPlacement: function(error, element) {
+                    element.parent().parent().addClass("error");
+                    error.addClass("help-inline").appendTo( element.parent() );
+                }
+            });
+
+            $("#form_register").validate({
+                submitHandler: function(form) {
+                    form.submit();
+                },
+                rules: {
+                    password: 'required',
+                    c_password: {
+                        required: true,
+                        equalTo: '#password'
+                    }
+                },
+                errorPlacement: function(error, element) {
+                    element.parent().parent().addClass("error");
+                    error.addClass("help-inline").appendTo( element.parent() );
+                }
+            });
+            
+            $("#password").passStrength({
+                shortPassText: '{% trans %}Short Password{% endtrans %}',
+                badPassText: '{% trans %}Insecure Password{% endtrans %}',
+                goodPassText: '{% trans %}Good Password{% endtrans %}',
+                strongPassText: '{% trans %}Secure Password{% endtrans %}'
+            });
+        });
+    </script>
+{% endblock %}
+
