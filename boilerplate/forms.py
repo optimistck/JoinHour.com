@@ -130,6 +130,7 @@ class InitiateActvityForm(BaseForm):
     duration = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
     expiration = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
     note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
+    meeting_place = fields.TextField(_('meeting_place'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
 
 
 class JoinForm(BaseForm):
@@ -139,7 +140,8 @@ class JoinForm(BaseForm):
     max_number_of_people_to_join = fields.SelectField(_('max_number_of_people_to_join'), choices=utils.NUMBER_OF_PEOPLE_MAX)
     duration = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
     expiration = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
-    note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
+    #note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
+    meeting_place = fields.TextField(_('meeting_place'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
     message = fields.TextAreaField(_('Message'), [validators.Required(), validators.Length(max=65536)])
 ### JH
 
