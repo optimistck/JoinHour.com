@@ -182,52 +182,34 @@
                     </fieldset>
                 </form>
 
-                <h3>{% trans %}Sign Up [NOT COMPLETE]{% endtrans %}</h3>
+                <h3>{% trans %}Sign Up{% endtrans %}</h3>
 
-                <form id="form_register" action="{{ uri_for("register") }}" method="post">
+                <form id="form_register" action="{{ uri_for("preregister") }}" method="post">
+
                     <fieldset class="well">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                        <!-- TO DO put building names here, DB load in the future -->
 
-                        <!-- COMMENT OUT CURRENT #1
                         <div class="control-group">
-                            <label class="controls">
-                                <input class="focused required" name="username" id="username" type="text"
-                                       placeholder="{% trans %}Username{% endtrans %}">
-                            </label>
-                        </div>
-                        COMMENT OUT CURRENT #1 -->
-                        <div class="control-group">
-                            <label class="controls">
-                                <input class="focused required email" name="email" id="email" type="email"
-                                       placeholder="{% trans %}Email{% endtrans %}">
-                                <input type="hidden" name="country" value="">
-                            </label>
-                        </div>
-                        <!-- NEW - NOT WIRED - -->
-                        <div class="control-group">
-                            <label class="controls">
-                                <input type="text" class="focused required email" name="email" id="email" data-provide="typeahead" data-items="4" data-source="["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]"
-                                       placeholder="{% trans %}Building Name{% endtrans %}">
+                            <label for="building_name" class="controls">Building *</label>
 
-                                                      
-                                <input type="hidden" name="country" value="">
+                            <div class="controls">
+                                <input type="text" value="" placeholder="Enter your building name" name="building_name" id="building_name"
+                                        >
+
+                            </div>
+                        </div>
+                        {{ macros.field(form.email, label=_("Email"), placeholder=_("Enter your")+" "+_("Email"), class="focused required email", type="email") }}
+
+                        <div class="form-actions">
+                            <label for="agree" class="control-label">
+                                <input type="checkbox" value="y" name="agree" id="agree" class="input-xlarge focused required">
+                                I read the <a href="{{ uri_for("terms") }}" target="_blank">Privacy Policy</a> and agree with the <a href="{{ uri_for("terms") }}" target="_blank">Terms Of Service</a>.
                             </label>
                         </div>
-                        <!-- COMMENT OUT CURRENT #2
-                        <div class="control-group">
-                            <label class="controls">
-                                <input class="focused required" name="password" id="password" type="password"
-                                       placeholder="{% trans %}Password{% endtrans %}">
-                            </label>
-                        </div>
-                        <div class="control-group">
-                            <label class="controls">
-                                <input class="focused required" name="c_password" id="c_password" type="password"
-                                       placeholder="{% trans %}Confirm Password{% endtrans %}">
-                            </label>
-                        </div>
-                        COMMENT OUT CURRENT #2 -->
-                        <div class="control-group">
+
+
+                        <div class="form-actions">
                             <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
                         </div>
                     </fieldset>
@@ -280,6 +262,22 @@
                 errorPlacement: function (error, element) {
                     element.parent().parent().addClass("error");
                     error.addClass("help-inline").appendTo(element.parent());
+                }
+            });
+
+            $("#building_name").typeahead({
+                source: function (query, process) {
+                    states = [];
+                    map = {};
+
+                    $.get('/allbuildings/', function(data) {
+                        $.each(data, function (i, building) {
+                            map[building.building_name] = building;
+                            states.push(building.building_name);
+
+                        });
+                        process(states);
+                    });
                 }
             });
 
