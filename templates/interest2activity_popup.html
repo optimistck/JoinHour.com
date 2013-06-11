@@ -1,7 +1,7 @@
 <div id="cancel_modal" class="modal hide fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-        <h3>Convert this Interest to an Activity</h3>
+        <h3>Join Flex Event</h3>
     </div>
 
     <form action="/convert_to_activity/" method="post">
@@ -9,7 +9,17 @@
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             <input type="hidden" name="interest_id" id="interest_id">
+            <div class="control-group">
 
+
+                <label for="meeting_place" class="control-label">Meeting place *</label>
+
+                <div class="controls">
+                    <input type="text" value="" placeholder="e.g., where we're meeting and going" name="meeting_place" id="meeting_place" class="input-xlarge focused required"
+                            >
+
+                </div>
+            </div>
             <div class="control-group">
                 <label class="control-label" for="min_number_of_people_to_join">with min </label>
                 <select id="min_number_of_people_to_join" name="min_number_of_people_to_join">
@@ -33,10 +43,9 @@
                     </select>
                 </div>
             </div>
-
         </div>
         <div class="modal-footer">
-            <input type="submit" value="Convert" name="commit" id="message_submit" class="btn btn-primary"/>
+            <input type="submit" value="Join" name="commit" id="message_submit" class="btn btn-primary"/>
             <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
         </div>
     </form>

@@ -103,7 +103,7 @@
                                {% if event_attributes['can_convert'] %}
                                      <a href="#cancel_modal" class="open-cancel-confirm-dialog btn btn-primary btn-mini" data-toggle="modal"
                                             data-id="{{ event.key.urlsafe()}}"">
-                                            <span data-class="label">Convert to Activity</span>
+                                            <span data-class="label">Join Flex Event</span>
                                      </a>
                                 {% endif %}
                                {% if expiration != 'EXPIRED' and event.status == 'COMPLETE' and event.type == 'ACTIVITY' %}
