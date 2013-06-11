@@ -9,17 +9,46 @@
 {% block content %}
 
     {% if user_id %}
-        <div>
-        <div class="alert alert-info"><i class="icon-edit icon-large"></i> Get connected: Post an <a
-                href="{{ uri_for("join") }}">interest</a>, see <a href="{{ uri_for("how") }}"> how this works</a>,
-            or browse for <a href="{{ uri_for("activity") }}">activities</a> you can join.
-            <BR>
+
+    {% if is_mobile %}
+            
+        <div class="alert alert-info"><i class="icon-edit icon-large"></i> Post an <a href="{{ uri_for("join") }}">interest</a>, browse <a href="{{ uri_for("activity") }}">activities</a>, see <a href="{{ uri_for("how") }}">how this works</a>.
+                <BR>
         </div>
+    {% else %}
+
+<ul class="thumbnails team">
+        <li class="span4">
+            <div class="thumbnail-style">
+                <a href="{{ uri_for("join") }}"><img src="../img/2.x.One.jpg" alt="" /></a>
+                <h3><a href="{{ uri_for("join") }}">Post</a> <small>Pick an interest & set availability.</small></h3>
+                <p></p>
+            </div>
+        </li>
+        <li class="span4">
+            <div class="thumbnail-style">
+                <a href="{{ uri_for("activity") }}"><img src="../img/2.x.Two.jpg" alt="" /></a>
+                <h3><a href="{{ uri_for("activity") }}">Browse</a> <small>Join activities on the Live Board.</small></h3>
+                <p></p>
+            </div>
+        </li>
+        <li class="span4">
+            <div class="thumbnail-style">
+                <a href="{{ uri_for("how") }}"><img src="../img/2.x.Three.jpg" alt="" /></a>
+                <h3><a href="{{ uri_for("how") }}">Stories</a> <small>See how your neighbors use JoinHour.</small></h3>
+                <p></p>
+            </div>
+        </li>
+    </ul><!--/thumbnails-->
+    {% endif %}
+
+
+        <div>
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#pane1" data-toggle="tab">Interests you have posted</a>
+                    <a href="#pane1" data-toggle="tab">Activities You Posted</a>
                 </li>
-                <li><a href="#pane2" data-toggle="tab">Interests you have joined</a></li>
+                <li><a href="#pane2" data-toggle="tab">Activities You Joined</a></li>
 
             </ul>
         </div>
