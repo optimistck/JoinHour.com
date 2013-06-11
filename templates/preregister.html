@@ -87,14 +87,6 @@
                     states = [];
                     map = {};
 
-                    var data = [
-                        {"stateCode": "CA", "stateName": "California"},
-                        {"stateCode": "AZ", "stateName": "Arizona"},
-                        {"stateCode": "NY", "stateName": "New York"},
-                        {"stateCode": "NV", "stateName": "Nevada"},
-                        {"stateCode": "OH", "stateName": "Ohio"}
-                    ];
-
                     $.get('/allbuildings/', function(data) {
                         $.each(data, function (i, building) {
                             map[building.building_name] = building;
@@ -103,7 +95,6 @@
                         });
                         process(states);
                     });
-
                 }
             });
         });
