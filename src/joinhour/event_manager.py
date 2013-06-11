@@ -192,11 +192,11 @@ class EventManager(object):
     def can_join(self, userId):
         #First check the status
         if self.expires_in() == Event.EXPIRED or self._event.status in Event.NON_EDITABLE_STATUS_CHOICES:
-            return False, "Event is already expired/cancelled or closed"
+            return False, "Event has already expired/cancelled or closed"
         #Are there any activities with this user and this activity?
         user_info = models.User.get_by_id(long(userId))
         if self._event.username == user_info.username:
-            return False, "You yourself created this activity."
+            return False, "You created this activity."
         user_activity = UserActivity.get_by_user_activity(user_info.key, self._event.key)
         if user_activity:
             return False, "You have already joined this activity."
