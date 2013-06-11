@@ -10,7 +10,7 @@ from src.joinhour.event_manager import EventManager
 from src.joinhour.notification_manager import NotificationManager
 
 #TODO This needs to be rewritten - Look at EventManager.join_flex_interest()
-class ConvertHandler(BaseHandler):
+class FlexInterestHandler(BaseHandler):
     """
     Handler for JoinHandler Form
     """
@@ -25,13 +25,16 @@ class ConvertHandler(BaseHandler):
             user_info = models.User.get_by_id(long(self.user_id))
             interest_id = self.request.get('interest_id')
             event_manager = EventManager.get(interest_id)
-            success, message = event_manager.join_flex_interest(
+            success, message, interest_owner, activity_key = event_manager.join_flex_interest(
                 user_id=self.user_id,
                 min_number_of_people_to_join=self.form.min_number_of_people_to_join.data.strip(),
                 max_number_of_people_to_join=self.form.max_number_of_people_to_join.data.strip(),
-                meeting_place=self.form.meeting_place.data.strip())
+                note=self.form.note.data.strip(),
+                meeting_place=self.form.meeting_place.data.strip(),
+                activity_location=self.form.activity_location.data.strip())
             if success:
                 message = _("The interest was converted successfully.")
+                self._push_notification(user_info, interest_owner, EventManager.get(activity_key))
                 self.add_message(message, 'success')
                 return self.redirect_to('activity')
             else:
