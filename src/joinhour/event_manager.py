@@ -174,7 +174,7 @@ class EventManager(object):
         if 'activity_location' in kwargs and kwargs['activity_location'] != "":
             self._event.meeting_place = kwargs['activity_location']
         self._event.put()
-        self.connect(user_id)
+        return self.connect(user_id)
 
     def spots_remaining(self):
         if self._event.max_number_of_people_to_join == 'No limit':

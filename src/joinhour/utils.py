@@ -83,7 +83,7 @@ def event_attributes(event_key, username):
             event_attributes['feedback'] = feedback[0]
         event_attributes['spots_remaining'] = event_manager.spots_remaining()
     else:
-        if status == Event.INITIATED:
+        if status == Event.INITIATED or status == Event.FORMING:
             if expiration == 'EXPIRED':
                 event_attributes['status'] = 'CLOSED'
                 event_attributes['can_convert'] = False
