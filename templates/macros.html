@@ -132,7 +132,7 @@
                          </span>
                     </div>
                  </div>
-                {% if event.type == 'INTEREST_SPECIFIC' and event.status != 'FORMING' %}
+                {% if event.type == 'INTEREST_SPECIFIC' and event.status != 'FORMING' and event.status != 'COMPLETE_NEEDS_FEEDBACK' %}
                     {% if activity_participants | length > 0 %}
                         <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
                             <div class="arrow">
