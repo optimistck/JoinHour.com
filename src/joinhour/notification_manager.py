@@ -17,6 +17,12 @@ class NotificationManager(object):
         else:
             return NotificationManager()
 
+    def get_base_template(self):
+        template = {
+                    "app_name": self._handler.app.config.get('app_name')
+        }
+        return template
+
     def __init__(self,handler=None):
         self._handler = handler
 

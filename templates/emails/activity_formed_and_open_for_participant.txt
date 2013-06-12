@@ -1,0 +1,37 @@
+<p>Hello <strong>{{participant_username}}</strong>,</p>
+
+<p>
+The activity you joined, <strong>{{interest['category']}}</strong>, has reached the minimum number of participants, and it will start at {{interest['start_time']}}. </p>
+
+
+<p>
+Activity details:</p>
+<ul>
+	<li>
+    	<em>Meeting place:</em> {{interest['meeting_place']}}
+    	</li>
+	<li>
+    	<em>Activity location:</em> {{interest['location']}}
+    	</li>
+	 <li>
+	<em>Activity owner</em>J: {{interest['username']}} (you)
+	 </li>
+	<li>
+	<em>People participating:</em> {{interest['all_participants']}}
+	</li>
+</ul>
+
+
+
+
+<p>We'll send all participants a 5 minute reminder shortly. Please arrive on time to have  fun with good people around you. Thank you for using JoinHour.com. Cheers!<br>
+
+{{ app_name }} Team
+
+<BR>
+<p>
+P.S. If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>
