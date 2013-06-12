@@ -131,6 +131,7 @@ class InitiateActvityForm(BaseForm):
     expiration = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
     note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
     meeting_place = fields.TextField(_('meeting_place'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
+    activity_location = fields.TextField(_('activity_location'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
 
 
 class JoinForm(BaseForm):

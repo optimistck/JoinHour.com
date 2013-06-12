@@ -172,7 +172,7 @@ class EventManager(object):
         if 'meeting_place' in kwargs and kwargs['meeting_place'] != "":
             self._event.meeting_place = kwargs['meeting_place']
         if 'activity_location' in kwargs and kwargs['activity_location'] != "":
-            self._event.meeting_place = kwargs['activity_location']
+            self._event.activity_location = kwargs['activity_location']
         self._event.put()
         return self.connect(user_id)
 

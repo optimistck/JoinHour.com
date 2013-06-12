@@ -29,9 +29,10 @@ class ConvertHandler(BaseHandler):
                 user_id=self.user_id,
                 min_number_of_people_to_join=self.form.min_number_of_people_to_join.data.strip(),
                 max_number_of_people_to_join=self.form.max_number_of_people_to_join.data.strip(),
-                meeting_place=self.form.meeting_place.data.strip())
+                meeting_place=self.form.meeting_place.data.strip(),
+                activity_location=self.form.activity_location.data.strip())
             if success:
-                message = _("The interest was converted successfully.")
+                message = _("Activity details necessary to start are now set. We'll keep you posted on activity status.")
                 self.add_message(message, 'success')
                 return self.redirect_to('activity')
             else:
@@ -62,6 +63,6 @@ class ConvertHandler(BaseHandler):
         }
         notification_manager = NotificationManager.get(self)
         notification_manager.push_notification(interest_owner.email,
-                                               '[JoinHour.com]Your interest is now an Activity',
+                                               '[JoinHour.com]Activity details are now set',
                                                'emails/interest_converted_to_activity.txt',
                                                **template_val)
