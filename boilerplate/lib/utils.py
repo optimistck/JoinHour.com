@@ -477,12 +477,6 @@ BUILDINGS = [
 ("River House", "River House"),
 ("Oakwood at Falls Church", "Oakwood at Falls Church"),
 ("The Belvedere", "The Belvedere")
-#("Meridian at Courthouse Commons", "Meridian at Courthouse Commons"),
-#("Courtland Towers", "Courtland Towers"),
-#("Arlington Courthouse Place", "Arlington Courthouse Place"),
-#("Randolph Towers", "Randolph Towers"),
-#("Post Pentagon Row", "Post Pentagon Row"),
-#("Crystal House 1 and 2", "Crystal House 1 and 2"),
 #("Virginia Square Plaza", "Virginia Square Plaza"),
 #("NOT LISTED", "NOT LISTED")
 ]
@@ -521,6 +515,7 @@ TIME_CHUNKS = [
 TIME_CHUNKS2 = [
 #("", ""),
 ("15", "15 mins"),
+("20", "20 mins"),
 ("30", "30 mins"),
 ("40", "40 mins"),
 ("50", "50 mins"),

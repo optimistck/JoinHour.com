@@ -1,7 +1,7 @@
 <div id="cancel_modal" class="modal hide fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
-        <h3>Join Flex Event</h3>
+        <h3>Join and Set Details</h3>
     </div>
 
     <form action="/convert_to_activity/" method="post">
@@ -9,19 +9,9 @@
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             <input type="hidden" name="interest_id" id="interest_id">
+
             <div class="control-group">
-
-
-                <label for="meeting_place" class="control-label">Meeting place *</label>
-
-                <div class="controls">
-                    <input type="text" value="" placeholder="e.g., where we're meeting and going" name="meeting_place" id="meeting_place" class="input-xlarge focused required"
-                            >
-
-                </div>
-            </div>
-            <div class="control-group">
-                <label class="control-label" for="min_number_of_people_to_join">with min </label>
+                <label class="control-label" for="min_number_of_people_to_join">Min # To Start</label>
                 <select id="min_number_of_people_to_join" name="min_number_of_people_to_join">
                     <option value="1 person">1 person</option>
                     <option value="2 people">2 people</option>
@@ -29,8 +19,7 @@
                 </select>
             </div>
             <div class="control-group">
-                <label class="control-label" for="max_number_of_people_to_join">no more
-                    than </label>
+                <label class="control-label" for="max_number_of_people_to_join">Max # That Can Join</label>
 
                 <div class="controls">
                     <select id="max_number_of_people_to_join" name="max_number_of_people_to_join">
@@ -39,8 +28,19 @@
                         <option value="3 people">3 people</option>
                         <option value="4 people">4 people</option>
                         <option value="5 people">5 people</option>
-                        <option value="No limit">No limit</option>
                     </select>
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="meeting_place" class="control-label">Meeting Place *</label>
+                <div class="controls">
+                    <input type="text" value="" placeholder="e.g., at the lobby by TV screen" name="meeting_place" id="meeting_place" class="input-xlarge focused required">
+                </div>
+            </div>
+            <div class="control-group">
+                <label for="activity_location" class="control-label">Activity Location *</label>
+                <div class="controls">
+                    <input type="text" value="" placeholder="e.g., WO&D Trail" name="activity_location" id="activity_location" class="input-xlarge focused required">
                 </div>
             </div>
         </div>
