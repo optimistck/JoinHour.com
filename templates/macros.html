@@ -142,7 +142,7 @@
                             <div class="media-thanks" data-class="like-container">
                                 <p>
                                     <span class="comment-count"><i class="icon-star"></i></span>
-                                    <span>Participants : {{ activity_participants | join(',') }}  , Spots Remaining : {{ event_attributes['spots_remaining'] }}</span>
+                                    <span>Participants: {{ activity_participants | join(',') }}, Spots Remaining: {{ event_attributes['spots_remaining'] }}</span>
                                 </p>
                             </div>
 
@@ -157,7 +157,7 @@
                          <div class="media-thanks" data-class="like-container">
                              <p>
                                 <span class="comment-count"><i class="icon-star"></i></span>
-                                <span>Matching interests for you</span>
+                                <span>Match found for you</span>
                              </p>
                          </div>
                     {% for match in event.key | get_matching_activities %}
@@ -170,17 +170,15 @@
                                     <div class="media-body">
                                     <h4 class="media-heading">
                                         <span class="subject">
-                                            <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a>
+                                            <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a> with <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity.username }}</a>
                                         </span>
                                     </h4>
                                     <p data-class="post-content">
-                                        {{ matching_activity.note }}
+                                        Activity Location: {{ matching_activity.activity_location }}
+                                        <BR>
+                                        Meeting Place: {{ matching_activity.meeting_place }}
                                     </p>
-                                    <h5 class="media-author">
-                                        <span class="user-name">Posted by
-                                            <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity.username }}</a>
-                                        </span>
-                                    </h5>
+                                    
                                     <div class="media-actions">
                                         <span>
                                             {%  if activity_attributes['can_join'] %}
