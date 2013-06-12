@@ -145,6 +145,8 @@ class JoinForm(BaseForm):
     meeting_place = fields.TextField(_('meeting_place'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
     activity_location = fields.TextField(_('activity_location'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
     message = fields.TextAreaField(_('Message'), [validators.Required(), validators.Length(max=65536)])
+    time_hours = fields.SelectField(_('time_hours'), choices=utils.TIME_HOURS)
+    time_minutes = fields.SelectField(_('time_minutes'), choices=utils.TIME_MINUTES)
 ### JH
 
 class JoinActivityForm(BaseForm):

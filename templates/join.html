@@ -20,10 +20,15 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             <H4>I want to</H4>
             {{ macros.field(form.category, label=_(" ")) }}
-            <h4>right away, and will wait</h4>
+            <h4>ASAP, and will wait</h4>
             {{ macros.field(form.expiration, label=_(" ")) }}
             <h4>for a companion.</h4>
             
+            <h1>OR</h1>
+            <h4>the activity must start at</h4>
+            {{ macros.field(form.time_hours, label=_(" ")) }}
+            {{ macros.field(form.time_minutes, label=_(" ")) }}
+
             <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I'm flexible, and I will join others</STRONG></label>
             <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I’ll set the details, and let others join me</STRONG></label>
             <span id="initiate_activity_details" style="display: none;">
