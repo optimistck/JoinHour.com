@@ -7,6 +7,7 @@ from webapp2_extras.appengine.auth.models import User
 
 from src.joinhour.event_manager import EventManager
 from src.joinhour.models.event import Event
+from src.joinhour.utils import *
 
 
 class EventManagerTest(unittest.TestCase):
@@ -34,11 +35,13 @@ class EventManagerTest(unittest.TestCase):
         self.assertEqual(3,len(Event.get_activities_by_building('building_1')))
         self.assertEqual(2,len(Event.get_activities_by_building('building_2')))
 
+
     def test_load_activity_mgr(self):
         activity_created = EventManager.create(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
         activity_from_activity_mgr = EventManager.get(activity_created.key.urlsafe()).get_event()
         self.assertEqual(activity_created.key.urlsafe(),activity_from_activity_mgr.key.urlsafe())
         self.assertEqual(Event.FORMING,activity_from_activity_mgr.status)
+
 
 
     def test_join(self):
@@ -90,6 +93,7 @@ class EventManagerTest(unittest.TestCase):
         self.assertEqual(Event.FORMED_OPEN,activity_created.status)
         self.assertEqual(False,activity_manager.can_join(user4.key.id())[0])
         self.assertEqual(2,activity_manager.companion_count())
+        get_interest_details(activity_created.key.urlsafe())
         #Now have 3 Unjoin activity
         activity_manager.unjoin(user3.key.id())
         self.assertEqual(Event.FORMED_OPEN,activity_created.status)
@@ -117,6 +121,7 @@ class EventManagerTest(unittest.TestCase):
     def test_load_interest_mgr(self):
         interest_created = EventManager.create(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
         interest_from_interest_mgr = EventManager.get(interest_created.key.urlsafe()).get_event()
+
         self.assertEqual(interest_created.key.urlsafe(),interest_from_interest_mgr.key.urlsafe())
         self.assertEqual(Event.FORMING,interest_from_interest_mgr.status)
 

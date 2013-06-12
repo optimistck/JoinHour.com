@@ -1,12 +1,8 @@
+__author__ = 'aparbane'
 import logging
 from src.joinhour.models.feedback import UserFeedback
 from src.joinhour.models.match import Match
-
-__author__ = 'aparbane'
-from UserString import MutableString
 from src.joinhour.models.event import Event
-
-
 from src.joinhour.event_manager import EventManager
 from boilerplate import models
 
@@ -93,5 +89,26 @@ def event_attributes(event_key, username):
         elif status == Event.COMPLETE_CONVERTED:
             event_attributes['status'] = 'COMPLETE_CONVERTED'
     return event_attributes
+
+
+def get_interest_details(interest_key):
+    event_manager = EventManager.get(interest_key)
+    event = event_manager.get_event()
+    interest_user = models.User.get_by_username(event.username)
+    interest_details = dict()
+    interest_details['category'] = event.category
+    interest_details['meeting_place'] = event.meeting_place
+    interest_details['location'] = event.activity_location
+    interest_details['start_time'] = event.start_time
+    interest_details['username'] = event.username
+    participants = event_manager.get_all_companions()
+    interest_details['participants'] = participants
+    all_participants = [interest_user.name + ' ' + interest_user.last_name]
+    for participant in participants:
+        all_participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))
+    interest_details['all_participants'] = all_participants
+
+
+
 
 

@@ -259,6 +259,8 @@ class EventManager(object):
                 task_execution_time = self._event.start_time - timedelta(minutes=5)
             if self._event.expiration is not None and self._event.expiration != "":
                 task_execution_time = datetime.utcnow() + timedelta(minutes=5)
+                self._event.start_time = task_execution_time
+                self._event.put()
             goTask = Task(eta=task_execution_time, url='/activity_life_cycle/',method='GET',params={'activity': self._event.key.urlsafe()})
             goTask.add('activityLifeCycle')
 
