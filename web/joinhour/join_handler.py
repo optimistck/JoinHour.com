@@ -40,7 +40,7 @@ class JoinHandler(BaseHandler):
             if hasattr(self.form,'activity_location'):
                 interest_info['activity_location'] = self.form.activity_location.data.strip()
             EventManager.create(**interest_info)
-            message = _("Your interest was registered successfully. We are searching for a match ... ")
+            message = _("Your post is now live. We'll notify you of progress. You can manage it on this My Corner page.")
             self.add_message(message, 'success')
             return self.redirect_to('home')
 
