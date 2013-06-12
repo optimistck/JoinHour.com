@@ -4,36 +4,62 @@
         {% trans %}Post your interest and availability {% endtrans %} - {{app_name}}
 {% endblock %}
 {% block header_title %}
-        {% trans %}Post{% endtrans %}
+
 {% endblock %}
 
 {% block content %}
 
-<h4>Post your interest and availability</h4>
+<h3>Post your interest and availability</h3>
 
-<BR>
 
-        <form id="form_initiate_activity" action="{{ url|safe }}" method="post" class="well form-horizontal">
+    <div class="row-fluid">
+        <div class="span8">
+        <form id="form_initiate_activity" action="{{ url|safe }}" method="post">
         <fieldset>
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            {{ macros.field(form.category, label=_("I want to")) }}
-             {{ macros.field(form.duration, label=_("for")) }}
-            {{ macros.field(form.expiration, label=_("willing to wait for a match for")) }}
+            <H4>I want to</H4>
+            {{ macros.field(form.category, label=_(" ")) }}
+            <h4>right away, and will wait</h4>
+            {{ macros.field(form.expiration, label=_(" ")) }}
+            <h4>for a companion.</h4>
             
-            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')">I'm flexible, and I will join others</label>
-            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')">I’ll set the details, and let others join me</label>
+            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I'm flexible, and I will join others</STRONG></label>
+            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I’ll set the details, and let others join me</STRONG></label>
             <span id="initiate_activity_details" style="display: none;">
-            {{ macros.field(form.meeting_place, label=_("Meet / Location"),placeholder=_("e.g., where we're meeting and ")+" "+_("going"), class="input-xlarge focused required") }}
-            {{ macros.field(form.min_number_of_people_to_join, label=_("with min"),disabled=true) }}
-            {{ macros.field(form.max_number_of_people_to_join, label=_("no more than"),disabled=true) }}
+            <h4>Min # to start</h4>
+            {{ macros.field(form.min_number_of_people_to_join, label=_(" "),disabled=true) }}
+            <h4>Max # that can join</h4>
+            {{ macros.field(form.max_number_of_people_to_join, label=_(" "),disabled=true) }}
+            <h4>Meeting Place</h4>
+            {{ macros.field(form.meeting_place, label=_(" "),placeholder=_("e.g., Main entrance by the TV"), class="input-xlarge focused required") }}
+            <h4>Activity Location</h4>
+            {{ macros.field(form.activity_location, label=_(" "),placeholder=_("e.g., WO&D trail towards DC"), class="input-xlarge focused required") }}
+
             </span>
 
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{% trans %}Post{% endtrans %}</button>
+                <button type="submit" class="btn btn-primary">Post</button>
             </div>
         </fieldset>
     </form>
+        </div><!--/span8-->
+        
+        <div class="span4">
+           
+            <!-- Posting is Easy -->
+            <div class="headline"><h4>Posting Is Easy</h4></div>
+            <p>Your neighbors can connect with you only if you post</p>
+            <ul class="unstyled">
+                <li><i class="icon-ok color-green"></i> People that join you share your interest!</li>
+                <li><i class="icon-ok color-green"></i> You can always cancel</li>
+                <li><i class="icon-ok color-green"></i> Your post disappers when your interests expires or activity starts</li>
+            </ul>
+
+        </div><!--/span4-->
+    </div><!--/row-fluid--> 
+
+
     
 {% endblock %}
 
