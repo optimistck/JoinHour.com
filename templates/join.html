@@ -20,10 +20,23 @@
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             <H4>I want to</H4>
             {{ macros.field(form.category, label=_(" ")) }}
-            <h4>right away, and will wait</h4>
+
+            <label class="radio"><input type="radio" name="type_radio2" id="ASAP_radio" value="ASAP" checked onchange="onTypeRadioButtonChange2('timing_details_ASAP')"><STRONG>ASAP - wire this to toggle</STRONG></label>
+            <label class="radio"><input type="radio" name="type_radio2" id="Set_Time_radio" value="Set_Time" onchange="onTypeRadioButtonChange2('timing_details_set_time')"><STRONG>Set Time - wire this to toggle</STRONG></label>
+
+            <h4>ASAP, and will wait for a companion</h4>
+            <span id="timing_details_ASAP" style="display: block;">
             {{ macros.field(form.expiration, label=_(" ")) }}
-            <h4>for a companion.</h4>
-            
+            </span>
+
+            <h1>OR</h1>
+
+            <span id="timing_details_set_time" style="display: block;">
+            <h4>the activity must start at</h4>
+            {{ macros.field(form.time_hours, label=_(" ")) }}
+            {{ macros.field(form.time_minutes, label=_(" ")) }}
+            </span>
+
             <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I'm flexible, and I will join others</STRONG></label>
             <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I’ll set the details, and let others join me</STRONG></label>
             <span id="initiate_activity_details" style="display: none;">
@@ -73,6 +86,21 @@
             }
         });
     });
+
+    function onTypeRadioButtonChange2(id){
+        if(document.getElementById('timing_details_ASAP').checked)
+        {
+            document.getElementById(id).style.display = 'block';
+            document.getElementById('time_hours').disabled = true
+            document.getElementById('time_minutes').disabled = true
+        }
+        else if(document.getElementById('timing_details_set_time').checked)
+        {
+            document.getElementById(id).style.display = 'block';
+            document.getElementById('time_hours').disabled = false
+            document.getElementById('time_minutes').disabled = false
+        }
+    }
 
     function onTypeRadioButtonChange(id){
         if(document.getElementById('express_interest_radio').checked)
