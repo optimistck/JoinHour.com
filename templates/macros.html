@@ -67,27 +67,27 @@
                     <!-- Status text-->
                    {% if event.status == 'FORMING'  %}
                         <div class="media-scope">
-                             Forming
+                             Status: Forming
                         </div>
                    {% elif event.status == 'FORMED_OPEN'  %}
                         <div class="media-scope">
-                             Starting soon
+                             Status: Formed & will start soon, but you can still join
                         </div>
                    {% elif event.status == 'FORMED_INITIATED'  %}
                         <div class="media-scope">
-                             Started
+                             Status: Started
                         </div>
                    {% elif event.status == 'EXPIRED'  %}
                         <div class="media-scope">
-                             Expired
+                             Status: Expired
                         </div>
                    {% elif event.status == 'CANCELLED'  %}
                         <div class="media-scope">
-                             Cancelled
+                             Status: Cancelled
                         </div>
                    {% else  %}
                         <div class="media-scope">
-                             Complete
+                             Status: Completed
                         </div>
                    {% endif %}
                     <!-- Event actions -->
