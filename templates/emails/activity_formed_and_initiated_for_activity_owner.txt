@@ -1,0 +1,23 @@
+<p>Hello <strong>{{interest['username']}}</strong>,</p>
+
+<p>
+Your activity {{interest['category'}} will start in a few minutes at {{interest['start_time']}}.
+<BR>
+Meet others at {{interest['meeting_place']}}. Activity location: {{interest['location']}}
+</p>
+
+
+Activity participants:</em> {{interest['all_participants']}}
+
+</p>
+
+<p>Have fun, arrive on time, and thank you for using JoinHour.com<br>
+{{ app_name }} Team
+
+<BR>
+<p>
+If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+{{support_url}}
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>

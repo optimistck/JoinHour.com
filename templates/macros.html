@@ -106,11 +106,7 @@
                                             <span data-class="label">Join</span>
                                      </a>
                                 {% endif %}
-                               {% if expiration != 'EXPIRED' and event.status == 'COMPLETE' and event.type == 'ACTIVITY' %}
-                                     <a class="btn btn-inverse btn-mini liked"  }}">
-                                                <span data-class="label">GO</span>
-                                     </a>
-                                {% endif %}
+
                                <!-- Cancel / Delete -->
                                {% if  event_attributes['can_leave'] %}
                                    <a class="btn btn-primary btn-mini" href="/leave_activity/?activity_key={{ event.key.urlsafe() }}">
