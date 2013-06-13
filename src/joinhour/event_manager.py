@@ -203,7 +203,7 @@ class EventManager(object):
             #Are there any activities with this user and this activity?
         user_info = models.User.get_by_id(long(userId))
         if self._event.username == user_info.username:
-            return False, "You created this activity."
+            return False, "You cannot join an activity you created."
         user_activity = UserActivity.get_by_user_activity(user_info.key, self._event.key)
         if user_activity:
             return False, "You have already joined this activity."
