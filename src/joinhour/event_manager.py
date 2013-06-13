@@ -162,6 +162,9 @@ class EventManager(object):
         return True, message
 
     def join_flex_interest(self,user_id,**kwargs):
+        (canJoin, message) = self.can_join_flex(user_id)
+        if not canJoin:
+            return canJoin, message, None, None
         self._event.type = Event.EVENT_TYPE_SPECIFIC_INTEREST
         if 'min_number_of_people_to_join' in kwargs and kwargs['min_number_of_people_to_join'] != "":
             self._event.min_number_of_people_to_join = kwargs['min_number_of_people_to_join']
@@ -173,8 +176,12 @@ class EventManager(object):
             self._event.meeting_place = kwargs['meeting_place']
         if 'activity_location' in kwargs and kwargs['activity_location'] != "":
             self._event.activity_location = kwargs['activity_location']
+        current_owner = models.User.get_by_username(self._event.username)
+        new_owner = models.User.get_by_id(long(user_id))
+        self._event.username = new_owner.username
         self._event.put()
-        return self.connect(user_id)
+        success, message = self.connect(current_owner.get_id())
+        return success, message, current_owner, new_owner
 
     def spots_remaining(self):
         if self._event.max_number_of_people_to_join == 'No limit':
@@ -188,6 +195,22 @@ class EventManager(object):
 
     def mark_expired(self):
         self._change_status(Event.EXPIRED)
+
+    def can_join_flex(self, userId):
+    #First check the status
+        if self.expires_in() == Event.EXPIRED or self._event.status in Event.NON_EDITABLE_STATUS_CHOICES:
+            return False, "Event has already expired/cancelled or closed"
+            #Are there any activities with this user and this activity?
+        user_info = models.User.get_by_id(long(userId))
+        if self._event.username == user_info.username:
+            return False, "You created this activity."
+        user_activity = UserActivity.get_by_user_activity(user_info.key, self._event.key)
+        if user_activity:
+            return False, "You have already joined this activity."
+        #Now check if there are spots remaining
+        if self._event.type != Event.EVENT_TYPE_FLEX_INTEREST:
+            return False, "This is not a flex event"
+        return True, "Success"
 
     def can_join(self, userId):
         #First check the status
