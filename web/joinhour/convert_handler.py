@@ -22,10 +22,9 @@ class ConvertHandler(BaseHandler):
     @user_required
     def post(self):
         if self.user:
-            user_info = models.User.get_by_id(long(self.user_id))
             interest_id = self.request.get('interest_id')
             event_manager = EventManager.get(interest_id)
-            success, message = event_manager.join_flex_interest(
+            success, message, current_owner, new_owner = event_manager.join_flex_interest(
                 user_id=self.user_id,
                 min_number_of_people_to_join=self.form.min_number_of_people_to_join.data.strip(),
                 max_number_of_people_to_join=self.form.max_number_of_people_to_join.data.strip(),
@@ -33,6 +32,7 @@ class ConvertHandler(BaseHandler):
                 activity_location=self.form.activity_location.data.strip())
             if success:
                 message = _("Activity details necessary to start are now set. We'll keep you posted on activity status.")
+                self._push_notification(new_owner, current_owner, event_manager)
                 self.add_message(message, 'success')
                 return self.redirect_to('activity')
             else:
@@ -44,9 +44,8 @@ class ConvertHandler(BaseHandler):
     def form(self):
         return forms.JoinForm(self)
 
-    def _push_notification(self, activity_owner, user_id,activity_manager):
-        interest_owner = models.User.get_by_id(long(user_id))
-        participants_list = activity_manager.get_all_companions()
+    def _push_notification(self, activity_owner, interest_owner, event_manager):
+        participants_list = event_manager.get_all_companions()
         participants = []
         for participant in participants_list:
             participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))
@@ -55,10 +54,10 @@ class ConvertHandler(BaseHandler):
         template_val = {
             "app_name": self.app.config.get('app_name'),
             "owner_name":interest_owner.name+' '+interest_owner.last_name,
-            "activity": activity_manager.get_event(),
+            "activity": event_manager.get_event(),
             "activity_owner_name": activity_owner.name+' '+activity_owner.last_name,
-            "complete": activity_manager.status() == Event.COMPLETE,
-            "expires_in": activity_manager.expires_in(),
+            "complete": event_manager.status() == Event.COMPLETE,
+            "expires_in": event_manager.expires_in(),
             "participants":''.join(participants)
         }
         notification_manager = NotificationManager.get(self)
