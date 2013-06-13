@@ -4,6 +4,12 @@ from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
 from src.joinhour.event_manager import EventManager
+from datetime import datetime
+
+from boilerplate.external.pytz import timezone
+from boilerplate.external.pytz.reference import  Local
+
+
 
 
 class JoinHandler(BaseHandler):
@@ -25,10 +31,12 @@ class JoinHandler(BaseHandler):
             interest_info['building_name'] = building_name
             interest_info['category'] = self.form.category.data.strip()
             interest_info['username'] = user_info.username
-            if hasattr(self.form,'expiration'):
+            if hasattr(self.form,'time_hours') and hasattr(self.form,'time_minutes') and self.form.time_hours.data != "None":
+                current_date = datetime.now(tz=Local)
+                current_date.replace(hour=int(self.form.time_hours.data.strip()), minute=int(self.form.time_minutes.data.strip()))
+                interest_info['start_time'] = current_date.astimezone(timezone('UTC')).replace(tzinfo=None)
+            elif hasattr(self.form,'expiration') and self.form.expiration.data != "" and self.form.expiration.data != "None":
                 interest_info['expiration'] = self.form.expiration.data.strip()
-            elif hasattr(self.form,'start_time'):
-                interest_info['start_time'] = self.form.start_time.data.strip()
             if hasattr(self.form,'min_number_of_people_to_join'):
                 interest_info['min_number_of_people_to_join'] = self.form.min_number_of_people_to_join.data.strip()
             if hasattr(self.form,'max_number_of_people_to_join'):
