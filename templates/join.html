@@ -21,20 +21,21 @@
             <H4>I want to</H4>
             {{ macros.field(form.category, label=_(" ")) }}
 
-            <label class="radio"><input type="radio" name="type_radio2" id="ASAP_radio" value="ASAP" checked onchange="onTypeRadioButtonChange2('timing_details_ASAP')"><STRONG>ASAP - wire this to toggle</STRONG></label>
-            <label class="radio"><input type="radio" name="type_radio2" id="Set_Time_radio" value="Set_Time" onchange="onTypeRadioButtonChange2('timing_details_set_time')"><STRONG>Set Time - wire this to toggle</STRONG></label>
+            <label class="radio"><input type="radio" name="type_radio2" id="ASAP_radio" value="ASAP" checked onchange="onTypeRadioButtonChange2('timing_details_set_time', 'timing_details_ASAP')"><STRONG>ASAP - wire this to toggle</STRONG></label>
+            <label class="radio"><input type="radio" name="type_radio2" id="Set_Time_radio" value="Set_Time" onchange="onTypeRadioButtonChange2('timing_details_set_time', 'timing_details_ASAP')"><STRONG>Set Time - wire this to toggle</STRONG></label>
 
-            <h4>ASAP, and will wait for a companion</h4>
+
             <span id="timing_details_ASAP" style="display: block;">
+            <h4>ASAP, and will wait for a companion</h4>
             {{ macros.field(form.expiration, label=_(" ")) }}
             </span>
 
-            <h1>OR</h1>
 
-            <span id="timing_details_set_time" style="display: block;">
-            <h4>the activity must start at</h4>
-            {{ macros.field(form.time_hours, label=_(" ")) }}
-            {{ macros.field(form.time_minutes, label=_(" ")) }}
+
+            <span id="timing_details_set_time" style="display: none;">
+            <h4>The activity must start at</h4>
+            {{ macros.field(form.time_hours, label=_(" ") ,disabled=true) }}
+            {{ macros.field(form.time_minutes, label=_(" ") ,disabled=true) }}
             </span>
 
             <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I'm flexible, and I will join others</STRONG></label>
@@ -87,18 +88,20 @@
         });
     });
 
-    function onTypeRadioButtonChange2(id){
-        if(document.getElementById('timing_details_ASAP').checked)
+    function onTypeRadioButtonChange2(id1, id2){
+        if(document.getElementById('ASAP_radio').checked)
         {
-            document.getElementById(id).style.display = 'block';
-            document.getElementById('time_hours').disabled = true
-            document.getElementById('time_minutes').disabled = true
+            document.getElementById(id1).style.display = 'none';
+            document.getElementById('time_hours').disabled = true;
+            document.getElementById('time_minutes').disabled = true;
+            document.getElementById(id2).style.display = 'block';
         }
-        else if(document.getElementById('timing_details_set_time').checked)
+        else if(document.getElementById('Set_Time_radio').checked)
         {
-            document.getElementById(id).style.display = 'block';
-            document.getElementById('time_hours').disabled = false
-            document.getElementById('time_minutes').disabled = false
+            document.getElementById(id1).style.display = 'block';
+            document.getElementById('time_hours').disabled = false;
+            document.getElementById('time_minutes').disabled = false;
+            document.getElementById(id2).style.display = 'none';
         }
     }
 
