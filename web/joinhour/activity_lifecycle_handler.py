@@ -1,19 +1,18 @@
 __author__ = 'ashahab'
-from src.joinhour.models.event import Event
-from urlparse import urlparse
-from UserString import MutableString
 import os
 import logging
+
 from google.appengine.ext import ndb
 from google.appengine.api.taskqueue import Task
+
+from src.joinhour.utils import get_interest_details
+from src.joinhour.models.event import Event
 from boilerplate.lib.basehandler import BaseHandler
-from src.joinhour.models.user_activity import UserActivity
-from boilerplate import models
 from src.joinhour.event_manager import EventManager
 from src.joinhour.notification_manager import NotificationManager
 
-class ActivityLifeCycleHandler(BaseHandler):
 
+class ActivityLifeCycleHandler(BaseHandler):
     def get(self):
         try:
             activity_key = self.request.get('activity')
@@ -27,48 +26,32 @@ class ActivityLifeCycleHandler(BaseHandler):
                     self._start_post_activity_completion_process(activity)
                     self._send_readyness_notification(activity)
 
-        except Exception , e:
+        except Exception, e:
             logging.warn(e)
 
-    def _send_readyness_notification(self,activity):
-        userActivities = UserActivity.get_users_for_activity(activity.key)
-        participants = MutableString()
-        for userActivity in userActivities:
-            user = userActivity.user.get()
-            participants += str(user.name)+' ' + str(user.last_name) + ' , '
-            participants.rstrip(',')
-        activity_owner = models.User.get_by_username(activity.username)
-        self._notify_participants(activity_owner, activity, participants)
+    def _send_readyness_notification(self, activity):
+        notification_manager = NotificationManager.get(self)
+        activity_manager = EventManager.get(activity.key.urlsafe())
+        interest_details = get_interest_details(activity_manager.get_event().key.urlsafe())
+        for participant in activity_manager.get_all_companions():
+            template_val = notification_manager.get_base_template()
+            template_val['interest'] = interest_details
+            template_val['participant_username'] = participant.user.get().username
+            notification_manager.push_notification(participant.user.get().email,
+                                                    '[JoinHour.com]Your activity is starting!',
+                                                    'emails/activity_formed_and_initiated_for_activity_participant.txt',
+                                                    **template_val)
 
-    def _start_post_activity_completion_process(self,activity):
+    def _start_post_activity_completion_process(self, activity):
         if os.environ.get('ENV_TYPE') is None:
-            if os.environ.get('SERVER_SOFTWARE','').startswith('Development'):
+            if os.environ.get('SERVER_SOFTWARE', '').startswith('Development'):
                 eta = 120
-            task = Task(url='/post_activity_completion/',method='GET',
+            task = Task(url='/post_activity_completion/', method='GET',
                         params={'activity_key': activity.key.urlsafe()},
                         countdown=eta)
             task.add('postActivityCompletion')
 
 
-    def _notify_participants(self,user, activity, participants):
-        activity_owner = models.User.get_by_username(activity.username)
-        email_url = self.uri_for('taskqueue-send-email')
-        url_object = urlparse(self.request.url)
-
-        template_val = {
-            "app_name": self.app.config.get('app_name'),
-            "participant_username": user.name+' '+user.last_name,
-            "activity_category": activity.category,
-            "owner_name": activity_owner.name+' '+activity_owner.last_name,
-            "expires_in": EventManager.get(activity.key.urlsafe()).expires_in(),
-            "participants": participants,
-            "support_url" : url_object.scheme + '://' + str(url_object.hostname) + ':' +str(url_object.port)
-        }
-        notification_manager = NotificationManager.get(self)
-        notification_manager.push_notification(user.email,
-                                               '[JoinHour.com]Its a go!',
-                                               'emails/its_a_go_notification_for_participants.txt',
-                                               **template_val)
 
 
 

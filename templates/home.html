@@ -46,10 +46,8 @@
         <div>
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#pane1" data-toggle="tab">Activities You Posted</a>
+                    <a href="#pane1" data-toggle="tab">Interests You Posted</a>
                 </li>
-                <li><a href="#pane2" data-toggle="tab">Activities You Joined</a></li>
-
             </ul>
         </div>
         <div class="tab-content">
@@ -62,14 +60,6 @@
                     {% endfor %}
                </div>
             </div>
-            <div id="pane2" class="tab-pane">
-                <div id="events" class="media">
-                     {% for event in  joined_interests%}
-                           {{ macros.show_event(event,username) }}
-                     {% endfor %}
-               </div>
-            </div>
-
         </div><!-- /.tab-content -->
     {% else %}
         <div class="row">

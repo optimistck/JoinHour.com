@@ -42,10 +42,11 @@ class JoinActivityHandler(BaseHandler):
     def _push_notification(self, activity_manager):
         notification_manager = NotificationManager.get(self)
         activity_user = models.User.get_by_username(activity_manager.get_event().username)
+        interest_details = get_interest_details(activity_manager.get_event().key.urlsafe())
          #To the activity owner if the activity is GO (formed OPEN)
         if activity_manager.status()  == Event.FORMED_OPEN:
             template_val = notification_manager.get_base_template()
-            template_val['interest'] = get_interest_details(activity_manager.get_event().key.urlsafe())
+            template_val['interest'] = interest_details
             notification_manager.push_notification2(activity_user.email,
                                                '[JoinHour.com]Activity Go Notification',
                                                'emails/activity_formed_and_open_for_owner.txt',Notification.GO_NOTIFICATION,
@@ -55,7 +56,7 @@ class JoinActivityHandler(BaseHandler):
         if activity_manager.status() == Event.FORMED_OPEN:
             for participant in activity_manager.get_all_companions():
                 template_val = notification_manager.get_base_template()
-                template_val['interest'] = get_interest_details(activity_manager.get_event().key.urlsafe())
+                template_val['interest'] = interest_details
                 template_val['participant_username'] = participant.user.get().username
                 notification_manager.push_notification2(participant.user.get().email,
                                                        '[JoinHour.com]Activity Go Notification',
