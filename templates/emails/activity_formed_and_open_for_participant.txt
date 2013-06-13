@@ -14,7 +14,7 @@ Activity details:</p>
     	<em>Activity location:</em> {{interest['location']}}
     	</li>
 	 <li>
-	<em>Activity owner</em>J: {{interest['username']}} (you)
+	<em>Activity owner</em>J: {{interest['username']}}
 	 </li>
 	<li>
 	<em>People participating:</em> {{interest['all_participants']}}

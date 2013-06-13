@@ -106,7 +106,7 @@ def get_interest_details(interest_key):
     all_participants = [interest_user.name + ' ' + interest_user.last_name]
     for participant in participants:
         all_participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))
-    interest_details['all_participants'] = all_participants
+    interest_details['all_participants'] = ' , '.join(all_participants)
     return interest_details
 
 
