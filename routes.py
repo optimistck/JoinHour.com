@@ -10,7 +10,7 @@ from web.joinhour import activity_handler, home_request_handler, join_handler, t
     tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler,match_making_handler, \
     token_gen_handler, convert_handler, update_activity_handler, leave_activity_handler, activity_lifecycle_handler, \
     about_handler, propmanagers_handler, pre_register_handler, cancel_activity_handler, next_action_preregistered_handler,\
-building_handler, all_buildings_handler
+building_handler, all_buildings_handler, next_action_thankyou_feedback_handler
 from web.joinhour.complete_profile_social_user_handler import CompleteProfileSocialUserHandler
 from web.joinhour.post_activity_completion_handler import PostActivityCompletionHandler
 from web.joinhour.services.user_profile import Avatar
@@ -52,6 +52,7 @@ _routes = [
     RedirectRoute('/buildings/', building_handler.BuildingHandler, name='buildings', strict_slash=True),
     RedirectRoute('/allbuildings/', all_buildings_handler.AllBuildingHandler, name='allbuildings', strict_slash=True),
     RedirectRoute('/next_action_preregistered/', next_action_preregistered_handler.next_action_PreRegisteredHandler, name='next_action_preregistered', strict_slash=True),
+    RedirectRoute('/next_action_thankyou_feedback/', next_action_thankyou_feedback_handler.next_action_ThankYouFeedbackHandler, name='next_action_thankyou_feedback', strict_slash=True),
     RedirectRoute('/complete_profile_social_user/', CompleteProfileSocialUserHandler, name='complete_profile_social_user', strict_slash=True)
 
 ]
