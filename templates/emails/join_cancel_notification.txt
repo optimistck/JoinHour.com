@@ -30,7 +30,7 @@ Here is a quick summary for this activity :</p>
 <BR>
 <p>
 If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
-{{support_url}}
+we+support@JoinHour.com
 </p>
 
 <p>We, the people, not computers, read and respond to every email. <br>
