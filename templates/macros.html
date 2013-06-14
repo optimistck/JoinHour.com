@@ -54,14 +54,12 @@
                                     <a href="/activity_detail/?ID={{ event.key.urlsafe() }}">{{ event.category }}</a> with <a
                                     href="/user_profile/?username={{ event.username }}">{{ event.username }}</a>
                                 </span>
-                        <!-- Timestamp-->
-                        <!--span class="timestamp">{{ event.date_entered | dateformat }}</span-->
                     </h4>
                     <!-- Event Note text-->
                     <p data-class="post-content">
-                        Activity Location: {{ event.activity_location }}
+                        Activity Location: {{ event.activity_location | default("Not set",True) }}
                         <BR>
-                        Meeting Place: {{ event.meeting_place}}
+                        Meeting Place: {{ event.meeting_place | default ("Not set",True)}}
                     </p>
 
                     <!-- Status text-->
@@ -169,10 +167,11 @@
                                             <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a> with <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity.username }}</a>
                                         </span>
                                     </h4>
+
                                     <p data-class="post-content">
-                                        Activity Location: {{ matching_activity.activity_location }}
+                                        Activity Location: {{ matching_activity.activity_location | default("Not set",True) }}
                                         <BR>
-                                        Meeting Place: {{ matching_activity.meeting_place }}
+                                        Meeting Place: {{ matching_activity.meeting_place | default("Not set",True)}}
                                     </p>
                                     
                                     <div class="media-actions">
