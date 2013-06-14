@@ -34,9 +34,9 @@ class LoveHandler(BaseHandler):
         love.name = self.form.name.data.strip()
         love.put()
 
-#        message = _('Thank you for showing us love.')
-#        self.add_message(message, 'success')
-        self.redirect_to('love')
+        #message = _('Thank you for sending us some love.')
+        #self.add_message(message, 'success')
+        self.redirect_to('next_action_thankyou_feedback')
 
     @webapp2.cached_property
     def form(self):
