@@ -56,6 +56,9 @@
                <hr/>
                <div id="events" class="media">
                     {% for event in  my_interests%}
+                        {% if event.status in ['CLOSED','CANCELLED','EXPIRED'] %}
+                            {% continue %}
+                        {% endif %}
                         {{ macros.show_event(event,username) }}
                     {% endfor %}
                </div>

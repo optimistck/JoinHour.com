@@ -17,7 +17,7 @@ config = {
 #                           'environment_args': {'extensions': ['jinja2.ext.i18n']}},
 
 'webapp2_extras.jinja2' : {'template_path': ['templates','templates', 'admin/templates'],
-                           'environment_args': {'extensions': ['jinja2.ext.i18n']}},                         
+                           'environment_args': {'extensions': ['jinja2.ext.i18n','jinja2.ext.loopcontrols']}},
 
 # application name
 'app_name' : "JoinHour",
