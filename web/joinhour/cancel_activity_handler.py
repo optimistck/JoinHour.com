@@ -6,7 +6,7 @@ from boilerplate import models
 from src.joinhour.models.event import Event
 from src.joinhour.utils import *
 from src.joinhour.notification_manager import NotificationManager
-
+from google.appengine.ext import ndb
 
 class CancelActivityHandler(BaseHandler):
     """
@@ -29,8 +29,9 @@ class CancelActivityHandler(BaseHandler):
             activity_user = models.User.get_by_username(activity_username)
             activity_owner_name = activity_user.name + ' ' + activity_user.last_name
             for participant in participants:
-                channel.send_message(participant.username, "Your activity has been canceled by: " + user_info.username)
-                self._push_notification(category,activity_owner_name,participant,'No reason')
+                participant_user = participant.user.get()
+                channel.send_message(participant_user.name, "Your activity has been canceled by: " + activity_owner_name)
+                self._push_notification(category,activity_owner_name,participant_user,'No reason')
             self.add_message(message, 'success')
         else:
             self.add_message(message, 'error')
