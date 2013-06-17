@@ -33,7 +33,7 @@ class JoinHandler(BaseHandler):
             interest_info['username'] = user_info.username
             if hasattr(self.form,'time_hours') and hasattr(self.form,'time_minutes') and self.form.time_hours.data != "None":
                 current_date = datetime.now(tz=Local)
-                current_date.replace(hour=int(self.form.time_hours.data.strip()), minute=int(self.form.time_minutes.data.strip()))
+                current_date = current_date.replace(hour=int(self.form.time_hours.data.strip()), minute=int(self.form.time_minutes.data.strip()))
                 interest_info['start_time'] = current_date.astimezone(timezone('UTC')).replace(tzinfo=None)
             elif hasattr(self.form,'expiration') and self.form.expiration.data != "" and self.form.expiration.data != "None":
                 interest_info['expiration'] = self.form.expiration.data.strip()

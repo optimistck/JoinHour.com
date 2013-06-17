@@ -1,3 +1,6 @@
+from  datetime import datetime, timedelta
+
+
 __author__ = 'aparbane'
 
 import unittest
@@ -7,6 +10,8 @@ from webapp2_extras.appengine.auth.models import User
 
 from src.joinhour.event_manager import EventManager
 from src.joinhour.models.event import Event
+from boilerplate.external.pytz import timezone
+from boilerplate.external.pytz.reference import  Local
 from src.joinhour.utils import *
 
 
@@ -107,6 +112,72 @@ class EventManagerTest(unittest.TestCase):
         activity_manager.unjoin(user2.key.id())
         self.assertEqual(Event.FORMING,activity_created.status)
         self.assertEqual(0,activity_manager.companion_count())
+
+    def test_set_time_interest(self):
+        user1 = User(
+                    name = "User1_name",
+                    last_name = "User1_lastname",
+                    email = "user@example.com",
+                    password = "foo",
+                    username = "user1",
+                    building = "building_1"
+        )
+        user1.put()
+        user2 = User(
+                    name = "User2_name",
+                    last_name = "User2_lastname",
+                    email = "user2@example.com",
+                    password = "foo",
+                    username = "user2",
+                    building = "building_1"
+        )
+        user2.put()
+        user3 = User(
+            name = "User3_name",
+            last_name = "User3_lastname",
+            email = "user3@example.com",
+            password = "foo",
+            username = "user3",
+            building = "building_1"
+        )
+        user3.put()
+        user4 = User(
+            name = "User4_name",
+            last_name = "User4_lastname",
+            email = "user4@example.com",
+            password = "foo",
+            username = "user4",
+            building = "building_1"
+        )
+        user4.put()
+        interest_start_time = datetime.utcnow() + timedelta(hours=2)
+        activity_created = EventManager.create(category='Category1',start_time=interest_start_time,username=user1.username,building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',meeting_place='meeting_place', activity_location='activity_location')
+        activity_manager = EventManager.get(activity_created.key.urlsafe())
+        self.assertEqual(activity_created.key.urlsafe(),activity_manager.get_event().key.urlsafe())
+        self.assertEqual(True,activity_manager.can_join(user2.key.id())[0])
+        activity_manager.connect(user2.key.id())
+        self.assertEqual(Event.FORMED_OPEN,activity_created.status)
+        self.assertEqual(False,activity_manager.can_join(user2.key.id())[0])
+        self.assertEqual(True,activity_manager.can_join(user3.key.id())[0])
+        activity_manager.connect(user3.key.id())
+        self.assertEqual(Event.FORMED_OPEN,activity_created.status)
+        self.assertEqual(False,activity_manager.can_join(user4.key.id())[0])
+        self.assertEqual(2,activity_manager.companion_count())
+        get_interest_details(activity_created.key.urlsafe())
+        #Now have 3 Unjoin activity
+        activity_manager.unjoin(user3.key.id())
+        self.assertEqual(Event.FORMED_OPEN,activity_created.status)
+        self.assertEqual(1,activity_manager.companion_count())
+        #Now check if User4 can join
+        self.assertEqual(True,activity_manager.can_join(user4.key.id())[0])
+        activity_manager.connect(user4.key.id())
+        self.assertEqual(2,activity_manager.companion_count())
+        self.assertEqual(Event.FORMED_OPEN,activity_created.status)
+        activity_manager.unjoin(user4.key.id())
+        activity_manager.unjoin(user2.key.id())
+        self.assertEqual(Event.FORMING,activity_created.status)
+        self.assertEqual(0,activity_manager.companion_count())
+
 
     def test_create_flex_interest(self):
         EventManager.create(category='Category1',duration='40',expiration='180',username='testuser1',building_name ='building_1',note='test_note')
