@@ -88,11 +88,9 @@ handlers:
   static_files: static/assets/img/\1
   upload: static/assets/img/(.*\.(gif|png|jpg))
 
-
-
-- url: /(.*\.(html))
+- url: /(index\.(html))
   static_files: templates/\1
-  upload: templates/(.*\.(html))
+  upload: templates/(index\.(html))
 
 - url: /.*
   script: main.app
