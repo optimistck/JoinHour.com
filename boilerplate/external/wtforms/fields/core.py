@@ -343,7 +343,15 @@ class Label(object):
     def __call__(self, text=None, **kwargs):
         kwargs['for'] = self.field_id
         attributes = widgets.html_params(**kwargs)
-        return widgets.HTMLString('<label %s>%s</label>' % (attributes, text or self.text))
+        """
+        When a label is for a required field it was inserting a * as the label
+        and didnt want it too.  This is a super kludgy fix.
+        """
+        s = widgets.HTMLString('<label %s>%s</label>' % (attributes, text or self.text))
+        if s.count('*') == 1:
+            s = widgets.HTMLString('<label %s></label>' % (attributes))
+
+        return s
 
     def __repr__(self):
         return 'Label(%r, %r)' % (self.field_id, self.text)
