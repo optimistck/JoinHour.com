@@ -92,6 +92,30 @@ handlers:
   static_files: templates/\1
   upload: templates/(index\.(html))
 
+- url: /(aboutjh\.(html))
+  static_files: templates/\1
+  upload: templates/(aboutjh\.(html))
+
+- url: /(value\.(html))
+  static_files: templates/\1
+  upload: templates/(value\.(html))
+
+- url: /(benefits\.(html))
+  static_files: templates/\1
+  upload: templates/(benefits\.(html))
+
+- url: /(get\.(html))
+  static_files: templates/\1
+  upload: templates/(get\.(html))
+
+- url: /(residents\.(html))
+  static_files: templates/\1
+  upload: templates/(residents\.(html))
+
+- url: /(why\.(html))
+  static_files: templates/\1
+  upload: templates/(why\.(html))
+
 - url: /.*
   script: main.app
 
