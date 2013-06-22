@@ -51,43 +51,21 @@ def event_attributes(event_key, username):
     expiration = event_manager.expires_in()
     event_attributes['expiration'] = expiration
     status = event.status
+    can_join = event_manager.can_join(user.key.id())[0]
+    can_leave = event_manager.can_leave(user.key.id())[0]
+    can_cancel = event_manager.can_cancel(user.key.id())[0]
+    if can_join:
+        event_attributes['can_join'] = True
+    if can_leave:
+        event_attributes['can_leave'] = True
+    if can_cancel:
+        event_attributes['can_cancel'] = True
     if type == Event.EVENT_TYPE_SPECIFIC_INTEREST:
-        can_join = event_manager.can_join(user.key.id())[0]
-        can_leave = event_manager.can_leave(user.key.id())[0]
-        can_cancel = event_manager.can_cancel(user.key.id())[0]
-        if can_join:
-            event_attributes['can_join'] = True
-        elif can_leave:
-            event_attributes['can_leave'] = True
-        elif can_cancel:
-            event_attributes['can_cancel'] = True
-        if status == Event.COMPLETE:
-            event_attributes['status'] = 'COMPLETE'
-        elif status == Event.INITIATED:
-            if expiration != 'EXPIRED':
-                event_attributes['status'] = 'CREATED'
-        elif status == Event.EXPIRED:
-            event_attributes['status'] = 'CLOSED'
-        elif status == Event.FORMING:
-            if expiration != 'EXPIRED':
-                event_attributes['status'] = 'FORMING'
-        else:
-            event_attributes['status'] = 'CLOSED'
         feedback = UserFeedback.query(UserFeedback.user == user.key,UserFeedback.status == UserFeedback.OPEN,UserFeedback.activity == event.key).fetch()
         if len(feedback) > 0:
             event_attributes['has_feedback'] = True
             event_attributes['feedback'] = feedback[0]
         event_attributes['spots_remaining'] = event_manager.spots_remaining()
-    else:
-        if status == Event.INITIATED or status == Event.FORMING:
-            if expiration == 'EXPIRED':
-                event_attributes['status'] = 'CLOSED'
-                event_attributes['can_convert'] = False
-            else:
-                event_attributes['status'] = 'CREATED'
-                event_attributes['can_convert'] = True
-        elif status == Event.COMPLETE_CONVERTED:
-            event_attributes['status'] = 'COMPLETE_CONVERTED'
     return event_attributes
 
 
