@@ -213,6 +213,8 @@ class EventManager(object):
         return True, "Success"
 
     def can_join(self, userId):
+        if self._event.type == Event.EVENT_TYPE_FLEX_INTEREST:
+            return self.can_join_flex(userId)
         #First check the status
         if self.expires_in() == Event.EXPIRED or self._event.status in Event.NON_EDITABLE_STATUS_CHOICES:
             return False, "Event has already expired/cancelled or closed"
