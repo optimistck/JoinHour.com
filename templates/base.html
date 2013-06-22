@@ -200,7 +200,7 @@
                         {% elif user_id and user_id | isValidUser%}
                         <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Post{% endtrans %}</a></li>
                         <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Board{% endtrans %}</a></li>
-                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/">{% trans %}My Corner{% endtrans %}</a></li>
+                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/app_home">{% trans %}My Corner{% endtrans %}</a></li>
 
 
                         
