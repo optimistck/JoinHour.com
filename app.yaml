@@ -116,6 +116,10 @@ handlers:
   static_files: templates/\1
   upload: templates/(why\.(html))
 
+- url: /(thanks\.(html))
+  static_files: templates/\1
+  upload: templates/(thanks\.(html))
+
 - url: /
   static_files: templates/index.html
   upload: templates/index.html
