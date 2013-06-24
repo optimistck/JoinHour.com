@@ -120,6 +120,10 @@ handlers:
   static_files: templates/\1
   upload: templates/(thanks\.(html))
 
+- url: /(costsavings\.(html))
+  static_files: templates/\1
+  upload: templates/(costsavings\.(html))
+
 - url: /
   static_files: templates/index.html
   upload: templates/index.html
