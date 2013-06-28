@@ -1,3 +1,7 @@
+from  datetime import datetime
+from boilerplate.external.pytz import timezone
+from boilerplate.external.pytz.reference import Local
+
 __author__ = 'aparbane'
 import logging
 from src.joinhour.models.feedback import UserFeedback
@@ -77,7 +81,9 @@ def get_interest_details(interest_key):
     interest_details['category'] = event.category
     interest_details['meeting_place'] = event.meeting_place
     interest_details['location'] = event.activity_location
-    interest_details['start_time'] = event.start_time
+    start_time = event.start_time - datetime.utcnow()
+    if start_time.total_seconds() > 0:
+        interest_details['start_time'] = round(start_time.total_seconds()/60)
     interest_details['username'] = event.username
     participants = event_manager.get_all_companions()
     interest_details['participants'] = participants

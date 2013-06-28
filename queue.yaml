@@ -10,3 +10,6 @@ queue:
   rate: 35/s
   retry_parameters:
       task_retry_limit: 0
+- name : activityClosure
+  rate : 35/s
+
