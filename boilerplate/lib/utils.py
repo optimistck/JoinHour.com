@@ -569,7 +569,7 @@ CATEGORY = [
 ("Go for a walk", "Go for a walk"),
 #("Split a cab", "Split a cab"),
 ("Play tennis", "Play tennis"),
-#("Pickup basketball", "Pickup basketball"),
+("Volunteer - one time commitment", "Volunteer - one time commitment"),
 ("Group dog walk", "Group dog walk"),
 ("Grab a beverage", "Grab a beverage")]
 
