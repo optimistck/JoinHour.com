@@ -45,9 +45,9 @@ class ActivityLifeCycleHandler(BaseHandler):
     def _start_post_activity_completion_process(self, activity):
         if os.environ.get('ENV_TYPE') is None:
             if os.environ.get('SERVER_SOFTWARE', '').startswith('Development'):
-                eta = 120
+                eta = 420
             else:
-                eta = 1800
+                eta = 2100
             task = Task(url='/post_activity_completion/', method='GET',
                         params={'activity_key': activity.key.urlsafe()},
                         countdown=eta)

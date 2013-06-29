@@ -162,7 +162,7 @@ class EventManager(object):
         return True, message
 
     def join_flex_interest(self,user_id,**kwargs):
-        (canJoin, message) = self.can_join_flex(user_id)
+        (canJoin, message) = self.can_join(user_id)
         if not canJoin:
             return canJoin, message, None, None
         self._event.type = Event.EVENT_TYPE_SPECIFIC_INTEREST
@@ -276,7 +276,6 @@ class EventManager(object):
             expiration_time = int(str(self._event.expiration))
             return self._event.date_entered + timedelta(minutes=expiration_time)
 
-    #TODO Recheck these calculations
     def _on_event_formation(self):
         #Queue it for life cycle management
         if os.environ.get('ENV_TYPE') is None:
@@ -284,7 +283,7 @@ class EventManager(object):
                 task_execution_time = self._event.start_time - timedelta(minutes=5)
             if self._event.expiration is not None and self._event.expiration != "":
                 task_execution_time = datetime.utcnow() + timedelta(minutes=5)
-                self._event.start_time = task_execution_time
+                self._event.start_time = datetime.utcnow() + timedelta(minutes=10)
                 self._event.put()
             goTask = Task(eta=task_execution_time, url='/activity_life_cycle/',method='GET',params={'activity': self._event.key.urlsafe()})
             goTask.add('activityLifeCycle')
