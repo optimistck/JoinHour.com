@@ -204,13 +204,14 @@
                     </fieldset>
                 </form>
 
+                <!-- ### START of PRE-REGISTER DISABLE ###
                 <h3>{% trans %}Sign Up{% endtrans %}</h3>
 
                 <form id="form_register" action="{{ uri_for("preregister") }}" method="post">
 
                     <fieldset class="well">
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                        <!-- TO DO put building names here, DB load in the future -->
+                       
 
                         <div class="control-group">
                             <label for="building_name" class="controls">Building *</label>
@@ -236,6 +237,7 @@
                         </div>
                     </fieldset>
                 </form>
+            ### END of PRE-REGISTER DISABLED ### -->
             </div>
         </div><!-- /row -->
     {% endif %}
