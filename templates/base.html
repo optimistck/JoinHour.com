@@ -11,7 +11,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="keywords" content="">
-    <meta name="generator" content="Google App Engine Boilerplate 2.2.0-beta rev516 (g9b1f961)">
+    <meta name="generator" content="Firebrand Fuse LLC">
 
     <!-- Mobile viewport optimized: h5bp.com/viewport -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -72,12 +72,12 @@
                 <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-chevron-down icon"></span>
                 </button>
-                <a class="brand" href="/"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a>
+                <a class="brand" href="/app_home"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a>
                 <div class="nav-collapse">
                     <ul class="nav pull-right">
                         
                     
-                        <li><a href="{{ uri_for("about") }}"><span class="icon-heart" ></span> {% trans %}About{% endtrans %}</a></li>
+                        <li><a href="#"></a></li>
                         <!-- START comment out top Nav Bar extras
                         {% if locale_iso %}
                         <li class="dropdown">
@@ -192,9 +192,9 @@
                         <!-- The sub nav menu changes depending if a user has logged in or not-->
 
                         {% if not user_id %}
-                        <li{% if path == uri_for("preregister") %} class="active"{% endif %}><a href="{{ uri_for("preregister") }}">{% trans %}<i class="icon-spinner icon-spin"></i> Sign Up{% endtrans %}</a></li>
-                        <li{% if path == uri_for("propmanagers") %} class="active"{% endif %}><a href="{{ uri_for("propmanagers") }}">{% trans %}Property Managers{% endtrans %}</a></li>
-                        <li{% if path == uri_for("how") %} class="active"{% endif %}><a href="{{ uri_for("how") }}">{% trans %}Residents{% endtrans %}</a></li>
+                        <li{% if path == uri_for("preregister") %} class="active"{% endif %}><a href="{{ uri_for("register") }}">{% trans %}<i class="icon-spinner icon-spin"></i> Sign Up{% endtrans %}</a></li>
+                        <li{% if path == uri_for("propmanagers") %} class="active"{% endif %}><a href="{{ uri_for("propmanagers") }}"></a></li>
+                        <li{% if path == uri_for("how") %} class="active"{% endif %}><a href="{{ uri_for("how") }}"></a></li>
 
                         <!-- Code if the user has logged in-->
                         {% elif user_id and user_id | isValidUser%}
