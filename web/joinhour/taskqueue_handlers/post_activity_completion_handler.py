@@ -1,3 +1,5 @@
+import os
+from google.appengine.api.taskqueue import Task
 from src.joinhour.models.event import Event
 
 __author__ = 'aparbane'
@@ -16,10 +18,16 @@ class PostActivityCompletionHandler(BaseHandler):
             activity_key = self.request.get('activity_key')
             activity = ndb.Key(urlsafe=activity_key).get()
             #Double check if the activity still exists and still complete
+            #Launch the feedback process
             if activity is not None and activity.status == Event.FORMED_INITIATED:
                 activity.status = Event.COMPLETE_NEEDS_FEEDBACK
                 activity.put()
                 self._handleFeedBack(activity)
+                self._start_activity_closure_process(activity)
+            #Close the activity
+            elif activity is not None and activity.status == Event.COMPLETE_NEEDS_FEEDBACK:
+                activity.status = Event.CLOSED
+                activity.put()
         except Exception , e:
             logging.warn(e)
 
@@ -40,4 +48,16 @@ class PostActivityCompletionHandler(BaseHandler):
         user_feedback.activity = activity.key
         user_feedback.user = activity_user.key
         user_feedback.put()
+
+
+    def _start_activity_closure_process(self, activity):
+        if os.environ.get('ENV_TYPE') is None:
+            if os.environ.get('SERVER_SOFTWARE', '').startswith('Development'):
+                eta = 1800
+            else:
+                eta = 259200
+            task = Task(url='/activity_closure/', method='GET',
+                        params={'activity_key': activity.key.urlsafe()},
+                        countdown=eta)
+            task.add('activityClosure')
 

@@ -1,7 +1,7 @@
 <p>Hello <strong>{{participant_username}}</strong>,</p>
 
 <p>
-The activity you joined, <strong>{{interest['category']}}</strong>, has reached the minimum number of participants, and it will start at {{interest['start_time']}}. </p>
+The activity you joined, <strong>{{interest['category']}}</strong>, has reached the minimum number of participants, and it will start in {{interest['start_time']}} minutes. </p>
 
 
 <p>
