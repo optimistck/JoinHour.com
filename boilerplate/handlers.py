@@ -754,7 +754,10 @@ class RegisterHandler(RegisterBaseHandler):
         building = self.form.building.data
         security_code = self.form.security_code.data.strip();
         if security_code:
-            token_match = Token.match(security_code)
+            try:
+                token_match = Token.match(security_code)
+            except ValueError:
+                token_match = None
             if not token_match:
                 message = _('Sorry, invalid security code. Please try again.')
                 self.add_message(message, 'error')
