@@ -15,6 +15,8 @@
 
 
 # TODO: change
+import logging
+
 __author__  = 'Constantin Kostenko with templates by Rodrigo Augosto'
 __website__ = 'www.JoinHour.com'
 
@@ -165,10 +167,13 @@ buildings = ["River Place North",
              "1633 Colonial Terrace",
              "Lyon Place at Clarendon Center",
              "Clarendon Apartments"]
-
+#No preregistration for now
+'''
 for building in buildings:
+    logging.info('Trying to add buildings')
     build = Building.query(Building.building_name==building).get()
     if not build:
         build = Building(building_name = building, online = False)
         build.put()
+'''
 
