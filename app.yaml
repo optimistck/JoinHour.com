@@ -128,10 +128,6 @@ handlers:
   static_files: templates/\1
   upload: templates/(whyitworks\.(html))
 
-- url: /
-  static_files: templates/index.html
-  upload: templates/index.html
-
 - url: /.*
   script: main.app
 

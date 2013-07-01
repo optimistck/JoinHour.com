@@ -72,7 +72,7 @@
                 <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
                     <span class="icon-chevron-down icon"></span>
                 </button>
-                <a class="brand" href="/app_home"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a>
+                <a class="brand" href="{{ uri_for("home") }}"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a>
                 <div class="nav-collapse">
                     <ul class="nav pull-right">
                         
@@ -200,7 +200,7 @@
                         {% elif user_id and user_id | isValidUser%}
                         <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Post{% endtrans %}</a></li>
                         <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Board{% endtrans %}</a></li>
-                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/app_home">{% trans %}My Corner{% endtrans %}</a></li>
+                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="{{ uri_for("home") }}">{% trans %}My Corner{% endtrans %}</a></li>
 
 
                         

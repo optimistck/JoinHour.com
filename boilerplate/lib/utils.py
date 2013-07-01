@@ -474,9 +474,7 @@ COUNTRIES = [
 
 BUILDINGS = [
 #("", ""),
-("River House", "River House"),
-("Oakwood at Falls Church", "Oakwood at Falls Church"),
-("The Belvedere", "The Belvedere")
+("Raytheon Solipsys", "Raytheon Solipsys")
 #("Virginia Square Plaza", "Virginia Square Plaza"),
 #("NOT LISTED", "NOT LISTED")
 ]
@@ -565,13 +563,10 @@ TIME_MINUTES = [
 
 CATEGORY = [
 #("", ""),
-("Go for a run", "Go for a run"),
-("Go for a walk", "Go for a walk"),
+("Lunch", "Lunch"),
+("Play ping pong", "Play ping pong"),
 #("Split a cab", "Split a cab"),
-("Play tennis", "Play tennis"),
-("Volunteer - one time commitment", "Volunteer - one time commitment"),
-("Group dog walk", "Group dog walk"),
-("Grab a beverage", "Grab a beverage")]
+("Grab coffee", "Grab coffee")]
 
 # These may have to go
 SUBCATEGORY = [
