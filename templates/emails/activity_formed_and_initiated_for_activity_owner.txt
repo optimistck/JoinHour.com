@@ -1,22 +1,32 @@
 <p>Hello <strong>{{interest['username']}}</strong>,</p>
 
 <p>
-Your activity {{interest['category'}} will start in 5 minutes.
-<BR>
-Meet others at {{interest['meeting_place']}}. Activity location: {{interest['location']}}
-</p>
+Your activity <strong>{{interest['category'}} </strong> will start in <strong>5</strong> minutes.
+<BR><BR>
+
+<p>
+Activity details:</p>
+<ul>
+	<li>
+    	<em>Meeting place:</em> {{interest['meeting_place']}}
+    	</li>
+	<li>
+    	<em>Activity location:</em> {{interest['location']}}
+    	</li>
+	<li>
+	<em>People participating:</em> {{interest['all_participants']}}
+	</li>
+</ul>
 
 
-Activity participants:</em> {{interest['all_participants']}}
 
-</p>
+Thank you for committing. Please arrive on time. <BR><BR> Enjoy the company, and thank you for using JoinHour.com. Cheers!<br><br><br>
 
-<p>Have fun, arrive on time, and thank you for using JoinHour.com<br>
 {{ app_name }} Team
 
 <BR>
 <p>
-If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+P.S. If you have questions, comments, or thoughts on how we can improve please contact us at:</br>
 we+support@JoinHour.com
 </p>
 

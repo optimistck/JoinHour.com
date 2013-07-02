@@ -14,7 +14,7 @@ Activity details:</p>
     	<em>Activity location:</em> {{interest['location']}}
     	</li>
 	 <li>
-	<em>Activity owner</em>J: {{interest['username']}}
+	<em>Activity owner</em>: {{interest['username']}}
 	 </li>
 	<li>
 	<em>People participating:</em> {{interest['all_participants']}}
@@ -24,13 +24,13 @@ Activity details:</p>
 
 
 
-<p>We'll send all participants a 5 minute reminder shortly. Please arrive on time to have  fun with good people around you. Thank you for using JoinHour.com. Cheers!<br>
+<p>We'll send all participants a reminder 5 minutes before the start time. </p> Thank you for committing. Please arrive on time. <BR><BR> Enjoy the company, and thank you for using JoinHour.com. Cheers!<br><br><br>
 
 {{ app_name }} Team
 
 <BR>
 <p>
-P.S. If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+P.S. If you have questions, comments, or thoughts on how we can improve please contact us at:</br>
 we+support@JoinHour.com
 </p>
 
