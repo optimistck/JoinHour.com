@@ -1,22 +1,33 @@
 <p>Hello <strong>{{interest['username']}}</strong>,</p>
 
 <p>
-Your activity {{interest['category']}} will start in {{interest.start_time}} minutes.
-<BR>
-Meet others at {{interest['meeting_place']}}. Activity location: {{interest['location']}}
-</p>
+The activity you created, <strong>{{interest['category']}}</strong>, has reached the minimum number of participants, and it will start in {{interest['start_time']}} minutes. The activity is open for others to join.</p>
 
 
-Activity participants:</em> {{interest['all_participants']}}
+<p>
+Activity details:</p>
+<ul>
+	<li>
+    	<em>Meeting place:</em> {{interest['meeting_place']}}
+    	</li>
+	<li>
+    	<em>Activity location:</em> {{interest['location']}}
+    	</li>
+	<li>
+	<em>People participating:</em> {{interest['all_participants']}}
+	</li>
+</ul>
 
-</p>
 
-<p>Have fun, arrive on time, and thank you for using JoinHour.com<br>
+
+
+<p>We'll send all participants a reminder 5 minutes before the start time. </p> Thank you for committing. Please arrive on time. <BR><BR> Enjoy the company, and thank you for using JoinHour.com. Cheers!<br><br><br>
+
 {{ app_name }} Team
 
 <BR>
 <p>
-If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
+P.S. If you have questions, comments, or thoughts on how we can improve please contact us at:</br>
 we+support@JoinHour.com
 </p>
 
