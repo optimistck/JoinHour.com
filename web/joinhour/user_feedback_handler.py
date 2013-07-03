@@ -1,3 +1,5 @@
+from boilerplate import models
+
 __author__ = 'aparbane'
 
 from google.appengine.ext import ndb
@@ -5,7 +7,7 @@ import webapp2
 
 from web.joinhour.ui.forms import UserFeedbackForm
 from boilerplate.lib.basehandler import BaseHandler, user_required
-from src.joinhour.models.feedback import UserFeedback
+from src.joinhour.models.feedback import UserFeedback, CompanionShipRating
 from wtforms import Form
 
 
@@ -18,6 +20,7 @@ class UserFeedbackHandler(BaseHandler):
         if user_feedback_key:
             user_feedback = ndb.Key(urlsafe=user_feedback_key).get()
             self.view.user_feedback = user_feedback
+            self.view.companion_ship_ratings = CompanionShipRating.query(CompanionShipRating.activity == user_feedback.activity, CompanionShipRating.rater == models.User.get_by_id(long(self.user_id)).key).fetch()
         return self.render_template('user_feedback.html', **params)
 
     @user_required
@@ -35,6 +38,7 @@ class UserFeedbackHandler(BaseHandler):
             else:
                 self.add_message("Your feedback was submitted. Please tell us how we can make JoinHour work better for you and hundreds of your neighbors.", 'success')
                 return self.redirect_to('contact');
+
 
     @webapp2.cached_property
     def form(self):

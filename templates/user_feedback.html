@@ -8,6 +8,30 @@
 {% endblock %}
 
 {% block content %}
+    <h4>Rate your experience and companions</h4>
+
+    <div id="companion_ship_popup" class="modal hide fade">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="false">&times;</button>
+            <h3>Rate your companions</h3>
+        </div>
+        <table id="companion_ship_ratings" class="table table-striped table-bordered">
+             <tr>
+                  <th>Companion</th>
+                  <th>Rating</th>
+             </tr>
+            {% for companionship_rating in companion_ship_ratings %}
+                <tr>
+                    <td>
+                        {{ companionship_rating.ratee.get().username }}
+                    </td>
+                    <td>
+                        <a class="x-editable" href="#" id="rating" data-type="select" data-pk="{{ companionship_rating.key.urlsafe() }}"  data-title="Enter Rating">{{ companionship_rating.rating }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
 
     <form id="form_feedback" action="{{ url|safe }}" method="post" class="well form-horizontal">
         <input type="hidden" name="userfeedback_key" value="{{ user_feedback.key.urlsafe() }}">
@@ -41,12 +65,34 @@
         </div>
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-primary">Submit feedback</button>
+                <span class="link inline"><a href="#companion_ship_popup" class="open-cancel-confirm-dialog" data-toggle="modal">Rate your companions</a></span>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <button type="submit" class="btn btn-primary">Submit</button>
             </div>
         </div>
     </form>
-
-    </table>
+    <!--h4>Rate your companion</h4>
+    <div class="hero-unit">
+        <table id="companion_ship_ratings" class="table table-striped table-bordered">
+             <tr>
+                  <th>Companion</th>
+                  <th>Rating</th>
+             </tr>
+            {% for companionship_rating in companion_ship_ratings %}
+                <tr>
+                    <td>
+                        <a href="/user_profile/?username={{ companionship_rating.ratee.get().username }}">{{ companionship_rating.ratee.get().username }}</a>
+                    </td>
+                    <td>
+                        <a class="x-editable" href="#" id="rating" data-type="select" data-pk="{{ companionship_rating.key.urlsafe() }}"  data-title="Enter Rating">{{ companionship_rating.rating }}</a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div-->
 
 
 {% endblock %}
@@ -61,6 +107,31 @@
                 }
             });
         });
+
+        $('#companion_ship_ratings td .x-editable').editable({
+            type: 'select',
+            url: '/companion_ship_rating_service.update_rating',
+            title: 'Enter Rating',
+            ajaxOptions: {
+                type: 'POST',
+                dataType: 'json',
+                contentType: 'application/json'
+            },
+            params: function(params) {
+
+                    var j={"key":params.pk,"rating":params.value};
+                    return JSON.stringify(j);
+            },
+            source: [
+              {value: 'INAPPROPRIATE', text: 'In Appropriate'},
+              {value: 'NO_SHOW', text: 'No Show'},
+              {value: 'NEUTRAL', text: 'Neutral'},
+              {value: 'GOOD', text: 'Good'},
+              {value: 'VERY_GOOD', text: 'Very Good'},
+              {value: 'OUTSTANDING', text: 'Outstanding'}
+           ]
+        });
+
     </script>
 {% endblock %}
 
