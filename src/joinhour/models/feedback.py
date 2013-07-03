@@ -39,10 +39,11 @@ class CompanionShipRating(ndb.Model):
     GOOD = 'GOOD'
     VERY_GOOD = 'VERY_GOOD'
     OUTSTANDING = 'OUTSTANDING'
-    rater = ndb.KeyProperty(kind=User,name='user')
+    activity = ndb.KeyProperty(kind=Event,name='activity',required=True)
+    rater = ndb.KeyProperty(kind=User,name='rater')
     activity_category = ndb.StringProperty()
     activity_date = ndb.DateTimeProperty(auto_now_add=True)
-    ratee = ndb.KeyProperty(kind=User,name='user')
+    ratee = ndb.KeyProperty(kind=User,name='ratee')
     rating = ndb.StringProperty(default = NEUTRAL,choices=[INAPPROPRIATE,NO_SHOW,NEUTRAL,GOOD,VERY_GOOD,OUTSTANDING])
     blacklist = ndb.BooleanProperty(default=False)
 
