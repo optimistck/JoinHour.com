@@ -4,7 +4,7 @@ from src.joinhour.models.event import Event
 
 __author__ = 'aparbane'
 from google.appengine.ext import ndb
-from src.joinhour.models.feedback import UserFeedback
+from src.joinhour.models.feedback import UserFeedback, CompanionShipRating
 from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
 import logging
@@ -23,6 +23,7 @@ class PostActivityCompletionHandler(BaseHandler):
                 activity.status = Event.COMPLETE_NEEDS_FEEDBACK
                 activity.put()
                 self._handleFeedBack(activity)
+                self._handle_companionship_rating(activity)
                 self._start_activity_closure_process(activity)
             #Close the activity
             elif activity is not None and activity.status == Event.COMPLETE_NEEDS_FEEDBACK:
@@ -48,6 +49,28 @@ class PostActivityCompletionHandler(BaseHandler):
         user_feedback.activity = activity.key
         user_feedback.user = activity_user.key
         user_feedback.put()
+
+    def _handle_companionship_rating(self, activity):
+        #populate default rating information for the owner
+        activity_user = models.User.get_by_username(activity.username).key
+        participants_list = UserActivity.query(UserActivity.activity == activity.key, UserActivity.status == UserActivity.ACTIVE).fetch(
+            projection=[UserActivity.user])
+        for participant in participants_list:
+            self._create_default_rating(activity,activity_user,participant.user)
+        #populate for other participants
+        for participant in participants_list:
+            self._create_default_rating(activity,participant.user,activity_user)
+            for other_participant in filter(lambda user_participant: user_participant.user != participant.user,participants_list):
+                self._create_default_rating(activity,participant.user,other_participant.user)
+
+    def _create_default_rating(self,activity,rater,ratee):
+        companionship_rating = CompanionShipRating()
+        companionship_rating.activity = activity.key
+        companionship_rating.rater = rater
+        companionship_rating.ratee = ratee
+        companionship_rating.put()
+
+
 
 
     def _start_activity_closure_process(self, activity):

@@ -166,9 +166,12 @@ buildings = ["River Place North",
              "Lyon Place at Clarendon Center",
              "Clarendon Apartments"]
 
+#Commenting the preregistration
+'''
 for building in buildings:
     build = Building.query(Building.building_name==building).get()
     if not build:
         build = Building(building_name = building, online = False)
         build.put()
+'''
 
