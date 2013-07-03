@@ -64,6 +64,9 @@ def event_attributes(event_key, username):
         event_attributes['can_leave'] = True
     if can_cancel:
         event_attributes['can_cancel'] = True
+    if event.start_time is not None:
+        start_time = str(event.start_time)
+        event_attributes['start_time'] = start_time[0:start_time.index('.')]
     if type == Event.EVENT_TYPE_SPECIFIC_INTEREST:
         feedback = UserFeedback.query(UserFeedback.user == user.key,UserFeedback.status == UserFeedback.OPEN,UserFeedback.activity == event.key).fetch()
         if len(feedback) > 0:
