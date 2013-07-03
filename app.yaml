@@ -132,6 +132,9 @@ handlers:
   static_files: templates/index.html
   upload: templates/index.html
 
+- url: /companion_ship_rating_service.*
+  script: services.app
+
 - url: /.*
   script: main.app
 
