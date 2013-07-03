@@ -7,7 +7,7 @@ from web import handlers
 from web.joinhour import get_activity_handler
 from web.joinhour import terms_handler
 from web.joinhour import activity_handler, home_request_handler, join_handler, thank_you_handler, \
-    tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler, token_gen_handler, convert_handler, update_activity_handler, leave_activity_handler, about_handler, propmanagers_handler, pre_register_handler, cancel_activity_handler, next_action_preregistered_handler,\
+    tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler, token_gen_handler, convert_handler, update_activity_handler, leave_activity_handler, propmanagers_handler, pre_register_handler, cancel_activity_handler, next_action_preregistered_handler,\
 building_handler, all_buildings_handler, next_action_thankyou_feedback_handler
 from web.joinhour.complete_profile_social_user_handler import CompleteProfileSocialUserHandler
 from web.joinhour.taskqueue_handlers.post_activity_completion_handler import PostActivityCompletionHandler
