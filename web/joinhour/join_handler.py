@@ -1,8 +1,11 @@
 from webapp2_extras.i18n import gettext as _
 import webapp2
+from boilerplate.external.wtforms.ext import dateutil
+
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
+import isodate
 from src.joinhour.event_manager import EventManager
 from datetime import datetime
 
@@ -31,10 +34,8 @@ class JoinHandler(BaseHandler):
             interest_info['building_name'] = building_name
             interest_info['category'] = self.form.category.data.strip()
             interest_info['username'] = user_info.username
-            if hasattr(self.form,'time_hours') and hasattr(self.form,'time_minutes') and self.form.time_hours.data != "None":
-                current_date = datetime.now(tz=Local)
-                current_date = current_date.replace(hour=int(self.form.time_hours.data.strip()), minute=int(self.form.time_minutes.data.strip()))
-                interest_info['start_time'] = current_date.astimezone(timezone('UTC')).replace(tzinfo=None)
+            if hasattr(self.form,'set_time') and self.form.set_time.data != "None" and self.form.set_time.data != "":
+                interest_info['start_time'] = isodate.parse_datetime(self.form.set_time.data.strip()).replace(tzinfo=None)
             elif hasattr(self.form,'expiration') and self.form.expiration.data != "" and self.form.expiration.data != "None":
                 interest_info['expiration'] = self.form.expiration.data.strip()
             if hasattr(self.form,'min_number_of_people_to_join'):
