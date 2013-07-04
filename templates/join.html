@@ -17,6 +17,7 @@
         <form id="form_initiate_activity" action="{{ url|safe }}" method="post">
         <fieldset>
             <input type="hidden" name="exception" value="{{ exception }}">
+            <input type="hidden" name="set_time" id="set_time" value="">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             <H4>I want to</H4>
             {{ macros.field(form.category, label=_(" ")) }}
@@ -34,8 +35,12 @@
 
             <span id="timing_details_set_time" style="display: none;">
             <h4>Set time to start activity at</h4>
-            {{ macros.field(form.time_hours, label=_(" ") ,disabled=true) }}
-            {{ macros.field(form.time_minutes, label=_(" ") ,disabled=true) }}
+                <div id="set_time_datetimepicker" class="input-append date form_datetime">
+                    <input size="16" type="text" value="" readonly>
+                        <span class="add-on">
+                            <i class="icon-th"></i>
+                        </span>
+                 </div>
             </span>
 
             <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I'm flexible, and I will join others</STRONG></label>
@@ -88,19 +93,34 @@
         });
     });
 
+    $(".form_datetime").datetimepicker({
+        format: "dd MM yyyy - HH:ii",
+        autoclose:true,
+        startView:0,
+        startDate:new Date()
+    });
+
+    $(".form_datetime").datetimepicker().on('changeDate', function(ev){
+        var picker = $(".form_datetime").data('datetimepicker')
+        var utcDate = picker.getDate().toUTCString();
+        document.getElementById('set_time').value = new Date(utcDate).toISOString();
+    });
+
+
+
     function onTypeRadioButtonChange2(id1, id2){
         if(document.getElementById('ASAP_radio').checked)
         {
             document.getElementById(id1).style.display = 'none';
-            document.getElementById('time_hours').disabled = true;
-            document.getElementById('time_minutes').disabled = true;
+            document.getElementById('set_time_datetimepicker').disabled = true;
             document.getElementById(id2).style.display = 'block';
         }
         else if(document.getElementById('Set_Time_radio').checked)
         {
             document.getElementById(id1).style.display = 'block';
-            document.getElementById('time_hours').disabled = false;
-            document.getElementById('time_minutes').disabled = false;
+            //document.getElementById('time_hours').disabled = false;
+            //document.getElementById('time_minutes').disabled = false;
+            document.getElementById('set_time_datetimepicker').disabled = false;
             document.getElementById(id2).style.display = 'none';
         }
     }
