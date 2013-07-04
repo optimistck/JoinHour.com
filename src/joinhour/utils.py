@@ -66,7 +66,10 @@ def event_attributes(event_key, username):
         event_attributes['can_cancel'] = True
     if event.start_time is not None:
         start_time = str(event.start_time)
-        event_attributes['start_time'] = start_time[0:start_time.index('.')]
+        if start_time.find('.') > 0:
+            event_attributes['start_time'] = start_time[0:start_time.find('.')]
+        else:
+            event_attributes['start_time'] = start_time
     if type == Event.EVENT_TYPE_SPECIFIC_INTEREST:
         feedback = UserFeedback.query(UserFeedback.user == user.key,UserFeedback.status == UserFeedback.OPEN,UserFeedback.activity == event.key).fetch()
         if len(feedback) > 0:
@@ -86,7 +89,7 @@ def get_interest_details(interest_key):
     interest_details['location'] = event.activity_location
     start_time = event.start_time - datetime.utcnow()
     if start_time.total_seconds() > 0:
-        interest_details['start_time'] = round(start_time.total_seconds()/60)
+        interest_details['start_time'] = minute_format(start_time)
     interest_details['username'] = event.username
     participants = event_manager.get_all_companions()
     interest_details['participants'] = participants
