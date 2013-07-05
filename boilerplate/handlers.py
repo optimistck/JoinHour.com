@@ -1273,7 +1273,7 @@ class EditProfileHandler(BaseHandler):
                 strAvatar = str(avatar)
                 if avatar is not None and strAvatar != "":
                     if sys.getsizeof(strAvatar) > TWO_MB:
-                        logging.error('Error updating profile: ' + e)
+                        logging.error('Error updating profile: ')
                         message = _('Unable to update profile. Profile image cannot be larger than 2MB.')
                         self.add_message(message, 'error')
                         return self.get()
