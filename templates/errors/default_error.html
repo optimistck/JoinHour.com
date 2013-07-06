@@ -14,6 +14,21 @@
     <link rel="stylesheet" href="/boilerplate/css/bootstrap.min.css">
     <link rel="stylesheet" href="/boilerplate/css/bootstrap-responsive.min.css">
 
+        <!-- CSS Global Compulsory-->
+    <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/headers/header1.css">
+    <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/assets/css/style_responsive.css">
+    <link rel="shortcut icon" href="favicon.ico">        
+    <!-- CSS Implementing Plugins -->    
+    <link rel="stylesheet" href="/assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="/assets/plugins/flexslider/flexslider.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/assets/plugins/parallax-slider/css/parallax-slider.css" type="text/css">
+    <!-- CSS Theme -->    
+    <link rel="stylesheet" href="/assets/css/themes/blue.css" id="style_color">
+    <link rel="stylesheet" href="/assets/css/themes/headers/header1-blue.css" id="style_color-header-1">
+
     <script type="text/javascript">
         var _gaq = _gaq || [];
         _gaq.push(['_setAccount', 'UA-XXXXX-X']);
@@ -29,32 +44,29 @@
 
 <body>
 
-<div class="container">
-    <h1 style="margin-bottom: 1em;">We&rsquo;re sorry &mdash; something has gone wrong on our end.</h1>
 
-    <div>
-        <p class="label">Error: {{ exception }}</p>
-        <h2>What could have caused this?</h2>
-        <ul>
-            <li>Well, something technical went wrong on our site.</li>
-            <li>We might have removed the page when we redesigned our website.</li>
-            <li>Or the link you clicked might be old and does not work anymore.</li>
-            <li>Or you might have accidentally typed the wrong URL in the address bar.</li>
+<!--=== Breadcrumbs ===-->
+<div class="breadcrumbs margin-bottom-40">
+    <div class="container">
+        <h1 class="color-green pull-left">Page Not Found</h1>
+        <ul class="pull-right breadcrumb">
+            <li><a href="index.html">Sorry</a> <span class="divider">/</span></li>
+            <li><a href="">about</a> <span class="divider">/</span></li>
+            <li>that...</li>
         </ul>
+    </div><!--/container-->
+</div><!--/breadcrumbs-->
+<!--=== End Breadcrumbs ===-->
 
-        <h2>What you can do?</h2>
-        <ul>
-            <li>You might try retyping the URL and trying again.</li>
-            <li>Or we could take you back to the <a href="/">home page</a>. </li>
-        </ul>
 
-        <div>
-            <strong>One more thing:</strong><br />
-            If you want to help us fix this issue, we are here to help.
-            Please contact us and <a href="/contact/?exception={{ exception }}-{{ url }}">let us know what went wrong</a>.
-        </div>
-    </div>
-</div>
+<!--=== Content Part ===-->
+<div class="container">     
+    <div class="row-fluid page-404">
+        <p><i class="icon-cogs"></i><span>Throw us a lifeline. We logged the error, but please tell us what went wrong <a href="/contact/?exception={{ exception }}-{{ url }}">here</a>.</span></p>
+    </div><!--/row-fluid-->        
+</div><!--/container-->     
+<!--=== End Content Part ===-->
+
 
 </body>
 </html>
