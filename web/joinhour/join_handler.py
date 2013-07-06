@@ -42,6 +42,13 @@ class JoinHandler(BaseHandler):
                 interest_info['min_number_of_people_to_join'] = self.form.min_number_of_people_to_join.data.strip()
             if hasattr(self.form,'max_number_of_people_to_join'):
                 interest_info['max_number_of_people_to_join'] = self.form.max_number_of_people_to_join.data.strip()
+            if hasattr(self.form,'min_number_of_people_to_join') and hasattr(self.form,'max_number_of_people_to_join'):
+                min_count = int(interest_info['min_number_of_people_to_join'].split()[0])
+                max_count = int(interest_info['max_number_of_people_to_join'].split()[0])
+                if min_count > max_count:
+                    message = _("Minimum number of participants cannot be greater than Maximum number of participants.")
+                    self.add_message(message, 'error')
+                    return self.redirect_to('join')
             if hasattr(self.form,'meeting_place'):
                 interest_info['meeting_place'] = self.form.meeting_place.data.strip()
             if hasattr(self.form,'duration'):
