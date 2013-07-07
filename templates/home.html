@@ -59,7 +59,7 @@
                         {% if event.status in ['CLOSED','CANCELLED','EXPIRED'] %}
                             {% continue %}
                         {% endif %}
-                        {{ macros.show_event(event,username) }}
+                        {{ macros.show_event(event,username,event_attributes_list) }}
                     {% endfor %}
                </div>
             </div>

@@ -6,7 +6,11 @@
         {% if event.status in ['CLOSED','CANCELLED','EXPIRED'] %}
             {% continue %}
         {% endif %}
-        {{ macros.show_event(event,username) }}
+        {% set event_attributes = event_attributes_list[event.key.urlsafe()] %}
+        {% if not event_attributes['can_join'] and   not event_attributes['can_leave'] and not event_attributes['can_cancel'] and not event_attributes['has_feedback']%}
+                {% continue %}
+        {% endif %}
+        {{ macros.show_event(event,username,event_attributes_list) }}
     {% endfor %}
     </events>
 {% endblock %}

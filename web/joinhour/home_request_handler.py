@@ -68,13 +68,12 @@ class HomeRequestHandler(RegisterBaseHandler):
 
         my_interests = Event.query(Event.username == user_info.username
                                              ,Event.status != Event.EXPIRED).fetch()
-        user_activities = UserActivity.query(UserActivity.user == user_info.key,
-                                                   UserActivity.status == UserActivity.ACTIVE).fetch()
-        joined_interests = []
-        for user_activity in user_activities:
-            joined_interests.append(user_activity.activity.get())
+        event_attributes_list = dict()
+        for event in my_interests:
+            event_attribute = event_attributes(event.key.urlsafe(),self.username)
+            event_attributes_list[event.key.urlsafe()] = event_attribute
         self.view.my_interests = my_interests
-        self.view.joined_activities = joined_interests
+        self.view.event_attributes_list = event_attributes_list
         token = channel.create_channel(self.user_id)
         params['token'] = token
         return self.render_template('home.html', **params)
