@@ -43,13 +43,20 @@ class ActivityHandler(BaseHandler):
         self.view.building = building_name
         cursor = Cursor(urlsafe=cursorStr.lstrip('Cursor(').rstrip(')'))
         events, next_cursor, more = Event.query(Event.building_name == building_name).order(-Event.date_entered).fetch_page(15, start_cursor=cursor)
+        event_attributes_list = dict()
+        for event in events:
+            event_attribute = event_attributes(event.key.urlsafe(),self.username)
+            event_attributes_list[event.key.urlsafe()] = event_attribute
         self.view.events = events
+        self.view.event_attributes_list = event_attributes_list
         self.view.cursor = next_cursor
         self.view.more = more
         if cursorStr is not None and cursorStr != "":
             return self.render_template('event_list.html', **params)
         else:
             return self.render_template('stat.html', **params)
+
+
 
 
 

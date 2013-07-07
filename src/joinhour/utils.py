@@ -54,7 +54,6 @@ def event_attributes(event_key, username):
     type = event.type
     expiration = event_manager.expires_in()
     event_attributes['expiration'] = expiration
-    status = event.status
     can_join = event_manager.can_join(user.key.id())[0]
     can_leave = event_manager.can_leave(user.key.id())[0]
     can_cancel = event_manager.can_cancel(user.key.id())[0]

@@ -37,11 +37,12 @@
 {% endif %}
 {%- endmacro %}
 
-{% macro show_event(event,username) -%}
-        {% set event_attributes = event.key.urlsafe() | event_attributes(username) %}
+{% macro show_event(event,username,event_attributes_list) -%}
+        {% set event_attributes = event_attributes_list[event.key.urlsafe()] %}
         {% set activity_participants = event.key.urlsafe() | get_all_companions %}
-        {% set expiration = event.key.urlsafe() |expires_in  | minute_format %}
         {% set matching_activities = event.key | get_matching_activities %}
+
+
 
             <div class="media-object">
                 {{ show_avatar(event.username) }}
