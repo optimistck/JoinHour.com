@@ -636,7 +636,7 @@ class CallbackSocialLoginHandler(BaseHandler):
             if email:
                 unique_properties = ['email']
                 user_info = self.auth.store.user_model.create_user(
-                    auth_id, unique_properties, email=email,username=email,
+                    auth_id, unique_properties, email=email,username=email.replace('@', '_'),
                     activated=True
                 )
             else:
