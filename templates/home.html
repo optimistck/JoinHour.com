@@ -9,39 +9,35 @@
 {% block content %}
 
     {% if user_id %}
-
-    {% if is_mobile %}
-            
-        <div class="alert alert-info"><i class="icon-edit icon-large"></i> Post your <a href="{{ uri_for("join") }}">interest</a>, browse open <a href="{{ uri_for("activity") }}">activities</a>, or read user <a href="{{ uri_for("how") }}">experiences</a>.
-                <BR>
-        </div>
-    {% else %}
-
-<ul class="thumbnails team">
-        <li class="span4">
-            <div class="thumbnail-style">
-                <a href="{{ uri_for("join") }}"><img src="../img/2.x.One.jpg" alt="" class="img-rounded"/></a>
-                <h3><a href="{{ uri_for("join") }}">Post</a> <small>Pick an interest & set availability.</small></h3>
-                <p></p>
+        {% if is_mobile %}
+            <div class="alert alert-info">
+                <i class="icon-edit icon-large"></i> Post your <a href="{{ uri_for("join") }}">interest</a>, browse open <a href="{{ uri_for("activity") }}">activities</a>, or read user <a href="{{ uri_for("how") }}">experiences</a>.<BR>
             </div>
-        </li>
-        <li class="span4">
-            <div class="thumbnail-style">
-                <a href="{{ uri_for("activity") }}"><img src="../img/2.x.Two.jpg" alt="" class="img-rounded"/></a>
-                <h3><a href="{{ uri_for("activity") }}">Browse</a> <small>Join activities on the Live Board.</small></h3>
-                <p></p>
-            </div>
-        </li>
-        <li class="span4">
-            <div class="thumbnail-style">
-                <a href="{{ uri_for("how") }}"><img src="../img/2.x.Three.jpg" alt="" class="img-rounded"/></a>
-                <h3><a href="{{ uri_for("how") }}">Experiences</a> <small>See how your neighbors use JoinHour.</small></h3>
-                <p></p>
-            </div>
-        </li>
-    </ul><!--/thumbnails-->
-    {% endif %}
-
+        {% else %}
+            <ul class="thumbnails team">
+                <li class="span4">
+                    <div class="thumbnail-style">
+                        <a href="{{ uri_for("join") }}"><img src="../img/2.x.One.jpg" alt="" class="img-rounded"/></a>
+                        <h3><a href="{{ uri_for("join") }}">Post</a> <small>Pick an interest & set availability.</small></h3>
+                        <p></p>
+                    </div>
+                </li>
+                <li class="span4">
+                    <div class="thumbnail-style">
+                        <a href="{{ uri_for("activity") }}"><img src="../img/2.x.Two.jpg" alt="" class="img-rounded"/></a>
+                        <h3><a href="{{ uri_for("activity") }}">Browse</a> <small>Join activities on the Live Board.</small></h3>
+                        <p></p>
+                    </div>
+                </li>
+                <li class="span4">
+                    <div class="thumbnail-style">
+                        <a href="{{ uri_for("how") }}"><img src="../img/2.x.Three.jpg" alt="" class="img-rounded"/></a>
+                        <h3><a href="{{ uri_for("how") }}">Experiences</a> <small>See how your neighbors use JoinHour.</small></h3>
+                        <p></p>
+                    </div>
+                </li>
+            </ul><!--/thumbnails-->
+        {% endif %}
 
         <div>
             <ul class="nav nav-tabs">
@@ -53,15 +49,15 @@
         <div class="tab-content">
             {% include "interest2activity_popup.html" %}
             <div id="pane1" class="tab-pane active">
-               <hr/>
-               <div id="events" class="media">
+                <hr/>
+                <div id="events" class="media">
                     {% for event in  my_interests%}
                         {% if event.status in ['CLOSED','CANCELLED','EXPIRED'] %}
                             {% continue %}
                         {% endif %}
                         {{ macros.show_event(event,username,event_attributes_list) }}
                     {% endfor %}
-               </div>
+                </div>
             </div>
         </div><!-- /.tab-content -->
     {% else %}

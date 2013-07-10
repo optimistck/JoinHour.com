@@ -334,7 +334,8 @@ var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s
     <div class="container">
         <div class="row-fluid">
             <div class="span8">                     
-                <p>2013 &copy; <a href="http://www.Firebrandfuse.com">Firebrand Fuse LLC</a> | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                <p>2013 &copy; <a href="http://www.Firebrandfuse.com">Firebrand Fuse LLC</a> | <a href="http://www.iubenda.com/privacy-policy/882951" class="iubenda-embed iubenda-no-icon" title="Privacy Policy" >Privacy Policy</a> |
+                    <a href="/terms.html">Terms of Service</a></p>
             </div>
             <div class="span4"> 
                 <!--JH Temp Removal   
@@ -390,6 +391,21 @@ var scr = d.getElementsByTagName(t)[0], par = scr.parentNode; par.insertBefore(s
   ga('send', 'pageview');
 
 </script>
-
+<script type="text/javascript">
+(function (w,d) {
+    var loader = function () {
+        var s = d.createElement("script"), tag = d.getElementsByTagName("script")[0];
+        s.src = "http://cdn.iubenda.com/iubenda.js";
+        tag.parentNode.insertBefore(s,tag);
+    };
+    if(w.addEventListener){
+        w.addEventListener("load", loader, false);
+    }else if(w.attachEvent){
+        w.attachEvent("onload", loader);
+    }else{
+        w.onload = loader;
+    }
+})(window, document);
+</script>
 </body>
 </html>	
