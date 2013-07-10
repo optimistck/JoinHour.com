@@ -19,7 +19,12 @@ class GetActivityHandler(BaseHandler):
     def get(self):
         ID = self.request.get('ID')
         if ID:
-            self.view.event = ndb.Key(urlsafe=ID).get()
+            event = ndb.Key(urlsafe=ID).get()
+            self.view.event = event
+            event_attributes_list = dict()
+            event_attribute = event_attributes(event.key.urlsafe(),self.username)
+            event_attributes_list[event.key.urlsafe()] = event_attribute
+            self.view.event_attributes_list = event_attributes_list
         params = {}
         return self.render_template('activity_detail.html', **params)
 
