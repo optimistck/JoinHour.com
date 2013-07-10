@@ -474,9 +474,8 @@ COUNTRIES = [
 
 BUILDINGS = [
 #("", ""),
-("River House", "River House"),
 ("Oakwood at Falls Church", "Oakwood at Falls Church"),
-("The Belvedere", "The Belvedere")
+("Oakwood at Crystal City", "Oakwood at Crystal City")
 #("Virginia Square Plaza", "Virginia Square Plaza"),
 #("NOT LISTED", "NOT LISTED")
 ]
