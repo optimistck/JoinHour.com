@@ -52,7 +52,10 @@ class EventManager(object):
             event.activity_location = kwargs['activity_location']
         event.put()
         if os.environ.get('ENV_TYPE') is None:
-            task = Task(url='/match_maker/',method='GET',params={'interest': event.key.urlsafe()})
+            if event.type == Event.EVENT_TYPE_FLEX_INTEREST:
+                task = Task(url='/match_maker/',method='GET',params={'interest': event.key.urlsafe()})
+            else:
+                task = Task(url='/match_maker/',method='GET',params={'activity': event.key.urlsafe()})
             task.add('matchmaker')
             logging.info('event created')
             logging.info('match maker task queued')
