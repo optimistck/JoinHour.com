@@ -22,4 +22,5 @@ class UserFeedbackForm(BaseForm):
 
 class CompleteProfileForSocialUserForm(BaseForm):
     building = fields.SelectField(_('Building'), choices=utils.BUILDINGS)
+    security_code = fields.TextField(_('Security Code'))
 
