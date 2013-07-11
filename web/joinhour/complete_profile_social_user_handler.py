@@ -5,8 +5,8 @@ import webapp2
 from boilerplate import models
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from web.joinhour.ui import forms
-
-
+from src.joinhour.models.token import Token
+from webapp2_extras.i18n import gettext as _
 class CompleteProfileSocialUserHandler(BaseHandler):
 
     @user_required
@@ -18,6 +18,19 @@ class CompleteProfileSocialUserHandler(BaseHandler):
     def post(self):
         logging.info('Post : CompleteProfileSocialUserHandler')
         building = self.form.building.data
+        security_code = self.form.security_code.data.strip();
+        if security_code:
+            try:
+                token_match = Token.match(security_code)
+            except ValueError:
+                token_match = None
+            if not token_match or token_match.used:
+                message = _('Sorry, invalid security code. Please try again.')
+                self.add_message(message, 'error')
+                return self.redirect_to('complete_profile_social_user')
+            else:
+                token_match.used = True
+                token_match.put();
         user_info = models.User.get_by_id(long(self.user_id))
         user_info.building = building
         user_info.put()
