@@ -759,7 +759,7 @@ class RegisterHandler(RegisterBaseHandler):
                 token_match = Token.match(security_code)
             except ValueError:
                 token_match = None
-            if not token_match:
+            if not token_match or token_match.used:
                 message = _('Sorry, invalid security code. Please try again.')
                 self.add_message(message, 'error')
                 return self.redirect_to('register')
