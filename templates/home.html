@@ -319,55 +319,6 @@
             $("#cancel_activity_id").click(function () {
                 document.location.href = '/?key=' + $("#activity_id").val() + "&action=cancel&reason=" + $("#cancellation_reason").val();
             });
-            sendMessage = function (path, opt_param) {
-                path += '?g=' + '{{ user_id }}';
-                if (opt_param) {
-                    path += '&' + opt_param;
-                }
-                var xhr = new XMLHttpRequest();
-                xhr.open('POST', path, true);
-                xhr.send();
-            };
-
-
-            onMessage = function (m) {
-                $.ajax({
-                    type: "GET",
-                    dataType: "html",
-                    url: '/update_activity_list/',
-                    data: {'user_id':{{user_id}}}
-                }).done(function (data) {
-                            $("#activity_list").html(data)
-                        });
-            }
-            updateHtml = function (e) {
-                $("#activity_list").replaceWith(e)
-            }
-            onOpened = function (m) {
-
-            };
-            openChannel = function () {
-                var token = '{{ token }}';
-                var channel = new goog.appengine.Channel(token);
-                var handler = {
-                    'onopen': onOpened,
-                    'onmessage': onMessage,
-                    'onerror': function () {
-                    },
-                    'onclose': function () {
-                    }
-                };
-                var socket = channel.open(handler);
-                socket.onopen = onOpened;
-                socket.onmessage = onMessage;
-
-            }
-            initialize = function () {
-                openChannel();
-
-            }
-
-            setTimeout(initialize, 100);
         });
 
     </script>
