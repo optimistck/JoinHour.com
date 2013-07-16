@@ -10,6 +10,7 @@
         <fieldset>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             {{ macros.field(form.building, label=_("Building")) }}
+            {{ macros.field(form.security_code, label=_("Security Code"), placeholder=_("Enter your")+" "+_("Security Code")) }}
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
             </div>

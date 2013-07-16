@@ -16,6 +16,7 @@ import json
 
 # related third party imports
 import webapp2
+import sys
 from lib import utils
 import httpagentparser
 from webapp2_extras import security
@@ -635,7 +636,7 @@ class CallbackSocialLoginHandler(BaseHandler):
             if email:
                 unique_properties = ['email']
                 user_info = self.auth.store.user_model.create_user(
-                    auth_id, unique_properties, email=email,username=email,
+                    auth_id, unique_properties, email=email,username=email.replace('@', '_'),
                     activated=True
                 )
             else:
@@ -758,7 +759,7 @@ class RegisterHandler(RegisterBaseHandler):
                 token_match = Token.match(security_code)
             except ValueError:
                 token_match = None
-            if not token_match:
+            if not token_match or token_match.used:
                 message = _('Sorry, invalid security code. Please try again.')
                 self.add_message(message, 'error')
                 return self.redirect_to('register')
@@ -1226,7 +1227,7 @@ class EditProfileHandler(BaseHandler):
 
     def post(self):
         """ Get fields from POST dict """
-
+        TWO_MB = 2 * 1024 * 1024
         if not self.form.validate():
             return self.get()
         username = self.form.username.data.lower()
@@ -1269,7 +1270,13 @@ class EditProfileHandler(BaseHandler):
                 user_info.twitter_screen_name = twitter_screen_name
                 user_info.about_me = about_me
                 user_info.interests = interests
-                if avatar is not None and str(avatar) != "":
+                strAvatar = str(avatar)
+                if avatar is not None and strAvatar != "":
+                    if sys.getsizeof(strAvatar) > TWO_MB:
+                        logging.error('Error updating profile: ')
+                        message = _('Unable to update profile. Profile image cannot be larger than 2MB.')
+                        self.add_message(message, 'error')
+                        return self.get()
                     user_info.avatar = avatar
                 user_info.put()
                 message+= " " + _('Thanks, your settings have been saved.')
