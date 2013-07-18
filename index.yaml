@@ -178,5 +178,11 @@ indexes:
 
 - kind: UserActivity
   properties:
+  - name: status
+  - name: user
+  - name: date_entered
+
+- kind: UserActivity
+  properties:
   - name: user
   - name: activity
