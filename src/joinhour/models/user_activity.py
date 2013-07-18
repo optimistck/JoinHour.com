@@ -28,3 +28,7 @@ class UserActivity(ndb.Model):
     @classmethod
     def get_by_user_activity(cls, user, activity):
         return cls.query(cls.user == user, cls.activity == activity).get()
+
+    @classmethod
+    def get_latest_activities(cls, user, date):
+        return cls.query(cls.user == user, cls.date_entered > date, cls.status == UserActivity.ACTIVE).fetch();
