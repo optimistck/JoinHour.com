@@ -58,9 +58,12 @@ class JoinHandler(BaseHandler):
                 interest_info['duration'] = self.form.duration.data.strip()
             if hasattr(self.form,'activity_location'):
                 interest_info['activity_location'] = self.form.activity_location.data.strip()
-            EventManager.create(**interest_info)
-            message = _("Your post is now live. View matches and manage it on this My Corner page.")
-            self.add_message(message, 'success')
+            success, message, event = EventManager.create(**interest_info)
+            if success:
+                message = _("Your post is now live. View matches and manage it on this My Corner page.")
+                self.add_message(message, 'success')
+            else:
+                self.add_message(message, 'error')
             return self.redirect_to('home')
 
     @webapp2.cached_property
