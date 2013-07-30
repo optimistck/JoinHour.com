@@ -37,15 +37,10 @@ class EventThrottler(object):
         #Get number of FORMING and events from User activity created in the last 5 minutes
         now = datetime.now()
         five_minutes_ago = now - timedelta(minutes=self.CONFIG_TIME)
-        latest_activities = UserActivity.get_latest_activities(self._user.key, five_minutes_ago)
-        #For each activity, find it, and
-        numEvents = 0
-        for user_activity in latest_activities:
-            event = ndb.Key(urlsafe=user_activity.activity.urlsafe()).get()
-            if event.status == Event.FORMING:
-                numEvents += 1
 
-        return numEvents
+        #For each activity, find it, and
+        events = Event.get_latest_forming_activities(self._user.username, self._user.building, five_minutes_ago)
+        return len(events)
 
     def increment_activity_count(self):
         self.number_of_cached_events()

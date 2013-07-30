@@ -81,6 +81,10 @@ class Event(ndb.Model):
         return cls.query(cls.building_name == building_name, cls.type == Event.EVENT_TYPE_SPECIFIC_INTEREST).order(-cls.date_entered).fetch()
 
     @classmethod
+    def get_latest_forming_activities(cls, user, building_name, date):
+        return cls.query(cls.building_name == building_name, cls.username == user, cls.date_entered > date, cls.status == Event.FORMING).fetch(projection=Event.date_entered);
+
+    @classmethod
     def get_interests_by_building(cls,building_name):
         return cls.query(cls.building_name == building_name, cls.type == Event.EVENT_TYPE_FLEX_INTEREST).order(-cls.date_entered).fetch()
 

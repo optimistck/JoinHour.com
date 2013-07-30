@@ -54,10 +54,6 @@ class EventManager(object):
         if 'activity_location' in kwargs and kwargs['activity_location'] != "":
             event.activity_location = kwargs['activity_location']
         event.put()
-        userActivity = UserActivity()
-        userActivity.user = eventThrottler._user.key
-        userActivity.activity = event.key
-        userActivity.put()
         if os.environ.get('ENV_TYPE') is None:
             if event.type == Event.EVENT_TYPE_FLEX_INTEREST:
                 task = Task(url='/match_maker/',method='GET',params={'interest': event.key.urlsafe()})
