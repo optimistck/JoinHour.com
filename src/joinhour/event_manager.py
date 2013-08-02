@@ -10,6 +10,7 @@ from google.appengine.api.taskqueue import Task
 from src.joinhour.models.event import Event
 from src.joinhour.models.user_activity import UserActivity
 from boilerplate import models
+from src.joinhour.event_throttler import EventThrottler
 import logging
 
 
@@ -25,7 +26,9 @@ class EventManager(object):
         :param kwargs:
         :return:
         '''
-
+        eventThrottler = EventThrottler(kwargs['username'])
+        if eventThrottler.number_of_cached_events() > 5:
+            return False, "You have too many concurrent events.", None
         event = Event(category = kwargs['category'],
                             date_entered = datetime.utcnow(),
                             type = Event.EVENT_TYPE_FLEX_INTEREST,
@@ -59,7 +62,8 @@ class EventManager(object):
             task.add('matchmaker')
             logging.info('event created')
             logging.info('match maker task queued')
-        return event
+        eventThrottler.increment_activity_count()
+        return True, 'success', event
 
     @classmethod
     def get(cls,key):
@@ -123,6 +127,8 @@ class EventManager(object):
         if not self._can_complete(companion_count):
             self._event.status = Event.FORMING
             self._event.put()
+            eventThrottler = EventThrottler(self.get_event().username)
+            eventThrottler.increment_activity_count()
         return True, "You have successfully left the activity " + self._event.category
 
     def cancel(self):
@@ -135,6 +141,9 @@ class EventManager(object):
             user_activity.put()
         self.get_event().status = Event.CANCELLED
         self.get_event().put()
+
+        eventThrottler = EventThrottler(self.get_event().username)
+        eventThrottler.decrement_activity_count()
         return True, "Your activity has been successfully canceled."
 
 
@@ -162,12 +171,17 @@ class EventManager(object):
                 self._event.status = Event.FORMED_OPEN
                 self._event.put()
                 self._on_event_formation()
+                eventThrottler = EventThrottler(self.get_event().username)
+                eventThrottler.decrement_activity_count()
         return True, message
 
     def join_flex_interest(self,user_id,**kwargs):
         (canJoin, message) = self.can_join(user_id)
         if not canJoin:
             return canJoin, message, None, None
+        eventThrottler = EventThrottler(self.get_event().username)
+        if eventThrottler.number_of_cached_events() > 5:
+            return False, "You have too many concurrent events.", None, None
         self._event.type = Event.EVENT_TYPE_SPECIFIC_INTEREST
         if 'min_number_of_people_to_join' in kwargs and kwargs['min_number_of_people_to_join'] != "":
             self._event.min_number_of_people_to_join = kwargs['min_number_of_people_to_join']
