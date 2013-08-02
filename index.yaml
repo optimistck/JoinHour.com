@@ -75,6 +75,13 @@ indexes:
 
 - kind: Event
   properties:
+  - name: building_name
+  - name: status
+  - name: username
+  - name: date_entered
+
+- kind: Event
+  properties:
   - name: type
   - name: username
   - name: status
@@ -175,6 +182,12 @@ indexes:
   - name: status
   - name: user
   - name: activity
+
+- kind: UserActivity
+  properties:
+  - name: status
+  - name: user
+  - name: date_entered
 
 - kind: UserActivity
   properties:
