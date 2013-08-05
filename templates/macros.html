@@ -67,7 +67,7 @@
                     <!-- Status text-->
                    {% if event.status == 'FORMING'  %}
                         <div class="media-scope">
-                             Status: Forming
+                             Status: Forming & must start by <span data-localtime-format="hh:mm a">{{ event_attributes['start_time'] }}Z</span>
                         </div>
                    {% elif event.status == 'FORMED_OPEN'  %}
                         <div class="media-scope">
