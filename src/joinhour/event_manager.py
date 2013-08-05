@@ -257,7 +257,6 @@ class EventManager(object):
     def get_event(self):
         return self._event
 
-
     def expires_in(self):
         if self._event.status == Event.EXPIRED:
             return Event.EXPIRED
