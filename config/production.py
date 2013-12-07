@@ -20,7 +20,7 @@ config = {
                            'environment_args': {'extensions': ['jinja2.ext.i18n','jinja2.ext.loopcontrols']}},
 
 # application name
-'app_name' : "JoinHour",
+'app_name' : "Actipond",
 
 # the default language code for the application.
 # should match whatever language the site uses when i18n is disabled
