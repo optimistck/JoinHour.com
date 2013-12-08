@@ -13,9 +13,9 @@
             <input type="hidden" name="exception" value="{{ exception }}">
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
             {{ macros.field(form.num_tokens, label=_("Number of Tokens"), placeholder=_("Enter the number of tokens to generate"), class="input-xlarge focused required") }}
-
+            {{ macros.field(form.group_name, label=_("Group Name"), placeholder=_("Group Name for token association"), class="input-xlarge focused required") }}
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{% trans %}Generate Tokens{% endtrans %}</button>
+                <button type="submit" class="btn btn-primary">Generate Tokens</button>
             </div>
 
         </fieldset>

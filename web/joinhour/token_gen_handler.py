@@ -23,7 +23,8 @@ class TokenGeneratorHandler(BaseHandler):
 
     def post(self):
         number_of_tokens = int(self.form.num_tokens.data.strip())
-        TokenGenerator.create_tokens(number_of_tokens)
+        group_name = self.form.group_name.data.strip()
+        TokenGenerator.create_tokens_for_group(number_of_tokens,group_name)
         message = _('Successfully generated tokens.')
         self.add_message(message, 'success')
         self.redirect_to('token_generator')
