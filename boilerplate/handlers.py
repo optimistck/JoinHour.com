@@ -752,11 +752,12 @@ class RegisterHandler(RegisterBaseHandler):
         last_name = self.form.last_name.data.strip()
         email = self.form.email.data.lower()
         password = self.form.password.data.strip()
-        building = self.form.building.data
+        building = "TBD" #self.form.building.data
         security_code = self.form.security_code.data.strip();
         if security_code:
             try:
                 token_match = Token.match(security_code)
+                building = token_match.belongs_to_group
             except ValueError:
                 token_match = None
             if not token_match or token_match.used:

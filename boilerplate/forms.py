@@ -49,7 +49,7 @@ class UserMixin(BaseForm):
     ##country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
     ### TODO: make this a building pull down, not a country field
     # country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
-    building = fields.SelectField(_('Building'), choices=utils.BUILDINGS)
+    #building = fields.SelectField(_('Building'), choices=utils.BUILDINGS)
 
 
 class UserEdit(BaseForm):

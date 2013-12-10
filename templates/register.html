@@ -14,9 +14,9 @@
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                         {{ macros.field(form.username, label=_("Username"), placeholder=_("Enter your")+" "+_("Username"), class="input-xlarge focused required") }}
                         {{ macros.field(form.name, label=_("Name"), placeholder=_("Enter your")+" "+_("Name"), class="input-xlarge focused") }}
-                        {{ macros.field(form.last_name, label=_("Last Name"), placeholder=_("Enter your")+" "+_("Last Initial"), class="input-xlarge focused") }}
+                        {{ macros.field(form.last_name, label=_("Last Name"), placeholder=_("Enter your")+" "+_("Last Name"), class="input-xlarge focused") }}
                         {{ macros.field(form.email, label=_("Email"), placeholder=_("Enter your")+" "+_("Email"), class="input-xlarge focused required email", type="email") }}
-                        {{ macros.field(form.building, label=_("Building")) }}
+
                         {{ macros.field(form.security_code, label=_("Security Code"), placeholder=_("Enter your")+" "+_("Security Code")) }}
                         {{ macros.field(form.password, label=_("Password"), placeholder=_("Enter your")+" "+_("Password"), class="input-xlarge focused required", type="password") }}
                         {% if not is_mobile %}
