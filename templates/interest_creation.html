@@ -1,0 +1,146 @@
+{% extends base_layout %}
+
+{% block title %}
+        Post Your Interest - {{app_name}}
+{% endblock %}
+{% block header_title %}
+
+{% endblock %}
+
+{% block content %}
+
+<h3>Post Your Interest</h3>
+
+
+    <div class="row-fluid">
+        <div class="span8">
+        <form id="form_initiate_activity" action="{{ url|safe }}" method="post">
+        <fieldset>
+            <input type="hidden" name="exception" value="{{ exception }}">
+            <input type="hidden" name="set_time" id="set_time" value="">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <H4>I want to</H4>
+            {{ macros.field(form.category, label=_(" ")) }}
+
+            <label class="radio"><input type="radio" name="type_radio2" id="ASAP_radio" value="ASAP" checked onchange="onTypeRadioButtonChange2('timing_details_set_time', 'timing_details_ASAP')"><STRONG>ASAP</STRONG></label>
+            <label class="radio"><input type="radio" name="type_radio2" id="Set_Time_radio" value="Set_Time" onchange="onTypeRadioButtonChange2('timing_details_set_time', 'timing_details_ASAP')"><STRONG>Set Time</STRONG></label>
+
+
+            <span id="timing_details_ASAP" style="display: block;">
+            <h4>ASAP, and will wait for a companion</h4>
+            {{ macros.field(form.expiration, label=_(" ")) }}
+            </span>
+
+
+
+            <span id="timing_details_set_time" style="display: none;">
+            <h4>Set activity start time</h4>
+                <div id="set_time_datetimepicker" class="input-append date form_datetime">
+                    <input size="16" type="text" value="" readonly>
+                        <span class="add-on">
+                            <i class="icon-th"></i>
+                        </span>
+                 </div>
+            </span>
+
+            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I'm flexible, and I will join others</STRONG></label>
+            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I’ll set the details, and let others join me</STRONG></label>
+            <span id="initiate_activity_details" style="display: none;">
+            <h4>Min # to start</h4>
+            {{ macros.field(form.min_number_of_people_to_join, label=_(" "),disabled=true) }}
+            <h4>Max # that can join</h4>
+            {{ macros.field(form.max_number_of_people_to_join, label=_(" "),disabled=true) }}
+            <h4>Meeting Place</h4>
+            {{ macros.field(form.meeting_place, label=_(" "),placeholder=_("e.g., Main entrance by the TV"), class="input-xlarge focused required") }}
+            <h4>Activity Location</h4>
+            {{ macros.field(form.activity_location, label=_(" "),placeholder=_("e.g., WO&D trail towards DC"), class="input-xlarge focused required") }}
+
+            </span>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Post</button>
+            </div>
+        </fieldset>
+    </form>
+        </div><!--/span8-->
+        
+        <div class="span4">
+           
+            <!-- Posting is Easy -->
+            <div class="headline"><h4>Posting Is Easy</h4></div>
+            <p>Set your interest and availability</p>
+            <ul class="unstyled">
+                <li><i class="icon-ok color-green"></i> Shared interest between the participants is assured</li>
+                <li><i class="icon-ok color-green"></i> Your post disappers when your interest expires or activity starts</li>
+                <li><i class="icon-ok color-green"></i> You can always cancel your post</li>
+            </ul>
+
+        </div><!--/span4-->
+    </div><!--/row-fluid--> 
+
+
+    
+{% endblock %}
+
+{% block mediaJS %}
+<script type="text/javascript">
+    $().ready(function() {
+        $("#form_contact").validate({
+            errorPlacement: function(error, element) {
+                element.parent().parent().addClass("error");
+                error.addClass("help-inline").appendTo( element.parent() );
+            }
+        });
+    });
+
+    $(".form_datetime").datetimepicker({
+        format: "MM dd at HH:ii P",
+        autoclose:true,
+        startView:1,
+        minuteStep:15,
+        showMeridian:true,
+        startDate:new Date()
+    });
+
+    $(".form_datetime").datetimepicker().on('changeDate', function(ev){
+        var picker = $(".form_datetime").data('datetimepicker')
+        var utcDate = picker.getDate().toUTCString();
+        document.getElementById('set_time').value = new Date(utcDate).toISOString();
+    });
+
+
+
+    function onTypeRadioButtonChange2(id1, id2){
+        if(document.getElementById('ASAP_radio').checked)
+        {
+            document.getElementById(id1).style.display = 'none';
+            document.getElementById('set_time_datetimepicker').disabled = true;
+            document.getElementById(id2).style.display = 'block';
+        }
+        else if(document.getElementById('Set_Time_radio').checked)
+        {
+            document.getElementById(id1).style.display = 'block';
+            //document.getElementById('time_hours').disabled = false;
+            //document.getElementById('time_minutes').disabled = false;
+            document.getElementById('set_time_datetimepicker').disabled = false;
+            document.getElementById(id2).style.display = 'none';
+        }
+    }
+
+    function onTypeRadioButtonChange(id){
+        if(document.getElementById('express_interest_radio').checked)
+        {
+            document.getElementById(id).style.display = 'none';
+            document.getElementById('min_number_of_people_to_join').disabled = true
+            document.getElementById('max_number_of_people_to_join').disabled = true
+        }
+        else if(document.getElementById('initiate_activity_radio').checked)
+        {
+            document.getElementById(id).style.display = 'block';
+            document.getElementById('min_number_of_people_to_join').disabled = false
+            document.getElementById('max_number_of_people_to_join').disabled = false
+        }
+    }
+</script>
+{% endblock %}
+
