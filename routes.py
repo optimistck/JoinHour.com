@@ -10,7 +10,8 @@ from web.joinhour import activity_handler, home_request_handler, join_handler, t
     tip_handler, love_handler, how_request_handler, join_activity_handler, expiry_handler, token_gen_handler, \
     convert_handler, update_activity_handler, leave_activity_handler, propmanagers_handler, pre_register_handler, \
     cancel_activity_handler, next_action_preregistered_handler,building_handler, all_buildings_handler, \
-    next_action_thankyou_feedback_handler, post_handler, activity_creation_handler, interest_creation_handler
+    next_action_thankyou_feedback_handler, post_handler, activity_creation_handler, interest_creation_handler,\
+    about_handler
 from web.joinhour.complete_profile_social_user_handler import CompleteProfileSocialUserHandler
 from web.joinhour.taskqueue_handlers.post_activity_completion_handler import PostActivityCompletionHandler
 from web.joinhour.services.user_profile import Avatar
@@ -33,6 +34,7 @@ _routes = [
     RedirectRoute('/post/', post_handler.PostHandler, name='post', strict_slash=True),
     RedirectRoute('/act/', activity_creation_handler.ActivityCreationHandler, name='activity', strict_slash=True),
     RedirectRoute('/int/', interest_creation_handler.InterestCreationHandler, name='interest', strict_slash=True),
+    RedirectRoute('/about/', about_handler.AboutHandler, name='about', strict_slash=True),
     RedirectRoute('/convert_to_activity/', convert_handler.ConvertHandler, name='convert', strict_slash=True),
     RedirectRoute('/activity_detail/', get_activity_handler.GetActivityHandler, name='activity_detail', strict_slash=True),
     RedirectRoute('/love/', love_handler.LoveHandler, name='love', strict_slash=True),
