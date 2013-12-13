@@ -22,18 +22,7 @@
             <H4>I want to</H4>
             {{ macros.field(form.category, label=_(" ")) }}
 
-            <label class="radio"><input type="radio" name="type_radio2" id="ASAP_radio" value="ASAP" checked onchange="onTypeRadioButtonChange2('timing_details_set_time', 'timing_details_ASAP')"><STRONG>ASAP</STRONG></label>
-            <label class="radio"><input type="radio" name="type_radio2" id="Set_Time_radio" value="Set_Time" onchange="onTypeRadioButtonChange2('timing_details_set_time', 'timing_details_ASAP')"><STRONG>Set Time</STRONG></label>
-
-
-            <span id="timing_details_ASAP" style="display: block;">
-            <h4>ASAP, and will wait for a companion</h4>
-            {{ macros.field(form.expiration, label=_(" ")) }}
-            </span>
-
-
-
-            <span id="timing_details_set_time" style="display: none;">
+            <span>
             <h4>Set activity start time</h4>
                 <div id="set_time_datetimepicker" class="input-append date form_datetime">
                     <input size="16" type="text" value="" readonly>
@@ -43,17 +32,18 @@
                  </div>
             </span>
 
-            <label class="radio"><input type="radio" name="type_radio" id="express_interest_radio" value="interest" checked onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I'm flexible, and I will join others</STRONG></label>
-            <label class="radio"><input type="radio" name="type_radio" id="initiate_activity_radio" value="activity" onchange="onTypeRadioButtonChange('initiate_activity_details')"><STRONG>I’ll set the details, and let others join me</STRONG></label>
-            <span id="initiate_activity_details" style="display: none;">
+            <span>
+            <!-- We're not offering the min # to start for now -->
+            <!--
             <h4>Min # to start</h4>
-            {{ macros.field(form.min_number_of_people_to_join, label=_(" "),disabled=true) }}
+            {{ macros.field(form.min_number_of_people_to_join, label=_(" ")) }}
+            -->
             <h4>Max # that can join</h4>
-            {{ macros.field(form.max_number_of_people_to_join, label=_(" "),disabled=true) }}
+            {{ macros.field(form.max_number_of_people_to_join, label=_(" ")) }}
             <h4>Meeting Place</h4>
-            {{ macros.field(form.meeting_place, label=_(" "),placeholder=_("e.g., Main entrance by the TV"), class="input-xlarge focused required") }}
+            {{ macros.field(form.meeting_place, label=_(" "),placeholder=_("e.g., Starbucks at Jolly Plaza"), class="input-xlarge focused required") }}
             <h4>Activity Location</h4>
-            {{ macros.field(form.activity_location, label=_(" "),placeholder=_("e.g., WO&D trail towards DC"), class="input-xlarge focused required") }}
+            {{ macros.field(form.activity_location, label=_(" "),placeholder=_("e.g., Lyon Village Playground"), class="input-xlarge focused required") }}
 
             </span>
 
@@ -110,37 +100,7 @@
 
 
 
-    function onTypeRadioButtonChange2(id1, id2){
-        if(document.getElementById('ASAP_radio').checked)
-        {
-            document.getElementById(id1).style.display = 'none';
-            document.getElementById('set_time_datetimepicker').disabled = true;
-            document.getElementById(id2).style.display = 'block';
-        }
-        else if(document.getElementById('Set_Time_radio').checked)
-        {
-            document.getElementById(id1).style.display = 'block';
-            //document.getElementById('time_hours').disabled = false;
-            //document.getElementById('time_minutes').disabled = false;
-            document.getElementById('set_time_datetimepicker').disabled = false;
-            document.getElementById(id2).style.display = 'none';
-        }
-    }
 
-    function onTypeRadioButtonChange(id){
-        if(document.getElementById('express_interest_radio').checked)
-        {
-            document.getElementById(id).style.display = 'none';
-            document.getElementById('min_number_of_people_to_join').disabled = true
-            document.getElementById('max_number_of_people_to_join').disabled = true
-        }
-        else if(document.getElementById('initiate_activity_radio').checked)
-        {
-            document.getElementById(id).style.display = 'block';
-            document.getElementById('min_number_of_people_to_join').disabled = false
-            document.getElementById('max_number_of_people_to_join').disabled = false
-        }
-    }
 </script>
 {% endblock %}
 

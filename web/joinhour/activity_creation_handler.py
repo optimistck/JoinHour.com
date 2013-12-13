@@ -39,9 +39,12 @@ class ActivityCreationHandler(BaseHandler):
             elif hasattr(self.form,'expiration') and self.form.expiration.data != "" and self.form.expiration.data != "None":
                 interest_info['expiration'] = self.form.expiration.data.strip()
             if hasattr(self.form,'min_number_of_people_to_join'):
-                interest_info['min_number_of_people_to_join'] = self.form.min_number_of_people_to_join.data.strip()
+                interest_info['min_number_of_people_to_join'] = "1" #self.form.min_number_of_people_to_join.data.strip()
             if hasattr(self.form,'max_number_of_people_to_join'):
                 interest_info['max_number_of_people_to_join'] = self.form.max_number_of_people_to_join.data.strip()
+
+            ''' Commenting out the logic checking block since the min # to join is always 1 for now'''
+            '''
             if hasattr(self.form,'min_number_of_people_to_join') and hasattr(self.form,'max_number_of_people_to_join'):
                 min_int = interest_info['min_number_of_people_to_join'].split()[0]
                 max_int = interest_info['max_number_of_people_to_join'].split()[0]
@@ -52,6 +55,7 @@ class ActivityCreationHandler(BaseHandler):
                         message = _("Minimum number of participants cannot be greater than Maximum number of participants.")
                         self.add_message(message, 'error')
                         return self.redirect_to('join')
+            '''
             if hasattr(self.form,'meeting_place'):
                 interest_info['meeting_place'] = self.form.meeting_place.data.strip()
             if hasattr(self.form,'duration'):
@@ -60,7 +64,7 @@ class ActivityCreationHandler(BaseHandler):
                 interest_info['activity_location'] = self.form.activity_location.data.strip()
             success, message, event = EventManager.create(**interest_info)
             if success:
-                message = _("Your post is now live. View matches and manage it on this My Corner page.")
+                message = _("Your post is now live. You can approve join requests and manage it here. Watch your email for notifications.")
                 self.add_message(message, 'success')
             else:
                 self.add_message(message, 'error')
