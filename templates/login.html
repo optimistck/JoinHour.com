@@ -1,10 +1,11 @@
 {% extends base_layout %}
 
 {% block header_title %}
-    {% trans %}Login{% endtrans %}
+    Please Login or Sign Up
 {% endblock %}
 
 {% block content %}
+    <h3>You're just one step away to connect on demand.</h3>
     <form id="form_login_user" action="{{ url|safe }}" method="post" class="well form-vertical auth-at-loginpage">
         <fieldset>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
