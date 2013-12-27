@@ -87,7 +87,7 @@ class EventManagerTest(unittest.TestCase):
 
 
     def test_join(self):
-        success, message, activity_created = EventManager.create(category='Category1',duration='40',expiration='180',username=self.user1.username,building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1', start_time=datetime.today())
+        success, message, activity_created = EventManager.create(category='Category1',duration='40',expiration='180',username=self.user1.username,building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
         activity_manager = EventManager.get(activity_created.key.urlsafe())
         self.assertEqual(activity_created.key.urlsafe(),activity_manager.get_event().key.urlsafe())
         self.assertEqual(True,activity_manager.can_join(self.user2.key.id())[0])
