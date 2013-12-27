@@ -69,7 +69,7 @@ class RequestManagerTest(unittest.TestCase):
 
     def test_initiate(self):
         #Activity Created by user1
-        success, message, activity_created = EventManager.create(category='Category1',duration='40',expiration='180',username=self.user1.username,building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1', start_time=datetime.today())
+        success, message, activity_created = EventManager.create(category='Category1',duration='40',expiration='180',username=self.user1.username,building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
         activity_manager = EventManager.get(activity_created.key.urlsafe())
         self.assertEqual(activity_created.key.urlsafe(),activity_manager.get_event().key.urlsafe())
         request = RequestManager.initiate(activity_key=activity_created.key,interest_owner_key=self.user2.key)
@@ -80,7 +80,7 @@ class RequestManagerTest(unittest.TestCase):
 
     def test_approve(self):
         #Activity Created by user1
-        success, message, activity_created = EventManager.create(category='Category1',duration='40',expiration='180',username=self.user1.username,building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1', start_time=datetime.today())
+        success, message, activity_created = EventManager.create(category='Category1',duration='40',expiration='180',username=self.user1.username,building_name ='building_1',min_number_of_people_to_join='1',max_number_of_people_to_join='2',note='note1')
         activity_manager = EventManager.get(activity_created.key.urlsafe())
         self.assertEqual(activity_created.key.urlsafe(),activity_manager.get_event().key.urlsafe())
         request = RequestManager.initiate(activity_key=activity_created.key,interest_owner_key=self.user2.key)
@@ -90,6 +90,8 @@ class RequestManagerTest(unittest.TestCase):
         self.assertEqual(True,request_manager.can_accept(self.user1))
         request_manager.accept(self.user1)
         self.assertEqual(request.ACCEPTED,request.status)
+        self.assertEqual(1,activity_manager.spots_remaining())
+
 
 
 

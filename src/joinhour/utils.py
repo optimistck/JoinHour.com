@@ -86,9 +86,10 @@ def get_interest_details(interest_key):
     interest_details['category'] = event.category
     interest_details['meeting_place'] = event.meeting_place
     interest_details['location'] = event.activity_location
-    start_time = event.start_time - datetime.utcnow()
-    if start_time.total_seconds() > 0:
-        interest_details['start_time'] = minute_format(start_time)
+    if event.start_time is not None:
+        start_time = event.start_time - datetime.utcnow()
+        if start_time.total_seconds() > 0:
+            interest_details['start_time'] = minute_format(start_time)
     interest_details['username'] = event.username
     participants = event_manager.get_all_companions()
     interest_details['participants'] = participants

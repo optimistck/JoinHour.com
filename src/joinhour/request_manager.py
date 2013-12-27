@@ -36,9 +36,14 @@ class RequestManager(object):
 
     def accept(self,user):
         event_manager = EventManager.get(self._request.activity.urlsafe())
-        event_manager.connect(self._request.interest_owner)
-        self._request.status = Request.ACCEPTED
-        self._request.put()
+        status,message = event_manager.connect(self._request.interest_owner.id())
+        if status :
+            self._request.status = Request.ACCEPTED
+            self._request.put()
+            return True,"Accepted & Connected"
+        else:
+            return False,message
+
 
     def reject(self):
         self._request.status = Request.REJECTED
