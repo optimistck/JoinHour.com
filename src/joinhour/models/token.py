@@ -1,4 +1,4 @@
-__author__ = 'ashahab'
+__author__ = 'ashahab, constantin'
 from google.appengine.ext import ndb
 
 
@@ -6,6 +6,8 @@ class Token(ndb.Model):
     value = ndb.IntegerProperty(default=0)
     date_entered = ndb.DateTimeProperty(auto_now_add=True)
     used = ndb.BooleanProperty(default=False)
+    'group = building'
+    belongs_to_group = ndb.StringProperty()
 
 
     @classmethod

@@ -49,7 +49,7 @@ class UserMixin(BaseForm):
     ##country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
     ### TODO: make this a building pull down, not a country field
     # country = fields.SelectField(_('Country'), choices=utils.COUNTRIES)
-    building = fields.SelectField(_('Building'), choices=utils.BUILDINGS)
+    #building = fields.SelectField(_('Building'), choices=utils.BUILDINGS)
 
 
 class UserEdit(BaseForm):
@@ -100,6 +100,7 @@ class PreRegisterForm(BaseForm):
 
 class TokenForm(BaseForm):
     num_tokens = fields.TextField(_('Number of Tokens'), [validators.Required(), validators.NumberRange(min=1, max=1000, message="Number must be between 1 and 1000")])
+    group_name = fields.TextField(_('Group Name'), [validators.Required()])
 
 #### JH
 class PassiveInterestForm(BaseForm):

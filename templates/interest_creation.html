@@ -1,0 +1,92 @@
+{% extends base_layout %}
+
+{% block title %}
+        Announce Your Interest - {{app_name}}
+{% endblock %}
+{% block header_title %}
+
+{% endblock %}
+
+{% block content %}
+
+<h3>Announce Your Interest</h3>
+
+
+    <div class="row-fluid">
+        <div class="span8">
+        <form id="form_initiate_activity" action="{{ url|safe }}" method="post">
+        <fieldset>
+            <input type="hidden" name="exception" value="{{ exception }}">
+            <input type="hidden" name="set_time" id="set_time" value="">
+            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+            <H4>I want to</H4>
+            {{ macros.field(form.category, label=_(" ")) }}
+
+
+             <span>
+            <h4>My interest expires at</h4>
+                <div id="set_time_datetimepicker" class="input-append date form_datetime">
+                    <input size="16" type="text" value="" readonly>
+                        <span class="add-on">
+                            <i class="icon-th"></i>
+                        </span>
+                 </div>
+            </span>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Announce Your Interest</button>
+            </div>
+        </fieldset>
+    </form>
+        </div><!--/span8-->
+        
+        <div class="span4">
+           
+            <!-- Posting is Easy -->
+            <div class="headline"><h4>Instructions</h4></div>
+            <p> </p>
+            <ul class="unstyled">
+                <li><i class="icon-ok color-green"></i> Set your interest</li>
+                <li><i class="icon-ok color-green"></i> Set your availability</li>
+                <li><i class="icon-ok color-green"></i> Announce it and look for matches</li>
+            </ul>
+
+        </div><!--/span4-->
+    </div><!--/row-fluid--> 
+
+
+    
+{% endblock %}
+
+{% block mediaJS %}
+<script type="text/javascript">
+    $().ready(function() {
+        $("#form_contact").validate({
+            errorPlacement: function(error, element) {
+                element.parent().parent().addClass("error");
+                error.addClass("help-inline").appendTo( element.parent() );
+            }
+        });
+    });
+
+    $(".form_datetime").datetimepicker({
+        format: "MM dd at HH:ii P",
+        autoclose:true,
+        startView:1,
+        minuteStep:15,
+        showMeridian:true,
+        startDate:new Date()
+    });
+
+    $(".form_datetime").datetimepicker().on('changeDate', function(ev){
+        var picker = $(".form_datetime").data('datetimepicker')
+        var utcDate = picker.getDate().toUTCString();
+        document.getElementById('set_time').value = new Date(utcDate).toISOString();
+    });
+
+
+
+
+</script>
+{% endblock %}
+

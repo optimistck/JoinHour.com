@@ -24,7 +24,6 @@ sys.path.insert(0, os.path.join(os.path.dirname(__file__), 'boilerplate/external
 
 import webapp2
 
-import routes
 from boilerplate import routes as boilerplate_routes
 from admin import routes as admin_routes
 from boilerplate import config as boilerplate_config

@@ -1,0 +1,56 @@
+{% extends base_layout %}
+
+{% block title %}
+        Select your post type - {{app_name}}
+{% endblock %}
+{% block header_title %}
+
+{% endblock %}
+
+{% block content %}
+
+<h3>Post your Activity or an Interest</h3>
+
+
+    <div class="row-fluid">
+        <div class="span12">
+        <div class="span4">
+            <div class="headline"><h4>Post an Activity</h4></div>
+                <ul class="unstyled">
+                    <li><i class="icon-ok color-green"></i> People join you</li>
+                    <li><i class="icon-ok color-green"></i> You control activity details</li>
+                    <li><i class="icon-ok color-green"></i> You accept join requests</li>
+                </ul>
+                <a href="../act" class="btn btn-primary btn-login">Post Your Activity</a>
+        </div><!--/span4-->
+        <div class="span2">
+            <div class="headline"><h4>OR</h4></div>
+
+        </div><!--/span4-->
+        <div class="span4">
+            <div class="headline"><h4>Announce Your Interest</h4></div>
+                <ul class="unstyled">
+                    <li><i class="icon-ok color-green"></i> Leave planning to someone else</li>
+                    <li><i class="icon-ok color-green"></i> You select who to join</li>
+                    <li><i class="icon-ok color-green"></i> We find activity matches </li>
+                </ul>
+                <a href="../int" class="btn btn-primary btn-login">Announce Your Interest</a>
+        </div><!--/span4-->
+        </div><!--/span12-->
+    </div><!--/row-fluid--> 
+
+    <div class="row-fluid">
+        <div class="span12">
+            <BR>
+            <H4>OK, <a href="../about" >here is how this works...</a></H4>
+        </div><!--/span12-->
+    </div><!--/row-fluid-->
+    
+{% endblock %}
+
+{% block mediaJS %}
+<script type="text/javascript">
+
+</script>
+{% endblock %}
+

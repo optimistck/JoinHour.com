@@ -28,11 +28,36 @@
     <link rel="stylesheet" href="/css/style.css">
     -->
 
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="JoinHour | Record breaking resident retention through communities that feel alive.">
+    <meta name="author" content="Firebrand Fuse LLC">
+
+    <!-- CSS Global Compulsory-->
+    <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/headers/header1.css">
+    <link rel="stylesheet" href="/assets/plugins/bootstrap/css/bootstrap-responsive.min.css">
+    <link rel="stylesheet" href="/assets/css/style_responsive.css">
+    <link rel="shortcut icon" href="favicon.ico">
+    <!-- CSS Implementing Plugins -->
+    <link rel="stylesheet" href="/assets/plugins/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" href="/assets/plugins/flexslider/flexslider.css" type="text/css" media="screen">
+    <link rel="stylesheet" href="/assets/plugins/parallax-slider/css/parallax-slider.css" type="text/css">
+    <!-- CSS Theme -->
+    <link rel="stylesheet" href="/assets/css/themes/blue.css" id="style_color">
+    <link rel="stylesheet" href="/assets/css/themes/headers/header1-blue.css" id="style_color-header-1">
+
+
+
+
     <link rel="stylesheet" href="/css/boilerplate.min.css">
     <link rel="stylesheet" href="/css/bootstrap-fileupload.min.css">
     <link rel="stylesheet" href="/css/jh.css">
     <link rel="stylesheet" href="/css/bootstrap-editable.css">
     <link rel="stylesheet" href="/css/datetimepicker.css">
+
 
 
     <link rel="stylesheet" href="/css/font-awesome.min.css">
@@ -57,71 +82,93 @@
        Modernizr enables HTML5 elements & feature detects for optimal performance. -->
     <script src="/boilerplate/js/libs/modernizr-2.6.1.min.js"></script>
 </head>
+
 <body>
     <!-- Prompt IE 6 users to install Chrome Frame. Remove this if you support IE 6.
            chromium.org/developers/how-tos/chrome-frame-getting-started -->
     <!--[if lt IE 8]>
-    	<p class=chromeframe>{% trans %}Your browser is <em>ancient!</em>{% endtrans %} 
+    	<p class=chromeframe>{% trans %}Your browser is <em>not supported</em> (too old).{% endtrans %}
     	{% trans %}<a href="http://browsehappy.com/">Upgrade to a different browser</a>
     	or <a href="http://www.google.com/chromeframe/?redirect=true">
     	install Google Chrome Frame</a> to experience this site.{% endtrans %}</p>
     <![endif]-->
 
-    <div id="page">
-        {% block navbar %}
-        <div class="navbar navbar-fixed-top">
+<!--=== Top ===-->
+<div class="top">
+    <div class="container">
+        <ul class="loginbar pull-right">
+            <!-- TODO: decide if this is needed -->
+            <!-- <a class="brand" href="/"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a> -->
+            <li><i class="icon-globe"> </i> <a href="#">About</a></li>
+            <!--=== JH: Reserved
+            <li class="devider">&nbsp;</li>
+            <li><a href="#" class="login-btn">Sign Up</a></li>
+            <li class="devider">&nbsp;</li>
+            <li><a href="#" class="login-btn">Login</a></li>
+            ===-->
+        </ul>
+    </div>
+</div><!--/top-->
+<!--=== End Top ===-->
+
+<!--=== Header ===-->
+<div class="header">
+    <div class="container">
+        <!-- Logo -->
+        <div class="logo">
+            <a href="/"><img id="logo-header" src="../img/logo1-default.png" alt="Logo"></a>
+        </div><!-- /logo -->
+
+        <!-- Menu -->
+        <div class="navbar">
             <div class="navbar-inner">
-                <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                    <span class="icon-chevron-down icon"></span>
-                </button>
-                <a class="brand" href="/app_home"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a>
-                <div class="nav-collapse">
-                    <ul class="nav pull-right">
-                        
-                    
-                        <li><a href="#"></a></li>
-                        <!-- START comment out top Nav Bar extras
-                        {% if locale_iso %}
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                {% trans %}Language{% endtrans %} : {{ locale_language }} <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                            	{% for l in locales %}
-                                {% if str(locale_iso) != l %}<li><a href="{{ path_for_language }}&hl={{ l }}">{{ locales[l] }}</a></li>{% endif %}
-                                {% endfor %}
-                            </ul>
-                        </li>
-
-                        END of comment out top Nav Bar extras-->
-
+                <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </a><!-- /nav-collapse -->
+                <div class="nav-collapse collapse">
+                    <ul class="nav top-2">
+                        <!-- Put menu items in here that are for both registered and not users -->
 
                         <!-- Code if the user has logged in-->
-                        {% endif %}
                         {% if user_id and user_id | isValidUser %}
-                        <li class="divider-vertical"></li>
-                        <li class="dropdown">
-                            {% if username | hasAvatar %}
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img class="avatar" src="/user/avatar/?user_name={{ username }}" width="22" height="22"/>
-                                    <span>{{ username }}</span>
-                                    <b class="caret"></b></a>
-                                </a>
-                            {% else %}
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img class="avatar" src="../img/user.jpg" width="22" height="22" />
-                                     <span>{{ username }}</span>
-                                     <b class="caret"></b></a>
-                                </a>
-                            {% endif %}
+                        <li>
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Post
+                                <b class="caret"></b>
+                            </a>
                             <ul class="dropdown-menu">
-                                <li><a href="{{ uri_for("edit-profile") }}">{% trans %}Edit Profile{% endtrans %}</a></li>
-                                <li class="divider"></li>
-                                <li><a href="{{ logout_url }}">{% trans %}Logout{% endtrans %}</a></li>
+                                <li><a href="/act">Post Activity / Event</a></li>
+                                <li><a href="/int">Announce Interest</a></li>
+                                <li><a href="/pipe">Activity Pipeline</a></li>
                             </ul>
+                            <b class="caret-out"></b>
                         </li>
+                        <li>
+                            {% if username | hasAvatar %}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img class="avatar" src="/user/avatar/?user_name={{ username }}" width="22" height="22"/>
+                                <span>{{ username }}</span>
+                                <b class="caret"></b></a>
+                            {% else %}
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <img class="avatar" src="../img/user.jpg" width="22" height="22" />
+                                 <span>{{ username }}</span>
+                                 <b class="caret"></b></a>
+                            {% endif %}
+
+                            <ul class="dropdown-menu">
+                                <li><a href="{{ uri_for("edit-profile") }}">Edit Profile</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ logout_url }}">Logout</a></li>
+                            </ul>
+                            <b class="caret-out"></b>
+                        </li>
+
+
                         <!-- Code if the user has NOT logged in-->
-                        {% elif path != "/" and path != "/login/" %}
+                        {% elif path != "/2" and path != "/login/" %}
+                        <li><a href="{{ uri_for("register") }}"><i class="icon-spinner icon-spin"></i> Sign Up</a></li>
                         <li class="divider-vertical"></li>
                         <li class="dropdown">
                             <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans %}Login{% endtrans %} <b class="caret"></b></a>
@@ -160,78 +207,74 @@
                         </li>
                         {% endif %}
                     </ul>
-                </div><!-- /.nav-collapse -->
+                </div><!-- /nav-collapse -->
             </div><!-- /navbar-inner -->
         </div><!-- /navbar -->
-        {% endblock %}
+    </div><!-- /container -->
+</div><!--/header -->
+<!--=== End Header ===-->
 
-        <div id="content" class="container xled">
-            {% block header %}
-            <header class="navbar" id="overview">
-                {% block header_title_lead %}
-                <h3>{% block header_title %}{{ app_name }}{% endblock %}</h3>
-                
-                <!-- START: remove large blurbs for now 
+<!--=== Content Part ===-->
+<div class="container">
+    {% block navbar %}
 
-                <p class="lead">
-		            {% trans %}this blurb is located in base.html{% endtrans %}
-		            <br><a href="http://github.com/coto/gae-boilerplate/blob/master/README.rdoc" target="_blank">
-		            {% trans %}LInk{% endtrans %}</a> {% trans %}or {% endtrans %} 
-		            <a href="http://github.com/coto/gae-boilerplate/" target="_blank">{% trans %}Link2{% endtrans %}</a> 
-		            {% trans %}and text. Still in header.{% endtrans %}
-				</p>
+    {% endblock %}
 
-                END: remove large blurbs for now -->
-                {% endblock %}
-                {% block subnavbar %}
-                <div class="subnav">
-                    <ul>
-                        <!-- START: remove unwanted sub-name menu items. This does not remove access to the actual page! i.e., JoinHour.com/contact 
+    {% block header %}
 
-                        <li{% if path == uri_for("contact") %} class="active"{% endif %}><a href="{{ uri_for("contact") }}">{% trans %}Contact{% endtrans %}</a></li>
-                        END: remove large blurbs for now -->
+    {% endblock %}
 
-                        <!-- The sub nav menu changes depending if a user has logged in or not-->
+    {% if messages|safe %}
+        {% for message in messages %}
+        <p class="alert alert-{{ message[1]|safe }}">
+            <a class="close" data-dismiss="alert">×</a>
+            {{ message[0]|safe }}
+        </p>
+        {% endfor %}
+    {% endif %}
 
-                        {% if not user_id %}
-                        <li{% if path == uri_for("preregister") %} class="active"{% endif %}><a href="{{ uri_for("register") }}">{% trans %}<i class="icon-spinner icon-spin"></i> Sign Up{% endtrans %}</a></li>
-                        <li{% if path == uri_for("propmanagers") %} class="active"{% endif %}><a href="{{ uri_for("propmanagers") }}"></a></li>
-                        <li{% if path == uri_for("how") %} class="active"{% endif %}><a href="{{ uri_for("how") }}"></a></li>
+    {% block content %}
 
-                        <!-- Code if the user has logged in-->
-                        {% elif user_id and user_id | isValidUser%}
-                        <li{% if path == uri_for("join") %} class="join"{% endif %}><a href="{{ uri_for("join") }}">{% trans %}Post{% endtrans %}</a></li>
-                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/activity/">{% trans %}Live Board{% endtrans %}</a></li>
-                        <li{% if path == uri_for("stat") %} class="passive"{% endif %}><a href="/app_home">{% trans %}My Corner{% endtrans %}</a></li>
+    {% endblock %}
+
+</div><!--/container-->
+<!-- End Content Part -->
 
 
-                        
-                        {% endif %}
-                    </ul>
-                </div>
-                {% endblock %}
-            </header>
-            {% endblock %}
-
-        {% if messages|safe %}
-        	{% for message in messages %}
-            <p class="alert alert-{{ message[1]|safe }}">
-                <a class="close" data-dismiss="alert">×</a>
-                {{ message[0]|safe }}
-            </p>
-            {% endfor %}
-        {% endif %}
-            {% block content %}{% endblock %}
 
             {% block footer %}
-            <footer>
-                <small><p class="text-center"> &copy; 2013 | Firebrand Fuse LLC | 4201 Wilson Blvd. Suite #110-355, Arlington, VA 22203 | <a href="{{ uri_for("terms") }}">Terms &amp; Privacy</a> | <a href="{{ uri_for("contact") }}">Contact</a> </p></small>
-            </footer>
+<!--=== Footer ===-->
+    <!--=== Tested and ready to insert from the current index - if and when needed ===-->
+<!--=== End Footer ===-->
             {% endblock %}
         </div><!-- /content -->
     </div><!-- /page -->
 
+
+
+<!--=== Copyright ===-->
+<div class="copyright">
+	<div class="container">
+		<div class="row-fluid">
+			<div class="span8">
+	            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | &copy; 2014 - <a href="http://www.Firebrandfuse.com">Firebrand Fuse LLC</a> | 4201 Wilson Blvd. #110-355, Arlington, VA</p>
+                <!-- <small><p class="text-center"> &copy; 2013 | Firebrand Fuse LLC | 4201 Wilson Blvd. Suite #110-355, Arlington, VA 22203 | <a href="{{ uri_for("terms") }}">Terms &amp; Privacy</a> | <a href="{{ uri_for("contact") }}">Contact</a> </p></small>-->
+			</div>
+			<div class="span4">
+                <!--JH Temp Removal
+				<a href="index.html"><img id="logo-footer" src="/assets/img/logo2-default.png" class="pull-right" alt="" /></a>
+                -->
+			</div>
+		</div><!--/row-fluid-->
+	</div><!--/container-->
+</div><!--/copyright-->
+<!--=== End Copyright ===-->
+
+
+
     <!-- JavaScript at the bottom for fast page loading -->
+
+
     <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 
@@ -246,6 +289,22 @@
     <script src="/js/bootstrap-editable.min.js"></script>
     <script  src="/js/jquery.localtime-0.6.2.min.js"></script>
     <script src="/js/bootstrap-datetimepicker.min.js" charset="UTF-8"></script>
+
+
+    <!-- JS Global Compulsory -->
+    <!-- This is already declared above; turning this on kills the calendar functionality
+    <script type="text/javascript" src="/assets/js/jquery-1.8.2.min.js"></script>
+    -->
+    <script type="text/javascript" src="/assets/js/modernizr.custom.js"></script>
+    <!-- TODO: this bootstramp.min.js is conflicting with already existing one - drop down is broken
+    <script type="text/javascript" src="/assets/plugins/bootstrap/js/bootstrap.min.js"></script>-->
+
+
+    <!-- JS Implementing Plugins -->
+    <script type="text/javascript" src="/assets/plugins/flexslider/jquery.flexslider-min.js"></script>
+    <script type="text/javascript" src="/assets/plugins/parallax-slider/js/modernizr.js"></script>
+    <script type="text/javascript" src="/assets/plugins/parallax-slider/js/jquery.cslider.js"></script>
+    <script type="text/javascript" src="/assets/plugins/back-to-top.js"></script>
 
 
     <!-- scripts concatenated and minified via build script -->
