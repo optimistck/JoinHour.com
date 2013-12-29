@@ -98,8 +98,8 @@
     <div class="container">
         <ul class="loginbar pull-right">
             <!-- TODO: decide if this is needed -->
-            <!-- <a class="brand" href="/app_home"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a> -->
-            <li><i class="icon-globe"> </i> <a href="why.html">About</a></li>
+            <!-- <a class="brand" href="/"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a> -->
+            <li><i class="icon-globe"> </i> <a href="#">About</a></li>
             <!--=== JH: Reserved
             <li class="devider">&nbsp;</li>
             <li><a href="#" class="login-btn">Sign Up</a></li>
@@ -116,7 +116,7 @@
     <div class="container">
         <!-- Logo -->
         <div class="logo">
-            <a href="index.html"><img id="logo-header" src="../img/logo1-default.png" alt="Logo"></a>
+            <a href="/"><img id="logo-header" src="../img/logo1-default.png" alt="Logo"></a>
         </div><!-- /logo -->
 
         <!-- Menu -->
@@ -167,7 +167,7 @@
 
 
                         <!-- Code if the user has NOT logged in-->
-                        {% elif path != "/" and path != "/login/" %}
+                        {% elif path != "/2" and path != "/login/" %}
                         <li><a href="{{ uri_for("register") }}"><i class="icon-spinner icon-spin"></i> Sign Up</a></li>
                         <li class="divider-vertical"></li>
                         <li class="dropdown">

@@ -24,7 +24,7 @@ from web.joinhour.user_feedback_handler import UserFeedbackHandler
 secure_scheme = 'https'
 
 _routes = [
-    RedirectRoute('/app_home', home_request_handler.HomeRequestHandler, name='home', strict_slash=True),
+    RedirectRoute('/', home_request_handler.HomeRequestHandler, name='home', strict_slash=True),
     RedirectRoute('/terms', terms_handler.TermsHandler, name='terms', strict_slash=True),
     RedirectRoute('/secure/', handlers.SecureRequestHandler, name='secure', strict_slash=True),
     RedirectRoute('/tip/',tip_handler.TipHandler, name='tip', strict_slash=True),

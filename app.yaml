@@ -59,11 +59,6 @@ handlers:
   static_files: boilerplate/static/img/\1
   upload: boilerplate/static/img/(.*\.(gif|png|jpg))
 
-
-- url: /assets/*
-  mime_type: text/css
-  static_dir: static/assets
-
 - url: /css
   mime_type: text/css
   static_dir: static/css
@@ -76,6 +71,10 @@ handlers:
   mime_type: text/javascript
   static_dir: static/js
 
+- url: /assets/*
+  mime_type: text/css
+  static_dir: static/assets
+
 - url: /assets/js/
   mime_type: text/javascript
   static_dir: static/assets/js
@@ -87,54 +86,6 @@ handlers:
 - url: /assets/img/(.*\.(gif|png|jpg))
   static_files: static/assets/img/\1
   upload: static/assets/img/(.*\.(gif|png|jpg))
-
-- url: /(index\.(html))
-  static_files: templates/\1
-  upload: templates/(index\.(html))
-
-- url: /(aboutjh\.(html))
-  static_files: templates/\1
-  upload: templates/(aboutjh\.(html))
-
-- url: /(value\.(html))
-  static_files: templates/\1
-  upload: templates/(value\.(html))
-
-- url: /(benefits\.(html))
-  static_files: templates/\1
-  upload: templates/(benefits\.(html))
-
-- url: /(get\.(html))
-  static_files: templates/\1
-  upload: templates/(get\.(html))
-
-- url: /(residents\.(html))
-  static_files: templates/\1
-  upload: templates/(residents\.(html))
-
-- url: /(why\.(html))
-  static_files: templates/\1
-  upload: templates/(why\.(html))
-
-- url: /(thanks\.(html))
-  static_files: templates/\1
-  upload: templates/(thanks\.(html))
-
-- url: /(costsavings\.(html))
-  static_files: templates/\1
-  upload: templates/(costsavings\.(html))
-
-- url: /(whyitworks\.(html))
-  static_files: templates/\1
-  upload: templates/(whyitworks\.(html))
-
-- url: /terms.html
-  static_files: templates/terms.html
-  upload: templates/terms.html
-
-- url: /
-  static_files: templates/index.html
-  upload: templates/index.html
 
 - url: /companion_ship_rating_service.*
   script: services.app
