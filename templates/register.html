@@ -5,42 +5,40 @@
 {% endblock %}
 
 {% block content %}
-    <div class="container-fluid">
-        <div class="row-fluid">
-            <div class="span9">
-                <form id="form_register" action="{{ url|safe }}" method="post" class="well form-horizontal">
 
-                    <fieldset>
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                        {{ macros.field(form.username, label=_("Username"), placeholder=_("Enter your")+" "+_("Username"), class="input-xlarge focused required") }}
-                        {{ macros.field(form.name, label=_("Name"), placeholder=_("Enter your")+" "+_("Name"), class="input-xlarge focused") }}
-                        {{ macros.field(form.last_name, label=_("Last Name"), placeholder=_("Enter your")+" "+_("Last Name"), class="input-xlarge focused") }}
-                        {{ macros.field(form.email, label=_("Email"), placeholder=_("Enter your")+" "+_("Email"), class="input-xlarge focused required email", type="email") }}
+	<div class="container">
+		<div class="row-fluid margin-bottom-10">
 
-                        {{ macros.field(form.security_code, label=_("Security Code"), placeholder=_("Enter your")+" "+_("Security Code")) }}
-                        {{ macros.field(form.password, label=_("Password"), placeholder=_("Enter your")+" "+_("Password"), class="input-xlarge focused required", type="password") }}
-                        {% if not is_mobile %}
-                            {{ macros.field(form.c_password, label=_("Confirm Password"), placeholder=_("Confirm Password"), class="input-xlarge focused required", type="password") }}
-                        {% endif %}
-                        <div class="form-actions">
-                            <label for="agree" class="control-label">
-                                <input type="checkbox" value="y" name="agree" id="agree" class="input-xlarge focused required">
-                                I read the <a href="{{ uri_for("terms") }}" target="_blank">Privacy Policy</a> and agree with the <a href="{{ uri_for("terms") }}" target="_blank">Terms Of Service</a>. We collect just enough data to make meaningful connections.
-                            </label>
-                        </div>
-
-
-                        <div class="form-actions">
-                        <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
-                        </div>
-                    </fieldset>
-                </form>
-            </div>
-
-
-        </div>
-    </div>
-
+            <form id="form_register" action="{{ url|safe }}" method="post" class="reg-page">
+            	<h3>Register a new account</h3>
+                <fieldset>
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                <div class="controls">
+                    <label>User Name</label>
+                    {{ macros.field(form.username, label=_("Username"), placeholder=_(" ")+" "+_(" "), class="input-xlarge focused required") }}
+                    <label>First Name</label>
+                    {{ macros.field(form.name, label=_("Name"), placeholder=_(" ")+" "+_(" "), class="input-xlarge focused") }}
+                    <label>Last Name</label>
+                    {{ macros.field(form.last_name, label=_("Last Name"), placeholder=_(" ")+" "+_(" "), class="input-xlarge focused") }}
+                    <label>Email Address <span class="color-red">*</span></label>
+                    {{ macros.field(form.email, label=_("Email"), placeholder=_(" ")+" "+_(" "), class="input-xlarge focused required email", type="email") }}
+                    {{ macros.field(form.security_code, label=_("Security Code"), placeholder=_(" ")+" "+_(" ")) }}
+                    <label>Password <span class="color-red">*</span></label>
+                    {{ macros.field(form.password, label=_("Password"), placeholder=_(" ")+" "+_(" "), class="input-xlarge focused required", type="password") }}
+                    <label>Confirm Password <span class="color-red">*</span></label>
+                    {{ macros.field(form.c_password, label=_("Confirm Password"), placeholder=_("   "), class="input-xlarge focused required", type="password") }}
+                </div>
+                <div class="controls form-inline">
+                    <input type="checkbox" value="y" name="agree" id="agree" class="input-xlarge focused required">
+                    <label>I read <a href="{{ uri_for("terms") }}" target="_blank">Terms and Privacy Policy</a></label>
+                    <button class="btn-u pull-right" type="submit">Sign Up</button>
+                </div>
+                <hr />
+				<p>Already Signed Up? Click <a href="{{ uri_for("login") }}" class="color-blue">Sign In</a> to login your account.</p>
+                </fieldset>
+            </form>
+        </div><!--/row-fluid-->
+	</div><!--/container-->
 
 {% endblock %}
 
@@ -70,6 +68,13 @@
                 goodPassText: '{% trans %}Good Password{% endtrans %}',
                 strongPassText: '{% trans %}Secure Password{% endtrans %}'
             });
+        });
+    </script>
+    <!-- JS Page Level -->
+    <script type="text/javascript" src="assets/js/app.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            App.init();
         });
     </script>
 {% endblock %}
