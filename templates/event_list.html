@@ -2,7 +2,28 @@
 {% block content %}
     <cursor id="events_cursor" hasmore="{{ more }}" next_cursor='{{ cursor }}'/>
      <events>
+    <H3>Forming Activities</H3>
     {% for event in events %}
+        <!-- not sure why this options works in reverse, but it achieves the goal of ONLY showing the Activities -->
+        {% if event.type == 'INTEREST_FLEX' %}
+            {% continue %}
+        {% endif %}
+        {% if event.status in ['CLOSED','CANCELLED','EXPIRED'] %}
+            {% continue %}
+        {% endif %}
+        {% set event_attributes = event_attributes_list[event.key.urlsafe()] %}
+        {% if not event_attributes['can_join'] and   not event_attributes['can_leave'] and not event_attributes['can_cancel'] and not event_attributes['has_feedback']%}
+                {% continue %}
+        {% endif %}
+        {{ macros.show_event(event,username,event_attributes_list) }}
+    {% endfor %}
+
+    <H3>Announced Interests (ready to commit to an activity)</H3>
+    {% for event in events %}
+    <!-- Now show what interests are floating out there... - but take no action -->
+        {% if event.type == 'INTEREST_SPECIFIC' %}
+            {% continue %}
+        {% endif %}
         {% if event.status in ['CLOSED','CANCELLED','EXPIRED'] %}
             {% continue %}
         {% endif %}

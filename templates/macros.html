@@ -100,11 +100,14 @@
                                     <a class="btn-u btn-u-blue" href="/join_activity/?key={{ event.key.urlsafe() }}">
                                           <span data-class="label">Join</span>
                                      </a>
-                               {% elif event.type =='INTEREST_FLEX' and event_attributes['can_join']  %}
+                               <!-- For Actipond initial release, you can only join Activities. Cannot convert an interest into an Activity -->
+                               <!-- 'no interest to activity conversion' (for future: inserted a space between '%' and 'elif' below)
+                               { % elif event.type =='INTEREST_FLEX' and event_attributes['can_join']  %}
                                      <a href="#cancel_modal" class="open-cancel-confirm-dialog btn btn-primary btn-mini" data-toggle="modal"
                                             data-id="{{ event.key.urlsafe()}}"">
                                             <span data-class="label">Join</span>
                                      </a>
+                               END 'no interest to activity' conversion -->
                                {% endif %}
                                <!-- Cancel / Delete -->
                                {% if  event_attributes['can_leave'] %}
@@ -182,7 +185,7 @@
                                     <div class="media-actions">
                                         <span>
                                             {%  if activity_attributes['can_join'] %}
-                                                <a class="btn btn-primary btn-mini" href="/join_activity/?key={{ matching_activity.key.urlsafe() }}">
+                                                <a class="btn-u btn-u-blue" href="/join_activity/?key={{ matching_activity.key.urlsafe() }}">
                                                     <span data-class="label">Join</span>
                                                 </a>
                                             {% endif %}
