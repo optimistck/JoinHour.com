@@ -33,10 +33,10 @@ class UserFeedbackHandler(BaseHandler):
             user_feedback.status = UserFeedback.CLOSED_WITH_FEEDBACK
             user_feedback.put()
             if activity_exp not in [UserFeedback.NEGATIVE, UserFeedback.NEUTRAL]:
-                self.add_message("Your feedback was submitted.", 'success')
+                self.add_message("Your feedback was submitted. Let us know if you have additional comments.", 'success')
                 return self.redirect_to('contact');
             else:
-                self.add_message("Your feedback was submitted. Please tell us how we can make JoinHour work better for you and hundreds of your neighbors.", 'success')
+                self.add_message("Your feedback was submitted. Please tell us how we can make this services work better for you and hundreds of your neighbors.", 'success')
                 return self.redirect_to('contact');
 
 
