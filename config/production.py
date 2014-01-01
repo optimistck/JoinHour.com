@@ -20,7 +20,7 @@ config = {
                            'environment_args': {'extensions': ['jinja2.ext.i18n','jinja2.ext.loopcontrols']}},
 
 # application name
-'app_name' : "JoinHour",
+'app_name' : "Actipond",
 
 # the default language code for the application.
 # should match whatever language the site uses when i18n is disabled
@@ -35,8 +35,8 @@ config = {
 'locales' : ['en_US', 'es_ES', 'it_IT', 'zh_CN', 'id_ID', 'fr_FR', 'de_DE', 'ru_RU', 'pt_BR', 'cs_CZ'],
 
 # contact page email settings
-'contact_sender' : "we@joinhour.com",
-'contact_recipient' : "we@joinhour.com",
+'contact_sender' : "optimistck@gmail.com",
+'contact_recipient' : "optimistck@gmail.com",
 
 # Password AES Encryption Parameters
 'aes_key' : "12_24_32_BYTES_KEY_FOR_PASSWORDS",

@@ -27,7 +27,8 @@ class EventManager(object):
         :return:
         '''
         eventThrottler = EventThrottler(kwargs['username'])
-        if eventThrottler.number_of_cached_events() > 5:
+        # set the # of events to 3 instead of 5, and at join_flex_interest (for consistency). Throttler at 10 minutes
+        if eventThrottler.number_of_cached_events() > 3:
             return False, "You have too many concurrent events.", None
         event = Event(category = kwargs['category'],
                             date_entered = datetime.utcnow(),
@@ -180,7 +181,7 @@ class EventManager(object):
         if not canJoin:
             return canJoin, message, None, None
         eventThrottler = EventThrottler(self.get_event().username)
-        if eventThrottler.number_of_cached_events() > 5:
+        if eventThrottler.number_of_cached_events() > 3:
             return False, "You have too many concurrent events.", None, None
         self._event.type = Event.EVENT_TYPE_SPECIFIC_INTEREST
         if 'min_number_of_people_to_join' in kwargs and kwargs['min_number_of_people_to_join'] != "":

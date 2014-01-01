@@ -10,7 +10,8 @@ from google.appengine.ext import ndb
 
 
 class EventThrottler(object):
-    FIVE_MINUTES = 5
+    # changed from 5 to 10. No more than 3 events can be set in 10 minutes.
+    FIVE_MINUTES = 10
     CONFIG_TIME = FIVE_MINUTES
 
     @classmethod

@@ -16,9 +16,17 @@ class TokenGenerator(object):
             list_of_tokens.add(newToken)
         return list_of_tokens
 
+
     @classmethod
     def create_tokens(cls, number_of_tokens):
         list_of_tokens = cls.generate_tokens(number_of_tokens)
         for t in list_of_tokens:
             token = Token(value=t)
+            token.put()
+
+    @classmethod
+    def create_tokens_for_group(cls, number_of_tokens, group_name):
+        list_of_tokens = cls.generate_tokens(number_of_tokens)
+        for t in list_of_tokens:
+            token = Token(value=t, belongs_to_group=group_name)
             token.put()

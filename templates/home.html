@@ -2,47 +2,53 @@
 
 
 {% block header_title %}
-    {% trans %} {% endtrans %}
+
 {% endblock %}
 
 
 {% block content %}
-
+<!--=== Content Part ===-->
+    <div class="container">
+    <!-- If User logged in -->
     {% if user_id %}
-        {% if is_mobile %}
-            <div class="alert alert-info">
-                <i class="icon-edit icon-large"></i> Post your <a href="{{ uri_for("join") }}">interest</a>, browse open <a href="{{ uri_for("activity") }}">activities</a>, or read user <a href="{{ uri_for("how") }}">experiences</a>.<BR>
-            </div>
-        {% else %}
-            <ul class="thumbnails team">
-                <li class="span4">
-                    <div class="thumbnail-style">
-                        <a href="{{ uri_for("join") }}"><img src="../img/2.x.One.jpg" alt="" class="img-rounded"/></a>
-                        <h3><a href="{{ uri_for("join") }}">Post</a> <small>Pick an interest & set availability.</small></h3>
-                        <p></p>
+
+            <!-- Service Blocks -->
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="service clearfix">
+                        <i class="icon-calendar"></i>
+                        <div class="desc">
+                            <h4><a href="/act">Post an Activity</a></h4>
+                            <p>Any group member can propose an activity or an event. If others join, it commences, otherwise, it expires.</p>
+                        </div>
                     </div>
-                </li>
-                <li class="span4">
-                    <div class="thumbnail-style">
-                        <a href="{{ uri_for("activity") }}"><img src="../img/2.x.Two.jpg" alt="" class="img-rounded"/></a>
-                        <h3><a href="{{ uri_for("activity") }}">Browse</a> <small>Join activities on the Live Board.</small></h3>
-                        <p></p>
+                </div>
+                <div class="span4">
+                    <div class="service clearfix">
+                        <i class="icon-calendar-empty"></i>
+                        <div class="desc">
+                            <h4><a href="/int">Announce Interest</a></h4>
+                            <p>Sometimes it's better to leave planning to someone else. Announce a timed interest and we'll find a match.</p>
+                        </div>
                     </div>
-                </li>
-                <li class="span4">
-                    <div class="thumbnail-style">
-                        <a href="{{ uri_for("how") }}"><img src="../img/2.x.Three.jpg" alt="" class="img-rounded"/></a>
-                        <h3><a href="{{ uri_for("how") }}">Experiences</a> <small>See how your neighbors use JoinHour.</small></h3>
-                        <p></p>
+                </div>
+                <div class="span4">
+                    <div class="service clearfix">
+                        <i class="icon-signal"></i>
+                        <div class="desc">
+                            <h4><a href="/pipe">See Activity Pipeline </a></h4>
+                            <p>View group activities that are forming now. See activity matches for your interest. Join an activity.</p>
+                        </div>
                     </div>
-                </li>
-            </ul><!--/thumbnails-->
-        {% endif %}
+                </div>
+            </div><!--/row-fluid-->
+            <!-- //End Service Blokcs -->
+
 
         <div>
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#pane1" data-toggle="tab">Interests You Posted</a>
+                    <a href="#pane1" data-toggle="tab">Interests & Activities You Posted</a>
                 </li>
             </ul>
         </div>
@@ -60,182 +66,22 @@
                 </div>
             </div>
         </div><!-- /.tab-content -->
+</div><!--/container-->
+<!-- End Content Part -->
+
+<!-- NOT logged in -->
     {% else %}
-        <div class="row">
-            <div class="span6">
-                <div class="home_bp">
-                    <h4>We connect neighbors on demand for in-person activities</h4>
-
-                    <p><B>Connections are made in real-time only when interests and availability matches</B></p>
-                    <BR>
-                    <!-- TO DO: decide if this needs to go. No value add.
-                    <table class="table table-striped table-bordered">
-                        <tr>
-                            <TD>
-                                <CENTER><i class="icon-edit icon-large"></i> You Post</CENTER>
-                            </TD>
-                            <TD>
-                                <CENTER><i class="icon-magic icon-large"></i> We Match on Demand</CENTER>
-                            </TD>
-                            <TD>
-                                <CENTER><i class="icon-group icon-large"></i> You Connect</CENTER>
-                            </TD>
-                        </tr>
-                    </table>
-                    Table -->
-                </div>
-
-                <div id="myCarousel" class="carousel slide">
-                    <ol class="carousel-indicators">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>
-                        <li data-target="#myCarousel" data-slide-to="2"></li>
-                        <li data-target="#myCarousel" data-slide-to="3"></li>
-                        <li data-target="#myCarousel" data-slide-to="4"></li>
-                        <li data-target="#myCarousel" data-slide-to="5"></li>
-                    </ol>
-                    <!-- Carousel items -->
-                    <div class="carousel-inner">
-                        <div class="active item">
-                            <img src="../img/carousel-01-BikeRide.jpg"/>
-
-                            <div class="carousel-caption">
-                                <h4>Group Bike Ride - formed with two hours' notice</h4>
-
-                                <p>Connect with neighbors and go for a ride in the nex hour or two. No planning
-                                    required.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="../img/carousel-02-food-day.jpg"/>
-
-                            <div class="carousel-caption">
-                                <h4>Tasty experiences should be shared - today</h4>
-
-                                <p>Friends don't want to try new things? No problem. Share an experience with a foodie
-                                    in your building. Why not today for lunch or dinner? Post location in the activity
-                                    details.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="../img/carousel-03-group-dog-walk.jpg"/>
-
-                            <div class="carousel-caption">
-                                <h4>Form group dogs walk in minutes</h4>
-
-                                <p>Offer a bit of canine company to your dog without a trip to a dog park. Post now and
-                                    pack walk in an hour.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="../img/carousel-04-tennis.jpg"/>
-
-                            <div class="carousel-caption">
-                                <h4>Feel like going for a run in the next hour? Tennis? Basketball? Yoga?</h4>
-
-                                <p>Hundreds of people next to you prefer doing activity in a group. Post an activity or
-                                    join others.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="../img/carousel-05-play-outside.jpg"/>
-
-                            <div class="carousel-caption">
-                                <h4>Enjoy sunshine</h4>
-
-                                <p>Grab a Frisbee or a ball for a quick pickup game. Why not? Getting 4 people together
-                                    in a span of an hour has never been easier.</p>
-                            </div>
-                        </div>
-                        <div class="item">
-                            <img src="../img/carousel-06-taxi.jpg"/>
-
-                            <div class="carousel-caption">
-                                <h4>Split a Cab</h4>
-
-                                <p>It's Friday night. Your neighbor is heading in the same direction. Why not split a cab?</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Carousel nav -->
-                    <a class="carousel-control left" href="#myCarousel" data-slide="prev">&lsaquo;</a>
-                    <a class="carousel-control right" href="#myCarousel" data-slide="next">&rsaquo;</a>
-                </div>
-
-            </div>
-
-
-            <div class="span3 auth-at-home">
-                <form id="form_login_user" action="{{ uri_for("login") }}" method="post">
-                    <fieldset class="well">
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-
-                        <div class="control-group">
-                            <label class="controls">
-                                <input class="focused required" name="username" id="l_username" type="text"
-                                       placeholder="{% trans %}Username or Email{% endtrans %}">
-                            </label>
-                        </div>
-                        <div class="control-group">
-                            <div class="controls row-fluid">
-                                <label class="span8">
-                                    <input class="focused required" name="password" id="l_password" type="password"
-                                           placeholder="{% trans %}Password{% endtrans %}">
-                                </label>
-                                <label class="span4">
-                                    <button type="submit" class="btn btn-primary btn-login">{% trans %}
-                                        Login{% endtrans %}</button>
-                                </label>
-                            </div>
-                        </div>
-                        <div>
-                            <label class="checkbox">
-                                <input type="checkbox" name="remember_me" id="remember_me" value="on">
-                                {% trans %}Remember me?{% endtrans %} <span class="separator"></span>
-                                <a href="{{ uri_for("password-reset") }}">{% trans %}Forgot your
-                                    password?{% endtrans %}</a>
-                            </label>
-                        </div>
-                        {{ macros.federated_login(provider_info, provider_uris, enable_federated_login) }}
-                    </fieldset>
-                </form>
-
-                <!-- ### START of PRE-REGISTER DISABLE ###
-                <h3>{% trans %}Sign Up{% endtrans %}</h3>
-
-                <form id="form_register" action="{{ uri_for("preregister") }}" method="post">
-
-                    <fieldset class="well">
-                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                       
-
-                        <div class="control-group">
-                            <label for="building_name" class="controls">Building *</label>
-
-                            <div class="controls">
-                                <input type="text" value="" placeholder="Enter your building name" name="building_name" id="building_name"
-                                        >
-
-                            </div>
-                        </div>
-                        {{ macros.field(form.email, label=_("Email"), placeholder=_("Enter your")+" "+_("Email"), class="focused required email", type="email") }}
-
-                        <div class="form-actions">
-                            <label for="agree" class="control-label">
-                                <input type="checkbox" value="y" name="agree" id="agree" class="input-xlarge focused required">
-                                I read the <a href="{{ uri_for("terms") }}" target="_blank">Privacy Policy</a> and agree with the <a href="{{ uri_for("terms") }}" target="_blank">Terms Of Service</a>.
-                            </label>
-                        </div>
-
-
-                        <div class="form-actions">
-                            <button type="submit" class="btn btn-primary">{% trans %}Sign Up{% endtrans %}</button>
-                        </div>
-                    </fieldset>
-                </form>
-            ### END of PRE-REGISTER DISABLED ### -->
-            </div>
-        </div><!-- /row -->
+<!--=== Purchase Block ===-->
+<div class="row-fluid purchase margin-bottom-30">
+    <div class="container">
+		<div class="span9">
+            <span>Actipond: activity partners on demand</span>
+            <p>Do stuff with non-friends. Placeholder.</p>
+        </div>
+        <a href="{{ uri_for("register") }}" class="btn-buy hover-effect">Sign Up</a>
+    </div>
+</div><!--/row-fluid-->
+<!-- End Purchase Block -->
     {% endif %}
 
 {% endblock %}
