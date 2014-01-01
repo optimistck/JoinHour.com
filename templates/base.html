@@ -99,7 +99,7 @@
         <ul class="loginbar pull-right">
             <!-- TODO: decide if this is needed -->
             <!-- <a class="brand" href="/"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a> -->
-            <li><i class="icon-globe"> </i> <a href="#">About</a></li>
+            <li><i class="icon-globe"> </i> <a href="/about">About</a></li>
             <!--=== JH: Reserved
             <li class="devider">&nbsp;</li>
             <li><a href="#" class="login-btn">Sign Up</a></li>
@@ -134,7 +134,7 @@
                         <!-- Code if the user has logged in-->
                         {% if user_id and user_id | isValidUser %}
                         <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Post
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action Menu
                                 <b class="caret"></b>
                             </a>
                             <ul class="dropdown-menu">
@@ -215,7 +215,7 @@
 <!--=== End Header ===-->
 
 <!--=== Content Part ===-->
-<div class="container">
+<div class="body"> <!-- container -->
     {% block navbar %}
 
     {% endblock %}
@@ -237,7 +237,7 @@
 
     {% endblock %}
 
-</div><!--/container-->
+</div><!--/container /body-->
 <!-- End Content Part -->
 
 
@@ -257,7 +257,7 @@
 	<div class="container">
 		<div class="row-fluid">
 			<div class="span8">
-	            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | &copy; 2014 - <a href="http://www.Firebrandfuse.com">Firebrand Fuse LLC</a> | 4201 Wilson Blvd. #110-355, Arlington, VA</p>
+	            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a> | &copy; 2014 -<a href="http://www.Firebrandfuse.com">Firebrand Fuse LLC</a> | 4201 Wilson Blvd. #110-355, Arlington, VA</p>
                 <!-- <small><p class="text-center"> &copy; 2013 | Firebrand Fuse LLC | 4201 Wilson Blvd. Suite #110-355, Arlington, VA 22203 | <a href="{{ uri_for("terms") }}">Terms &amp; Privacy</a> | <a href="{{ uri_for("contact") }}">Contact</a> </p></small>-->
 			</div>
 			<div class="span4">

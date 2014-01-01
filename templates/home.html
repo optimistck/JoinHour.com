@@ -7,43 +7,48 @@
 
 
 {% block content %}
-
+<!--=== Content Part ===-->
+    <div class="container">
     <!-- If User logged in -->
     {% if user_id %}
-        {% if is_mobile %}
-            <div class="alert alert-info">
-                <i class="icon-edit icon-large"></i> Post your <a href="{{ uri_for("join") }}">interest</a>, browse open <a href="{{ uri_for("activity") }}">activities</a>, or read user <a href="{{ uri_for("how") }}">experiences</a>.<BR>
-            </div>
-        {% else %}
-            <ul class="thumbnails team">
-                <li class="span4">
-                    <div class="thumbnail-style">
-                        <a href="{{ uri_for("join") }}"><img src="../img/2.x.One.jpg" alt="" class="img-rounded"/></a>
-                        <h3><a href="{{ uri_for("join") }}">Post</a> <small>Pick an interest & set availability.</small></h3>
-                        <p></p>
+
+            <!-- Service Blocks -->
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="service clearfix">
+                        <i class="icon-calendar"></i>
+                        <div class="desc">
+                            <h4><a href="/act">Post an Activity</a></h4>
+                            <p>Any group member can propose an activity or an event. If others join, it commences, otherwise, it expires.</p>
+                        </div>
                     </div>
-                </li>
-                <li class="span4">
-                    <div class="thumbnail-style">
-                        <a href="{{ uri_for("activity") }}"><img src="../img/2.x.Two.jpg" alt="" class="img-rounded"/></a>
-                        <h3><a href="{{ uri_for("activity") }}">Browse</a> <small>Join activities on the Live Board.</small></h3>
-                        <p></p>
+                </div>
+                <div class="span4">
+                    <div class="service clearfix">
+                        <i class="icon-calendar-empty"></i>
+                        <div class="desc">
+                            <h4><a href="/int">Announce Interest</a></h4>
+                            <p>Sometimes it's better to leave planning to someone else. Announce a timed interest and we'll find a match.</p>
+                        </div>
                     </div>
-                </li>
-                <li class="span4">
-                    <div class="thumbnail-style">
-                        <a href="{{ uri_for("how") }}"><img src="../img/2.x.Three.jpg" alt="" class="img-rounded"/></a>
-                        <h3><a href="{{ uri_for("how") }}">Experiences</a> <small>See how your neighbors use JoinHour.</small></h3>
-                        <p></p>
+                </div>
+                <div class="span4">
+                    <div class="service clearfix">
+                        <i class="icon-signal"></i>
+                        <div class="desc">
+                            <h4><a href="/pipe">See Activity Pipeline </a></h4>
+                            <p>View group activities that are forming now. See activity matches for your interest. Join an activity.</p>
+                        </div>
                     </div>
-                </li>
-            </ul><!--/thumbnails-->
-        {% endif %}
+                </div>
+            </div><!--/row-fluid-->
+            <!-- //End Service Blokcs -->
+
 
         <div>
             <ul class="nav nav-tabs">
                 <li class="active">
-                    <a href="#pane1" data-toggle="tab">Interests You Posted</a>
+                    <a href="#pane1" data-toggle="tab">Interests & Activities You Posted</a>
                 </li>
             </ul>
         </div>
@@ -61,7 +66,10 @@
                 </div>
             </div>
         </div><!-- /.tab-content -->
-    <!-- NOT logged in -->
+</div><!--/container-->
+<!-- End Content Part -->
+
+<!-- NOT logged in -->
     {% else %}
 <!--=== Purchase Block ===-->
 <div class="row-fluid purchase margin-bottom-30">
@@ -70,7 +78,7 @@
             <span>Actipond: activity partners on demand</span>
             <p>Do stuff with non-friends. Placeholder.</p>
         </div>
-        <a href="#" class="btn-buy hover-effect">Sign Up</a>
+        <a href="{{ uri_for("register") }}" class="btn-buy hover-effect">Sign Up</a>
     </div>
 </div><!--/row-fluid-->
 <!-- End Purchase Block -->

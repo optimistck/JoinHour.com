@@ -24,10 +24,10 @@
             <div id="third_party_login" class="form-actions">
 {#
                 {% if disable_local_accounts %}
-                <h4>{% trans %}Sign in using:{% endtrans %}</h4>
+                <h4>{% trans %}Sign In using:{% endtrans %}</h4>
                 {% else %}
 #}
-                <h4>{% trans %}Or Sign in using:{% endtrans %}</h4>
+                <h4>{% trans %}Or Sign In using:{% endtrans %}</h4>
                 <ul class="social-login-icons">
                     {% for p in provider_info if provider_uris[p] %}
                         <li><a href="{{ provider_uris[p] }}" class="social-btn social-btn-{{ p }}" title="{{ p }}">{{ p }}</a></li>
@@ -57,12 +57,14 @@
                                     href="/user_profile/?username={{ event.username }}">{{ event.username }}</a>
                                 </span>
                     </h4>
-                    <!-- Event Note text-->
+                    <!-- Event Note text - show the location and meeting place only if it's an Activity, not Interest-->
+                    {% if event.type == 'INTEREST_SPECIFIC'  %}
                     <p data-class="post-content">
                         Activity Location: {{ event.activity_location | default("Not set",True) }}
                         <BR>
                         Meeting Place: {{ event.meeting_place | default ("Not set",True)}}
                     </p>
+                    {% endif %}
 
                     <!-- Status text-->
                    {% if event.status == 'FORMING'  %}

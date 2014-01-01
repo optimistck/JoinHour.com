@@ -9,64 +9,83 @@
 
 {% block content %}
 
-<h3>Post Your Activity</h3>
+<!--=== Content Part ===-->
+<div class="container">
+	<div class="row-fluid">
+        <div class="span9">
+			<!-- Other Questions -->
+            <div class="headline"><h2>Post Your Activity</h2></div>
+            <!-- Accardion -->
+            <div class="accordion acc-home margin-bottom-40" id="accordion2">
+                <div class="accordion-group">
+                  <div id="collapseOne" class="accordion-body in collapse" style="height: auto;">
+                    <div class="accordion-inner">
+                      <p></p>
+                        <form id="form_initiate_activity" action="{{ url|safe }}" method="post">
+                            <fieldset>
+                                <input type="hidden" name="exception" value="{{ exception }}">
+                                <input type="hidden" name="set_time" id="set_time" value="">
+                                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                                <H4>I want to</H4>
+                                {{ macros.field(form.category, label=_(" ")) }}
 
+                                <span>
+                                <h4>Set activity start time</h4>
+                                    <div id="set_time_datetimepicker" class="input-append date form_datetime">
+                                        <input size="16" type="text" value="" readonly>
+                                            <span class="add-on">
+                                                <i class="icon-th"></i>
+                                            </span>
+                                     </div>
+                                </span>
 
-    <div class="row-fluid">
-        <div class="span8">
-        <form id="form_initiate_activity" action="{{ url|safe }}" method="post">
-        <fieldset>
-            <input type="hidden" name="exception" value="{{ exception }}">
-            <input type="hidden" name="set_time" id="set_time" value="">
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            <H4>I want to</H4>
-            {{ macros.field(form.category, label=_(" ")) }}
+                                <span>
+                                <!-- We're not offering the min # to start for now -->
+                                <!--
+                                <h4>Min # to start</h4>
+                                {{ macros.field(form.min_number_of_people_to_join, label=_(" ")) }}
+                                -->
+                                <h4>Max # that can join</h4>
+                                {{ macros.field(form.max_number_of_people_to_join, label=_(" ")) }}
+                                <h4>The group will meet at</h4>
+                                {{ macros.field(form.meeting_place, label=_(" "),placeholder=_("e.g., Starbucks at Jolly Plaza"), class="input-xlarge focused required") }}
+                                <h4>Activity location</h4>
+                                {{ macros.field(form.activity_location, label=_(" "),placeholder=_("e.g., Lyon Village Playground"), class="input-xlarge focused required") }}
 
-            <span>
-            <h4>Set activity start time</h4>
-                <div id="set_time_datetimepicker" class="input-append date form_datetime">
-                    <input size="16" type="text" value="" readonly>
-                        <span class="add-on">
-                            <i class="icon-th"></i>
-                        </span>
-                 </div>
-            </span>
+                                </span>
 
-            <span>
-            <!-- We're not offering the min # to start for now -->
-            <!--
-            <h4>Min # to start</h4>
-            {{ macros.field(form.min_number_of_people_to_join, label=_(" ")) }}
-            -->
-            <h4>Max # that can join</h4>
-            {{ macros.field(form.max_number_of_people_to_join, label=_(" ")) }}
-            <h4>The group will meet at</h4>
-            {{ macros.field(form.meeting_place, label=_(" "),placeholder=_("e.g., Starbucks at Jolly Plaza"), class="input-xlarge focused required") }}
-            <h4>Activity Location</h4>
-            {{ macros.field(form.activity_location, label=_(" "),placeholder=_("e.g., Lyon Village Playground"), class="input-xlarge focused required") }}
+                                <div class="form-actions">
+                                    <button type="submit" class="btn-u btn-u-blue">Post</button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </div>
+                  </div>
+                </div><!--/accordion-group-->
+            </div><!--/accardion-->
+		</div><!--/span9-->
 
-            </span>
+		<div class="span3">
+            <!-- How this works -->
+            <div class="headline"><h3>How this works</h3></div>
+            <p>Select an activity and your availability. Group members will see your post details and will send you <EM>join requests</EM>. If you don't accept requests before the activity start time, then your post expires.</p>
 
-            <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Post</button>
-            </div>
-        </fieldset>
-    </form>
-        </div><!--/span8-->
-        
-        <div class="span4">
-           
-            <!-- Posting is Easy -->
-            <div class="headline"><h4>Posting Is Easy</h4></div>
-            <p>Set your interest and availability</p>
+        	<!-- Posting Is Easy -->
+            <div class="headline"><h3>You're in control</h3></div>
+            <p>Creating an activity gives you the most flexibility.</p>
             <ul class="unstyled">
-                <li><i class="icon-ok color-green"></i> Shared interest between the participants is assured</li>
-                <li><i class="icon-ok color-green"></i> Your post disappers when your interest expires or activity starts</li>
-                <li><i class="icon-ok color-green"></i> You can always cancel your post</li>
+            	<li><i class="icon-ok color-green"></i> You control activity details</li>
+            	<li><i class="icon-ok color-green"></i> You accept join requests</li>
+                <li><i class="icon-ok color-green"></i> You can cancel anytime </li>
             </ul>
 
+            <!-- Option B -->
+            <div class="headline"><h3>Option B</h3></div>
+            <p>Don't feel like planning? Then go with the flow and <a href="/int">announce your interest instead</a>.</p>
         </div><!--/span4-->
-    </div><!--/row-fluid--> 
+    </div><!--/row-fluid-->
+</div><!--/container-->
+<!--=== End Content Part ===-->
 
 
     
@@ -98,9 +117,14 @@
         document.getElementById('set_time').value = new Date(utcDate).toISOString();
     });
 
-
-
-
 </script>
+
+<script type="text/javascript" src="/assets/js/app.js"></script>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        App.init();
+    });
+</script>
+
 {% endblock %}
 
