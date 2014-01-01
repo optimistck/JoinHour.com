@@ -8,7 +8,8 @@
 {% endblock %}
 
 {% block content %}
-    <h4>Rate your experience and companions</h4>
+<div class="container">
+    <h3>Please rate your activity experience</h3>
 
     <div id="companion_ship_popup" class="modal hide fade">
         <div class="modal-header">
@@ -63,14 +64,16 @@
                 </label>
             </div>
         </div>
+        <!-- We're not rating companions for now
         <div class="control-group">
             <div class="controls">
                 <span class="link inline"><a href="#companion_ship_popup" class="open-cancel-confirm-dialog" data-toggle="modal">Rate your companions</a></span>
             </div>
         </div>
+        -->
         <div class="control-group">
             <div class="controls">
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn-u btn-u-blue">Provide Feedback</button>
             </div>
         </div>
     </form>
@@ -94,7 +97,7 @@
         </table>
     </div-->
 
-
+</div><!--/container-->
 {% endblock %}
 
 {% block mediaJS %}
@@ -132,6 +135,13 @@
            ]
         });
 
+    </script>
+
+    <script type="text/javascript" src="/assets/js/app.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            App.init();
+        });
     </script>
 {% endblock %}
 
