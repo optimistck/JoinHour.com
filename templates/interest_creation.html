@@ -15,38 +15,28 @@
         <div class="span9">
 			<!-- Other Questions -->
             <div class="headline"><h2>Announce Your Interest</h2></div>
-            <!-- Accardion -->
-            <div class="accordion acc-home margin-bottom-40" id="accordion2">
-                <div class="accordion-group">
-                  <div id="collapseOne" class="accordion-body in collapse" style="height: auto;">
-                    <div class="accordion-inner">
-                      <p></p>
-                        <form id="form_initiate_activity" action="{{ url|safe }}" method="post">
-                            <fieldset>
-                                <input type="hidden" name="exception" value="{{ exception }}">
-                                <input type="hidden" name="set_time" id="set_time" value="">
-                                <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                                <H4>I want to</H4>
-                                {{ macros.field(form.category, label=_(" ")) }}
-                                <span>
-                                <h4>My interest expires at</h4>
-                                    <div id="set_time_datetimepicker" class="input-append date form_datetime">
-                                        <input size="16" type="text" value="" readonly>
-                                            <span class="add-on">
-                                                <i class="icon-th"></i>
-                                            </span>
-                                     </div>
+            <form id="form_initiate_activity" action="{{ url|safe }}" method="post">
+                <fieldset>
+                    <input type="hidden" name="exception" value="{{ exception }}">
+                    <input type="hidden" name="set_time" id="set_time" value="">
+                    <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
+                    <H4>I want to</H4>
+                    {{ macros.field(form.category, label=_(" ")) }}
+                    <span>
+                    <h4>My interest expires at</h4>
+                        <div id="set_time_datetimepicker" class="input-append date form_datetime">
+                            <input size="16" type="text" value="" readonly>
+                                <span class="add-on">
+                                    <i class="icon-th"></i>
                                 </span>
+                         </div>
+                    </span>
 
-                                <div class="form-actions">
-                                    <button type="submit" class="btn-u btn-u-blue">Announce Your Interest</button>
-                                </div>
-                            </fieldset>
-                        </form>
+                    <div class="form-actions">
+                        <button type="submit" class="btn-u btn-u-blue">Announce Your Interest</button>
                     </div>
-                  </div>
-                </div><!--/accordion-group-->
-            </div><!--/accardion-->
+                </fieldset>
+            </form>
 		</div><!--/span9-->
 
 		<div class="span3">
