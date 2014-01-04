@@ -23,6 +23,14 @@ class Request(ndb.Model):
     date_entered = ndb.DateTimeProperty(required=True)
 
 
+    @classmethod
+    def get_by_approver(approver_user):
+        return cls.query(cls.activity == Event.EVENT_TYPE_SPECIFIC_INTEREST,cls.category == category,cls.status.IN(Event.JOINABLE_STATUS_CHOICES)).fetch()
+
+
+
+
+
 
 
 

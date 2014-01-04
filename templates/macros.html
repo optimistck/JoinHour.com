@@ -190,6 +190,13 @@
                                                 </a>
                                             {% endif %}
                                         </span>
+                                        <span>
+                                            {%  if activity_attributes['can_join'] %}
+                                                <a class="btn btn-primary btn-mini" href="/initiate_join_request/?key={{ matching_activity.key.urlsafe() }}">
+                                                    <span data-class="label">Request Join</span>
+                                                </a>
+                                            {% endif %}
+                                        </span>
                                     </div>
                                     </div>
                                 </div>

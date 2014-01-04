@@ -18,6 +18,7 @@ from web.joinhour.services.user_profile import Avatar
 from web.joinhour.taskqueue_handlers import activity_lifecycle_handler, match_making_handler
 from web.joinhour.user_profile_handler import UserProfileHandler
 from web.joinhour.user_feedback_handler import UserFeedbackHandler
+from web.joinhour.initiate_join_request_handler import InitiateJoinRequestHandler
 
 
 
@@ -60,6 +61,7 @@ _routes = [
     RedirectRoute('/next_action_preregistered/', next_action_preregistered_handler.next_action_PreRegisteredHandler, name='next_action_preregistered', strict_slash=True),
     RedirectRoute('/next_action_thankyou_feedback/', next_action_thankyou_feedback_handler.next_action_ThankYouFeedbackHandler, name='next_action_thankyou_feedback', strict_slash=True),
     RedirectRoute('/complete_profile_social_user/', CompleteProfileSocialUserHandler, name='complete_profile_social_user', strict_slash=True),
+    RedirectRoute('/initiate_join_request_handler/', InitiateJoinRequestHandler, name='initiate_join_request_handler', strict_slash=True)
 
 
 ]
