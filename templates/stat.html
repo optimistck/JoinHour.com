@@ -1,16 +1,17 @@
 {% extends base_layout %}
 
 {% block title %}
-    {% trans %}Activities Pipeline{% endtrans %} - {{ app_name }}
+    Activities Pipeline - {{ app_name }}
 {% endblock %}
 {% block header_title %}
-    {% trans %}Live Board of {{ building }}{% endtrans %}
+     Activities Pipeline for {{ building }}
 {% endblock %}
 {% block content %}
 <div class="container">
 
     <hr/>
-    {% include "interest2activity_popup.html" %}
+    <!-- remove the conversion -->
+    <!-- { % include "interest2activity_popup.html" %} -->
     <div id="events" class="media">
        {% include "event_list.html" %}
     </div>
