@@ -497,7 +497,12 @@ NUMBER_OF_PEOPLE_MAX = [
 ("2 people", "2 people"),
 ("3 people", "3 people"),
 ("4 people", "4 people"),
-("5 people", "5 people")]
+("5 people", "5 people"),
+("6 people", "6 people"),
+("7 people", "7 people"),
+("10 people", "10 people"),
+("15 people", "15 people"),
+("20 people", "20 people")]
 #("No limit", "No limit")]
 
 TIME_CHUNKS = [
@@ -565,13 +570,12 @@ TIME_MINUTES = [
 
 CATEGORY = [
 #("", ""),
-("Go for a run", "Go for a run"),
-("Go for a walk", "Go for a walk"),
-#("Split a cab", "Split a cab"),
-("Play tennis", "Play tennis"),
-("Volunteer - one time commitment", "Volunteer - one time commitment"),
-("Group dog walk", "Group dog walk"),
-("Grab a beverage", "Grab a beverage")]
+("Play date", "Play date"),
+("Playground", "Playground"),
+("Stroller walk", "Stroller walk"),
+("Local event", "Local event"),
+("Lunch or Coffee", "Lunch or Coffee"),
+("Moms night out", "Moms night out")]
 
 # These may have to go
 SUBCATEGORY = [

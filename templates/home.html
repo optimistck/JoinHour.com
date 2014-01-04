@@ -52,6 +52,8 @@
                 </li>
             </ul>
         </div>
+
+
         <div class="tab-content">
             {% include "interest2activity_popup.html" %}
             <div id="pane1" class="tab-pane active">
@@ -75,13 +77,64 @@
 <div class="row-fluid purchase margin-bottom-30">
     <div class="container">
 		<div class="span9">
-            <span>Actipond: activity partners on demand</span>
-            <p>Do stuff with non-friends. Placeholder.</p>
+            <span>Coordinate spontaneously</span>
+            <p>Everything mom groups want to do without the stress of scheduling in advance.</p>
         </div>
         <a href="{{ uri_for("register") }}" class="btn-buy hover-effect">Sign Up</a>
     </div>
 </div><!--/row-fluid-->
 <!-- End Purchase Block -->
+
+                <div class="container">
+
+            <!-- Service Blocks -->
+            <div class="row-fluid">
+                <div class="span12">
+                    <div class="service clearfix">
+                        <div class="desc">
+                            <p><img src="../img/AMsnapshot.png"></img></p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/row-fluid-->
+            <!-- //End Service Blokcs -->
+        </div><!--/container-->
+
+
+        <div class="container">
+
+            <!-- Service Blocks -->
+            <div class="row-fluid">
+                <div class="span4">
+                    <div class="service clearfix">
+                        <i class="icon-calendar"></i>
+                        <div class="desc">
+                            <h4><a href="/about">How this works</a></h4>
+                            <p>Your child sets your schedule one hour at a time. ActiMom quickly coordinates activity interests between Moms group members.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="service clearfix">
+                        <i class="icon-calendar-empty"></i>
+                        <div class="desc">
+                            <h4><a href="/register">Got the code?</a></h4>
+                            <p>Register your account using a private security code provided by your group leader.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="span4">
+                    <div class="service clearfix">
+                        <i class="icon-bolt"></i>
+                        <div class="desc">
+                            <h4><a href="/about">Be group leader</a></h4>
+                            <p>Become a private group lead to organize your friends. Get a pack of codes & let anyone organize activities for your group.</p>
+                        </div>
+                    </div>
+                </div>
+            </div><!--/row-fluid-->
+            <!-- //End Service Blokcs -->
+        </div><!--/container-->
     {% endif %}
 
 {% endblock %}
