@@ -7,8 +7,11 @@ import logging
 from src.joinhour.models.feedback import UserFeedback
 from src.joinhour.models.match import Match
 from src.joinhour.models.event import Event
+from src.joinhour.models.request import Request
 from src.joinhour.event_manager import EventManager
+from src.joinhour.request_manager import RequestManager
 from boilerplate import models
+from google.appengine.ext import ndb
 
 
 def minute_format(timedelta):
@@ -57,7 +60,8 @@ def event_attributes(event_key, username):
     can_join = event_manager.can_join(user.key.id())[0]
     can_leave = event_manager.can_leave(user.key.id())[0]
     can_cancel = event_manager.can_cancel(user.key.id())[0]
-    if can_join:
+    can_initiate_join_request = Request.can_initiate(event_manager.get_event().key,user.key)
+    if can_join and can_initiate_join_request:
         event_attributes['can_join'] = True
     if can_leave:
         event_attributes['can_leave'] = True
@@ -98,6 +102,13 @@ def get_interest_details(interest_key):
         all_participants.append(str(participant.user.get().name) + ' ' + str(participant.user.get().last_name))
     interest_details['all_participants'] = ' , '.join(all_participants)
     return interest_details
+
+def get_request_details(request_key):
+    request_manager = RequestManager.get(request_key)
+    request = request_manager.get_request()
+    request_details = dict()
+    request_details['requester'] = request.requester.get().username
+    return request_details
 
 
 
