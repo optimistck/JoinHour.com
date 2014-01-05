@@ -27,6 +27,11 @@ class Request(ndb.Model):
         return  cls.query(cls.activity == activity,cls.requester==requester).get() is  None
 
 
+    @classmethod
+    def get_open_request(self,activity_owner):
+        return cls.
+
+
 
 
 
