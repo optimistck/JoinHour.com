@@ -19,10 +19,10 @@ class RequestManager(object):
 
         request = Request(activity = kwargs['activity_key'],
                             date_entered = datetime.utcnow(),
-                            interest_owner = kwargs['interest_owner_key']
+                            requester = kwargs['requester_key']
         )
         request.put()
-        return request
+        return True,request
 
     @classmethod
     def get(cls,key):
@@ -36,7 +36,7 @@ class RequestManager(object):
 
     def accept(self,user):
         event_manager = EventManager.get(self._request.activity.urlsafe())
-        status,message = event_manager.connect(self._request.interest_owner.id())
+        status,message = event_manager.connect(self._request.requester.id())
         if status :
             self._request.status = Request.ACCEPTED
             self._request.put()
@@ -61,6 +61,9 @@ class RequestManager(object):
 
     def can_reject(self,user):
         return self._request.status == Request.INITIATED
+
+    def get_request(self):
+        return self._request
 
 
 
