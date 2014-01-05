@@ -19,8 +19,13 @@ class Request(ndb.Model):
     #Attributes
     status = ndb.StringProperty(default=INITIATED, choices = STATES)
     activity = ndb.KeyProperty(kind=Event,name='activity')
-    interest_owner = ndb.KeyProperty(kind=User,name='user',required=True)
+    requester = ndb.KeyProperty(kind=User,name='user',required=True)
     date_entered = ndb.DateTimeProperty(required=True)
+
+    @classmethod
+    def can_initiate(cls,activity,requester):
+        return  cls.query(cls.activity == activity,cls.requester==requester).get() is  None
+
 
 
 

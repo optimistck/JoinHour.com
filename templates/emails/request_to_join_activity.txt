@@ -1,0 +1,34 @@
+<p>Hello <strong>{{interest['username']}}</strong>,</p>
+
+<p>
+{{request['requester']}} wants to join your activity <strong>{{interest['category']}} </strong>.
+<BR><BR>
+
+<p>
+Activity details:</p>
+<ul>
+	<li>
+    	<em>Meeting place:</em> {{interest['meeting_place']}}
+    	</li>
+	<li>
+    	<em>Activity location:</em> {{interest['location']}}
+    	</li>
+	<li>
+	<em>People participating:</em> {{interest['all_participants']}}
+	</li>
+</ul>
+
+
+You can approve/reject this request from Actimom.com
+
+Enjoy the company, and thank you for using Actimom.com. Cheers!<br><br><br>
+
+{{ app_name }} Team
+
+<BR>
+<p>
+P.S. If you have questions, comments, or thoughts on how we can improve please contact us at:</br>
+we+support@JoinHour.com
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>
