@@ -18,6 +18,7 @@ from web.joinhour.services.user_profile import Avatar
 from web.joinhour.taskqueue_handlers import activity_lifecycle_handler, match_making_handler
 from web.joinhour.user_profile_handler import UserProfileHandler
 from web.joinhour.user_feedback_handler import UserFeedbackHandler
+from web.joinhour.join_request_handler import JoinRequestHandler
 
 
 
@@ -32,6 +33,7 @@ _routes = [
     #RedirectRoute('/activity/', activity_handler.ActivityHandler, name='activity', strict_slash=True),
     RedirectRoute('/pipe/', activity_handler.ActivityHandler, name='pipeline', strict_slash=True),
     RedirectRoute('/join/', join_handler.JoinHandler, name='join', strict_slash=True),
+    RedirectRoute('/join_request/', JoinRequestHandler, name='join_request', strict_slash=True),
     RedirectRoute('/act/', activity_creation_handler.ActivityCreationHandler, name='activity', strict_slash=True),
     RedirectRoute('/int/', interest_creation_handler.InterestCreationHandler, name='interest', strict_slash=True),
     RedirectRoute('/about/', about_handler.AboutHandler, name='about', strict_slash=True),

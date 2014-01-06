@@ -41,6 +41,7 @@
         {% set event_attributes = event_attributes_list[event.key.urlsafe()] %}
         {% set activity_participants = event.key.urlsafe() | get_all_companions %}
         {% set matching_activities = event.key | get_matching_activities %}
+        {% set join_requests = event.key | get_open_requests_for_activity %}
 
 
 
@@ -131,7 +132,7 @@
                     </div>
                  </div>
                 <!-- Show participants Info-->
-                {% if event.type == 'INTEREST_SPECIFIC' and event.status != 'FORMING' and event.status != 'COMPLETE_NEEDS_FEEDBACK' %}
+                {% if event.type == 'INTEREST_SPECIFIC'  and event.status != 'COMPLETE_NEEDS_FEEDBACK' %}
                     {% if activity_participants | length > 0 %}
                         <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
                             <div class="arrow">
@@ -144,8 +145,51 @@
                                     <span>Participants: {{ activity_participants | join(',') }}, Spots Remaining: {{ event_attributes['spots_remaining'] }}</span>
                                 </p>
                             </div>
-
                         </div>
+                    {% endif %}
+                    <!-- Show Join Requests -->
+                    {% if join_requests | length > 0 %}
+                        <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
+                            <div class="arrow">
+                                <b class="arrow-up-dark"></b>
+                                <b class="arrow-up"></b>
+                            </div>
+                            <div class="media-thanks" data-class="like-container">
+                                <p>
+                                    <span class="comment-count"><i class="icon-star"></i></span>
+                                    <span>Join Requests</span>
+                                </p>
+                            </div>
+                        {% for request in join_requests %}
+                            {% set request_details = request.key.urlsafe() | get_request_details %}
+                            <div class="media-comment">
+                                    <div class="media-object">
+                                        {{ show_avatar(request_details['requester']) }}
+                                    </div>
+                                    <div class="media-body">
+                                        <h4 class="media-heading">
+                                            <span class="subject">
+                                                <a href="/user_profile/?username={{ request_details['requester'] }}">{{ request_details['requester'] }}</a>
+                                            </span>
+                                        </h4>
+                                        <div class="media-actions">
+                                            <span>
+                                                {%  if request_details['can_accept'] %}
+                                                    <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }} &action=Accept">
+                                                        <span data-class="label">Accept</span>
+                                                    </a>
+                                                {% endif %}
+                                                {%  if request_details['can_reject'] %}
+                                                    <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }} &action=Reject">
+                                                        <span data-class="label">Reject</span>
+                                                    </a>
+                                                {% endif %}
+                                            </span>
+                                        </div>
+                                    </div>
+                            </div>
+                        {% endfor %}
+                         </div>
                     {% endif %}
                 <!-- Show Matching activities -->
                 {% elif event.type == 'INTEREST_FLEX' and event.username == username and matching_activities |  length  %}

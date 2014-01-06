@@ -30,6 +30,10 @@ jinja2.filters.FILTERS['dateformat'] = dateformat
 jinja2.filters.FILTERS['hasAvatar'] = hasAvatar
 jinja2.filters.FILTERS['event_attributes'] = event_attributes
 jinja2.filters.FILTERS['get_matching_activities'] = get_matching_activities
+jinja2.filters.FILTERS['get_request_details'] = get_request_details
+jinja2.filters.FILTERS['get_open_requests_for_activity'] = get_open_requests_for_activity
+
+
 
 class ActivityHandler(BaseHandler):
     """

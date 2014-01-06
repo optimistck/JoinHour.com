@@ -34,7 +34,7 @@ class RequestManager(object):
         self._request = ndb.Key(urlsafe=key).get()
 
 
-    def accept(self,user):
+    def accept(self):
         event_manager = EventManager.get(self._request.activity.urlsafe())
         status,message = event_manager.connect(self._request.requester.id())
         if status :
@@ -53,13 +53,13 @@ class RequestManager(object):
         self._request.status = Request.CANCELLED
         self._request.put()
 
-    def can_cancel(self,user):
+    def can_cancel(self):
         return self._request.status == Request.INITIATED
 
-    def can_accept(self,user):
+    def can_accept(self):
         return self._request.status == Request.INITIATED
 
-    def can_reject(self,user):
+    def can_reject(self):
         return self._request.status == Request.INITIATED
 
     def get_request(self):

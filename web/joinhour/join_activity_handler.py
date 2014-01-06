@@ -29,11 +29,10 @@ class JoinActivityHandler(BaseHandler):
             message = _("Your request is sent to  " + activity_manager.get_event().username + "for approval")
             self._push_notification(activity_manager,request)
             self.add_message(message, 'success')
-            return self.redirect_to('activity')
         else:
             message = _("Failed to send join request")
             self.add_message(message, 'failure')
-            return self.redirect_to('activity')
+        return self.redirect_to('pipeline')
 
     def post(self):
         return self.redirect_to('activity')
