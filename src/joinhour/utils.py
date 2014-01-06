@@ -48,6 +48,9 @@ def dateformat(value,format='%H:%M'):
 def get_matching_activities(interest_key):
     return Match.query(Match.interest == interest_key).fetch()
 
+def get_open_requests_for_activity(activity_key):
+    return Request.get_open_requests_for_activity(activity_key)
+
 
 def event_attributes(event_key, username):
     event_attributes = {}
@@ -108,6 +111,8 @@ def get_request_details(request_key):
     request = request_manager.get_request()
     request_details = dict()
     request_details['requester'] = request.requester.get().username
+    request_details['can_accept'] = request_manager.can_accept()
+    request_details['can_reject'] = request_manager.can_reject()
     return request_details
 
 

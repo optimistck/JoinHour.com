@@ -14,13 +14,12 @@ class Request(ndb.Model):
     EXPIRED = 'EXPIRED'
     CANCELLED = 'CANCELLED'
     STATES = [INITIATED,ACCEPTED,REJECTED,EXPIRED]
-
-
     #Attributes
     status = ndb.StringProperty(default=INITIATED, choices = STATES)
-    activity = ndb.KeyProperty(kind=Event,name='activity')
+    activity = ndb.KeyProperty(kind=Event,name='activity',required=True)
     requester = ndb.KeyProperty(kind=User,name='user',required=True)
     date_entered = ndb.DateTimeProperty(required=True)
+    activity_owner = ndb.ComputedProperty(lambda self: self.activity.get().username)
 
     @classmethod
     def can_initiate(cls,activity,requester):
@@ -28,8 +27,12 @@ class Request(ndb.Model):
 
 
     @classmethod
-    def get_open_request(self,activity_owner):
-        return cls.
+    def get_open_requests_for_owner(cls,activity_owner):
+        return cls.query(cls.activity_owner == activity_owner).fetch()
+
+    @classmethod
+    def get_open_requests_for_activity(cls,activity):
+        return cls.query(cls.activity == activity,cls.status == Request.INITIATED).fetch()
 
 
 
