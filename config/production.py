@@ -35,8 +35,8 @@ config = {
 'locales' : ['en_US', 'es_ES', 'it_IT', 'zh_CN', 'id_ID', 'fr_FR', 'de_DE', 'ru_RU', 'pt_BR', 'cs_CZ'],
 
 # contact page email settings
-'contact_sender' : "optimistck@gmail.com",
-'contact_recipient' : "optimistck@gmail.com",
+'contact_sender' : "we@ActiMom.com",
+'contact_recipient' : "we@ActiMom.com",
 
 # Password AES Encryption Parameters
 'aes_key' : "12_24_32_BYTES_KEY_FOR_PASSWORDS",
