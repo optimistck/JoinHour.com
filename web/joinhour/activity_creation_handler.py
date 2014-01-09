@@ -1,7 +1,7 @@
 from webapp2_extras.i18n import gettext as _
 import webapp2
 from boilerplate.external.wtforms.ext import dateutil
-
+from src.joinhour.notification_manager import NotificationManager
 from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import forms
 from boilerplate import models
@@ -66,6 +66,8 @@ class ActivityCreationHandler(BaseHandler):
             if success:
                 message = _("Your post is now live. You can approve join requests and manage it here. Watch your email for notifications.")
                 self.add_message(message, 'success')
+                email = user_info.email
+                self._push_notification(interest_info, email)
             else:
                 self.add_message(message, 'error')
             return self.redirect_to('home')
@@ -74,5 +76,14 @@ class ActivityCreationHandler(BaseHandler):
     def form(self):
         return forms.JoinForm(self)
 
+    def _push_notification(self, interest_info, email):
 
-
+        template_val = {
+            "app_name": self.app.config.get('app_name'),
+            "activity": interest_info
+        }
+        notification_manager = NotificationManager.get()
+        notification_manager.push_notification(email,
+                                               '[ActiMom.com]Activity creation notification',
+                                               'emails/activity_created_for_owner.txt',
+                                               **template_val)

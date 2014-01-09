@@ -1,0 +1,31 @@
+<p>Hello <strong>{{activity['username']}}</strong>,</p>
+
+<p>
+The activity you created, <strong>{{activity['category']}}</strong>, will start in {{activity['start_time']}}. The activity is open for others to join.</p>
+
+
+<p>a
+Activity details:</p>
+<ul>
+	<li>
+    	<em>Meeting place:</em> {{activity['meeting_place']}}
+    	</li>
+	<li>
+    	<em>Activity location:</em> {{activity['location']}}
+    	</li>
+</ul>
+
+
+
+
+<p>We'll send all participants a reminder 5 minutes before the start time. </p> Thank you for committing. Please arrive on time. <BR><BR> Enjoy the company, and thank you for using Actimom.com. Cheers!<br><br><br>
+
+{{ app_name }} Team
+
+<BR>
+<p>
+P.S. If you have questions, comments, or thoughts on how we can improve please contact us at:</br>
+we+support@JoinHour.com
+</p>
+
+<p>We, the people, not computers, read and respond to every email. </p>
