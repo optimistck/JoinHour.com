@@ -101,7 +101,7 @@
                         <span>
                               <!-- Join -->
                                {%  if event.type =='INTEREST_SPECIFIC' and event_attributes['can_join'] %}
-                                    <a class="btn-u btn-u-blue" href="/join_activity/?key={{ event.key.urlsafe() }} & action=Initiate">
+                                    <a class="btn-u btn-u-blue" href="/join_activity/?key={{ event.key.urlsafe() }}&action=Initiate">
                                           <span data-class="label">Request to Join</span>
                                     </a>
 
@@ -114,7 +114,7 @@
                                      </a>
                                END 'no interest to activity' conversion -->
                                {% elif event.type =='INTEREST_SPECIFIC' and event_attributes['can_cancel_join_request'] %}
-                                     <a class="btn-u btn-u-blue" href="/join_activity/?key={{ event.key.urlsafe() }} & action = Cancel">
+                                     <a class="btn-u btn-u-blue" href="/join_activity/?key={{ event.key.urlsafe() }}&action=Cancel">
                                           <span data-class="label">Cancel Join Request</span>
                                      </a>
                                {% endif %}
@@ -183,12 +183,12 @@
                                         <div class="media-actions">
                                             <span>
                                                 {%  if request_details['can_accept'] %}
-                                                    <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }} &action=Accept">
+                                                    <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }}&action=Accept">
                                                         <span data-class="label">Accept</span>
                                                     </a>
                                                 {% endif %}
                                                 {%  if request_details['can_reject'] %}
-                                                    <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }} &action=Reject">
+                                                    <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }}&action=Reject">
                                                         <span data-class="label">Reject</span>
                                                     </a>
                                                 {% endif %}
@@ -225,7 +225,7 @@
                                     <div class="media-body">
                                     <h4 class="media-heading">
                                         <span class="subject">
-                                            <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a> with <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity.username }}</a>
+                                            <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a> with <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity | get_full_name}}</a>
                                         </span>
                                     </h4>
 
@@ -233,12 +233,17 @@
                                         Activity Location: {{ matching_activity.activity_location | default("Not set",True) }}
                                         <BR>
                                         Meeting Place: {{ matching_activity.meeting_place | default("Not set",True)}}
+                                        <BR>
+                                        Max # of participants: {{ event.max_number_of_people_to_join | default ("Not set",True)}}
                                     </p>
                                     <div class="media-actions">
                                         <span>
                                             {%  if activity_attributes['can_join'] %}
-                                                <a class="btn-u btn-u-blue" href="/join_activity/?key={{ matching_activity.key.urlsafe() }}">
+                                                <a class="btn-u btn-u-blue" href="/join_activity/?key={{ matching_activity.key.urlsafe() }}&action=Initiate">
                                                     <span data-class="label">Request to Join</span>
+                                                </a>
+                                                <a class="btn-u btn-u-blue" href="/join_activity/?key={{ matching_activity.key.urlsafe() }}&action=Ignore">
+                                                    <span data-class="label">No Thanks</span>
                                                 </a>
                                             {% endif %}
                                         </span>

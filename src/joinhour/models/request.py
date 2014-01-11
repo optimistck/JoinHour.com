@@ -23,7 +23,9 @@ class Request(ndb.Model):
 
     @classmethod
     def can_initiate(cls,activity,requester):
-        return  cls.query(cls.activity == activity,cls.requester==requester).get() is  None
+        if activity.get().username == requester.get().username:
+            return False
+        return cls.query(cls.activity == activity,cls.requester==requester).get() is  None
 
 
     @classmethod
@@ -36,6 +38,8 @@ class Request(ndb.Model):
 
     @classmethod
     def can_cancel(cls,activity,requester):
+        if activity.get().username == requester.get().username:
+            return False
         return cls.query(cls.activity == activity,cls.requester==requester,cls.status == Request.INITIATED) is not None
 
 
