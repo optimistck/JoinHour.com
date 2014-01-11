@@ -34,6 +34,10 @@ class Request(ndb.Model):
     def get_open_requests_for_activity(cls,activity):
         return cls.query(cls.activity == activity,cls.status == Request.INITIATED).fetch()
 
+    @classmethod
+    def can_cancel(cls,activity,requester):
+        return cls.query(cls.activity == activity,cls.requester==requester,cls.status == Request.INITIATED) is not None
+
 
 
 

@@ -51,6 +51,10 @@ def get_matching_activities(interest_key):
 def get_open_requests_for_activity(activity_key):
     return Request.get_open_requests_for_activity(activity_key)
 
+def get_full_name(username):
+    user = models.User.get_by_username(username)
+    return user.name + " " + user.last_name
+
 
 def event_attributes(event_key, username):
     event_attributes = {}
@@ -64,8 +68,11 @@ def event_attributes(event_key, username):
     can_leave = event_manager.can_leave(user.key.id())[0]
     can_cancel = event_manager.can_cancel(user.key.id())[0]
     can_initiate_join_request = Request.can_initiate(event_manager.get_event().key,user.key)
+    can_cancel_join_request = Request.can_cancel(event_manager.get_event().key,user.key)
     if can_join and can_initiate_join_request:
         event_attributes['can_join'] = True
+    if can_cancel_join_request:
+        event_attributes['can_cancel_join_request'] = True
     if can_leave:
         event_attributes['can_leave'] = True
     if can_cancel:

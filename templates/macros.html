@@ -45,6 +45,7 @@
 
 
 
+
             <div class="media-object">
                 {{ show_avatar(event.username) }}
             </div>
@@ -55,7 +56,7 @@
                                 <!-- Subject-->
                                 <span class="subject">
                                     <a href="/activity_detail/?ID={{ event.key.urlsafe() }}">{{ event.category }}</a> with <a
-                                    href="/user_profile/?username={{ event.username }}">{{ event.username }}</a>
+                                    href="/user_profile/?username={{ event.username }}">{{ event.username | get_full_name}}</a>
                                 </span>
                     </h4>
                     <!-- Event Note text - show the location and meeting place only if it's an Activity, not Interest-->
@@ -64,6 +65,8 @@
                         Activity Location: {{ event.activity_location | default("Not set",True) }}
                         <BR>
                         Meeting Place: {{ event.meeting_place | default ("Not set",True)}}
+                        <BR>
+                        Max # of participants: {{ event.max_number_of_people_to_join | default ("Not set",True)}}
                     </p>
                     {% endif %}
 
@@ -98,9 +101,10 @@
                         <span>
                               <!-- Join -->
                                {%  if event.type =='INTEREST_SPECIFIC' and event_attributes['can_join'] %}
-                                    <a class="btn-u btn-u-blue" href="/join_activity/?key={{ event.key.urlsafe() }}">
-                                          <span data-class="label">Join</span>
-                                     </a>
+                                    <a class="btn-u btn-u-blue" href="/join_activity/?key={{ event.key.urlsafe() }} & action=Initiate">
+                                          <span data-class="label">Request to Join</span>
+                                    </a>
+
                                <!-- For Actipond initial release, you can only join Activities. Cannot convert an interest into an Activity -->
                                <!-- 'no interest to activity conversion' (for future: inserted a space between '%' and 'elif' below)
                                { % elif event.type =='INTEREST_FLEX' and event_attributes['can_join']  %}
@@ -109,6 +113,10 @@
                                             <span data-class="label">Join</span>
                                      </a>
                                END 'no interest to activity' conversion -->
+                               {% elif event.type =='INTEREST_SPECIFIC' and event_attributes['can_cancel_join_request'] %}
+                                     <a class="btn-u btn-u-blue" href="/join_activity/?key={{ event.key.urlsafe() }} & action = Cancel">
+                                          <span data-class="label">Cancel Join Request</span>
+                                     </a>
                                {% endif %}
                                <!-- Cancel / Delete -->
                                {% if  event_attributes['can_leave'] %}
@@ -230,7 +238,7 @@
                                         <span>
                                             {%  if activity_attributes['can_join'] %}
                                                 <a class="btn-u btn-u-blue" href="/join_activity/?key={{ matching_activity.key.urlsafe() }}">
-                                                    <span data-class="label">Join</span>
+                                                    <span data-class="label">Request to Join</span>
                                                 </a>
                                             {% endif %}
                                         </span>
