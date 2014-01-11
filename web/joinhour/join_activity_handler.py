@@ -22,16 +22,25 @@ class JoinActivityHandler(BaseHandler):
     def get(self):
         user_id = self.user_id
         key = self.request.get('key')
+        action = self.request.get('action')
         activity_manager = EventManager.get(key)
         activity_user = models.User.get_by_username(activity_manager.get_event().username)
-        (success, request) = RequestManager.initiate(activity_key=activity_manager.get_event().key,requester_key=models.User.get_by_username(self.username).key)
-        if success:
-            message = _("Your request is sent to  " + activity_manager.get_event().username + "for approval")
-            self._push_notification(activity_manager,request)
-            self.add_message(message, 'success')
-        else:
-            message = _("Failed to send join request")
-            self.add_message(message, 'failure')
+        if action == "Initiate":
+            (success, request) = RequestManager.initiate(activity_key=activity_manager.get_event().key,requester_key=models.User.get_by_username(self.username).key)
+            if success:
+                message = _("Processing Request. We'll notify you as soon as the organizer confirms.")
+                self._push_notification(activity_manager,request)
+                self.add_message(message, 'success')
+            else:
+                message = _("Failed to send join request")
+                self.add_message(message, 'failure')
+        elif action == "Cancel":
+            request = Request.query(Request.activity == activity,cls.requester == activity_user,
+                                    Request.status == Request.INITIATED)
+            reqeust_manager = RequestManager.get(request.key)
+            reqeust_manager.cancel()
+        elif action == "Ignore":
+            pass
         return self.redirect_to('pipeline')
 
     def post(self):

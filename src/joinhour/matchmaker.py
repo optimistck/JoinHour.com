@@ -11,8 +11,8 @@ from boilerplate.lib import utils
 
 
 class MatchMaker(object):
-    DURATION_TOLERANCE_MINUTES = 10
-    TIME_INTERVAL_TOLERANCE_SECONDS = 300
+    DURATION_TOLERANCE_MINUTES = 30
+    TIME_INTERVAL_TOLERANCE_SECONDS = 600
 
 
     @classmethod
