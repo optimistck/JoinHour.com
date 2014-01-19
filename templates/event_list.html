@@ -32,7 +32,7 @@
                             {{ macros.show_event(event,username,event_attributes_list) }}
                         {% endfor %}
 
-                        <H3>Announced Interests (ready to commit to an activity)</H3>
+                        <H3>Active Interests</H3>
                         {% for event in events %}
                         <!-- Now show what interests are floating out there... - but take no action -->
                             {% if event.type == 'INTEREST_SPECIFIC' %}
