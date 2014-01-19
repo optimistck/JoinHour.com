@@ -99,16 +99,21 @@
         <ul class="loginbar pull-right">
             <!-- TODO: decide if this is needed -->
             <!-- <a class="brand" href="/"><img src="../img/logo.png" class="img-rounded" alt="20x20" style="width: 20px; height: 20px;"></img> {{ app_name }}</a> -->
-            <li><i class="icon-globe"> </i> <a href="/about">About</a></li>
+            <li><i class="icon-info-sign"> </i> <a href="/about">About</a></li>
             {% if not (user_id and user_id | isValidUser) %}
             <li class="devider">&nbsp;</li>
-            <li><i class="icon-user"> </i><a href="/login" class="login-btn">Login</a></li>
-            {% endif %}
-            <!--=== JH: Reserved
-            <li class="devider">&nbsp;</li>
-            <li><a href="#" class="login-btn">Sign Up</a></li>
+            <li><i class="icon-ok-sign"> </i><a href="/register" class="login-btn">Register</a></li>
 
-            ===-->
+            <li class="devider">&nbsp;</li>
+            <li><i class="icon-user"> </i><a href="/login" class="login-btn">Login</a></li>
+
+            <li class="devider">&nbsp;</li>
+            {% endif %}
+            {% if user_id and user_id | isValidUser %}
+            <li><i class="icon-signout"> </i><li><a href="{{ logout_url }}">Logout</a></li>
+
+            {% endif %}
+
         </ul>
     </div>
 </div><!--/top-->
@@ -136,78 +141,21 @@
 
                         <!-- Code if the user has logged in-->
                         {% if user_id and user_id | isValidUser %}
-                        <li>
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Action Menu
-                                <b class="caret"></b>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li><a href="/act">Post Activity / Event</a></li>
-                                <li><a href="/int">Announce Interest</a></li>
-                                <li><a href="/pipe">Group Activity Pipeline</a></li>
-                                <li><a href="/">Your Activities & Interests</a></li>
-                            </ul>
-                            <b class="caret-out"></b>
-                        </li>
+
+                        <li><a href="/">Menu</a></li>
+
                         <li>
                             {% if username | hasAvatar %}
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="{{ uri_for("edit-profile") }}" class="dropdown">
                                 <img class="avatar" src="/user/avatar/?user_name={{ username }}" width="22" height="22"/>
                                 <span>{{ username }}</span>
-                                <b class="caret"></b></a>
+                                </a>
                             {% else %}
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                            <a href="{{ uri_for("edit-profile") }}" class="dropdown">
                                 <img class="avatar" src="../img/user.jpg" width="22" height="22" />
-                                 <span>{{ username }}</span>
-                                 <b class="caret"></b></a>
+                                <span>{{ username }}</span>
+                                </a>
                             {% endif %}
-
-                            <ul class="dropdown-menu">
-                                <li><a href="{{ uri_for("edit-profile") }}">Edit Profile</a></li>
-                                <li class="divider"></li>
-                                <li><a href="{{ logout_url }}">Logout</a></li>
-                            </ul>
-                            <b class="caret-out"></b>
-                        </li>
-
-
-                        <!-- Code if the user has NOT logged in-->
-                        {% elif path != "/2" and path != "/login/" %}
-                        <li><a href="{{ uri_for("register") }}"><i class="icon-spinner icon-spin"></i> Sign Up</a></li>
-                        <li class="divider-vertical"></li>
-                        <li class="dropdown">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">{% trans %}Login{% endtrans %} <b class="caret"></b></a>
-                            <div class="dropdown-menu well">
-                                <form id="form_login_user" action="{{ uri_for("login") }}" method="post" class="auth-at-dropdown">
-                                    <fieldset>
-                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-                                        <div class="control-group">
-                                            <label class="control-label" for="l_username">{% trans %}Username or Email{% endtrans %}:</label>
-                                            <div class="controls">
-                                                <input class="input-xlarge focused required" id="l_username" name="username" type="text" value="">
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <label class="control-label" for="l_password">{% trans %}Password{% endtrans %}:</label>
-                                            <div class="controls">
-                                                <input class="input-xlarge focused required" id="l_password" name="password" type="password" value="">
-                                            </div>
-                                        </div>
-                                        <div class="control-group row-fluid">
-                                            <label class="checkbox span7">
-                                                <input type="checkbox" name="remember_me" id="remember_me" value="on">
-                                                {% trans %}Remember me?{% endtrans %}
-                                            </label>
-                                            <div class="span5">
-                                                <button type="submit" class="btn btn-primary btn-small btn-login">{% trans %}Login{% endtrans %}</button>
-                                            </div>
-                                        </div>
-                                        <div class="control-group">
-                                            <a href="{{ uri_for("password-reset") }}">{% trans %}Forgot your password?{% endtrans %}</a>
-                                        </div>
-                                        {{ macros.federated_login(provider_info, provider_uris, enable_federated_login) }}
-                                    </fieldset>
-                                </form>
-                            </div>
                         </li>
                         {% endif %}
                     </ul>
