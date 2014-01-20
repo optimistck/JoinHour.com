@@ -761,7 +761,7 @@ class RegisterHandler(RegisterBaseHandler):
             except ValueError:
                 token_match = None
             if not token_match or token_match.used:
-                message = _('Sorry, invalid security code. Please try again.')
+                message = _('Sorry, invalid security code. Please try again or request a new code from the group organizer.')
                 self.add_message(message, 'error')
                 return self.redirect_to('register')
             else:
@@ -820,8 +820,8 @@ class RegisterHandler(RegisterBaseHandler):
                         'body' : body,
                         })
 
-                    message = _('You were successfully registered. '
-                                'We sent you an email to activate your account. Check your Inbox or Junk mail folder.')
+                    message = _('Step one of two completed! '
+                                'We sent you an email from we@ActiMom.com with a link to activate your account. Check your Inbox (or Junk mail folder) to finish the setup. You are one step away!')
                     self.add_message(message, 'success')
                     return self.redirect_to('home')
 

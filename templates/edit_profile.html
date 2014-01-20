@@ -71,9 +71,7 @@
                                                               method="post" provider="{{ provider.name }}">
                                                             <input type="hidden" name="_csrf_token"
                                                                    value="{{ csrf_token() }}">
-                                                            <button class="btn btn-danger" type="submit"><i
-                                                                    class="icon-trash icon-white"></i>&nbsp;{% trans %}
-                                                                Remove{% endtrans %}</button>
+                                                            <button class="btn btn-danger" type="submit"><i class="icon-trash icon-white"></i>&nbsp;Remove</button>
                                                         </form>
                                                     </td>
                                                 {% endif %}
@@ -95,6 +93,8 @@
                                     </div>
                                 </div>
                             {% endif %}
+                            <h4>Need to delete your account?</h4>
+                                    <p>Please email us with a request to we+SorryToSeeYouGo@ActiMom.com from your email account used for ActiMom.com</p>
                         {% endif %}
                     </form>
                     </fieldset>
