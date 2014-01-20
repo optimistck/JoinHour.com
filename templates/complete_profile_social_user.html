@@ -9,10 +9,9 @@
     <form id="form_complete_profile" action="{{ url|safe }}" method="post" class="well form-horizontal">
         <fieldset>
             <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
-            {{ macros.field(form.building, label=_("Building")) }}
             {{ macros.field(form.security_code, label=_("Security Code"), placeholder=_("Enter your")+" "+_("Security Code")) }}
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">{% trans %}Save{% endtrans %}</button>
+                <button type="submit" class="btn-u pull-right">Save</button>
             </div>
         </fieldset>
     </form>
