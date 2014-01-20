@@ -9,6 +9,9 @@ from src.joinhour.models.token import Token
 from webapp2_extras.i18n import gettext as _
 class CompleteProfileSocialUserHandler(BaseHandler):
 
+
+
+
     @user_required
     def get(self):
         logging.info('Get : CompleteProfileSocialUserHandler')
@@ -17,15 +20,17 @@ class CompleteProfileSocialUserHandler(BaseHandler):
     @user_required
     def post(self):
         logging.info('Post : CompleteProfileSocialUserHandler')
-        building = self.form.building.data
+
+        building = "TEMP"
         security_code = self.form.security_code.data.strip();
         if security_code:
             try:
                 token_match = Token.match(security_code)
+                building = token_match.belongs_to_group
             except ValueError:
                 token_match = None
             if not token_match or token_match.used:
-                message = _('Sorry, invalid security code. Please try again.')
+                message = _('Sorry, invalid security code. Please try again or request a new code from the group organizer.')
                 self.add_message(message, 'error')
                 return self.redirect_to('complete_profile_social_user')
             else:
