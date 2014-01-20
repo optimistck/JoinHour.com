@@ -820,8 +820,8 @@ class RegisterHandler(RegisterBaseHandler):
                         'body' : body,
                         })
 
-                    message = _('You were successfully registered. '
-                                'We sent you an email to activate your account. Check your Inbox or Junk mail folder.')
+                    message = _('Step one of two completed! '
+                                'We sent you an email from we@ActiMom.com with a link to activate your account. Check your Inbox (or Junk mail folder) to finish the setup. You are one step away!')
                     self.add_message(message, 'success')
                     return self.redirect_to('home')
 
