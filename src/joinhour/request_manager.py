@@ -53,8 +53,10 @@ class RequestManager(object):
         self._request.status = Request.CANCELLED
         self._request.put()
 
-    def can_cancel(self):
-        return self._request.status == Request.INITIATED
+    def can_cancel(self,user):
+        if self._request.requester.get().username == user:
+            return self._request.status == Request.INITIATED
+        return False;
 
     def can_accept(self,user):
         if self._request.activity.get().username == user:

@@ -152,7 +152,7 @@
                         </div>
                     {% endif %}
                     <!-- Show Join Requests -->
-                    {% if event.username == username and join_requests | length > 0 %}
+                    {% if join_requests | length > 0 %}
                         <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
                             <div class="arrow">
                                 <b class="arrow-up-dark"></b>
@@ -178,14 +178,19 @@
                                         </h4>
                                         <div class="media-actions">
                                             <span>
-                                                {%  if request_details['can_accept'] %}
+                                                {%  if event.username == username and request_details['can_accept'] %}
                                                     <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }}&action=Accept">
                                                         <span data-class="label">Accept</span>
                                                     </a>
                                                 {% endif %}
-                                                {%  if request_details['can_reject'] %}
+                                                {%  if event.username == username and request_details['can_reject'] %}
                                                     <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }}&action=Reject">
                                                         <span data-class="label">Reject</span>
+                                                    </a>
+                                                {% endif %}
+                                                {%  if request_details['can_cancel'] %}
+                                                    <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }}&action=Cancel">
+                                                        <span data-class="label">Cancel Join Request</span>
                                                     </a>
                                                 {% endif %}
                                             </span>

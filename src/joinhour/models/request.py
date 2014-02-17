@@ -37,6 +37,11 @@ class Request(ndb.Model):
         return cls.query(cls.activity == activity,cls.status == Request.INITIATED).fetch()
 
     @classmethod
+    def get_open_requests_for_user(cls,requester):
+        return cls.query(cls.requester == requester,cls.status == Request.INITIATED).fetch()
+
+
+    @classmethod
     def can_cancel(cls,activity,requester):
         if activity.get().username == requester.get().username:
             return False

@@ -31,6 +31,8 @@ class JoinRequestHandler(BaseHandler):
                 self.add_message(message, 'failure')
         elif action == "Reject":
             request_manager.reject()
+        elif action == "Cancel":
+            request_manager.cancel()
         return self.redirect_to('pipeline')
 
     def _push_notification(self, activity_manager):
