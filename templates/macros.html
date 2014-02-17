@@ -156,7 +156,7 @@
                         </div>
                     {% endif %}
                     <!-- Show Join Requests -->
-                    {% if join_requests | length > 0 %}
+                    {% if event.username == username and join_requests | length > 0 %}
                         <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
                             <div class="arrow">
                                 <b class="arrow-up-dark"></b>
@@ -169,7 +169,7 @@
                                 </p>
                             </div>
                         {% for request in join_requests %}
-                            {% set request_details = request.key.urlsafe() | get_request_details %}
+                            {% set request_details = request.key.urlsafe() | get_request_details(username) %}
                             <div class="media-comment">
                                     <div class="media-object">
                                         {{ show_avatar(request_details['requester']) }}

@@ -113,13 +113,13 @@ def get_interest_details(interest_key):
     interest_details['all_participants'] = ' , '.join(all_participants)
     return interest_details
 
-def get_request_details(request_key):
+def get_request_details(request_key,username):
     request_manager = RequestManager.get(request_key)
     request = request_manager.get_request()
     request_details = dict()
     request_details['requester'] = request.requester.get().username
-    request_details['can_accept'] = request_manager.can_accept()
-    request_details['can_reject'] = request_manager.can_reject()
+    request_details['can_accept'] = request_manager.can_accept(username)
+    request_details['can_reject'] = request_manager.can_reject(username)
     return request_details
 
 
