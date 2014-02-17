@@ -113,10 +113,6 @@
                                             <span data-class="label">Join</span>
                                      </a>
                                END 'no interest to activity' conversion -->
-                               {% elif event.type =='INTEREST_SPECIFIC' and event_attributes['can_cancel_join_request'] %}
-                                     <a class="btn-u btn-u-blue" href="/join_activity/?key={{ event.key.urlsafe() }}&action=Cancel">
-                                          <span data-class="label">Cancel Join Request</span>
-                                     </a>
                                {% endif %}
                                <!-- Cancel / Delete -->
                                {% if  event_attributes['can_leave'] %}
