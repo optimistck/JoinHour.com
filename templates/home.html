@@ -50,8 +50,13 @@
                 <li class="active">
                     <a href="#pane1" data-toggle="tab">Interests & Activities You Posted</a>
                 </li>
+                <li>
+                    <a href="#pane2" data-toggle="tab">Your Join Requests</a>
+                </li>
             </ul>
         </div>
+
+
 
 
         <div class="tab-content">
@@ -60,6 +65,17 @@
                 <hr/>
                 <div id="events" class="media">
                     {% for event in  my_interests%}
+                        {% if event.status in ['CLOSED','CANCELLED','EXPIRED'] %}
+                            {% continue %}
+                        {% endif %}
+                        {{ macros.show_event(event,username,event_attributes_list) }}
+                    {% endfor %}
+                </div>
+            </div>
+            <div id="pane2" class="tab-pane">
+                <hr/>
+                <div id="events" class="media">
+                    {% for event in  activities_for_my_join_requests%}
                         {% if event.status in ['CLOSED','CANCELLED','EXPIRED'] %}
                             {% continue %}
                         {% endif %}

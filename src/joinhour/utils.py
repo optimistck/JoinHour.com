@@ -120,6 +120,7 @@ def get_request_details(request_key,username):
     request_details['requester'] = request.requester.get().username
     request_details['can_accept'] = request_manager.can_accept(username)
     request_details['can_reject'] = request_manager.can_reject(username)
+    request_details['can_cancel'] = request_manager.can_cancel(username)
     return request_details
 
 
