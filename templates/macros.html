@@ -233,7 +233,7 @@
                                     <div class="media-body">
                                     <h4 class="media-heading">
                                         <span class="subject">
-                                            <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a> with <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity | get_full_name}}</a>
+                                            <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a> with <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity.username | get_full_name}}</a>
                                         </span>
                                     </h4>
 
@@ -257,7 +257,7 @@
                                         </span>
                                     </div>
                                     </div>
-                                </div>
+                         </div>
 
                     {% endfor %}
                     </div>
