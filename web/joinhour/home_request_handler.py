@@ -64,15 +64,25 @@ class HomeRequestHandler(RegisterBaseHandler):
             activity_owner_name = activity_user.name + ' ' + activity_user.last_name
             for participant in participants:
                 self._push_notification(category,activity_owner_name,participant,self.request.get('reason'))
-        user_info = models.User.get_by_id(long(self.user_id))
 
+        user_info = models.User.get_by_id(long(self.user_id))
         my_interests = Event.query(Event.username == user_info.username
                                              ,Event.status != Event.EXPIRED).fetch()
+        my_join_requests = Request.get_open_requests_for_user(user_info.key)
+        activities_for_my_join_requests = list()
+        for join_request in my_join_requests:
+            activities_for_my_join_requests.append(join_request.activity.get())
+
         event_attributes_list = dict()
         for event in my_interests:
             event_attribute = event_attributes(event.key.urlsafe(),self.username)
             event_attributes_list[event.key.urlsafe()] = event_attribute
+        for event in activities_for_my_join_requests:
+            event_attribute = event_attributes(event.key.urlsafe(),self.username)
+            event_attributes_list[event.key.urlsafe()] = event_attribute
+
         self.view.my_interests = my_interests
+        self.view.activities_for_my_join_requests = activities_for_my_join_requests
         self.view.event_attributes_list = event_attributes_list
         token = channel.create_channel(self.user_id)
         params['token'] = token

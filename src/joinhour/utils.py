@@ -51,6 +51,10 @@ def get_matching_activities(interest_key):
 def get_open_requests_for_activity(activity_key):
     return Request.get_open_requests_for_activity(activity_key)
 
+def get_open_request_for_activity_user(activity_key,username):
+    user = models.User.get_by_username(username)
+    return Request.get_open_request_for_activity_user(activity_key,user.key)
+
 def get_full_name(username):
     user = models.User.get_by_username(username)
     return user.name + " " + user.last_name
@@ -120,6 +124,7 @@ def get_request_details(request_key,username):
     request_details['requester'] = request.requester.get().username
     request_details['can_accept'] = request_manager.can_accept(username)
     request_details['can_reject'] = request_manager.can_reject(username)
+    request_details['can_cancel'] = request_manager.can_cancel(username)
     return request_details
 
 
