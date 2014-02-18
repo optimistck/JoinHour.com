@@ -18,7 +18,7 @@ We have found new matches for you. Check them out:
             	Note - {{match.activity.get().note}}
             </li>
             <li>
-            	<a href="{{url}}/activity_detail/?ID={{ match.activity.urlsafe() }}">View this activity</a>
+            	<a href="{{url}}/pipe/">View this activity</a>
             </li>
         </ul>
     </ul>
