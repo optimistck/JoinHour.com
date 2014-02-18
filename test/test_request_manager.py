@@ -76,7 +76,7 @@ class RequestManagerTest(unittest.TestCase):
         self.assertIsNotNone(request,"Failed to initiate request")
         request_manager = RequestManager.get(request.key.urlsafe())
         self.assertIsNotNone(request_manager,"Failed to load request manager")
-        self.assertEqual(True,request_manager.can_accept())
+        self.assertEqual(True,request_manager.can_accept(self.user1.username))
 
     def test_approve(self):
         #Activity Created by user1
@@ -87,7 +87,7 @@ class RequestManagerTest(unittest.TestCase):
         self.assertIsNotNone(request,"Failed to initiate request")
         request_manager = RequestManager.get(request.key.urlsafe())
         self.assertIsNotNone(request_manager,"Failed to load request manager")
-        self.assertEqual(True,request_manager.can_accept())
+        self.assertEqual(True,request_manager.can_accept(self.user1.username))
         request_manager.accept()
         self.assertEqual(request.ACCEPTED,request.status)
         self.assertEqual(1,activity_manager.spots_remaining())
