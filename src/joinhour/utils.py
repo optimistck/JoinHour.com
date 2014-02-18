@@ -51,6 +51,10 @@ def get_matching_activities(interest_key):
 def get_open_requests_for_activity(activity_key):
     return Request.get_open_requests_for_activity(activity_key)
 
+def get_open_request_for_activity_user(activity_key,username):
+    user = models.User.get_by_username(username)
+    return Request.get_open_request_for_activity_user(activity_key,user.key)
+
 def get_full_name(username):
     user = models.User.get_by_username(username)
     return user.name + " " + user.last_name

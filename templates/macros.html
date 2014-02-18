@@ -42,6 +42,7 @@
         {% set activity_participants = event.key.urlsafe() | get_all_companions %}
         {% set matching_activities = event.key | get_matching_activities %}
         {% set join_requests = event.key | get_open_requests_for_activity %}
+        {% set pending_join_request = event.key | get_open_request_for_activity_user(username) %}
 
 
 
@@ -132,6 +133,12 @@
                                             <span data-class="label">Provide feedback</span>
                                  </a>
                               {% endif %}
+                              <!-- Pending Join Request -->
+                              {% if  pending_join_request is not none %}
+                                 <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ pending_join_request.key.urlsafe() }}&action=Cancel">
+                                           <span data-class="label">Cancel</span>
+                                 </a>
+                              {% endif %}
                          </span>
                     </div>
                  </div>
@@ -152,7 +159,7 @@
                         </div>
                     {% endif %}
                     <!-- Show Join Requests -->
-                    {% if join_requests | length > 0 %}
+                    {% if event.username == username and join_requests | length > 0 %}
                         <div class="media-comments  show" data-num-comments="1" data-class="comment-like-container">
                             <div class="arrow">
                                 <b class="arrow-up-dark"></b>
@@ -178,12 +185,12 @@
                                         </h4>
                                         <div class="media-actions">
                                             <span>
-                                                {%  if event.username == username and request_details['can_accept'] %}
+                                                {%  if request_details['can_accept'] %}
                                                     <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }}&action=Accept">
                                                         <span data-class="label">Accept</span>
                                                     </a>
                                                 {% endif %}
-                                                {%  if event.username == username and request_details['can_reject'] %}
+                                                {%  if request_details['can_reject'] %}
                                                     <a class="btn-u btn-u-blue" href="/join_request/?request_key={{ request.key.urlsafe() }}&action=Reject">
                                                         <span data-class="label">Reject</span>
                                                     </a>
