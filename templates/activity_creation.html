@@ -26,7 +26,7 @@
                     <span>
                     <h4>Set activity start time</h4>
                         <div id="set_time_datetimepicker" class="input-append date form_datetime">
-                            <input size="16" type="text" value="" readonly>
+                            {{ macros.field(form.set_time, label=_(" "), class="input-large focused required") }}
                                 <span class="add-on">
                                     <i class="icon-th"></i>
                                 </span>
@@ -34,11 +34,7 @@
                     </span>
 
                     <span>
-                    <!-- We're not offering the min # to start for now -->
-                    <!--
-                    <h4>Min # to start</h4>
-                    {{ macros.field(form.min_number_of_people_to_join, label=_(" ")) }}
-                    -->
+
                     <h4>Max # that can join</h4>
                     {{ macros.field(form.max_number_of_people_to_join, label=_(" ")) }}
                     <h4>The group will meet at</h4>

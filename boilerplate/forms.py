@@ -136,20 +136,12 @@ class InitiateActvityForm(BaseForm):
 
 
 class JoinForm(BaseForm):
-    category = fields.SelectField(_('Category'), choices=utils.CATEGORY)
-    sub_category = fields.SelectField(_('Sub_Category'), choices=utils.SUBCATEGORY)
-    min_number_of_people_to_join = fields.SelectField(_('min_number_of_people_to_join'), choices=utils.NUMBER_OF_PEOPLE_MIN)
+    category = fields.SelectField(_('category'), choices=utils.CATEGORY)
+    set_time = fields.TextField(_('set_time'), [validators.Required(), validators.Length(min=4)])
     max_number_of_people_to_join = fields.SelectField(_('max_number_of_people_to_join'), choices=utils.NUMBER_OF_PEOPLE_MAX)
-    duration = fields.SelectField(_('Time_Chunks'), choices=utils.TIME_CHUNKS)
-    expiration = fields.SelectField(_('Time_Chunks2'), choices=utils.TIME_CHUNKS2)
-    #note = fields.TextField(_('note'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
     meeting_place = fields.TextField(_('meeting_place'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
     activity_location = fields.TextField(_('activity_location'), [validators.Required(), validators.Length(max=FIELD_MAXLENGTH_NOTE)])
-    message = fields.TextAreaField(_('Message'), [validators.Required(), validators.Length(max=65536)])
-    set_time = fields.TextField(_('set_time'))
-    #time_hours = fields.SelectField(_('time_hours'), choices=utils.TIME_HOURS)
-    #time_minutes = fields.SelectField(_('time_minutes'), choices=utils.TIME_MINUTES)
-### JH
+
 
 class JoinActivityForm(BaseForm):
     activity_id = fields.TextField(_('activity_id'))
