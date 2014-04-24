@@ -15,7 +15,7 @@ from web.joinhour import activity_handler, home_request_handler, join_handler, t
 from web.joinhour.complete_profile_social_user_handler import CompleteProfileSocialUserHandler
 from web.joinhour.taskqueue_handlers.post_activity_completion_handler import PostActivityCompletionHandler
 from web.joinhour.services.user_profile import Avatar
-from web.joinhour.taskqueue_handlers import activity_lifecycle_handler, match_making_handler
+from web.joinhour.taskqueue_handlers import activity_lifecycle_handler, match_making_handler, activity_digest_handler
 from web.joinhour.user_profile_handler import UserProfileHandler
 from web.joinhour.user_feedback_handler import UserFeedbackHandler
 from web.joinhour.join_request_handler import JoinRequestHandler
@@ -46,6 +46,7 @@ _routes = [
     RedirectRoute('/join_activity/', join_activity_handler.JoinActivityHandler, name='join_activity', strict_slash=True),
     RedirectRoute('/expire_activities/', expiry_handler.ExpiryHandler, name='expire_activities', strict_slash=True),
     RedirectRoute('/match_maker/', match_making_handler.MatchMakingHandler, name='match_maker', strict_slash=True),
+    RedirectRoute('/activity_digest/', activity_digest_handler.ActivityDigestHandler, name='activity_digest', strict_slash=True),
     RedirectRoute('/activity_life_cycle/', activity_lifecycle_handler.ActivityLifeCycleHandler, name='activity_life_cycle', strict_slash=True),
     RedirectRoute('/token_generator/', token_gen_handler.TokenGeneratorHandler, name='token_generator', strict_slash=True),
     RedirectRoute('/user_profile/', UserProfileHandler, name='user_profile', strict_slash=True),
