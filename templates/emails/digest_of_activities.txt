@@ -1,0 +1,37 @@
+<p>Hello <strong>{{interest_creator_name}}</strong>,</p>
+
+<p>
+Here is a digest of forming activities and interests in your group. Take a look and join:
+</p>
+<p>
+### TO DO: work it ###
+{% for match in matches %}
+    <ul>
+        <li>Interest name : <strong>{{match.interest.get().category}}</strong></li>
+        <ul>
+            <li>
+            	Activity Name</em> - {{match.activity.get().category}}
+            </li>
+            <li>
+            	Activity Initiator</em> - {{match.activity.get().username}}
+            </li>
+            <li>
+            	Note - {{match.activity.get().note}}
+            </li>
+            <li>
+            	<a href="{{url}}/pipe/">View this activity</a>
+            </li>
+        </ul>
+    </ul>
+{% endfor %}
+</p>
+
+<p>Thank you for using ActiMom<br>
+
+<BR>
+<p>
+</br>
+
+</p>
+
+<p>To unsubscribe please send us a note with your request to we+NoDigest@ActiMom.com</p>

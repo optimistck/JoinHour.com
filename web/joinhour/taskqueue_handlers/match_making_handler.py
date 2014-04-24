@@ -49,7 +49,7 @@ class MatchMakingHandler(BaseHandler):
         }
         notification_manager = NotificationManager.get()
         notification_manager.push_notification(user.email,
-                                               '[JoinHour.com]Match notification',
+                                               'ActiMom.com: Match notification',
                                                'emails/match_found_notification_for_interest_owner.txt',
                                                **template_val)
 

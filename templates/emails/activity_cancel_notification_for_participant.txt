@@ -1,22 +1,14 @@
 <p>Hello <strong>{{participant_name}}</strong>,</p>
 
 <p>
-We are sorry! Your activity <strong>{{activity_name}} </strong> is cancelled by the owner {{activity_owner_name}}.
-Note left by activity owner-
-{%if reason_for_cancellation is defined %}
-{{reason_for_cancellation}}
-{%else%}
-None
-{%endif%}
+Change of plans! Your activity <strong>{{activity_name}}</strong> is cancelled by the owner {{activity_owner_name}}.
 
 
-<p>Thank you for using JoinHour.com<br>
+<p>Thank you for using ActiMom.com<br>
 {{ app_name }} Team
 
 <BR>
 <p>
 If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
-we+support@JoinHour.com
+we+support@ActiMom.com
 </p>
-
-<p>We, the people, not computers, read and respond to every email. </p>
