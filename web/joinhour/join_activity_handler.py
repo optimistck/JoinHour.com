@@ -55,7 +55,7 @@ class JoinActivityHandler(BaseHandler):
         notification_manager = NotificationManager.get(self)
         activity_user = models.User.get_by_username(activity_manager.get_event().username)
         interest_details = get_interest_details(activity_manager.get_event().key.urlsafe())
-        request_details = get_request_details(request.key.urlsafe())
+        request_details = get_request_details(request.key.urlsafe(),None)
         template_val = notification_manager.get_base_template()
         template_val['interest'] = interest_details
         template_val['request'] = request_details
