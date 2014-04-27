@@ -635,15 +635,18 @@ class CallbackSocialLoginHandler(BaseHandler):
             auth_id = "%s:%s" % (provider_name, uid)
             if email:
                 unique_properties = ['email']
+                #Custom Hack for Facebook Integration
                 user_info = self.auth.store.user_model.create_user(
                     auth_id, unique_properties, email=email,username=email.replace('@', '_'),
-                    activated=True
+                    activated=True,name=user_data['first_name'],last_name=user_data['last_name']
                 )
             else:
                 user_info = self.auth.store.user_model.create_user(
                     auth_id, activated=True
                 )
+            logging.info('user_info'+str(user_info))
             if not user_info[0]: #user is a tuple
+                logging.info('failing here'+str(user_info[0]))
                 message = _('The account %s is already in use.' % provider_display_name)
                 self.add_message(message, 'error')
                 return self.redirect_to('register')
