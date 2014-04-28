@@ -66,6 +66,11 @@ class Event(ndb.Model):
         return cls.query(cls.status.IN([Event.FORMING]))
 
     @classmethod
+    def query_all_active_events_by_building(cls,building_name):
+        return cls.query(cls.status.IN([Event.FORMING]), cls.building_name == building_name)
+
+
+    @classmethod
     def query_event(cls, ancestor_key):
         return cls.query(ancestor=ancestor_key).order(-cls.date_entered)
 

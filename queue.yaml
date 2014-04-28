@@ -12,5 +12,3 @@ queue:
       task_retry_limit: 0
 - name : activityClosure
   rate : 35/s
-- name : sendActivityDigest
-  rate : 35/s
