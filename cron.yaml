@@ -1,4 +1,8 @@
 cron:
 - description: activity and interest expiry job
   url: /expire_activities/
-  schedule: every 5 minutes 
+  schedule: every 5 minutes
+
+- description: send activity digest
+  url: /activity_digest/
+  schedule: every 24 hours

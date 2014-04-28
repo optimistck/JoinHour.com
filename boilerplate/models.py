@@ -114,6 +114,10 @@ class User(User):
     def delete_resend_token(cls, user_id, token):
         cls.token_model.get_key(user_id, 'resend-activation-mail', token).delete()
 
+    @classmethod
+    def get_by_group(cls,group):
+        return cls.query(cls.username == group).get()
+
     def get_social_providers_names(self):
         social_user_objects = SocialUser.get_by_user(self.key)
         result = []
@@ -132,6 +136,10 @@ class User(User):
             else:
                 result['unused'].append(v)
         return result
+
+    @classmethod
+    def get_by_group(cls,group):
+        return cls.query(cls.building == group).fetch()
 
 
 class LogVisit(ndb.Model):
