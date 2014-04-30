@@ -4,11 +4,14 @@
 Change of plans! Your activity <strong>{{activity_name}}</strong> is cancelled by the owner {{activity_owner_name}}.
 
 
-<p>Thank you for using ActiMom.com<br>
-{{ app_name }} Team
+<p>Thank you for using ActiMom.com<br></p>
 
-<BR>
 <p>
-If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
-we+support@ActiMom.com
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
 </p>
+
+<p>Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA</p> <br>
+
+You received this email because you signed-up for the ActiMom.com service. <BR>To unsubscribe please send a request to we+willmissyou@ActiMom.com
+

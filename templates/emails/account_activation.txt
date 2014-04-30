@@ -8,9 +8,10 @@ please verify your email by clicking this link:
 {{confirmation_url}}
 
 <p>
-If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
-we+support@JoinHour.com
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
 </p>
 
-<p>We, the people, not computers, read and respond to every email. <br>
-{{ app_name }} Team
+<p>Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA</p> <br>
+
+You received this email because you signed-up for the ActiMom.com service. <BR>To unsubscribe please send a request to we+willmissyou@ActiMom.com

@@ -20,14 +20,17 @@ Activity details:</p>
 
 
 
-Thank you for committing. Please arrive on time. <BR><BR> Enjoy the company, and thank you for using JoinHour.com. Cheers!<br><br><br>
+Thank you for committing. Please arrive to your event on time. <br><br><br>
 
-{{ app_name }} Team
 
-<BR>
+<p>Thank you for using ActiMom.com<br></p>
+
 <p>
-P.S. If you have questions, comments, or thoughts on how we can improve please contact us at:</br>
-we+support@JoinHour.com
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
 </p>
 
-<p>We, the people, not computers, read and respond to every email. </p>
+<p>Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA</p> <br>
+
+You received this email because you signed-up for the ActiMom.com service. <BR>To unsubscribe please send a request to we+willmissyou@ActiMom.com
+
