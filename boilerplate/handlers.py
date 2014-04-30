@@ -823,8 +823,8 @@ class RegisterHandler(RegisterBaseHandler):
                         'body' : body,
                         })
 
-                    message = _('Step one of two completed! '
-                                'We sent you an email from we@ActiMom.com with a link to activate your account. Check your Inbox (or Junk mail folder) to finish the setup. You are one step away!')
+                    message = _('Action required: Activate your account '
+                                'by clicking on the link we emailed you from we@ActiMom.com. Check your Junk email if the message is not in the Inbox.')
                     self.add_message(message, 'success')
                     return self.redirect_to('home')
 

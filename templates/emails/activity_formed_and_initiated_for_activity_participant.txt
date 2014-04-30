@@ -1,26 +1,35 @@
 <p>Hello <strong>{{participant_username}}</strong>,</p>
 
 <p>
-Your activity {{interest['category']}} will start in 5 minutes.
+Your activity <STRONG>{{interest['category']}}</STRONG> will start in <STRONG>5</STRONG> minutes.
 <BR>
-Meet others at {{interest['meeting_place']}}. Activity location: {{interest['location']}}
-</p>
+
+<p><STRONG>Activity details:</STRONG></p>
+<ul>
+	<li>
+    	<em>Meeting place:</em> {{interest['meeting_place']}}
+    	</li>
+	<li>
+    	<em>Activity location:</em> {{interest['location']}}
+    	</li>
+	<li>
+	<em>Who is going:</em> {{interest['all_participants']}}
+	</li>
+</ul>
 
 
-Activity participants:</em> {{interest['all_participants']}}
 
-</p>
+<p>Have fun, and please arrive on time.</p>
 
-<p>Have fun, and please arrive on time.<br>
-
-<p>Thank you for using ActiMom.com<br></p>
+<BR><BR><BR>
+<p>Thank you for using ActiMom.com</p>
 
 <p>
 We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
 we+listen@ActiMom.com</a></br>
 </p>
-
-<p>Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA</p> <br>
-
-You received this email because you signed-up for the ActiMom.com service. <BR>To unsubscribe please send a request to we+willmissyou@ActiMom.com
+<BR>
+Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA<BR>
+You received this email because you signed-up for the ActiMom.com service. <BR>
+To unsubscribe please send a request to we+willmissyou@ActiMom.com
 
