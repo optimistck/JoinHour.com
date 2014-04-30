@@ -18,14 +18,17 @@ Here is a quick summary for this activity :</p>
 		<em>Your other companions </em> - {{participants}}
 	</li>
 </ul>
-<p>You've committed to the activity, please make every effort to participate. If you can't, please meet with the participants and let them know that you can't. At this time we don't have a way to withdraw elegantly from a commitment.
-<p>Enjoy the connection, and thank you for using JoinHour.com<br>
-{{ app_name }} Team
+<p>You've committed to the activity, please make every effort to participate. If you can't, please let others know by cancelliing from the ActiMom.com site.</p>
 
-<BR>
+
+<p>Thank you for using ActiMom.com<br></p>
+
 <p>
-If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
-we+support@JoinHour.com
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
 </p>
 
-<p>We, the people, not computers, read and respond to every email. </p>
+<p>Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA</p> <br>
+
+You received this email because you signed-up for the ActiMom.com service. <BR>To unsubscribe please send a request to we+willmissyou@ActiMom.com
+
