@@ -1,0 +1,35 @@
+<p>Hello <strong>{{interest['username']}}</strong>,</p>
+
+<p>
+A group member <strong>{{request['requester']}}</strong> wants to join your activity: <strong>{{interest['category']}}</strong>.
+<BR>
+
+<p><STRONG>Activity details:</STRONG></p>
+<ul>
+	<li>
+    	<em>Meeting place:</em> {{interest['meeting_place']}}
+    	</li>
+	<li>
+    	<em>Activity location:</em> {{interest['location']}}
+    	</li>
+	<li>
+	<em>People participating so far:</em> {{interest['all_participants']}}
+	</li>
+</ul>
+
+<H3>Your Action Required:</H3>
+Please <STRONG>approve</STRONG> or <STRONG>reject</STRONG> this request on <a href="http://www.ActiMom.com.com">ActiMom.com</a>
+
+
+<BR><BR><BR>
+<p>Thank you for using ActiMom.com</p>
+
+<p>
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
+</p>
+<BR>
+Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA<BR>
+You received this email because you signed-up for the ActiMom.com service. <BR>
+To unsubscribe please send a request to we+willmissyou@ActiMom.com
+
