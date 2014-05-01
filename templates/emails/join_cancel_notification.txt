@@ -1,26 +1,26 @@
 <p>Hello <strong>{{owner_name}}</strong>,</p>
 
 <p>
-{{cancelling_user_name}} has decided to cancel their participation to the activity.
+Group member <STRONG>{{cancelling_user_name}}</STRONG> has decided to cancel their participation in the activity.
 </p>
 
 <p>
 Here is a quick summary for this activity :</p>
 <ul>
 	<li>
-		<em>Name</em> - {{activity.category}}
+		<em>Name</em>: {{activity.category}}
 	</li>
 	<li>
-    	<em>Note</em> - {{activity.note}}
+    	<em>Note</em>: {{activity.note}}
     </li>
 	<li>
-		<em>Activity Initiator</em> - {{owner_name}}
+		<em>Activity Initiator</em>: {{owner_name}}
 	</li>
 	<li>
-		<em>Must start in</em> - {{expires_in}}
+		<em>Must start in</em>: {{expires_in}}
 	</li>
 	<li>
-		<em>Participants </em> - {{participants}}
+		<em>Remaining Participants</em>: {{participants}}
 	</li>
 </ul>
 

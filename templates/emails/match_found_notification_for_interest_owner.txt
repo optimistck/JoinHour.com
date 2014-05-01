@@ -1,21 +1,18 @@
 <p>Hello <strong>{{interest_creator_name}}</strong>,</p>
 
 <p>
-We have found new matches for you. Check them out:
+We found ActiMom.com activity matches for you:
 </p>
 <p>
 {% for match in matches %}
     <ul>
-        <li>Interest name : <strong>{{match.interest.get().category}}</strong></li>
+        <li>Interest name: <strong>{{match.interest.get().category}}</strong></li>
         <ul>
             <li>
-            	Activity Name</em> - {{match.activity.get().category}}
+            	<em>Activity Name</em>: {{match.activity.get().category}}
             </li>
             <li>
-            	Activity Initiator</em> - {{match.activity.get().username}}
-            </li>
-            <li>
-            	Note - {{match.activity.get().note}}
+            	<em>Activity Initiator</em>: {{match.activity.get().username}}
             </li>
             <li>
             	<a href="{{url}}/pipe/">View this activity</a>
@@ -24,6 +21,7 @@ We have found new matches for you. Check them out:
     </ul>
 {% endfor %}
 </p>
+Go to ActiMom.com to join.
 
 
 <BR><BR><BR>
