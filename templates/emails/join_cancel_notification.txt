@@ -1,18 +1,15 @@
 <p>Hello <strong>{{owner_name}}</strong>,</p>
 
 <p>
-Group member <STRONG>{{cancelling_user_name}}</STRONG> has decided to cancel their participation in the activity.
+Group member <STRONG>{{cancelling_user_name}}</STRONG> decided to cancel their RSVP for your activity.
 </p>
 
 <p>
-Here is a quick summary for this activity :</p>
+Here is a quick summary of your activity:</p>
 <ul>
 	<li>
 		<em>Name</em>: {{activity.category}}
 	</li>
-	<li>
-    	<em>Note</em>: {{activity.note}}
-    </li>
 	<li>
 		<em>Activity Initiator</em>: {{owner_name}}
 	</li>

@@ -42,7 +42,7 @@ webapp2_config.update(config.config)
 
 app = webapp2.WSGIApplication(debug = os.environ['SERVER_SOFTWARE'].startswith('Dev'), config=webapp2_config)
 # uncomment the line below and comment the line above for the deployment to Prod. Don't check-in the prod change into GitHub
-# app = webapp2.WSGIApplication(debug = os.environ['SERVER_SOFTWARE'].startswith('Google'), config=webapp2_config)
+#app = webapp2.WSGIApplication(debug = os.environ['SERVER_SOFTWARE'].startswith('Google'), config=webapp2_config)
 
 for status_int in app.config['error_templates']:
     app.error_handlers[status_int] = handle_error
