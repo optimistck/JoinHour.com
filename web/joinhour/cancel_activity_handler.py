@@ -36,7 +36,7 @@ class CancelActivityHandler(BaseHandler):
         else:
             self.add_message(message, 'error')
         #fire a notification to the activity owner
-        return self.redirect_to('activity')
+        return self.redirect_to('pipeline')
 
 
     def _push_notification(self,category,activity_owner_name,participant,reason_for_cancellation):

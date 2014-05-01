@@ -130,7 +130,7 @@
                               {% if  event_attributes['has_feedback']%}
                                  {% set feedback = event_attributes['feedback'] %}
                                  <a  class="btn-u btn-u-blue" href="/user_feedback/?userfeedback_key={{ feedback.key.urlsafe() }}">
-                                            <span data-class="label">Provide feedback</span>
+                                            <span data-class="label">Provide Anonymous Feedback</span>
                                  </a>
                               {% endif %}
                               <!-- Pending Join Request -->
@@ -233,7 +233,7 @@
                                     <div class="media-body">
                                     <h4 class="media-heading">
                                         <span class="subject">
-                                            <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a> with <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity.username | get_full_name}}</a>
+                                            <a href="/activity_detail/?ID={{ matching_activity.key.urlsafe() }}">{{ matching_activity.category }}</a> organized by <a href="/user_profile/?username={{ matching_activity.username }}">{{ matching_activity.username | get_full_name}}</a>
                                         </span>
                                     </h4>
 

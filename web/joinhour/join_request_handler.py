@@ -44,7 +44,7 @@ class JoinRequestHandler(BaseHandler):
             template_val = notification_manager.get_base_template()
             template_val['interest'] = interest_details
             notification_manager.push_notification2(activity_user.email,
-                                               '[JoinHour.com]Activity Go Notification',
+                                               'ActiMom.com: Activity Go Notification',
                                                'emails/activity_formed_and_open_for_owner.txt',Notification.GO_NOTIFICATION,
                                                activity_manager.get_event(),activity_user,True,**template_val)
 
@@ -55,7 +55,7 @@ class JoinRequestHandler(BaseHandler):
                 template_val['interest'] = interest_details
                 template_val['participant_username'] = participant.user.get().username
                 notification_manager.push_notification2(participant.user.get().email,
-                                                       '[JoinHour.com]Activity Go Notification',
+                                                       'ActiMom.com: Activity Go Notification',
                                                        'emails/activity_formed_and_open_for_participant.txt',Notification.GO_NOTIFICATION,activity_manager.get_event(),participant.user.get(),True,
                                                        **template_val)
 

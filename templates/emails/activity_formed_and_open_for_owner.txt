@@ -5,7 +5,7 @@ The activity you created, <strong>{{interest['category']}}</strong>, has reached
 
 
 <p>
-Activity details:</p>
+<B>Activity details:</B></p>
 <ul>
 	<li>
     	<em>Meeting place:</em> {{interest['meeting_place']}}
@@ -14,7 +14,7 @@ Activity details:</p>
     	<em>Activity location:</em> {{interest['location']}}
     	</li>
 	<li>
-	<em>People participating:</em> {{interest['all_participants']}}
+	<em>People participating so far:</em> {{interest['all_participants']}}
 	</li>
 </ul>
 
@@ -24,14 +24,14 @@ Activity details:</p>
 <p>We'll send all participants a reminder 5 minutes before the start time. </p> Thank you for committing. Please arrive on time. <BR><BR><br><br>
 
 
-<p>Thank you for using ActiMom.com<br></p>
+<BR><BR><BR>
+<p>Thank you for using ActiMom.com</p>
 
 <p>
 We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
 we+listen@ActiMom.com</a></br>
 </p>
-
-<p>Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA</p> <br>
-
-You received this email because you signed-up for the ActiMom.com service. <BR>To unsubscribe please send a request to we+willmissyou@ActiMom.com
-
+<BR>
+Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA<BR>
+You received this email because you signed-up for the ActiMom.com service. <BR>
+To unsubscribe please send a request to we+willmissyou@ActiMom.com
