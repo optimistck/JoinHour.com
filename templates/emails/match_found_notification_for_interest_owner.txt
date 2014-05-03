@@ -1,21 +1,18 @@
 <p>Hello <strong>{{interest_creator_name}}</strong>,</p>
 
 <p>
-We have found new matches for you. Check them out:
+We found ActiMom.com activity matches for you:
 </p>
 <p>
 {% for match in matches %}
     <ul>
-        <li>Interest name : <strong>{{match.interest.get().category}}</strong></li>
+        <li>Interest name: <strong>{{match.interest.get().category}}</strong></li>
         <ul>
             <li>
-            	Activity Name</em> - {{match.activity.get().category}}
+            	<em>Activity Name</em>: {{match.activity.get().category}}
             </li>
             <li>
-            	Activity Initiator</em> - {{match.activity.get().username}}
-            </li>
-            <li>
-            	Note - {{match.activity.get().note}}
+            	<em>Activity Initiator</em>: {{match.activity.get().username}}
             </li>
             <li>
             	<a href="{{url}}/pipe/">View this activity</a>
@@ -24,15 +21,17 @@ We have found new matches for you. Check them out:
     </ul>
 {% endfor %}
 </p>
+Go to ActiMom.com to join.
 
-<p>Thank you for using JoinHour.com<br>
-JoinHour Team
 
-<BR>
+<BR><BR><BR>
+<p>Thank you for using ActiMom.com</p>
+
 <p>
-If you have any questions, comments, or thoughts on how we can improve the serv
-ce please contact us at:</br>
-
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
 </p>
-
-<p>We, the people, not computers, read and respond to every email. </p>
+<BR>
+Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA<BR>
+You received this email because you signed-up for the ActiMom.com service. <BR>
+To unsubscribe please send a request to we+willmissyou@ActiMom.com

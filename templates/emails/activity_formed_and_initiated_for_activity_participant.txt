@@ -1,23 +1,35 @@
 <p>Hello <strong>{{participant_username}}</strong>,</p>
 
 <p>
-Your activity {{interest['category']}} will start in 5 minutes.
+Your activity <STRONG>{{interest['category']}}</STRONG> will start in <STRONG>5</STRONG> minutes.
 <BR>
-Meet others at {{interest['meeting_place']}}. Activity location: {{interest['location']}}
-</p>
+
+<p><STRONG>Activity details:</STRONG></p>
+<ul>
+	<li>
+    	<em>Meeting place:</em> {{interest['meeting_place']}}
+    	</li>
+	<li>
+    	<em>Activity location:</em> {{interest['location']}}
+    	</li>
+	<li>
+	<em>Who is going:</em> {{interest['all_participants']}}
+	</li>
+</ul>
 
 
-Activity participants:</em> {{interest['all_participants']}}
 
-</p>
+<p>Have fun, and please arrive on time.</p>
 
-<p>Have fun, arrive on time, and thank you for using JoinHour.com<br>
-{{ app_name }} Team
+<BR><BR><BR>
+<p>Thank you for using ActiMom.com</p>
 
-<BR>
 <p>
-If you have any questions, comments, or thoughts on how we can improve the service please contact us at:</br>
-we+support@JoinHour.com
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
 </p>
+<BR>
+Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA<BR>
+You received this email because you signed-up for the ActiMom.com service. <BR>
+To unsubscribe please send a request to we+willmissyou@ActiMom.com
 
-<p>We, the people, not computers, read and respond to every email. </p>

@@ -19,7 +19,7 @@ class ActivityDigestHandler(BaseHandler):
     def get(self):
         logging.info("Entered the ActivityDigestHandler")
         #TODO Groups should be configured in config file
-        groups = ["Test1","Test2"]
+        groups = ["Test1","TBD"]
         for group in groups:
             #Get ActiveEvents per group
             events = Event.query_all_active_events_by_building(group)
@@ -33,7 +33,7 @@ class ActivityDigestHandler(BaseHandler):
         template_val = notification_manager.get_base_template()
         template_val['recipient'] = user.name
         template_val['events'] = events
-        notification_manager.push_notification(user.email,'[Actimom.com]Daily Digest!','emails/digest_of_activities.txt',**template_val)
+        notification_manager.push_notification(user.email,'ActiMom.com: Activity & Interest Digest!','emails/digest_of_activities.txt',**template_val)
 
 
 

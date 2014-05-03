@@ -1,11 +1,10 @@
 <p>Hello <strong>{{interest['username']}}</strong>,</p>
 
 <p>
-{{request['requester']}} wants to join your activity <strong>{{interest['category']}} </strong>.
-<BR><BR>
+A group member <strong>{{request['requester']}}</strong> wants to join your activity: <strong>{{interest['category']}}</strong>.
+<BR>
 
-<p>
-Activity details:</p>
+<p><STRONG>Activity details:</STRONG></p>
 <ul>
 	<li>
     	<em>Meeting place:</em> {{interest['meeting_place']}}
@@ -14,21 +13,23 @@ Activity details:</p>
     	<em>Activity location:</em> {{interest['location']}}
     	</li>
 	<li>
-	<em>People participating:</em> {{interest['all_participants']}}
+	<em>People participating so far:</em> {{interest['all_participants']}}
 	</li>
 </ul>
 
+<H3>Your Action Required:</H3>
+Please <STRONG>approve</STRONG> or <STRONG>reject</STRONG> this request on <a href="http://www.ActiMom.com.com">ActiMom.com</a>
 
-You can approve/reject this request from Actimom.com
 
-Enjoy the company, and thank you for using Actimom.com. Cheers!<br><br><br>
+<BR><BR><BR>
+<p>Thank you for using ActiMom.com</p>
 
-{{ app_name }} Team
-
-<BR>
 <p>
-P.S. If you have questions, comments, or thoughts on how we can improve please contact us at:</br>
-we+support@JoinHour.com
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
 </p>
+<BR>
+Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA<BR>
+You received this email because you signed-up for the ActiMom.com service. <BR>
+To unsubscribe please send a request to we+willmissyou@ActiMom.com
 
-<p>We, the people, not computers, read and respond to every email. </p>

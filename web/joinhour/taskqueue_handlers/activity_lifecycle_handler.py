@@ -38,7 +38,7 @@ class ActivityLifeCycleHandler(BaseHandler):
             template_val['interest'] = interest_details
             template_val['participant_username'] = participant.user.get().username
             notification_manager.push_notification(participant.user.get().email,
-                                                    '[JoinHour.com]Your activity is starting!',
+                                                    'ActiMom.com Notification: Your activity is starting soon!',
                                                     'emails/activity_formed_and_initiated_for_activity_participant.txt',
                                                     **template_val)
 

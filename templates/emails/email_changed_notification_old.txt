@@ -4,8 +4,18 @@
 To confirm your new e-mail contact, please follow the link in the confirmation message sent to that address.</p>
 
 <p>If you do not request this change and believe that your {{ app_name }} account has been compromised,
-contact {{ app_name }} support by clicking this link:</p>
+contact {{ app_name }} support by sending us an email.</p>
 we+support@JoinHour.com
 
-<p>Sincerely,<br>
-{{ app_name }} Team
+
+<BR><BR><BR>
+<p>Thank you for using ActiMom.com</p>
+
+<p>
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
+</p>
+<BR>
+Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA<BR>
+You received this email because you signed-up for the ActiMom.com service. <BR>
+To unsubscribe please send a request to we+willmissyou@ActiMom.com
