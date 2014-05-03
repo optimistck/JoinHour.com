@@ -5,7 +5,7 @@ Here is a digest of forming activities and interests in your group. Take a look 
 </p>
 <p>
 ### TO DO: work it ###
-{% for event in Events %}
+{% for event in events %}
 <ul>
     {% if event.type == 'INTEREST_SPECIFIC'  %}
         <li>

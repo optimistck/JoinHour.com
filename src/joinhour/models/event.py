@@ -67,7 +67,7 @@ class Event(ndb.Model):
 
     @classmethod
     def query_all_active_events_by_building(cls,building_name):
-        return cls.query(cls.status.IN([Event.FORMING]), cls.building_name == building_name)
+        return cls.query(cls.status.IN([Event.FORMING]), cls.building_name == building_name).fetch()
 
 
     @classmethod
