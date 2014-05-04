@@ -4,8 +4,8 @@
 Here is a digest of forming activities and interests in your group. Take a look and join:
 </p>
 <p>
-
-{% for event in Events %}
+### TO DO: work it ###
+{% for event in events %}
 <ul>
     {% if event.type == 'INTEREST_SPECIFIC'  %}
         <li>
@@ -27,20 +27,13 @@ Here is a digest of forming activities and interests in your group. Take a look 
 {% endfor %}
 </p>
 
-<BR>
+<p>Thank you for using ActiMom<br>
 
+<BR>
+<p>
+</br>
+
+</p>
 
 <p>To unsubscribe please send us a note with your request to we+NoDigest@ActiMom.com</p>
 
-
-<BR><BR><BR>
-<p>Thank you for using ActiMom.com</p>
-
-<p>
-We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
-we+listen@ActiMom.com</a></br>
-</p>
-<BR>
-Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA<BR>
-You received this email because you signed-up for the ActiMom.com service. <BR>
-To unsubscribe please send a request to we+willmissyou@ActiMom.com
