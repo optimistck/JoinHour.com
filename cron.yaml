@@ -5,4 +5,4 @@ cron:
 
 - description: send activity digest
   url: /activity_digest/
-  schedule: every 5 minutes
+  schedule: every 24 hours

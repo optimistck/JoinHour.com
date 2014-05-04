@@ -1,25 +1,31 @@
 <p>Hello <strong>{{recipient}}</strong>,</p>
 
 <p>
-Here is a digest of forming activities and interests in your group. Take a look and join:
+Here is a list of <strong>forming activities</strong> and <strong>active interests</strong> in your group:
 </p>
 <p>
-### TO DO: work it ###
+
+<H3>Activities starting soon that you can join right now:</H3>
 {% for event in events %}
 <ul>
     {% if event.type == 'INTEREST_SPECIFIC'  %}
         <li>
-    	    <em>Activity Name:</em> {{event.category}}
+    	    <em>Name:</em> {{event.category}}, <em> location:</em> {{event.activity_location}}, <em>start time:</em> {{event.start_time}} - <a href="http://www.ActiMom.com/pipe/">join</a>
     	</li>
-	    <li>
-    	    <em>Activity location:</em> {{event.activity_location}}
-    	</li>
-    	<li>
-    	    <em>Activity location:</em> {{event.start_time}}
-    	</li>
-    {% else  %}
+    {% endif %}
+</ul>
+{% endfor %}
+</p>
+
+
+<p>
+
+<H3>What group members are interested in right now:</H3>
+{% for event in events %}
+<ul>
+    {% if event.type != 'INTEREST_SPECIFIC'  %}
         <li>
-    	    <em>Interest Name:</em> {{event.category}}
+    	    <em>Interest for</em> {{event.category}} <em>is expiring at</em> {{event.start_time}}
     	</li>
     {% endif %}
 
@@ -27,13 +33,26 @@ Here is a digest of forming activities and interests in your group. Take a look 
 {% endfor %}
 </p>
 
-<p>Thank you for using ActiMom<br>
+
+
+
+<p>
+
 
 <BR>
-<p>
-</br>
 
-</p>
 
 <p>To unsubscribe please send us a note with your request to we+NoDigest@ActiMom.com</p>
 
+
+<BR><BR><BR>
+<p>Thank you for using ActiMom.com</p>
+
+<p>
+We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+we+listen@ActiMom.com</a></br>
+</p>
+<BR>
+Firebrand Fuse LLC, 4201 Wilson Blvd. #110-355, Arlington, VA USA<BR>
+You received this email because you signed-up for the ActiMom.com service. <BR>
+To unsubscribe please send a request to we+willmissyou@ActiMom.com
