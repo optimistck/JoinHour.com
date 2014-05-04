@@ -80,6 +80,8 @@ class EventManager(object):
         self._event = ndb.Key(urlsafe=key).get()
 
     def can_cancel(self,user_id=None):
+        if self._event.type == Event.EVENT_TYPE_FLEX_INTEREST:
+            return False
         if self.expires_in() == Event.EXPIRED or self._event.status in Event.NON_EDITABLE_STATUS_CHOICES:
             return False, "You cannot leave an expired/closed/initiated/cancelled interest."
         if user_id is not None:
