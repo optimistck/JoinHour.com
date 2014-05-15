@@ -24,9 +24,10 @@ class ActivityDigestHandler(BaseHandler):
             #Get ActiveEvents per group
             events = Event.query_all_active_events_by_building(group)
             #if events:
-            users = User.get_by_group(group)
-            for user in users:
-                self._push_notification(events,user)
+            if len(events) > 0:
+                users = User.get_by_group(group)
+                for user in users:
+                    self._push_notification(events,user)
 
 
     def _push_notification(self, events,user):
