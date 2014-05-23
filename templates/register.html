@@ -22,7 +22,7 @@
                     {{ macros.field(form.last_name, label=_("Last Name"), placeholder=_(" ")+" "+_(" "), class="input-xlarge focused") }}
                     <label>Email Address <span class="color-red">*</span></label>
                     {{ macros.field(form.email, label=_("Email"), placeholder=_(" ")+" "+_(" "), class="input-xlarge focused required email", type="email") }}
-                    {{ macros.field(form.security_code, label=_("Security Code"), placeholder=_(" ")+" "+_(" ")) }}
+                    {{ macros.field(form.security_code, label=_("Security Code"), placeholder=_(" ")+" "+_(" "), class="input-xlarge focused required") }}
                     <label>Password <span class="color-red">*</span></label>
                     {{ macros.field(form.password, label=_("Password"), placeholder=_(" ")+" "+_(" "), class="input-xlarge focused required", type="password") }}
                     <label>Confirm Password <span class="color-red">*</span></label>
