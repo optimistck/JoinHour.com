@@ -10,7 +10,8 @@
 		<div class="row-fluid margin-bottom-10">
 
             <form id="form_register" action="{{ url|safe }}" method="post" class="reg-page">
-            	<h3>Got <a href="/about">code</a>? Sign-up now.</h3>
+            	<h3>You need a <a href="/aboutleads">code</a> to sign-up</h3>
+                <h5>You can join by invitation only. Your group organizer will provide a single use security code. Privacy matters.</h5>
                 <fieldset>
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token() }}">
                 <div class="controls">
@@ -35,7 +36,7 @@
                 </div>
                 <hr />
 				<BR>
-                    <p>Already Signed Up? Click <a href="{{ uri_for("login") }}" class="color-blue">Sign In</a> to login your account.</p>
+                    <p>Already Signed Up? <a href="{{ uri_for("login") }}" class="color-blue">Sign In</a> into your account.</p>
                 </fieldset>
             </form>
         </div><!--/row-fluid-->
