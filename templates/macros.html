@@ -74,11 +74,11 @@
                     <!-- Status text-->
                    {% if event.status == 'FORMING'  %}
                         <div class="media-scope">
-                             Status: Forming & must start by <span data-localtime-format="hh:mm a">{{ event_attributes['start_time'] }}Z</span>
+                             Status: Forming & would start at <STRONG> <span data-localtime-format="hh:mm a">{{ event_attributes['start_time'] }}Z</span></STRONG>
                         </div>
                    {% elif event.status == 'FORMED_OPEN'  %}
                         <div class="media-scope">
-                             Status: Formed & will start at <span data-localtime-format="hh:mm a">{{ event_attributes['start_time'] }}Z</span>
+                             Status: Formed & will start at <STRONG><span data-localtime-format="hh:mm a">{{ event_attributes['start_time'] }}Z</span></STRONG>
                         </div>
                    {% elif event.status == 'FORMED_INITIATED'  %}
                         <div class="media-scope">
