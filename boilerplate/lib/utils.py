@@ -573,6 +573,7 @@ CATEGORY = [
 ("Play date", "Play date"),
 ("Playground", "Playground"),
 ("Stroller walk", "Stroller walk"),
+("Run - no kids", "Run - no kids"),
 ("Local event", "Local event"),
 ("Lunch or Coffee", "Lunch or Coffee"),
 ("Moms night out", "Moms night out")]
