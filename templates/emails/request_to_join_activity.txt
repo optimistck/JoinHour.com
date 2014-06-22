@@ -18,7 +18,7 @@ A group member <strong>{{request['requester']}}</strong> wants to join your acti
 </ul>
 
 <H3>Your Action Required:</H3>
-Please <STRONG>approve</STRONG> or <STRONG>reject</STRONG> this request on <a href="http://www.ActiMom.com.com">ActiMom.com</a>
+Please <STRONG>approve</STRONG> or <STRONG>reject</STRONG> this request on <a href="http://www.ActiMom.com">ActiMom.com</a>
 
 
 <BR><BR><BR>
