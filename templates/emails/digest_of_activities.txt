@@ -1,7 +1,7 @@
 <p>Hello <strong>{{recipient}}</strong>,</p>
 
 <p>
-Here is a list of <strong>forming activities</strong> and <strong>active interests</strong> in your group:
+Here is a list of <strong>forming activities</strong> you can join right now, and a list of <strong>interests</strong> from the members:
 </p>
 <p>
 
@@ -10,7 +10,7 @@ Here is a list of <strong>forming activities</strong> and <strong>active interes
 <ul>
     {% if event.type == 'INTEREST_SPECIFIC'  %}
         <li>
-    	    <em>Name:</em> {{event.category}}, <em> location:</em> {{event.activity_location}}, <em>start time:</em> {{event.start_time}} - <a href="http://www.ActiMom.com/pipe/">join</a>
+    	    <em></em> {{event.category}}. <em> Location:</em> {{event.activity_location}}. <em>Start time:</em> {{event.start_time}} - <a href="http://www.ActiMom.com/pipe/">view and join</a>
     	</li>
     {% endif %}
 </ul>
@@ -34,22 +34,18 @@ Here is a list of <strong>forming activities</strong> and <strong>active interes
 </p>
 
 
-
-
 <p>
-
+Want to connect with group members who posted interests? Post a matching activity, and they will get notified on a match.
 
 <BR>
 
-
-<p>To unsubscribe please send us a note with your request to we+NoDigest@ActiMom.com</p>
 
 
 <BR><BR><BR>
 <p>Thank you for using ActiMom.com</p>
 
 <p>
-We thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
+We're in beta, so we thrive on feedback. Share your ideas and comments: <a href="mailto:we+listen@ActiMom.com?Subject=ActiMom.com%20feedback" target="_top">
 we+listen@ActiMom.com</a></br>
 </p>
 <BR>
