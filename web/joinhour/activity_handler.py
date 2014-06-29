@@ -3,7 +3,7 @@
 import jinja2
 from google.appengine.datastore.datastore_query import Cursor
 
-from boilerplate.lib.basehandler import BaseHandler
+from boilerplate.lib.basehandler import BaseHandler, user_required
 from boilerplate import models
 from src.joinhour.models.event import Event
 from src.joinhour.event_manager import EventManager
@@ -41,6 +41,7 @@ class ActivityHandler(BaseHandler):
     """
     Handler for the liveboard
     """
+    @user_required
     def get(self):
         params = {}
         cursorStr = str(self.request.get('cursor'))
