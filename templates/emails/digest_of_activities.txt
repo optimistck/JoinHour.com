@@ -25,7 +25,7 @@ Here is a list of <strong>forming activities</strong> you can join right now, an
 <ul>
     {% if event.type != 'INTEREST_SPECIFIC'  %}
         <li>
-    	    <em>Interest for</em> {{event.category}} <em>is expiring at</em> {{event.start_time}}
+    	    <strong>{{event.category}}</strong>: <em>The interest for someone else to organize </em> {{event.category}} <em>is expiring at</em> {{event.start_time}}
     	</li>
     {% endif %}
 
