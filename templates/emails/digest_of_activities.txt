@@ -1,3 +1,7 @@
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+<script  src="http://www.actimom.com/js/jquery.localtime-0.6.2.min.js"></script>
+
+
 <p>Hello <strong>{{recipient}}</strong>,</p>
 
 <p>
@@ -10,7 +14,7 @@ Here is a list of <strong>forming activities</strong> you can join right now, an
 <ul>
     {% if event.type == 'INTEREST_SPECIFIC'  %}
         <li>
-    	    <em></em> {{event.category}}. <em> Location:</em> {{event.activity_location}}. <em>Start time:</em> {{event.start_time}} - <a href="http://www.ActiMom.com/pipe/">view and join</a>
+    	    <em></em> {{event.category}}. <em> Location:</em> {{event.activity_location}}. <em>Start time:</em> <span data-localtime-format="ddddd hh:mm a">{{ event.start_time }}Z</span> - <a href="http://www.ActiMom.com/pipe/">view and join</a>
     	</li>
     {% endif %}
 </ul>
@@ -25,7 +29,7 @@ Here is a list of <strong>forming activities</strong> you can join right now, an
 <ul>
     {% if event.type != 'INTEREST_SPECIFIC'  %}
         <li>
-    	    <strong>{{event.category}}</strong>: <em>The interest for someone else to organize </em> {{event.category}} <em>is expiring at</em> {{event.start_time}}
+    	    <strong>{{event.category}}</strong>: <em>The interest for someone else to organize </em> {{event.category}} <em>is expiring at</em> <span data-localtime-format="ddddd hh:mm a">{{ event.start_time }}Z</span>
     	</li>
     {% endif %}
 
