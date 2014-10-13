@@ -19,7 +19,7 @@ class ActivityDigestHandler(BaseHandler):
     def get(self):
         logging.info("Entered the ActivityDigestHandler")
         #TODO Groups should be configured in config file
-        groups = ["Test Group","TBD", "Impromptu Dads", "ToddlerTalk35", "ToddlerTalk13", "The Boob Crew"]
+        groups = ["Test Group","TBD", "Impromptu Dads", "ToddlerTalk35", "ToddlerTalk13", "The Boob Crew", "Honolulu Tots"]
         for group in groups:
             #Get ActiveEvents per group
             events = Event.query_all_active_events_by_building(group)

@@ -7,4 +7,6 @@ cron:
   url: /activity_digest/
   #schedule: every 2 minutes
   #the Google App Engine time is in GMT. Email digest to run at 9.30, 11.30, 13.30 EST
-  schedule: every 2 hours from 13:30 to 17:31
+  #schedule: every 2 hours from 13:30 to 17:31
+  # NEW 10.12.2014: Email digest to run every hour from at 6.30 to 19.59 EST
+  schedule: every 1 hours from 10:30 to 23:59
